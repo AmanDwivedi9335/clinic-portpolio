@@ -86,6 +86,43 @@
 	animation: bounceUpDown 3s infinite; /* Adjust duration as needed */
 }
 
+@keyframes textWave {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.text-wave {
+	background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899, #4f46e5);
+	background-size: 200% 100%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	animation: textWave 5s ease-in-out infinite;
+}
+
+@keyframes wordColorWave {
+	0%,
+	100% {
+		color: #cbd5e1;
+	}
+	50% {
+		color: #282672;
+	}
+}
+
+.word-wave {
+	animation: wordColorWave 4s ease-in-out 1;
+	animation-delay: var(--delay, 0s);
+	animation-fill-mode: forwards;
+}
+
 ul,
 ol {
 	@apply pl-5 list-disc;

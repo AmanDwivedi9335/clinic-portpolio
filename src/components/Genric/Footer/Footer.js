@@ -3,259 +3,138 @@ import Image from "next/image";
 
 export default function Footer() {
 	return (
-		<footer className="bg-[#160073] relative">
-			{/* Wave Pattern Rectangle with Radial Lines */}
-			<div
-				style={{ borderRadius: "0px 40px 0px 0px" }}
-				className="hidden sm:block absolute bottom-0 left-0 w-full sm:w-[45%] h-[calc(100%+60px)] bg-[#5C4AFF] z-0"
-			>
-				<div
-					style={{
-						position: "relative",
-						width: "100%",
-						height: "100%",
-						backgroundImage: "url('/images/footerframe.png')",
-						backgroundSize: "1000px 1000px",
-						backgroundPosition: "-200px -400px",
-					}}
-				>
-					<div
-						style={{
-							textAlign: "center",
-							position: "absolute",
-							top: "50%",
-							left: "50%",
-							transform: "translate(-50%, -50%)",
-							color: "white",
-						}}
-						className="flex flex-col items-center px-4"
-					>
-						<Image
-							src="/images/MLicon.png"
-							alt="logo"
-							className="text-center"
-							width="170"
-							height="170"
-							loading="lazy"
-						/>
+		<footer className="bg-white text-[#0D0B4C]">
+			<div className="container mx-auto px-6 py-12">
+				<div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
+					<div className="space-y-4">
+						<div className="flex items-center gap-3">
+							<Image
+								src="/images/MLicon.png"
+								alt="MediBank logo"
+								width={62}
+								height={62}
+								loading="lazy"
+							/>
+							<div>
+								<p className="text-lg font-semibold leading-tight">MediBank</p>
+								<p className="text-sm text-[#6B6B8F]">
+									India&apos;s First Health Identity Infrastructure™
+								</p>
+							</div>
+						</div>
+						<p className="text-sm text-[#6B6B8F] leading-relaxed max-w-sm">
+							Your complete medical history—secure, portable, and always with you.
+						</p>
+					</div>
 
-						<div className="flex space-x-4 mt-4">
-							<Link href="https://www.facebook.com">
-								<Image
-									src="/images/Facebook.png"
-									alt="Facebook Logo"
-									className="text-center"
-									width="30"
-									height="30"
-									loading="lazy"
-								/>
+					<div className="space-y-4">
+						<h4 className="text-base font-semibold">Contact Us</h4>
+						<ul className="space-y-3 text-sm text-[#3D3D66]">
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5">✉️</span>
+								<a
+									href="mailto:team@signinbiomedical.com"
+									className="hover:text-[#5C4AFF]"
+								>
+									team@signinbiomedical.com
+								</a>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5">📞</span>
+								<a
+									href="tel:+919819117478"
+									className="hover:text-[#5C4AFF]"
+								>
+									+91 8919117478
+								</a>
+							</li>
+							<li className="flex items-start gap-2">
+								<span className="mt-0.5">🕒</span>
+								<span>Mon–Sat | 10 AM to 7 PM</span>
+							</li>
+						</ul>
+					</div>
+
+					<div className="space-y-4">
+						<h4 className="text-base font-semibold">Quick Links</h4>
+						<ul className="space-y-3 text-sm text-[#3D3D66]">
+							<li>
+								<Link href="/account" className="hover:text-[#5C4AFF]">
+									My Account
+								</Link>
+							</li>
+							<li>
+								<Link href="/how-it-works" className="hover:text-[#5C4AFF]">
+									How it Works?
+								</Link>
+							</li>
+							<li>
+								<Link href="/knowledge-center" className="hover:text-[#5C4AFF]">
+									Knowledge Center
+								</Link>
+							</li>
+							<li>
+								<Link href="/faq" className="hover:text-[#5C4AFF]">
+									FAQs
+								</Link>
+							</li>
+						</ul>
+					</div>
+
+					<div className="space-y-4">
+						<h4 className="text-base font-semibold">Follow Us:</h4>
+						<div className="flex gap-3">
+							<Link
+								href="https://www.whatsapp.com/"
+								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+							>
+								<span className="text-lg">💬</span>
 							</Link>
-							<Link href="https://www.youtube.com">
-								<Image
-									src="/images/Youtube.png"
-									alt="YouTube Logo"
-									className="text-center"
-									width="30"
-									height="30"
-									loading="lazy"
-								/>
-							</Link>
-							<Link href="https://linkedin.com/">
-								<Image
-									src="/images/LinkedIn.png"
-									alt="LinkedIn Logo"
-									className="text-center"
-									width="30"
-									height="30"
-									loading="lazy"
-								/>
-							</Link>
-							<Link href="https://instagram.com/">
+							<Link
+								href="https://instagram.com/"
+								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+							>
 								<Image
 									src="/images/insta.png"
-									alt="Insta Logo"
-									className="text-center"
-									width="30"
-									height="30"
+									alt="Instagram"
+									width={18}
+									height={18}
 									loading="lazy"
 								/>
 							</Link>
-							<Link href="https://x.com/">
+							<Link
+								href="https://x.com/"
+								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+							>
 								<Image
 									src="/images/x.png"
-									alt="X Logo"
-									className="text-center"
-									width="30"
-									height="30"
+									alt="X"
+									width={18}
+									height={18}
+									loading="lazy"
+								/>
+							</Link>
+							<Link
+								href="https://linkedin.com/"
+								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+							>
+								<Image
+									src="/images/LinkedIn.png"
+									alt="LinkedIn"
+									width={18}
+									height={18}
 									loading="lazy"
 								/>
 							</Link>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			{/* Footer Content */}
-			<div className="container mx-auto px-4 py-12 relative z-10">
-				<div className="flex flex-col md:flex-row w-full justify-between space-y-8 md:space-y-0">
-					{/* Logo Section */}
-					<div className="w-full md:w-1/2">
-						{/* Placeholder for logo or additional content */}
-						<div
-							// style={{
-							// 	textAlign: "center",
-							// 	position: "absolute",
-							// 	top: "50%",
-							// 	left: "50%",
-							// 	transform: "translate(-50%, -50%)",
-							// 	color: "white",
-							// }}
-							className="sm:hidden flex items-center justify-between"
-						>
-							<Image
-								src="/images/MLicon.png"
-								alt="logo"
-								className="text-center"
-								loading="lazy"
-								width="60"
-								height="60"
-							/>
-
-							{/* <div className="flex space-x-4 mt-4">
-								<Link href="https://www.facebook.com">
-									<Image
-										src="/images/Facebook.png"
-										alt="Facebook Logo"
-										className="text-center"
-										width="30"
-										height="30"
-										loading="lazy"
-									/>
-								</Link>
-								<Link href="https://www.youtube.com">
-									<Image
-										src="/images/Youtube.png"
-										alt="YouTube Logo"
-										className="text-center"
-										width="30"
-										height="30"
-										loading="lazy"
-									/>
-								</Link>
-								<Link href="https://linkedin.com/">
-									<Image
-										src="/images/LinkedIn.png"
-										alt="LinkedIn Logo"
-										className="text-center"
-										width="30"
-										height="30"
-										loading="lazy"
-									/>
-								</Link>
-							</div> */}
-						</div>
-					</div>
-
-					{/* Information Section */}
-					<div className="w-full md:w-1/4">
-						<h4 className="text-lg font-bold text-white mb-4">Quick Links</h4>
-						<ul className="p-0 m-0 list-none flex flex-col md:flex-col ">
-							<li className="m-0 p-0">
-								<Link
-									href="/health-guides"
-									className="text-white hover:text-[#5C4AFF]"
-								>
-									Health Guides
-								</Link>
-							</li>
-							<li className="m-0 p-0">
-								<Link
-									href="/privacy-policy"
-									className="text-white hover:text-[#5C4AFF]"
-								>
-									Privacy Policy
-								</Link>
-							</li>
-							<li className="m-0 p-0">
-								<Link
-									href="/about#about4"
-									className="text-white hover:text-[#5C4AFF]"
-								>
-									Contact Us
-								</Link>
-							</li>
-							<li className="m-0 p-0">
-								<Link href="/about" className="text-white hover:text-[#5C4AFF]">
-									About Us
-								</Link>
-							</li>
-							<li className="m-0 p-0">
-								<Link href="/blog" className="text-white hover:text-[#5C4AFF]">
-									Blog
-								</Link>
-							</li>
-						</ul>
-					</div>
-
-					{/* Contact Section */}
-					<div className="w-full md:w-1/4">
-						<h4 className="text-lg font-bold text-white mb-4">Contact</h4>
-						<ul className="space-y-2 p-0 m-0 list-none">
-							<li className="text-white">
-								<span className="font-semibold">Address:</span> 4th Floor,
-								Bizness Square, 16, Hitech City Rd, Laxmi Cyber City,
-								Whitefields, HITEC City, Hyderabad, Telangana 500081
-							</li>
-							<li className="text-white">
-								<span className="font-semibold">Email:</span>{" "}
-								<a
-									href="mailto:contact@medibank.in"
-									className="hover:text-[#5C4AFF]"
-								>
-									contact@medibank.in
-								</a>
-							</li>
-							{/* <li className="text-white">
-								<span className="font-normal">
-									Charak HealthTech Pvt Ltd [CIN: U47413TS2024PTC191919] t/a MediBank
-								</span>
-							</li> */}
-							<li className="sm:hidden text-white">
-								<div className="flex space-x-4 mt-4">
-									<Link href="https://www.facebook.com">
-										<Image
-											src="/images/Facebook.png"
-											alt="Facebook Logo"
-											className="text-center"
-											width="30"
-											height="30"
-											loading="lazy"
-										/>
-									</Link>
-									<Link href="https://www.youtube.com">
-										<Image
-											src="/images/Youtube.png"
-											alt="YouTube Logo"
-											className="text-center"
-											width="30"
-											height="30"
-											loading="lazy"
-										/>
-									</Link>
-									<Link href="https://linkedin.com/">
-										<Image
-											src="/images/LinkedIn.png"
-											alt="LinkedIn Logo"
-											className="text-center"
-											width="30"
-											height="30"
-											loading="lazy"
-										/>
-									</Link>
-								</div>
-							</li>
-						</ul>
-					</div>
+				<div className="mt-10 border-t border-[#E8E8F2] pt-6 text-sm text-[#6B6B8F] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+					<p>© 2024 MediBank. All rights reserved.</p>
+					<p>
+						Made with <span className="text-[#5C4AFF]">❤</span> in India
+					</p>
 				</div>
 			</div>
 		</footer>

@@ -32,37 +32,34 @@ export default function Home() {
 	return (
 		<>
 			{/* Hero Section */}
-			<Hero />
+			<div className=" sticky h-screen z-[-1] top-[5px]">
+				<Hero />
+			</div>
+			
 
 			{/* About Section */}
-			<div className="py-6 md:py-12 px-4 md:px-8 lg:px-0 bg-inherit sticky h-screen z-[-1] top-[90px]">
-				<Aboutsection />
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+				<ReportCarouselSection />
 			</div>
 
-			{/* Why Us Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[90px]">
-				<WhyUs />
+			{/* HealthIdentity Section */}
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+				<HealthIdentitySection />
 			</div>
 
-			<ReportCarouselSection />
-			<LovedOnesSection />
-			<HealthIdentitySection />
-
-			{/* Blog Section */}
+			{/* LovedOnes Section */}
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
-				<Blogsection />
+				<LovedOnesSection />
 			</div>
 
-			<DataControlSection />
+			{/* Data Control Section */}
+			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
+				<DataControlSection />
+			</div>
 
 			{/* Contact Us Section */}
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
 				<ContactCard />
-			</div>
-
-			{/* FAQ Section */}
-			<div className="px-4 md:px-8 py-6 md:py-12 bg-inherit">
-				<Faq />
 			</div>
 		</>
 	);

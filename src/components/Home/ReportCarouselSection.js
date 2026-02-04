@@ -127,7 +127,7 @@ export default function ReportCarouselSection() {
                 className="basis-full sm:basis-[70%] lg:basis-[40%]"
               >
                 <div
-                  className={`group relative aspect-[3/4] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
+                  className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
                     activeIndex === index
                       ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
                       : "scale-90 opacity-70 blur-[2px] saturate-75"

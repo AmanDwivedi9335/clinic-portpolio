@@ -58,21 +58,55 @@ export default function LovedOnesSection() {
         }
       );
 
-      gsap.fromTo(
-        ".loved-avatar",
-        { y: 16, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          stagger: 0.1,
-          scrollTrigger: {
-            trigger: ".loved-diagram",
-            start: "top 75%",
+      const orbitItems = gsap.utils.toArray(".loved-orbit");
+
+      const orbitTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".loved-diagram",
+          start: "top 75%",
+        },
+      });
+
+      orbitTimeline
+        .fromTo(
+          ".loved-center",
+          { scale: 0.9 },
+          { scale: 1, duration: 0.45, ease: "power3.out" }
+        )
+        .to(
+          ".loved-center",
+          {
+            keyframes: [
+              { rotation: 2 },
+              { rotation: -2 },
+              { rotation: 1 },
+              { rotation: -1 },
+              { rotation: 0 },
+            ],
+            duration: 0.6,
+            ease: "power1.inOut",
           },
-        }
-      );
+          "<"
+        )
+        .fromTo(
+          orbitItems,
+          {
+            opacity: 0,
+            scale: 0.6,
+            x: (index, element) => Number(element.dataset.x || 0),
+            y: (index, element) => Number(element.dataset.y || 0),
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            y: 0,
+            duration: 0.9,
+            ease: "back.out(1.6)",
+            stagger: 0.12,
+          },
+          "-=0.25"
+        );
     });
   }, []);
 
@@ -98,7 +132,7 @@ export default function LovedOnesSection() {
           <div className="absolute left-1/2 top-1/2 h-px w-[210px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="loved-avatar relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
+            <div className="loved-center relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
               <div className="absolute inset-[-10px] rounded-[24px] bg-[#EAD9FF] opacity-40" />
               <Image
                 src="/images/ml_logo.png"
@@ -110,7 +144,10 @@ export default function LovedOnesSection() {
             </div>
           </div>
 
-          <div className="loved-avatar absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2">
+          <div
+            className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2"
+            data-y="120"
+          >
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[0].image}
@@ -125,7 +162,10 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="loved-avatar absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
+          <div
+            className="loved-orbit absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
+            data-x="120"
+          >
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[1].image}
@@ -140,7 +180,10 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="loved-avatar absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
+          <div
+            className="loved-orbit absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
+            data-x="-120"
+          >
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[2].image}
@@ -155,7 +198,10 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="loved-avatar absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+          <div
+            className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
+            data-y="-120"
+          >
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[3].image}

@@ -9,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { createGsapContext } from "@/lib/gsap";
 
 const slides = [
   {
@@ -48,6 +49,7 @@ export default function ReportCarouselSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const autoplayRef = useRef(null);
   const isHoveredRef = useRef(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     if (!api) return;
@@ -90,9 +92,59 @@ export default function ReportCarouselSection() {
     };
   }, [api]);
 
+  useEffect(() => {
+    return createGsapContext(sectionRef, (gsap) => {
+      gsap.fromTo(
+        ".report-intro",
+        { y: 28, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".report-carousel",
+        { y: 36, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".report-carousel",
+            start: "top 80%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".report-slide",
+        { scale: 0.95, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power2.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: ".report-carousel",
+            start: "top 75%",
+          },
+        }
+      );
+    });
+  }, []);
+
   return (
-    <section className="bg-white py-10 md:py-16">
-      <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
+    <section ref={sectionRef} className="bg-white py-10 md:py-16">
+      <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <span className="mb-4 rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           The Moment No One Thinks About
         </span>
@@ -108,7 +160,7 @@ export default function ReportCarouselSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-10 max-w-6xl px-4 md:px-8">
+      <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -124,7 +176,7 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="basis-full sm:basis-[70%] lg:basis-[40%]"
+                className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
               >
                 <div
                   className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${

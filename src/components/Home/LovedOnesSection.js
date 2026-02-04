@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 const lovedOnes = [
   {
@@ -22,9 +24,61 @@ const lovedOnes = [
 ];
 
 export default function LovedOnesSection() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    return createGsapContext(sectionRef, (gsap) => {
+      gsap.fromTo(
+        ".loved-intro",
+        { y: 26, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".loved-diagram",
+        { scale: 0.92, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".loved-diagram",
+            start: "top 80%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".loved-avatar",
+        { y: 16, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power2.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ".loved-diagram",
+            start: "top 75%",
+          },
+        }
+      );
+    });
+  }, []);
+
   return (
-    <section className="bg-white py-12 md:py-20">
-      <div className="mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
+    <section ref={sectionRef} className="bg-white py-12 md:py-20">
+      <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
         <span className="rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           For Your Loved Ones
         </span>
@@ -39,12 +93,12 @@ export default function LovedOnesSection() {
       </div>
 
       <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
-        <div className="relative h-[340px] w-full max-w-[420px]">
+        <div className="loved-diagram relative h-[340px] w-full max-w-[420px]">
           <div className="absolute left-1/2 top-1/2 h-[210px] w-px -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
           <div className="absolute left-1/2 top-1/2 h-px w-[210px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
+            <div className="loved-avatar relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
               <div className="absolute inset-[-10px] rounded-[24px] bg-[#EAD9FF] opacity-40" />
               <Image
                 src="/images/ml_logo.png"
@@ -56,7 +110,7 @@ export default function LovedOnesSection() {
             </div>
           </div>
 
-          <div className="absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2">
+          <div className="loved-avatar absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2">
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[0].image}
@@ -71,7 +125,7 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
+          <div className="loved-avatar absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[1].image}
@@ -86,7 +140,7 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
+          <div className="loved-avatar absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2">
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[2].image}
@@ -101,7 +155,7 @@ export default function LovedOnesSection() {
             </span>
           </div>
 
-          <div className="absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
+          <div className="loved-avatar absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
             <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
               <Image
                 src={lovedOnes[3].image}

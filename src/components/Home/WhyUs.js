@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import {
-	FaAngleDown,
 	FaChevronCircleDown,
-	FaAngleUp,
 	FaChevronCircleUp,
 } from "react-icons/fa";
+import { createGsapContext } from "@/lib/gsap";
 
 export default function WhyUs() {
 	const blogList = [
@@ -52,19 +50,8 @@ export default function WhyUs() {
 		},
 	];
 
-	const [mainBlog, setMainBlog] = useState(blogList[0]); // Set the initial main blog
-	const [isSwitching, setIsSwitching] = useState(false);
 	const [viewDetails, setViewDetails] = useState([]);
-
-	const handleBlogClick = (blog) => {
-		if (blog.title !== mainBlog.title) {
-			setIsSwitching(true); // Trigger the switching animation
-			setTimeout(() => {
-				setMainBlog(blog);
-				setIsSwitching(false); // Reset the animation state
-			}, 500); // Match the duration of the animation
-		}
-	};
+	const sectionRef = useRef(null);
 
 	const handleViewDetailsClick = (title) => {
 		if (!viewDetails.includes(title)) {
@@ -74,48 +61,60 @@ export default function WhyUs() {
 		}
 	};
 
-	// Animation Variants
-	const blogCardVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-	};
+	useEffect(() => {
+		return createGsapContext(sectionRef, (gsap) => {
+			gsap.fromTo(
+				".why-heading",
+				{ y: 20, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.8,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
 
-	const mainBlogVariants = {
-		hidden: { opacity: 0, scale: 0.9 },
-		visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } },
-		exit: { opacity: 0, scale: 0.9, transition: { duration: 0.6 } },
-	};
-
-	const buttonVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } },
-	};
+			gsap.fromTo(
+				".why-card",
+				{ y: 24, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.8,
+					ease: "power2.out",
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: ".why-grid",
+						start: "top 80%",
+					},
+				}
+			);
+		});
+	}, []);
 
 	return (
-		<div className="text-center">
-			<h2 className="w-[90%] text-left md:text-[35px] m-auto py-6 md:leading-[52px] font-semibold text-[#000339] text-3xl leading-[25px]">
+		<div ref={sectionRef} className="text-center">
+			<h2 className="why-heading w-[90%] text-left md:text-[35px] m-auto py-6 md:leading-[52px] font-semibold text-[#000339] text-3xl leading-[25px]">
 				Why <span style={{ color: "#6D4AFF" }}>Choose</span> Us ?
 			</h2>
-			<h3 className="w-[90%] text-left m-auto text-[#000339] text-[17px] leading-[25px]">
+			<h3 className="why-heading w-[90%] text-left m-auto text-[#000339] text-[17px] leading-[25px]">
 				Transforming India&apos;s healthcare one step at a time with EHR
 			</h3>
 			<div className="flex py-6 justify-between items-center mxxxl:container w-[90%] m-auto xl:container">
 				{/* Other Blogs */}
-				<motion.div
-					className="flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-4 w-full justify-center"
-					initial="hidden"
-					whileInView="visible"
-					viewport={{ once: false, amount: 0.3 }}
-				>
+				<div className="why-grid flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-4 w-full justify-center">
 					{blogList.map((item, index) => (
-						<motion.div
+						<div
 							key={index}
-							className={`relative flex sm:flex-wrap text-left border border-gray-300 rounded-[20px] p-4 ${
+							className={`why-card relative flex sm:flex-wrap text-left border border-gray-300 rounded-[20px] p-4 ${
 								index === blogList.length - 1
 									? "col-span-2 sm:mx-[20%] justify-center"
 									: ""
 							}`}
-							variants={blogCardVariants}
 						>
 							{/* Icon Section */}
 							<div className="absolute -left-4 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center">
@@ -158,9 +157,9 @@ export default function WhyUs() {
 									&#8594;
 								</span>
 							</div>
-						</motion.div>
+						</div>
 					))}
-				</motion.div>
+				</div>
 			</div>
 			{/* <motion.div
 				className="text-center my-1"

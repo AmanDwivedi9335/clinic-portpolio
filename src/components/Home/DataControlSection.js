@@ -194,29 +194,28 @@ export default function DataControlSection() {
 			</div>
 
 			<div className="mt-12 md:mt-16">
-				<div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-[#3413A8] via-[#5B1FAE] to-[#A244B4] px-6 py-10 text-left text-white md:px-12 md:py-12">
-					<div className="relative z-10 max-w-xl">
-						<h3 className="text-[28px] md:text-[36px] font-semibold leading-tight">
+				<div className="relative flex min-h-[70vh] items-center overflow-hidden rounded-[32px] bg-[linear-gradient(120deg,_#2A0B6E_0%,_#5A1FA9_35%,_#4C36D6_60%,_#1B2D7A_100%)] px-6 py-12 text-left text-white md:px-16">
+					<div className="relative z-10 w-full max-w-[600px] text-center md:text-left">
+						<h3 className="text-[34px] leading-tight md:text-[52px] md:leading-[1.2] font-bold">
 							Don&apos;t wait for a crisis to organise your medical life.
 						</h3>
-						<p className="mt-3 text-sm md:text-base text-white/90">
+						<p className="mt-4 text-[16px] md:text-[19px] text-white/90 max-w-[520px] mx-auto md:mx-0">
 							The best time to claim your Health Identity is before you need it.
 						</p>
 						<button
 							type="button"
-							className="mt-6 inline-flex items-center rounded-[10px] bg-[#E9E3FF] px-5 py-2 text-sm font-semibold text-[#3413A8] shadow-sm transition hover:brightness-95"
+							className="mt-8 inline-flex items-center rounded-full bg-[#E6D9FF] px-7 py-3.5 text-sm font-semibold text-[#2A0B6E] shadow-md transition duration-200 hover:scale-[1.02] hover:brightness-105"
 						>
 							Claim Your Health Identity
 						</button>
 					</div>
 
-					<div className="pointer-events-none absolute inset-y-0 right-0 hidden w-2/5 items-center justify-end md:flex">
-						<div className="relative h-[220px] w-[220px]">
-							<div className="absolute inset-0 rounded-full border-[18px] border-white/10" />
-							<div className="absolute inset-6 rounded-full border-[18px] border-white/20" />
-							<div className="absolute inset-12 rounded-full border-[18px] border-white/30" />
-							<div className="absolute inset-16 rounded-full border-[18px] border-white/50" />
-							<div className="absolute inset-20 rounded-full border-[18px] border-white/80" />
+					<div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[46%] items-center justify-end md:flex">
+						<div className="relative h-[420px] w-[420px]">
+							<div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.18)_0%,_rgba(255,255,255,0)_60%)]" />
+							<div className="absolute inset-6 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.2)_0%,_rgba(255,255,255,0)_62%)]" />
+							<div className="absolute inset-16 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.22)_0%,_rgba(255,255,255,0)_65%)]" />
+							<div className="absolute inset-28 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.26)_0%,_rgba(255,255,255,0)_70%)]" />
 						</div>
 					</div>
 				</div>

@@ -192,6 +192,35 @@ export default function DataControlSection() {
 					No hospital, clinic, insurer, or doctor owns your data. Only you do.
 				</p>
 			</div>
+
+			<div className="mt-12 md:mt-16">
+				<div className="relative overflow-hidden rounded-[24px] bg-gradient-to-r from-[#3413A8] via-[#5B1FAE] to-[#A244B4] px-6 py-10 text-left text-white md:px-12 md:py-12">
+					<div className="relative z-10 max-w-xl">
+						<h3 className="text-[28px] md:text-[36px] font-semibold leading-tight">
+							Don&apos;t wait for a crisis to organise your medical life.
+						</h3>
+						<p className="mt-3 text-sm md:text-base text-white/90">
+							The best time to claim your Health Identity is before you need it.
+						</p>
+						<button
+							type="button"
+							className="mt-6 inline-flex items-center rounded-[10px] bg-[#E9E3FF] px-5 py-2 text-sm font-semibold text-[#3413A8] shadow-sm transition hover:brightness-95"
+						>
+							Claim Your Health Identity
+						</button>
+					</div>
+
+					<div className="pointer-events-none absolute inset-y-0 right-0 hidden w-2/5 items-center justify-end md:flex">
+						<div className="relative h-[220px] w-[220px]">
+							<div className="absolute inset-0 rounded-full border-[18px] border-white/10" />
+							<div className="absolute inset-6 rounded-full border-[18px] border-white/20" />
+							<div className="absolute inset-12 rounded-full border-[18px] border-white/30" />
+							<div className="absolute inset-16 rounded-full border-[18px] border-white/50" />
+							<div className="absolute inset-20 rounded-full border-[18px] border-white/80" />
+						</div>
+					</div>
+				</div>
+			</div>
 		</section>
 	);
 }

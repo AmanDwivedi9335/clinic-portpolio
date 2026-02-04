@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   Carousel,
@@ -44,55 +43,6 @@ const slides = [
 ];
 
 export default function ReportCarouselSection() {
-  const autoplayRef = useRef(null);
-  const [api, setApi] = useState();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    const updateIndex = () => {
-      setActiveIndex(api.selectedScrollSnap());
-    };
-
-    updateIndex();
-    api.on("select", updateIndex);
-    api.on("reInit", updateIndex);
-
-    return () => {
-      api.off("select", updateIndex);
-      api.off("reInit", updateIndex);
-    };
-  }, [api]);
-
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    if (isHovered) {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-        autoplayRef.current = null;
-      }
-      return;
-    }
-
-    autoplayRef.current = setInterval(() => {
-      api.scrollNext();
-    }, 2000);
-
-    return () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-        autoplayRef.current = null;
-      }
-    };
-  }, [api, isHovered]);
-
   return (
     <section className="bg-white py-10 md:py-16">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
@@ -113,25 +63,16 @@ export default function ReportCarouselSection() {
 
       <div className="mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
-          setApi={setApi}
           opts={{ align: "center", loop: true }}
           className="relative"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
         >
-          <CarouselContent className="py-8">
+          <CarouselContent className="py-6">
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
                 className="md:basis-1/2 lg:basis-1/3"
               >
-                <div
-                  className={`group relative mx-auto h-64 w-[90%] overflow-hidden rounded-[36px] bg-[#F3F0FF] transition-all duration-500 md:h-72 md:w-[92%] ${
-                    activeIndex === index
-                      ? "z-10 scale-105 shadow-2xl"
-                      : "scale-95 shadow-lg"
-                  }`}
-                >
+                <div className="group relative h-64 overflow-hidden rounded-[32px] bg-[#F3F0FF] shadow-lg transition-transform duration-300 hover:-translate-y-2">
                   <Image
                     src={slide.image}
                     alt={slide.alt}
@@ -140,7 +81,7 @@ export default function ReportCarouselSection() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     priority={index === 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1B0C2E]/85 via-[#1B0C2E]/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-90" />
                   <div className="absolute inset-x-6 bottom-6 translate-y-8 text-center text-sm font-semibold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                     {slide.caption}
                   </div>

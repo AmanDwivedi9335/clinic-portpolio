@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -43,6 +44,52 @@ const slides = [
 ];
 
 export default function ReportCarouselSection() {
+  const [api, setApi] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const autoplayRef = useRef(null);
+  const isHoveredRef = useRef(false);
+
+  useEffect(() => {
+    if (!api) return;
+
+    const handleSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+
+    handleSelect();
+    api.on("select", handleSelect);
+
+    return () => {
+      api.off("select", handleSelect);
+    };
+  }, [api]);
+
+  useEffect(() => {
+    if (!api) return;
+
+    const startAutoplay = () => {
+      if (autoplayRef.current) return;
+      autoplayRef.current = setInterval(() => {
+        if (!isHoveredRef.current) {
+          api.scrollNext();
+        }
+      }, 4000);
+    };
+
+    const stopAutoplay = () => {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
+    };
+
+    startAutoplay();
+
+    return () => {
+      stopAutoplay();
+    };
+  }, [api]);
+
   return (
     <section className="bg-white py-10 md:py-16">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
@@ -64,25 +111,40 @@ export default function ReportCarouselSection() {
       <div className="mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
+          setApi={setApi}
           className="relative"
+          onMouseEnter={() => {
+            isHoveredRef.current = true;
+          }}
+          onMouseLeave={() => {
+            isHoveredRef.current = false;
+          }}
         >
           <CarouselContent className="py-6">
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="md:basis-1/2 lg:basis-1/3"
+                className="basis-full sm:basis-[70%] lg:basis-[40%]"
               >
-                <div className="group relative h-64 overflow-hidden rounded-[32px] bg-[#F3F0FF] shadow-lg transition-transform duration-300 hover:-translate-y-2">
+                <div
+                  className={`group relative aspect-[3/4] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
+                    activeIndex === index
+                      ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
+                      : "scale-90 opacity-70 blur-[2px] saturate-75"
+                  }`}
+                >
                   <Image
                     src={slide.image}
                     alt={slide.alt}
                     fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className={`object-cover transition-transform duration-500 ease-in-out will-change-transform transform-gpu ${
+                      activeIndex === index ? "scale-105" : "scale-100"
+                    }`}
+                    sizes="(min-width: 1024px) 40vw, (min-width: 640px) 70vw, 100vw"
                     priority={index === 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-90" />
-                  <div className="absolute inset-x-6 bottom-6 translate-y-8 text-center text-sm font-semibold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-x-5 bottom-5 text-center text-base font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-lg">
                     {slide.caption}
                   </div>
                 </div>

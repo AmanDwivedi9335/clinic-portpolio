@@ -8,6 +8,7 @@ import WhyUs from "@/components/Home/WhyUs";
 import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
 import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import LovedOnesSection from "@/components/Home/LovedOnesSection";
+import DataControlSection from "@/components/Home/DataControlSection";
 import ContactCard from "@/components/Home/ContactCard";
 import Faq from "@/components/Home/Faq";
 
@@ -51,6 +52,8 @@ export default function Home() {
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
 				<Blogsection />
 			</div>
+
+			<DataControlSection />
 
 			{/* Contact Us Section */}
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">

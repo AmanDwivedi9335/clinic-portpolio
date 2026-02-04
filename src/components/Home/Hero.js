@@ -3,6 +3,13 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function Hero() {
+  const firstLineWords =
+    "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.".split(
+      " "
+    );
+  const secondLineWords =
+    "Because one missing detail can change everything...".split(" ");
+
   return (
     <section className="pt-[5px] pb-5">
       <div className="mx-auto px-3 md:px-6">
@@ -33,33 +40,34 @@ export default function Hero() {
                 Medibank - India&apos;s 1st Health Identity Infrastructure
               </p>
 
-              <h1
-                className="mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold 
-                bg-gradient-to-r from-indigo-600 to-purple-900 
-                bg-clip-text text-transparent"
-                >
+              <h1 className="mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
                 Your Health
                 <br />
-                Identity for{" "}
-                <span
-                    className="
-                    bg-gradient-to-r from-indigo-600 via-pink-500 to-purple-900
-                    bg-clip-text text-transparent
-                    animate-wave
-                    "
-                >
-                    Life
-                </span>
+                Identity for Life
               </h1>
 
-
-              <p className="mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-700">
-                We ensures your complete medical history is always with you, in
-                emergencies, in hospitals, across cities, across time.
+              <p className="mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">
+                {firstLineWords.map((word, index) => (
+                  <span
+                    key={`line-one-${word}-${index}`}
+                    className="word-wave"
+                    style={{ "--delay": `${index * 0.12}s` }}
+                  >
+                    {word}{" "}
+                  </span>
+                ))}
                 <br />
-                <span className="font-semibold">
-                  Because one missing detail can change everything...
-                </span>
+                {secondLineWords.map((word, index) => (
+                  <span
+                    key={`line-two-${word}-${index}`}
+                    className="word-wave font-semibold"
+                    style={{
+                      "--delay": `${(firstLineWords.length + index) * 0.12}s`,
+                    }}
+                  >
+                    {word}{" "}
+                  </span>
+                ))}
               </p>
 
               <div className="mt-7">

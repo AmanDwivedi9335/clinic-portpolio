@@ -6,6 +6,7 @@ import Blogsection from "@/components/Home/Blogsection";
 import Aboutsection from "@/components/Home/Aboutsection";
 import WhyUs from "@/components/Home/WhyUs";
 import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
+import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import ContactCard from "@/components/Home/ContactCard";
 import Faq from "@/components/Home/Faq";
 
@@ -42,6 +43,7 @@ export default function Home() {
 			</div>
 
 			<ReportCarouselSection />
+			<HealthIdentitySection />
 
 			{/* Blog Section */}
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">

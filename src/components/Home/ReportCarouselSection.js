@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -43,6 +44,28 @@ const slides = [
 ];
 
 export default function ReportCarouselSection() {
+  const [api, setApi] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const updateIndex = () => {
+      setSelectedIndex(api.selectedScrollSnap());
+    };
+
+    updateIndex();
+    api.on("select", updateIndex);
+    api.on("reInit", updateIndex);
+
+    return () => {
+      api.off("select", updateIndex);
+      api.off("reInit", updateIndex);
+    };
+  }, [api]);
+
   return (
     <section className="bg-white py-10 md:py-16">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
@@ -64,15 +87,22 @@ export default function ReportCarouselSection() {
       <div className="mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
+          setApi={setApi}
           className="relative"
         >
-          <CarouselContent className="py-6">
+          <CarouselContent className="py-8">
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="md:basis-1/2 lg:basis-1/3"
+                className="md:basis-2/3 lg:basis-1/2"
               >
-                <div className="group relative h-64 overflow-hidden rounded-[32px] bg-[#F3F0FF] shadow-lg transition-transform duration-300 hover:-translate-y-2">
+                <div
+                  className={`group relative h-72 overflow-hidden rounded-[36px] bg-[#F3F0FF] transition-all duration-500 md:h-80 ${
+                    index === selectedIndex
+                      ? "scale-100 opacity-100 shadow-[0_32px_70px_rgba(63,24,106,0.35)]"
+                      : "scale-90 opacity-70"
+                  }`}
+                >
                   <Image
                     src={slide.image}
                     alt={slide.alt}
@@ -81,8 +111,20 @@ export default function ReportCarouselSection() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     priority={index === 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-90" />
-                  <div className="absolute inset-x-6 bottom-6 translate-y-8 text-center text-sm font-semibold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t ${
+                      index === selectedIndex
+                        ? "from-black/80 via-black/35"
+                        : "from-black/60 via-black/25"
+                    } to-transparent`}
+                  />
+                  <div
+                    className={`absolute inset-x-6 bottom-6 rounded-2xl bg-black/35 px-4 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm transition-all duration-500 md:text-base ${
+                      index === selectedIndex
+                        ? "translate-y-0 opacity-100"
+                        : "translate-y-2 opacity-80"
+                    }`}
+                  >
                     {slide.caption}
                   </div>
                 </div>

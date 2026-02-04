@@ -7,6 +7,7 @@ import Aboutsection from "@/components/Home/Aboutsection";
 import WhyUs from "@/components/Home/WhyUs";
 import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
 import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
+import LovedOnesSection from "@/components/Home/LovedOnesSection";
 import ContactCard from "@/components/Home/ContactCard";
 import Faq from "@/components/Home/Faq";
 
@@ -43,6 +44,7 @@ export default function Home() {
 			</div>
 
 			<ReportCarouselSection />
+			<LovedOnesSection />
 			<HealthIdentitySection />
 
 			{/* Blog Section */}

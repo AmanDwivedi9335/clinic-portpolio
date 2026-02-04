@@ -18,10 +18,10 @@ export default function HealthIdentitySection() {
     <section className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-14 md:py-20">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <h2 className="text-2xl font-semibold text-white md:text-4xl">
-          India&apos;s First Health Identity Infrastructure™
+          With MediBank, your "what if" becomes "we're ready."
         </h2>
         <p className="mt-2 text-sm text-white/80 md:text-base">
-          A universal health identity that stores:
+          No Missing Reports   |     No blind emergencies    |     No guesswork    |     No repeated tests
         </p>
       </div>
 

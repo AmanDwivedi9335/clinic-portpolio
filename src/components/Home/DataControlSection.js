@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 const cardData = [
 	{
@@ -161,26 +162,79 @@ const cardData = [
 ];
 
 export default function DataControlSection() {
+	const sectionRef = useRef(null);
+
+	useEffect(() => {
+		return createGsapContext(sectionRef, (gsap) => {
+			gsap.fromTo(
+				".data-intro",
+				{ y: 24, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
+
+			gsap.fromTo(
+				".data-card",
+				{ y: 22, opacity: 0, scale: 0.96 },
+				{
+					y: 0,
+					opacity: 1,
+					scale: 1,
+					duration: 0.8,
+					ease: "power3.out",
+					stagger: 0.1,
+					scrollTrigger: {
+						trigger: ".data-grid",
+						start: "top 80%",
+					},
+				}
+			);
+
+			gsap.fromTo(
+				".data-cta",
+				{ y: 30, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: ".data-cta",
+						start: "top 80%",
+					},
+				}
+			);
+		});
+	}, []);
+
 	return (
-		<section className="bg-white py-10 md:py-16 px-4 md:px-8">
+		<section ref={sectionRef} className="bg-white py-10 md:py-16 px-4 md:px-8">
 			<div className="mxxxl:container xl:container w-[90%] mx-auto text-center">
-				<div className="inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
+				<div className="data-intro inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
 					For Your Loved Ones
 				</div>
-				<h2 className="mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF]">
+				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF]">
 					Your Data. Your Control.{" "}
 					<span className="font-bold text-[#3B1ED0]">Absolutely.</span>
 				</h2>
-				<p className="mt-3 text-[#000339] max-w-3xl mx-auto text-sm md:text-base">
+				<p className="data-intro mt-3 text-[#000339] max-w-3xl mx-auto text-sm md:text-base">
 					Built with healthcare-grade security from the ground up. We don&apos;t
 					just protect your data—we give you complete ownership of it.
 				</p>
 
-				<div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<div className="data-grid mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 					{cardData.map((card) => (
 						<div
 							key={card.title}
-							className="border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white"
+							className="data-card border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white"
 						>
 							{card.icon}
 							<p className="mt-3 text-[#000339] font-semibold">{card.title}</p>
@@ -188,12 +242,12 @@ export default function DataControlSection() {
 					))}
 				</div>
 
-				<p className="mt-8 text-[#000339] text-base md:text-lg">
+				<p className="data-intro mt-8 text-[#000339] text-base md:text-lg">
 					No hospital, clinic, insurer, or doctor owns your data. Only you do.
 				</p>
 			</div>
 
-			<div className="mt-12 md:mt-16">
+			<div className="data-cta mt-12 md:mt-16">
 				<div className="relative flex min-h-[320px] items-center overflow-hidden rounded-[24px] bg-[linear-gradient(110deg,_#2B0B78_0%,_#6D1AA6_45%,_#1C2A85_100%)] px-6 py-10 text-left text-white md:min-h-[320px] md:px-12 md:py-12">
 					<div className="relative z-10 w-full max-w-[600px] text-center md:text-left">
 						<h3 className="text-[30px] leading-tight md:text-[40px] md:leading-[1.2] font-semibold">

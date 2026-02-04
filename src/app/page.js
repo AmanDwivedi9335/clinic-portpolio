@@ -1,34 +1,12 @@
 "use client";
-import Image from "next/image";
-import { motion } from "framer-motion";
 import Hero from "@/components/Home/Hero";
-import Blogsection from "@/components/Home/Blogsection";
-import Aboutsection from "@/components/Home/Aboutsection";
-import WhyUs from "@/components/Home/WhyUs";
 import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
 import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import LovedOnesSection from "@/components/Home/LovedOnesSection";
 import DataControlSection from "@/components/Home/DataControlSection";
 import ContactCard from "@/components/Home/ContactCard";
-import Faq from "@/components/Home/Faq";
 
 export default function Home() {
-	// Animation Variants
-	const fadeInText = {
-		hidden: { opacity: 0, x: -50 },
-		visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
-	};
-
-	const fadeInImage = {
-		hidden: { opacity: 0, scale: 0.9 },
-		visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
-	};
-
-	const fadeInButton = {
-		hidden: { opacity: 0, y: 50 },
-		visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } },
-	};
-
 	return (
 		<>
 			{/* Hero Section */}

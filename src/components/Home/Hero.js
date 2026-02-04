@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 export default function Hero() {
   const firstLineWords =
@@ -9,9 +10,30 @@ export default function Hero() {
     );
   const secondLineWords =
     "Because one missing detail can change everything...".split(" ");
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    return createGsapContext(sectionRef, (gsap) => {
+      gsap.fromTo(
+        ".hero-animate",
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    });
+  }, []);
 
   return (
-    <section className="pt-[5px] pb-5">
+    <section ref={sectionRef} className="pt-[5px] pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
@@ -30,23 +52,18 @@ export default function Hero() {
           {/* Content */}
           <div className="relative grid min-h-[95vh] md:min-h-[95vh] grid-cols-1 md:grid-cols-2 items-center">
             {/* Left content */}
-            <motion.div
-              initial={{ opacity: 0, x: -18 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="px-6 md:px-10 py-12 md:py-16"
-            >
-              <p className="text-[12px] md:text-sm font-medium text-slate-700">
+            <div className="px-6 md:px-10 py-12 md:py-16">
+              <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
                 Medibank - India&apos;s 1st Health Identity Infrastructure
               </p>
 
-              <h1 className="mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
+              <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
                 Your Health
                 <br />
                 Identity for Life
               </h1>
 
-              <p className="mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">
+              <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">
                 {firstLineWords.map((word, index) => (
                   <span
                     key={`line-one-${word}-${index}`}
@@ -70,7 +87,7 @@ export default function Hero() {
                 ))}
               </p>
 
-              <div className="mt-7">
+              <div className="hero-animate mt-7">
                 <a
                   href="/claim"
                   className="inline-flex items-center justify-center rounded-xl bg-[#4b00a3] px-6 py-3 text-white font-semibold shadow-[0_10px_25px_rgba(75,0,163,0.28)] hover:opacity-95 active:scale-[0.99] transition"
@@ -78,7 +95,7 @@ export default function Hero() {
                   Claim Your Health Identity
                 </a>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right side kept mostly visual (optional) */}
             <div className="hidden md:block" />

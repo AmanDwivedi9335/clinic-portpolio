@@ -1,5 +1,7 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef } from "react";
 import Accordion from "@/components/Blocks/Accordion";
+import { createGsapContext } from "@/lib/gsap";
 
 const data = [
 	// Same FAQ data as provided
@@ -43,10 +45,47 @@ const data = [
 
 const Faq = () => {
 	const [showAllQuestions, setShowAllQuestions] = React.useState(false);
+	const sectionRef = useRef(null);
+
+	useEffect(() => {
+		return createGsapContext(sectionRef, (gsap) => {
+			gsap.fromTo(
+				".faq-heading",
+				{ y: 24, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.8,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
+
+			gsap.fromTo(
+				".faq-item",
+				{ y: 16, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.7,
+					ease: "power2.out",
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: ".faq-list",
+						start: "top 80%",
+					},
+				}
+			);
+		});
+	}, []);
 	return (
-		<div className="bg-white py-16">
+		<div ref={sectionRef} className="bg-white py-16">
 			<div className="container mx-auto">
 				<h2
+					className="faq-heading"
 					style={{
 						fontSize: "50px",
 						fontWeight: "400",
@@ -59,22 +98,23 @@ const Faq = () => {
 					Frequently Asked Questions
 				</h2>
 
-				<div className="md:w-3/4 mx-auto">
+				<div className="faq-list md:w-3/4 mx-auto">
 					{data
 						.slice(0, showAllQuestions ? data.length : 5)
 						.map((item, index) => (
-							<Accordion
-								key={index}
-								index={index}
-								ques={item.ques}
-								ans={item.ans}
-							/>
+							<div key={index} className="faq-item">
+								<Accordion
+									index={index}
+									ques={item.ques}
+									ans={item.ans}
+								/>
+							</div>
 						))}
 
 					{data.length > 5 && (
 						<button
+							className="faq-item text-blue-500 font-semibold text-sm"
 							onClick={() => setShowAllQuestions(!showAllQuestions)}
-							className="text-blue-500 font-semibold text-sm"
 						>
 							{showAllQuestions ? "Show less" : "Show more"}
 						</button>

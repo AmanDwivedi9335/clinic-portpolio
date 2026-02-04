@@ -1,14 +1,55 @@
+"use client";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 export default function ChemistryAtWorkSection() {
 	// State to control the "Read More" functionality
 	const [isExpanded, setIsExpanded] = useState(false);
+	const sectionRef = useRef(null);
+
+	useEffect(() => {
+		return createGsapContext(sectionRef, (gsap) => {
+			gsap.fromTo(
+				".about-content",
+				{ y: 26, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
+
+			gsap.fromTo(
+				".about-image",
+				{ x: 30, opacity: 0 },
+				{
+					x: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
+		});
+	}, []);
 
 	return (
-		<div className="bg-[#EEEAFF] rounded-[30px] md:w-4/5 m-auto container flex flex-col md:flex-row py-8 sm:py-16 justify-center items-center">
+		<div
+			ref={sectionRef}
+			className="bg-[#EEEAFF] rounded-[30px] md:w-4/5 m-auto container flex flex-col md:flex-row py-8 sm:py-16 justify-center items-center"
+		>
 			{/* Text Section */}
-			<div className="text-black md:w-1/2 w-full text-justify pb-8 sm:pb-0">
+			<div className="about-content text-black md:w-1/2 w-full text-justify pb-8 sm:pb-0">
 				<h1 className="text-3xl font-bold my-4">
 					Why <span className="text-[#6D4AFF]">Medibank ?</span>
 				</h1>
@@ -50,7 +91,7 @@ export default function ChemistryAtWorkSection() {
 
 			{/* Image Section */}
 			<div className="md:w-1/2 w-full md:px-10 m-auto">
-				<div className="relative">
+				<div className="about-image relative">
 					<Image
 						src="/images/doctorNew.png"
 						className="rounded-lg"

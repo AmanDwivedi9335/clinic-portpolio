@@ -101,7 +101,6 @@
 .text-wave {
 	background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899, #4f46e5);
 	background-size: 200% 100%;
-	background-clip: text;
 	-webkit-background-clip: text;
 	color: transparent;
 	animation: textWave 5s ease-in-out infinite;
@@ -118,9 +117,9 @@
 }
 
 .word-wave {
-	animation: wordColorWave 4s ease-in-out 1;
+	animation: wordColorWave 4s ease-in-out infinite;
 	animation-delay: var(--delay, 0s);
-	animation-fill-mode: forwards;
+	animation-fill-mode: both;
 }
 
 ul,

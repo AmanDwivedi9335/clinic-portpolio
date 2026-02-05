@@ -10,18 +10,18 @@ export default function Home() {
 	return (
 		<>
 			{/* Hero Section */}
-			<div className=" sticky h-screen z-[-1] top-[5px]">
+			<div className="pt-24">
 				<Hero />
 			</div>
 			
 
 			{/* About Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
 				<ReportCarouselSection />
 			</div>
 
 			{/* HealthIdentity Section */}
-			<div className="bg-white py-6 md:py-32 px-24 md:px-18 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
 				<HealthIdentitySection />
 			</div>
 

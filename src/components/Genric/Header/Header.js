@@ -43,11 +43,11 @@ export default function Header() {
 	);
 
 	return (
-		<header className="fixed bg-red top-4 left-1/2 -translate-x-1/2 z-50 w-[95%]">
+		<header className="fixed left-1/2 top-3 z-50 w-[96%] max-w-7xl -translate-x-1/2 md:top-4">
 			{/* pill conatainer */}
-			<div className="rounded-[50px] bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12) border border-white/60 gap-2">
+			<div className="rounded-[50px] border border-white/60 bg-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl">
 				{/* items container */}
-				<div className="flex items-center px-6 md:px-10 h-[72px]">
+				<div className="flex h-[68px] items-center px-4 md:h-[72px] md:px-8">
 					<a href="/" className="flex items-center gap-2">
 						<Image
 							src="/images/ml_logo.png"
@@ -97,7 +97,7 @@ export default function Header() {
 
 					{/* mobile menu button */}
 					<button 
-						className="lg:hidden ml-auto text-[32px] leading-none text-[#1d4ed8] px-2"
+						className="ml-auto px-2 text-[30px] leading-none text-[#1d4ed8] lg:hidden"
 						onClick={() => setIsMobileMenuOpen((s) => !s)}
 						aria-label="Open menu"
 					>

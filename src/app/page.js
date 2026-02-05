@@ -8,9 +8,9 @@ import ContactCard from "@/components/Home/ContactCard";
 
 export default function Home() {
 	return (
-		<main className="overflow-x-hidden pt-24">
+		<main className="overflow-x-hidden">
 			{/* Hero Section */}
-			<div className="bg-white px-4 pb-6 md:px-8 md:pb-10">
+			<div className="bg-white px-4 pt-24 pb-6 md:px-8 md:pt-28 md:pb-10">
 				<Hero />
 			</div>
 

@@ -13,31 +13,31 @@ import { createGsapContext } from "@/lib/gsap";
 
 const slides = [
   {
-    image: "/images/doctorNew.png",
+    image: "/images/panivpenicillin.png",
     alt: "Doctor speaking with patient",
     caption:
       "What if your ER doctor doesn't know you're allergic to penicillin?",
   },
   {
-    image: "/images/doctors2.png",
+    image: "/images/newmedication.png",
     alt: "Patients waiting in a clinic",
     caption:
       "What if a new medication conflicts with something you took 5 years ago?",
   },
   {
-    image: "/images/singledoctor.png",
+    image: "/images/reportmissing.png",
     alt: "Doctor with a patient in a clinic",
     caption:
       "What if the one report that could save your life is missing?",
   },
   {
-    image: "/images/doctorNew.png",
+    image: "/images/reportscaterred.png",
     alt: "Doctor reviewing notes",
     caption:
       "What if your health history is scattered across five hospitals?",
   },
   {
-    image: "/images/doctors2.png",
+    image: "/images/reportscaterred.png",
     alt: "Clinicians discussing care",
     caption:
       "What if an emergency happens when your family can't find your records?",
@@ -151,7 +151,7 @@ export default function ReportCarouselSection() {
         <h2 className="text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
           What if the one report that could save your life...
           <span className="block font-normal text-[#5A2D82]">
-            wasn't there when you needed it?
+            wasn&apos;t there when you needed it?
           </span>
         </h2>
         <p className="mt-4 max-w-3xl text-sm text-[#3F2F63] md:text-base">

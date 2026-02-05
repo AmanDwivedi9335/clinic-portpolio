@@ -21,7 +21,7 @@ export default function Home() {
 			</div>
 
 			{/* HealthIdentity Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white py-6 md:py-32 px-24 md:px-18 sticky h-screen z-[-1] top-[5px]">
 				<HealthIdentitySection />
 			</div>
 

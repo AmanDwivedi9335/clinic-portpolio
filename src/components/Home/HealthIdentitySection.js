@@ -5,14 +5,14 @@ import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
 
 const identityItems = [
-  { title: "Past Treatments", icon: "/images/doctorNew.png" },
+  { title: "Past Treatments", icon: "/images/labtest.png" },
   { title: "Medical History", icon: "/images/stethoscope.png" },
-  { title: "Doctor Notes", icon: "/images/sign_cross.png" },
-  { title: "Prescriptions", icon: "/images/plus.png" },
-  { title: "Allergies", icon: "/images/heart_rate.png" },
-  { title: "Scans", icon: "/images/microscope.png" },
-  { title: "Diagnoses", icon: "/images/hospital.png" },
-  { title: "Lab reports", icon: "/images/healthResources.png" },
+  { title: "Doctor Notes", icon: "/images/doctornotes.png" },
+  { title: "Prescriptions", icon: "/images/prescription.png" },
+  { title: "Allergies", icon: "/images/allergies.png" },
+  { title: "Scans", icon: "/images/scans.png" },
+  { title: "Diagnoses", icon: "/images/diagnosis.png" },
+  { title: "Lab reports", icon: "/images/labreport.png" },
 ];
 
 export default function HealthIdentitySection() {
@@ -72,30 +72,30 @@ export default function HealthIdentitySection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-14 md:py-20"
+      className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-6 md:py-10 border rounded-3xl"
     >
       <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-        <h2 className="text-2xl font-semibold text-white md:text-4xl">
-          With MediBank, your "what if" becomes "we're ready."
+        <h2 className="text-xl font-semibold text-white md:text-3xl">
+          With MediBank, your &quot;what if&quot; becomes &quot;we&apos;re ready.&quot;
         </h2>
         <p className="mt-2 text-sm text-white/80 md:text-base">
           No Missing Reports   |     No blind emergencies    |     No guesswork    |     No repeated tests
         </p>
       </div>
 
-      <div className="identity-grid mx-auto mt-10 grid max-w-6xl grid-cols-2 gap-4 px-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="identity-grid mx-auto mt-5 grid max-w-6xl grid-cols-2 gap-4 px-18 sm:grid-cols-3 md:grid-cols-4 md:gap-6 md:px-8">
         {identityItems.map((item) => (
           <div
             key={item.title}
             className="identity-card flex flex-col items-center gap-3 rounded-3xl bg-white px-4 py-5 text-center shadow-lg"
           >
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF0FF] shadow-inner">
+            <div className="flex h-24 w-24 items-center justify-center rounded-2xl ">
               <Image
                 src={item.icon}
                 alt={item.title}
                 width={40}
                 height={40}
-                className="h-10 w-10 object-contain"
+                className="h-20 w-20 object-contain"
               />
             </div>
             <span className="text-sm font-semibold text-[#1C2E9C]">

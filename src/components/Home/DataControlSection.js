@@ -166,6 +166,8 @@ export default function DataControlSection() {
 
 	useEffect(() => {
 		return createGsapContext(sectionRef, (gsap) => {
+			const mm = gsap.matchMedia();
+
 			gsap.fromTo(
 				".data-intro",
 				{ y: 24, opacity: 0 },
@@ -174,6 +176,23 @@ export default function DataControlSection() {
 					opacity: 1,
 					duration: 0.9,
 					ease: "power3.out",
+					scrollTrigger: {
+						trigger: sectionRef.current,
+						start: "top 80%",
+					},
+				}
+			);
+
+			gsap.fromTo(
+				".data-head-word",
+				{ yPercent: 120, rotateX: -50, opacity: 0 },
+				{
+					yPercent: 0,
+					rotateX: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					stagger: 0.08,
 					scrollTrigger: {
 						trigger: sectionRef.current,
 						start: "top 80%",
@@ -212,6 +231,130 @@ export default function DataControlSection() {
 					},
 				}
 			);
+
+			gsap.to(".data-float-1", {
+				yPercent: -14,
+				duration: 3,
+				repeat: -1,
+				yoyo: true,
+				ease: "sine.inOut",
+			});
+
+			gsap.to(".data-float-2", {
+				yPercent: 12,
+				xPercent: 6,
+				duration: 4,
+				repeat: -1,
+				yoyo: true,
+				ease: "sine.inOut",
+			});
+
+			mm.add("(pointer: fine)", () => {
+				const cards = gsap.utils.toArray(".data-card");
+				const cleanups = cards.map((card) => {
+					const glow = card.querySelector(".data-card-glow");
+					const icon = card.querySelector(".data-card-icon");
+					const title = card.querySelector(".data-card-title");
+
+					const moveX = gsap.quickTo(card, "x", {
+						duration: 0.5,
+						ease: "power3.out",
+					});
+					const moveY = gsap.quickTo(card, "y", {
+						duration: 0.5,
+						ease: "power3.out",
+					});
+					const rotateX = gsap.quickTo(card, "rotationX", {
+						duration: 0.5,
+						ease: "power3.out",
+					});
+					const rotateY = gsap.quickTo(card, "rotationY", {
+						duration: 0.5,
+						ease: "power3.out",
+					});
+					const glowX = glow
+						? gsap.quickTo(glow, "x", { duration: 0.25, ease: "power2.out" })
+						: null;
+					const glowY = glow
+						? gsap.quickTo(glow, "y", { duration: 0.25, ease: "power2.out" })
+						: null;
+					const glowOpacity = glow
+						? gsap.quickTo(glow, "opacity", { duration: 0.25, ease: "power2.out" })
+						: null;
+					const iconX = icon
+						? gsap.quickTo(icon, "x", { duration: 0.35, ease: "power2.out" })
+						: null;
+					const iconY = icon
+						? gsap.quickTo(icon, "y", { duration: 0.35, ease: "power2.out" })
+						: null;
+					const titleX = title
+						? gsap.quickTo(title, "x", { duration: 0.35, ease: "power2.out" })
+						: null;
+					const titleY = title
+						? gsap.quickTo(title, "y", { duration: 0.35, ease: "power2.out" })
+						: null;
+
+					const onMouseMove = (event) => {
+						const bounds = card.getBoundingClientRect();
+						const relativeX = event.clientX - bounds.left;
+						const relativeY = event.clientY - bounds.top;
+						const percentX = relativeX / bounds.width - 0.5;
+						const percentY = relativeY / bounds.height - 0.5;
+
+						moveX(percentX * 12);
+						moveY(percentY * 10);
+						rotateX(-percentY * 8);
+						rotateY(percentX * 10);
+
+						if (glowX && glowY && glowOpacity) {
+							glowX(relativeX);
+							glowY(relativeY);
+							glowOpacity(1);
+						}
+
+						if (iconX && iconY && titleX && titleY) {
+							iconX(percentX * 6);
+							iconY(percentY * 5);
+							titleX(percentX * -8);
+							titleY(percentY * -5);
+						}
+					};
+
+					const onMouseLeave = () => {
+						gsap.to(card, {
+							x: 0,
+							y: 0,
+							rotationX: 0,
+							rotationY: 0,
+							duration: 0.6,
+							ease: "elastic.out(1, 0.5)",
+						});
+						if (glowOpacity) {
+							glowOpacity(0);
+						}
+						if (iconX && iconY && titleX && titleY) {
+							iconX(0);
+							iconY(0);
+							titleX(0);
+							titleY(0);
+						}
+					};
+
+					card.addEventListener("mousemove", onMouseMove);
+					card.addEventListener("mouseleave", onMouseLeave);
+
+					return () => {
+						card.removeEventListener("mousemove", onMouseMove);
+						card.removeEventListener("mouseleave", onMouseLeave);
+					};
+				});
+
+				return () => {
+					cleanups.forEach((cleanup) => cleanup());
+				};
+			});
+
+			return () => mm.revert();
 		});
 	}, []);
 
@@ -221,9 +364,19 @@ export default function DataControlSection() {
 				<div className="data-intro inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
 					For Your Loved Ones
 				</div>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF]">
-					Your Data. Your Control.{" "}
-					<span className="font-bold text-[#3B1ED0]">Absolutely.</span>
+				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF] [perspective:800px]">
+					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
+						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
+							<span
+								key={`${word}-${index}`}
+								className={`data-head-word inline-block ${
+									word === "Absolutely." ? "font-bold text-[#3B1ED0]" : ""
+								}`}
+							>
+								{word}
+							</span>
+						))}
+					</span>
 				</h2>
 				<p className="data-intro mt-3 text-[#000339] max-w-3xl mx-auto text-sm md:text-base">
 					Built with healthcare-grade security from the ground up. We don&apos;t
@@ -234,10 +387,13 @@ export default function DataControlSection() {
 					{cardData.map((card) => (
 						<div
 							key={card.title}
-							className="data-card border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white"
+							className="data-card relative overflow-hidden border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(92,74,255,0.18)] [transform-style:preserve-3d]"
 						>
-							{card.icon}
-							<p className="mt-3 text-[#000339] font-semibold">{card.title}</p>
+							<div className="data-card-glow pointer-events-none absolute left-0 top-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(109,74,255,0.35)_0%,_rgba(109,74,255,0)_72%)] opacity-0" />
+							<div className="data-card-icon data-float-1 relative z-10">{card.icon}</div>
+							<p className="data-card-title data-float-2 mt-3 text-[#000339] font-semibold">
+								{card.title}
+							</p>
 						</div>
 					))}
 				</div>

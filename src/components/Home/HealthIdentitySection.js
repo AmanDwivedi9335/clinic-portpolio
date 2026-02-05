@@ -37,14 +37,13 @@ export default function HealthIdentitySection() {
 
       gsap.fromTo(
         ".identity-card",
-        { y: 30, opacity: 0, scale: 0.96 },
+        { x: -140, opacity: 0 },
         {
-          y: 0,
+          x: 0,
           opacity: 1,
-          scale: 1,
-          duration: 0.9,
+          duration: 0.85,
           ease: "power3.out",
-          stagger: 0.1,
+          stagger: 0.12,
           scrollTrigger: {
             trigger: ".identity-grid",
             start: "top 80%",

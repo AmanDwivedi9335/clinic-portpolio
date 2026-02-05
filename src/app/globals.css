@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: "Soria";
+	src: url("/fonts/soria-font-webfont.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
 * {
 	scroll-behavior: smooth;
 }
@@ -99,6 +107,7 @@
 }
 
 .text-wave {
+	font-family: "Soria", sans-serif;
 	background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899, #4f46e5);
 	background-size: 200% 100%;
 	-webkit-background-clip: text;

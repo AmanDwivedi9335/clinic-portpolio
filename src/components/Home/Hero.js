@@ -33,8 +33,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="pt-[5px] pb-5">
-      <div className="mx-auto px-3 md:px-6">
+    <section ref={sectionRef} className="pt-1 pb-3 md:pb-5">
+      <div className="mx-auto w-full max-w-7xl px-1 sm:px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
           {/* Background image */}
@@ -50,14 +50,14 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
-          <div className="relative grid min-h-[95vh] md:min-h-[95vh] grid-cols-1 md:grid-cols-2 items-center">
+          <div className="relative grid min-h-[72vh] grid-cols-1 items-center md:min-h-[86vh] md:grid-cols-2">
             {/* Left content */}
-            <div className="px-6 md:px-10 py-12 md:py-16">
+            <div className="px-4 py-10 sm:px-6 md:px-10 md:py-16">
               <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
                 Medibank - India&apos;s 1st Health Identity Infrastructure
               </p>
 
-              <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
+              <h1 className="hero-animate mt-4 text-[32px] leading-[1.08] sm:text-[38px] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
                 Your Health
                 <br />
                 Identity for Life

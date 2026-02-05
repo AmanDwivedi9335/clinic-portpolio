@@ -160,7 +160,7 @@ export default function ReportCarouselSection() {
         </p>
       </div>
 
-      <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
+      <div className="report-carousel mx-auto mt-8 max-w-6xl px-2 sm:px-4 md:mt-10 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -176,13 +176,13 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
+                className="report-slide basis-[92%] sm:basis-[70%] lg:basis-[40%]"
               >
                 <div
                   className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
                     activeIndex === index
-                      ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
-                      : "scale-90 opacity-70 blur-[2px] saturate-75"
+                      ? "scale-100 opacity-100 brightness-110 contrast-110 shadow-2xl md:scale-105"
+                      : "scale-[0.94] opacity-75 saturate-90 md:scale-95 md:opacity-70 md:blur-[2px] md:saturate-75"
                   }`}
                 >
                   <Image

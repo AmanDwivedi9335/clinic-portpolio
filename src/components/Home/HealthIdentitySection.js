@@ -59,7 +59,7 @@ export default function HealthIdentitySection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-6 md:py-10 border rounded-3xl"
+      className="overflow-hidden rounded-3xl border bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-6 md:py-10"
     >
       <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <h2 className="text-xl font-semibold text-white md:text-3xl">
@@ -70,11 +70,11 @@ export default function HealthIdentitySection() {
         </p>
       </div>
 
-      <div className="identity-grid mx-auto mt-5 grid max-w-6xl grid-cols-2 gap-4 px-18 sm:grid-cols-3 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="identity-grid mx-auto mt-5 grid max-w-6xl grid-cols-2 gap-3 px-4 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 md:gap-6 md:px-8">
         {identityItems.map((item) => (
           <div
             key={item.title}
-            className="identity-card flex flex-col items-center gap-3 rounded-3xl bg-white px-4 py-5 text-center shadow-lg"
+            className="identity-card flex flex-col items-center gap-2 rounded-3xl bg-white px-3 py-4 text-center shadow-lg sm:gap-3 sm:px-4 sm:py-5"
           >
             <div className="flex h-24 w-24 items-center justify-center rounded-2xl ">
               <Image
@@ -82,7 +82,7 @@ export default function HealthIdentitySection() {
                 alt={item.title}
                 width={40}
                 height={40}
-                className="h-20 w-20 object-contain"
+                className="h-14 w-14 object-contain sm:h-16 sm:w-16 md:h-20 md:w-20"
               />
             </div>
             <span className="text-sm font-semibold text-[#1C2E9C]">

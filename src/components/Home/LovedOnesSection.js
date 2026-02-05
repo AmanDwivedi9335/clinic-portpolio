@@ -126,20 +126,20 @@ export default function LovedOnesSection() {
         </p>
       </div>
 
-      <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
-        <div className="loved-diagram relative h-[340px] w-full max-w-[420px]">
-          <div className="absolute left-1/2 top-1/2 h-[210px] w-px -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[210px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
+      <div className="mx-auto mt-10 flex w-full max-w-4xl justify-center px-2 sm:px-4 md:mt-12 md:px-8">
+        <div className="loved-diagram relative h-[280px] w-full max-w-[320px] sm:h-[320px] sm:max-w-[380px] md:h-[340px] md:max-w-[420px]">
+          <div className="absolute left-1/2 top-1/2 h-[170px] w-px -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
+          <div className="absolute left-1/2 top-1/2 h-px w-[170px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="loved-center relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
+            <div className="loved-center relative flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
               <div className="absolute inset-[-10px] rounded-[24px] bg-[#EAD9FF] opacity-40" />
               <Image
                 src="/images/ml_logo.png"
                 alt="MediBank"
                 width={44}
                 height={44}
-                className="relative h-10 w-10 object-contain"
+                className="relative h-8 w-8 object-contain sm:h-10 sm:w-10"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[0].image}
                 alt={lovedOnes[0].label}
@@ -166,7 +166,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[1].image}
                 alt={lovedOnes[1].label}
@@ -184,7 +184,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[2].image}
                 alt={lovedOnes[2].label}
@@ -202,7 +202,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[3].image}
                 alt={lovedOnes[3].label}

@@ -8,20 +8,19 @@ import ContactCard from "@/components/Home/ContactCard";
 
 export default function Home() {
 	return (
-		<>
+		<main className="overflow-x-hidden pt-24">
 			{/* Hero Section */}
-			<div className=" sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white px-4 pb-6 md:px-8 md:pb-10">
 				<Hero />
 			</div>
-			
 
 			{/* About Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white px-4 py-6 md:px-8 md:py-12">
 				<ReportCarouselSection />
 			</div>
 
 			{/* HealthIdentity Section */}
-			<div className="bg-white py-6 md:py-32 px-24 md:px-18 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white px-4 py-6 md:px-8 md:py-14 lg:px-12">
 				<HealthIdentitySection />
 			</div>
 
@@ -34,6 +33,6 @@ export default function Home() {
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
 				<DataControlSection />
 			</div>
-		</>
+		</main>
 	);
 }

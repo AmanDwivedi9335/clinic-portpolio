@@ -116,7 +116,7 @@ export default function LovedOnesSection() {
         <span className="rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           For Your Loved Ones
         </span>
-        <h2 className="mt-5 text-2xl font-semibold text-[#6B21A8] md:text-4xl">
+        <h2 className="mt-5 text-2xl font-semibold text-[#6B21A8] md:text-4xl [font-family:'Soria',sans-serif]">
           Your Health Identity is Your “Protection”
         </h2>
         <p className="mt-4 max-w-3xl text-sm text-[#3F2F63] md:text-base">

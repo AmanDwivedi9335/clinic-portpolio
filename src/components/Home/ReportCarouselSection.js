@@ -148,9 +148,9 @@ export default function ReportCarouselSection() {
         <span className="mb-4 rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           The Moment No One Thinks About
         </span>
-        <h2 className="text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
+        <h2 className="text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl [font-family:'Soria',sans-serif]">
           What if the one report that could save your life...
-          <span className="block font-normal text-[#5A2D82]">
+          <span className="block font-normal text-[#5A2D82] [font-family:'Soria',sans-serif]">
             wasn&apos;t there when you needed it?
           </span>
         </h2>

@@ -71,7 +71,7 @@ export default function HealthIdentitySection() {
         className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-8 md:py-10 border rounded-3xl"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-          <h2 className="text-xl font-semibold text-white md:text-3xl">
+          <h2 className="text-xl font-semibold text-white md:text-3xl [font-family:'Soria',sans-serif]">
             With MediBank, your &quot;what if&quot; becomes &quot;we&apos;re ready.&quot;
           </h2>
           <p className="mt-2 text-sm text-white/80 md:text-base">

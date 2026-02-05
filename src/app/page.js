@@ -34,11 +34,6 @@ export default function Home() {
 			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
 				<DataControlSection />
 			</div>
-
-			{/* Contact Us Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
-				<ContactCard />
-			</div>
 		</>
 	);
 }

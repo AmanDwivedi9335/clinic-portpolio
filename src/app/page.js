@@ -39,27 +39,27 @@ export default function Home() {
 	return (
 		<main ref={mainRef} className="overflow-x-hidden">
 			{/* Hero Section */}
-			<div className="home-stack-section relative bg-white px-2 pt-14 pb-6 md:px-8 md:pt-1 md:pb-1">
+			<div className="home-stack-section bg-white px-2 pt-14 pb-6 md:px-8 md:pt-1 md:pb-1">
 				<Hero />
 			</div>
 
 			{/* About Section */}
-			<div className="home-stack-section relative bg-white px-4 pb-6 pt-24 md:px-8 md:pb-4 md:pt-28">
+			<div className="home-stack-section bg-white px-4 pb-6 pt-24 md:px-8 md:pb-4 md:pt-28">
 				<ReportCarouselSection />
 			</div>
 
 			{/* HealthIdentity Section */}
-			<div className="home-stack-section relative bg-white px-4 pb-6 pt-24 md:px-8 md:pb-14 md:pt-28 lg:px-12">
+			<div className="home-stack-section bg-white px-4 pb-6 pt-24 md:px-8 md:pb-14 md:pt-28 lg:px-12">
 				<HealthIdentitySection />
 			</div>
 
 			{/* LovedOnes Section */}
-			<div className="home-stack-section relative bg-[#F3F0FF] px-4 pb-6 pt-24 md:px-8 md:pb-12 md:pt-28">
+			<div className="home-stack-section bg-[#F3F0FF] px-4 pb-6 pt-24 md:px-8 md:pb-12 md:pt-28">
 				<LovedOnesSection />
 			</div>
 
 			{/* Data Control Section */}
-			<div className="home-stack-section relative bg-[#F3F0FF] px-4 pb-6 pt-24 md:px-8 md:pb-12 md:pt-28">
+			<div className="home-stack-section bg-[#F3F0FF] px-4 pb-6 pt-24 md:px-8 md:pb-12 md:pt-28">
 				<DataControlSection />
 			</div>
 		</main>

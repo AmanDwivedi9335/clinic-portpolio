@@ -50,7 +50,7 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
-          <div className="relative grid min-h-[72vh] grid-cols-1 items-center md:min-h-[86vh] md:grid-cols-2">
+          <div className="relative grid min-h-[95vh] grid-cols-1 items-center md:grid-cols-2">
             {/* Left content */}
             <div className="px-4 py-10 sm:px-6 md:px-10 md:py-16">
               <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">

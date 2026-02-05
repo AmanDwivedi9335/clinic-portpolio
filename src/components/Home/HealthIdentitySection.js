@@ -20,51 +20,39 @@ export default function HealthIdentitySection() {
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
-      gsap.fromTo(
-        ".identity-heading",
-        { y: 26, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      const cards = gsap.utils.toArray(".identity-card");
 
-      gsap.fromTo(
-        ".identity-card",
-        { x: -140, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.85,
-          ease: "power3.out",
-          stagger: 0.12,
-          scrollTrigger: {
-            trigger: ".identity-grid",
-            start: "top 80%",
-          },
-        }
-      );
+      gsap.set(cards, {
+        opacity: 0,
+        y: 60,
+        scale: 0.92,
+      });
 
-      gsap.fromTo(
-        ".identity-footer",
-        { y: 22, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
+      gsap.set([".identity-heading", ".identity-footer"], {
+        opacity: 1,
+      });
+
+      const revealTimeline = gsap.timeline({
+        defaults: {
+          duration: 1,
           ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".identity-grid",
-            start: "top 70%",
-          },
-        }
-      );
+        },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: `+=${cards.length * 180}`,
+          pin: true,
+          scrub: 0.6,
+        },
+      });
+
+      cards.forEach((card) => {
+        revealTimeline.to(card, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+      });
     });
   }, []);
 

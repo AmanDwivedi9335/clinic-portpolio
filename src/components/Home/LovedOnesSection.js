@@ -111,35 +111,35 @@ export default function LovedOnesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-12 md:py-20">
-      <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
+    <section ref={sectionRef} className="bg-white py-8 sm:py-10 md:py-16 lg:py-20">
+      <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-1 text-center sm:px-4 md:px-8">
         <span className="rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           For Your Loved Ones
         </span>
-        <h2 className="mt-5 text-2xl font-semibold text-[#6B21A8] md:text-4xl">
+        <h2 className="mt-4 text-xl font-semibold text-[#6B21A8] sm:mt-5 sm:text-2xl md:text-4xl">
           Your Health Identity is Your “Protection”
         </h2>
-        <p className="mt-4 max-w-3xl text-sm text-[#3F2F63] md:text-base">
+        <p className="mt-3 max-w-3xl px-2 text-xs leading-relaxed text-[#3F2F63] sm:mt-4 sm:text-sm md:px-0 md:text-base">
           But your Family&apos;s Health Identity is you “Power”. Create linked health
           identities of your parents, your loved ones and your children so you are
           always prepared - even when they can&apos;t be
         </p>
       </div>
 
-      <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
-        <div className="loved-diagram relative h-[340px] w-full max-w-[420px]">
-          <div className="absolute left-1/2 top-1/2 h-[210px] w-px -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[210px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
+      <div className="mx-auto mt-8 flex w-full max-w-4xl justify-center px-1 sm:mt-10 sm:px-4 md:mt-12 md:px-8">
+        <div className="loved-diagram relative h-[280px] w-full max-w-[320px] sm:h-[320px] sm:max-w-[380px] md:h-[340px] md:max-w-[420px]">
+          <div className="absolute left-1/2 top-1/2 h-[170px] w-px -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF] sm:h-[190px] md:h-[210px]" />
+          <div className="absolute left-1/2 top-1/2 h-px w-[170px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF] sm:w-[190px] md:w-[210px]" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="loved-center relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
+            <div className="loved-center relative flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)] sm:h-20 sm:w-20">
               <div className="absolute inset-[-10px] rounded-[24px] bg-[#EAD9FF] opacity-40" />
               <Image
                 src="/images/ml_logo.png"
                 alt="MediBank"
                 width={44}
                 height={44}
-                className="relative h-10 w-10 object-contain"
+                className="relative h-8 w-8 object-contain sm:h-10 sm:w-10"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[0].image}
                 alt={lovedOnes[0].label}
@@ -157,7 +157,7 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[11px] font-medium text-[#2D2261] sm:text-xs">
               {lovedOnes[0].label}
             </span>
           </div>
@@ -166,7 +166,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[1].image}
                 alt={lovedOnes[1].label}
@@ -175,7 +175,7 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[11px] font-medium text-[#2D2261] sm:text-xs">
               {lovedOnes[1].label}
             </span>
           </div>
@@ -184,7 +184,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[2].image}
                 alt={lovedOnes[2].label}
@@ -193,7 +193,7 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[11px] font-medium text-[#2D2261] sm:text-xs">
               {lovedOnes[2].label}
             </span>
           </div>
@@ -202,7 +202,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-lg sm:h-14 sm:w-14 md:h-16 md:w-16">
               <Image
                 src={lovedOnes[3].image}
                 alt={lovedOnes[3].label}
@@ -211,7 +211,7 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[11px] font-medium text-[#2D2261] sm:text-xs">
               {lovedOnes[3].label}
             </span>
           </div>

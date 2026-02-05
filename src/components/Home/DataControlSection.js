@@ -216,25 +216,25 @@ export default function DataControlSection() {
 	}, []);
 
 	return (
-		<section ref={sectionRef} className="bg-white py-10 md:py-16 px-4 md:px-8">
-			<div className="mxxxl:container xl:container w-[90%] mx-auto text-center">
+		<section ref={sectionRef} className="bg-white px-1 py-8 sm:px-2 sm:py-10 md:px-4 md:py-14">
+			<div className="mxxxl:container xl:container mx-auto w-full max-w-6xl text-center">
 				<div className="data-intro inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
 					For Your Loved Ones
 				</div>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF]">
+				<h2 className="data-intro mt-4 text-[24px] font-semibold text-[#5C4AFF] sm:text-[30px] md:text-[40px]">
 					Your Data. Your Control.{" "}
 					<span className="font-bold text-[#3B1ED0]">Absolutely.</span>
 				</h2>
-				<p className="data-intro mt-3 text-[#000339] max-w-3xl mx-auto text-sm md:text-base">
+				<p className="data-intro mx-auto mt-3 max-w-3xl px-2 text-xs text-[#000339] sm:text-sm md:px-0 md:text-base">
 					Built with healthcare-grade security from the ground up. We don&apos;t
 					just protect your data—we give you complete ownership of it.
 				</p>
 
-				<div className="data-grid mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<div className="data-grid mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
 					{cardData.map((card) => (
 						<div
 							key={card.title}
-							className="data-card border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white"
+							className="data-card flex flex-col items-center justify-center rounded-[18px] border border-[#5C4AFF] bg-white px-4 py-5 text-center sm:px-6 sm:py-7"
 						>
 							{card.icon}
 							<p className="mt-3 text-[#000339] font-semibold">{card.title}</p>
@@ -242,23 +242,23 @@ export default function DataControlSection() {
 					))}
 				</div>
 
-				<p className="data-intro mt-8 text-[#000339] text-base md:text-lg">
+				<p className="data-intro mt-7 text-sm text-[#000339] sm:text-base md:mt-8 md:text-lg">
 					No hospital, clinic, insurer, or doctor owns your data. Only you do.
 				</p>
 			</div>
 
-			<div className="data-cta mt-12 md:mt-16">
-				<div className="relative flex min-h-[320px] items-center overflow-hidden rounded-[24px] bg-[linear-gradient(110deg,_#2B0B78_0%,_#6D1AA6_45%,_#1C2A85_100%)] px-6 py-10 text-left text-white md:min-h-[320px] md:px-12 md:py-12">
+			<div className="data-cta mt-10 md:mt-16">
+				<div className="relative flex min-h-[280px] items-center overflow-hidden rounded-[24px] bg-[linear-gradient(110deg,_#2B0B78_0%,_#6D1AA6_45%,_#1C2A85_100%)] px-4 py-8 text-left text-white sm:min-h-[320px] sm:px-6 sm:py-10 md:px-12 md:py-12">
 					<div className="relative z-10 w-full max-w-[600px] text-center md:text-left">
-						<h3 className="text-[30px] leading-tight md:text-[40px] md:leading-[1.2] font-semibold">
+						<h3 className="text-[24px] font-semibold leading-tight sm:text-[30px] md:text-[40px] md:leading-[1.2]">
 							Don&apos;t wait for a crisis to organise your medical life.
 						</h3>
-						<p className="mt-3 text-[15px] md:text-[16px] text-white/90 max-w-[520px] mx-auto md:mx-0">
+						<p className="mx-auto mt-3 max-w-[520px] text-[14px] text-white/90 sm:text-[15px] md:mx-0 md:text-[16px]">
 							The best time to claim your Health Identity is before you need it.
 						</p>
 						<button
 							type="button"
-							className="mt-6 inline-flex items-center rounded-[10px] bg-[#E2CCFF] px-5 py-2 text-sm font-semibold text-[#4A1A96] shadow-sm transition duration-200 hover:brightness-105"
+							className="mt-6 inline-flex w-full items-center justify-center rounded-[10px] bg-[#E2CCFF] px-5 py-2 text-sm font-semibold text-[#4A1A96] shadow-sm transition duration-200 hover:brightness-105 sm:w-auto"
 						>
 							Claim Your Health Identity
 						</button>

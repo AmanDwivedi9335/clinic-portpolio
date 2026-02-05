@@ -143,24 +143,24 @@ export default function ReportCarouselSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-10 md:py-16">
-      <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
+    <section ref={sectionRef} className="bg-white py-8 sm:py-10 md:py-14">
+      <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-1 text-center sm:px-2 md:px-4">
         <span className="mb-4 rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           The Moment No One Thinks About
         </span>
-        <h2 className="text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
+        <h2 className="text-xl font-semibold leading-snug text-[#7B1FA2] sm:text-2xl md:text-4xl">
           What if the one report that could save your life...
           <span className="block font-normal text-[#5A2D82]">
             wasn&apos;t there when you needed it?
           </span>
         </h2>
-        <p className="mt-4 max-w-3xl text-sm text-[#3F2F63] md:text-base">
+        <p className="mt-3 max-w-3xl px-2 text-xs text-[#3F2F63] sm:mt-4 sm:text-sm md:px-0 md:text-base">
           When your health history is missing, things go wrong. Not theoretically...
           Not rarely...Every. Single. Day
         </p>
       </div>
 
-      <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
+      <div className="report-carousel mx-auto mt-8 max-w-6xl px-0 sm:px-2 md:mt-10 md:px-4">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -176,13 +176,13 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
+                className="report-slide basis-[92%] px-2 sm:basis-[78%] md:basis-[62%] lg:basis-[40%]"
               >
                 <div
                   className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
                     activeIndex === index
-                      ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
-                      : "scale-90 opacity-70 blur-[2px] saturate-75"
+                      ? "scale-[1.02] opacity-100 brightness-110 contrast-110 shadow-2xl md:scale-110"
+                      : "scale-[0.94] opacity-75 saturate-75 md:scale-90 md:blur-[2px]"
                   }`}
                 >
                   <Image
@@ -196,7 +196,7 @@ export default function ReportCarouselSection() {
                     priority={index === 2}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute inset-x-5 bottom-5 text-center text-base font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-lg">
+                  <div className="absolute inset-x-4 bottom-4 text-center text-sm font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] sm:inset-x-5 sm:bottom-5 sm:text-base md:text-lg">
                     {slide.caption}
                   </div>
                 </div>

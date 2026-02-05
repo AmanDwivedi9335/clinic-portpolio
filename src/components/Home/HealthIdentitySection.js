@@ -72,45 +72,45 @@ export default function HealthIdentitySection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-6 md:py-10 border rounded-3xl"
+      className="rounded-3xl border bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] px-3 py-6 sm:px-4 md:px-6 md:py-10"
     >
-      <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-        <h2 className="text-xl font-semibold text-white md:text-3xl">
+      <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-1 text-center sm:px-3 md:px-8">
+        <h2 className="text-lg font-semibold text-white sm:text-xl md:text-3xl">
           With MediBank, your &quot;what if&quot; becomes &quot;we&apos;re ready.&quot;
         </h2>
-        <p className="mt-2 text-sm text-white/80 md:text-base">
+        <p className="mt-2 text-xs leading-relaxed text-white/80 sm:text-sm md:text-base">
           No Missing Reports   |     No blind emergencies    |     No guesswork    |     No repeated tests
         </p>
       </div>
 
-      <div className="identity-grid mx-auto mt-5 grid max-w-6xl grid-cols-2 gap-4 px-18 sm:grid-cols-3 md:grid-cols-4 md:gap-6 md:px-8">
+      <div className="identity-grid mx-auto mt-5 grid max-w-6xl grid-cols-2 gap-3 px-1 sm:grid-cols-3 sm:gap-4 sm:px-2 md:grid-cols-4 md:gap-6 md:px-4">
         {identityItems.map((item) => (
           <div
             key={item.title}
-            className="identity-card flex flex-col items-center gap-3 rounded-3xl bg-white px-4 py-5 text-center shadow-lg"
+            className="identity-card flex flex-col items-center gap-2 rounded-2xl bg-white px-3 py-4 text-center shadow-lg sm:gap-3 sm:rounded-3xl sm:px-4 sm:py-5"
           >
-            <div className="flex h-24 w-24 items-center justify-center rounded-2xl ">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl sm:h-20 sm:w-20 md:h-24 md:w-24">
               <Image
                 src={item.icon}
                 alt={item.title}
                 width={40}
                 height={40}
-                className="h-20 w-20 object-contain"
+                className="h-12 w-12 object-contain sm:h-16 sm:w-16 md:h-20 md:w-20"
               />
             </div>
-            <span className="text-sm font-semibold text-[#1C2E9C]">
+            <span className="text-xs font-semibold text-[#1C2E9C] sm:text-sm">
               {item.title}
             </span>
           </div>
         ))}
       </div>
 
-      <div className="identity-footer mx-auto mt-8 max-w-3xl px-4 text-center text-sm text-white/90 md:px-8 md:text-base">
+      <div className="identity-footer mx-auto mt-7 max-w-3xl px-2 text-center text-xs leading-relaxed text-white/90 sm:px-4 sm:text-sm md:px-8 md:text-base">
         And is instantly accessible. <span className="font-semibold">With your consent.</span>{" "}
         To any doctor, in any city, at any time.
       </div>
 
-      <div className="identity-footer mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-3 rounded-full bg-white/20 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur md:gap-6 md:text-sm">
+      <div className="identity-footer mx-auto mt-5 flex max-w-3xl flex-wrap items-center justify-center gap-2 rounded-3xl bg-white/20 px-3 py-3 text-[10px] font-semibold uppercase tracking-wide text-white backdrop-blur sm:gap-3 sm:rounded-full sm:px-4 sm:text-xs md:gap-6 md:text-sm">
         <span className="flex items-center gap-2">
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF7A45] text-white">
             ✕

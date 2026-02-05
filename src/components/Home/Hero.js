@@ -33,8 +33,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="pt-[5px] pb-5">
-      <div className="mx-auto px-3 md:px-6">
+    <section ref={sectionRef} className="py-3 sm:py-4 md:py-5">
+      <div className="mx-auto max-w-7xl">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
           {/* Background image */}
@@ -50,20 +50,20 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
-          <div className="relative grid min-h-[95vh] md:min-h-[95vh] grid-cols-1 md:grid-cols-2 items-center">
+          <div className="relative grid min-h-[72vh] grid-cols-1 items-center sm:min-h-[78vh] md:min-h-[85vh] md:grid-cols-2 lg:min-h-[90vh]">
             {/* Left content */}
-            <div className="px-6 md:px-10 py-12 md:py-16">
-              <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
+            <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-16">
+              <p className="hero-animate text-[11px] font-medium text-slate-700 sm:text-xs md:text-sm">
                 Medibank - India&apos;s 1st Health Identity Infrastructure
               </p>
 
-              <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
+              <h1 className="hero-animate mt-4 text-[30px] font-extrabold leading-[1.08] text-wave sm:text-[38px] md:text-[50px] md:leading-[1.03] lg:text-[60px] lg:leading-[1.02]">
                 Your Health
                 <br />
                 Identity for Life
               </h1>
 
-              <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">
+              <p className="hero-animate mt-4 max-w-xl text-[13px] leading-relaxed text-slate-500 sm:mt-5 sm:text-[14px] md:text-[15px]">
                 {firstLineWords.map((word, index) => (
                   <span
                     key={`line-one-${word}-${index}`}
@@ -90,7 +90,7 @@ export default function Hero() {
               <div className="hero-animate mt-7">
                 <a
                   href="/claim"
-                  className="inline-flex items-center justify-center rounded-xl bg-[#4b00a3] px-6 py-3 text-white font-semibold shadow-[0_10px_25px_rgba(75,0,163,0.28)] hover:opacity-95 active:scale-[0.99] transition"
+                  className="inline-flex w-full items-center justify-center rounded-xl bg-[#4b00a3] px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_25px_rgba(75,0,163,0.28)] transition hover:opacity-95 active:scale-[0.99] sm:w-auto sm:px-6 sm:text-base"
                 >
                   Claim Your Health Identity
                 </a>

@@ -10,12 +10,12 @@ export default function Home() {
 	return (
 		<main className="overflow-x-hidden">
 			{/* Hero Section */}
-			<div className="bg-white px-4 pt-24 pb-6 md:px-8 md:pt-28 md:pb-10">
+			<div className="bg-white px-2 pt-14 pb-6 md:px-8 md:pt-1 md:pb-1">
 				<Hero />
 			</div>
 
 			{/* About Section */}
-			<div className="bg-white px-4 py-6 md:px-8 md:py-12">
+			<div className="bg-white px-4 py-6 md:px-8 md:py-4">
 				<ReportCarouselSection />
 			</div>
 

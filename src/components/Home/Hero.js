@@ -33,8 +33,8 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="pt-1 pb-3 md:pb-5">
-      <div className="mx-auto w-full max-w-7xl px-1 sm:px-3 md:px-6">
+    <section ref={sectionRef} className="pt-1 pb-3 md:pb-3">
+      <div className="mx-auto w-full px-1 sm:px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
           {/* Background image */}

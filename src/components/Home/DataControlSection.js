@@ -364,7 +364,7 @@ export default function DataControlSection() {
 				<div className="data-intro inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
 					For Your Loved Ones
 				</div>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF] [perspective:800px]">
+				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF] [perspective:800px] [font-family:'Soria',sans-serif]">
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
 							<span
@@ -406,7 +406,7 @@ export default function DataControlSection() {
 			<div className="data-cta mt-12 md:mt-16">
 				<div className="relative flex min-h-[320px] items-center overflow-hidden rounded-[24px] bg-[linear-gradient(110deg,_#2B0B78_0%,_#6D1AA6_45%,_#1C2A85_100%)] px-6 py-10 text-left text-white md:min-h-[320px] md:px-12 md:py-12">
 					<div className="relative z-10 w-full max-w-[600px] text-center md:text-left">
-						<h3 className="text-[30px] leading-tight md:text-[40px] md:leading-[1.2] font-semibold">
+						<h3 className="text-[30px] leading-tight md:text-[40px] md:leading-[1.2] font-semibold [font-family:'Soria',sans-serif]">
 							Don&apos;t wait for a crisis to organise your medical life.
 						</h3>
 						<p className="mt-3 text-[15px] md:text-[16px] text-white/90 max-w-[520px] mx-auto md:mx-0">

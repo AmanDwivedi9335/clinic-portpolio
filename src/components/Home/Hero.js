@@ -1,9 +1,15 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
 
 export default function Hero() {
+  const heroImages = [
+    "/images/hero1.png",
+    "/images/hero2.png",
+    "/images/hero3.png",
+    "/images/hero4.png",
+  ];
   const firstLineWords =
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.".split(
       " "
@@ -11,6 +17,7 @@ export default function Hero() {
   const secondLineWords =
     "Because one missing detail can change everything...".split(" ");
   const sectionRef = useRef(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
@@ -32,19 +39,34 @@ export default function Hero() {
     });
   }, []);
 
+  useEffect(() => {
+    const carouselInterval = setInterval(() => {
+      setActiveImageIndex((currentIndex) =>
+        currentIndex === heroImages.length - 1 ? 0 : currentIndex + 1
+      );
+    }, 1000);
+
+    return () => clearInterval(carouselInterval);
+  }, [heroImages.length]);
+
   return (
     <section ref={sectionRef} className="pt-[5px] pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
           {/* Background image */}
-          <Image
-            src="/images/hero.png" 
-            alt="Hero background"
-            fill
-            priority
-            className="object-cover"
-          />
+          {heroImages.map((heroImage, index) => (
+            <Image
+              key={heroImage}
+              src={heroImage}
+              alt={`Hero background ${index + 1}`}
+              fill
+              priority={index === 0}
+              className={`object-cover transition-opacity duration-700 ${
+                index === activeImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
 
           {/* Soft left fade (so text stays readable) */}
           <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />

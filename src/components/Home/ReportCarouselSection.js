@@ -162,7 +162,7 @@ export default function ReportCarouselSection() {
 
       <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
-          opts={{ align: "center", loop: true }}
+          opts={{ align: "center", loop: true, containScroll: false }}
           setApi={setApi}
           className="relative"
           onMouseEnter={() => {
@@ -172,17 +172,17 @@ export default function ReportCarouselSection() {
             isHoveredRef.current = false;
           }}
         >
-          <CarouselContent className="py-6">
+          <CarouselContent className="-ml-3 py-4 md:-ml-4 md:py-6">
             {slides.map((slide, index) => (
               <CarouselItem
                 key={slide.caption}
-                className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
+                className="report-slide basis-[88%] pl-3 sm:basis-[62%] md:basis-[48%] md:pl-4 lg:basis-[36%]"
               >
                 <div
-                  className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
+                  className={`group relative aspect-[16/10] overflow-hidden rounded-[28px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
                     activeIndex === index
-                      ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
-                      : "scale-90 opacity-70 blur-[2px] saturate-75"
+                      ? "z-20 scale-[1.08] opacity-100 shadow-[0_24px_55px_rgba(43,21,89,0.45)]"
+                      : "z-10 scale-[0.9] opacity-80"
                   }`}
                 >
                   <Image
@@ -190,21 +190,27 @@ export default function ReportCarouselSection() {
                     alt={slide.alt}
                     fill
                     className={`object-cover transition-transform duration-500 ease-in-out will-change-transform transform-gpu ${
-                      activeIndex === index ? "scale-105" : "scale-100"
+                      activeIndex === index ? "scale-105" : "scale-100 grayscale-[20%]"
                     }`}
                     sizes="(min-width: 1024px) 40vw, (min-width: 640px) 70vw, 100vw"
                     priority={index === 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute inset-x-5 bottom-5 text-center text-base font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-lg">
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-500 ${
+                      activeIndex === index
+                        ? "bg-gradient-to-t from-[#2f105f]/85 via-[#341357]/40 to-transparent"
+                        : "bg-gradient-to-t from-black/60 via-black/25 to-transparent"
+                    }`}
+                  />
+                  <div className="absolute inset-x-5 bottom-5 text-center text-sm font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-[1.55rem] md:leading-tight">
                     {slide.caption}
                   </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
+          <CarouselPrevious className="left-2 z-30 flex h-9 w-9 border-0 bg-white/20 text-white backdrop-blur hover:bg-white/35 md:left-6 md:h-10 md:w-10" />
+          <CarouselNext className="right-2 z-30 flex h-9 w-9 border-0 bg-white/20 text-white backdrop-blur hover:bg-white/35 md:right-6 md:h-10 md:w-10" />
         </Carousel>
       </div>
     </section>

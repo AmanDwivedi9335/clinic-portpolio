@@ -5,10 +5,11 @@ import { createGsapContext } from "@/lib/gsap";
 
 export default function Hero() {
   const heroImages = [
-    "/images/hero1.png",
-    "/images/hero2.png",
-    "/images/hero3.png",
-    "/images/hero4.png",
+    "/images/hero.png",
+    "/images/img1bg.png",
+    "/images/img2bg.png",
+    "/images/img3bg.png",
+    "/images/img4bg.png",
   ];
   const firstLineWords =
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.".split(
@@ -44,7 +45,7 @@ export default function Hero() {
       setActiveImageIndex((currentIndex) =>
         currentIndex === heroImages.length - 1 ? 0 : currentIndex + 1
       );
-    }, 1000);
+    }, 3000);
 
     return () => clearInterval(carouselInterval);
   }, [heroImages.length]);

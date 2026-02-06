@@ -67,6 +67,14 @@ export default function Header() {
 							Home <FiArrowUpRight size={18} color="282672"/>
 						</a>
 
+						<a href="/doctor" className="flex items-center gap-1 hover:opacity-70">
+							For Doctors <FiArrowUpRight size={18} color="282672"/>
+						</a>
+
+						<a href="/users" className="flex items-center gap-1 hover:opacity-70">
+							For Users <FiArrowUpRight size={18} color="282672"/>
+						</a>
+
 						<a href="/partners" className="flex items-center gap-1 hover:opacity-70">
 							Partners <FiArrowUpRight size={18} />
 						</a>

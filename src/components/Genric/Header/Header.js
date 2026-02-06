@@ -19,6 +19,8 @@ export default function Header() {
 
 	const data = [
 		{ url: "/", name: "Home" },
+		{ url: "/doctors", name: "For Doctors" },
+		{ url: "/users", name: "For Users" },
 		{ url: "/partners", name: "Partners" },
 		{ url: "/resources", name: "Resources" },
 		{ url: "/about", name: "About Us" },

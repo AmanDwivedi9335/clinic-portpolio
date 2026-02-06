@@ -6,10 +6,11 @@ import { createGsapContext } from "@/lib/gsap";
 export default function Hero() {
   const heroImages = [
     "/images/hero.png",
-    "/images/img1bg.png",
+    // "/images/img1bg.png",
     "/images/img2bg.png",
     "/images/img3bg.png",
     "/images/img4bg.png",
+    "/images/img5bg.png",
   ];
   const firstLineWords =
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.".split(
@@ -81,9 +82,9 @@ export default function Hero() {
               </p>
 
               <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
-                Your Health
-                <br />
-                Identity for Life
+                Your Health Identity<br />
+                
+                For Life
               </h1>
 
               <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">

@@ -33,25 +33,22 @@ export default function Footer() {
 							<li className="flex items-start gap-2">
 								<span className="mt-0.5">✉️</span>
 								<a
-									href="mailto:team@signinbiomedical.com"
+									href="mailto:contact@medibank.in"
 									className="hover:text-[#5C4AFF]"
 								>
-									team@signinbiomedical.com
+									contact@medibank.in
 								</a>
 							</li>
 							<li className="flex items-start gap-2">
 								<span className="mt-0.5">📞</span>
 								<a
-									href="tel:+919819117478"
+									href="tel:+919959095217"
 									className="hover:text-[#5C4AFF]"
 								>
-									+91 8919117478
+									 +91 9959095217
 								</a>
 							</li>
-							<li className="flex items-start gap-2">
-								<span className="mt-0.5">🕒</span>
-								<span>Mon–Sat | 10 AM to 7 PM</span>
-							</li>
+							
 						</ul>
 					</div>
 

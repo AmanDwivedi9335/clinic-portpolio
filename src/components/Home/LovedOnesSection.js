@@ -7,19 +7,19 @@ import { createGsapContext } from "@/lib/gsap";
 const lovedOnes = [
   {
     label: "Parents",
-    image: "/images/doctorNew.png",
+    image: "/images/grandparents.png",
   },
   {
     label: "Partner",
-    image: "/images/profile.jpeg",
+    image: "/images/partner.png",
   },
   {
     label: "Children",
-    image: "/images/he.png",
+    image: "/images/children.png",
   },
   {
     label: "Grandparents",
-    image: "/images/she.png",
+    image: "/images/grandparents2.png",
   },
 ];
 

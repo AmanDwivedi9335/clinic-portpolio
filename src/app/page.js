@@ -4,36 +4,40 @@ import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
 import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import LovedOnesSection from "@/components/Home/LovedOnesSection";
 import DataControlSection from "@/components/Home/DataControlSection";
-import ContactCard from "@/components/Home/ContactCard";
+import StackSection from "@/components/StackSection";
 
 export default function Home() {
 	return (
-		<>
-			{/* Hero Section */}
-			<div className="pt-24">
-				<Hero />
-			</div>
-			
+		<main className="bg-slate-50">
+			<StackSection zIndex={10} backgroundClassName="bg-white">
+				<div className="h-full w-full px-4 md:px-8 flex items-center">
+					<Hero />
+				</div>
+			</StackSection>
 
-			{/* About Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
-				<ReportCarouselSection />
-			</div>
+			<StackSection zIndex={20} backgroundClassName="bg-white">
+				<div className="h-full w-full px-4 md:px-8 flex items-center">
+					<ReportCarouselSection />
+				</div>
+			</StackSection>
 
-			{/* HealthIdentity Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
-				<HealthIdentitySection />
-			</div>
+			<StackSection zIndex={30} backgroundClassName="bg-white">
+				<div className="h-full w-full px-4 md:px-8 flex items-center">
+					<HealthIdentitySection />
+				</div>
+			</StackSection>
 
-			{/* LovedOnes Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
-				<LovedOnesSection />
-			</div>
+			<StackSection zIndex={40} backgroundClassName="bg-[#F3F0FF]">
+				<div className="h-full w-full px-4 md:px-8 flex items-center">
+					<LovedOnesSection />
+				</div>
+			</StackSection>
 
-			{/* Data Control Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
-				<DataControlSection />
-			</div>
-		</>
+			<StackSection zIndex={50} backgroundClassName="bg-[#F3F0FF]">
+				<div className="h-full w-full px-4 md:px-8 flex items-center">
+					<DataControlSection />
+				</div>
+			</StackSection>
+		</main>
 	);
 }

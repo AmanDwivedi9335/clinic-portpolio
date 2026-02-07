@@ -147,8 +147,9 @@ export default function DoctorsPage() {
       <section className="relative overflow-hidden px-6">
         <div className="absolute -top-32 right-0 h-72 w-72 rounded-full bg-[#6D4AFF]/10 blur-3xl" />
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#282672]/10 blur-3xl" />
-        <div className="doctor-hero mx-auto flex w-full max-w-6xl flex-col gap-12 rounded-[32px] border border-[#E3E0FF] bg-gradient-to-br from-[#F7F6FF] via-white to-[#F0F4FF] px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:flex-row md:items-start md:gap-16 md:px-12 md:py-16">
-          <div className="flex-1">
+        <div className="doctor-hero relative mx-auto flex w-full max-w-6xl flex-col gap-12 overflow-hidden rounded-[32px] border border-[#E3E0FF] bg-[url('/images/reportmissing.png')] bg-cover bg-center px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:flex-row md:items-start md:gap-16 md:px-12 md:py-16">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
+          <div className="relative z-10 flex-1">
             <span className="doctor-hover inline-flex cursor-pointer items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
               For Doctors
             </span>
@@ -159,7 +160,7 @@ export default function DoctorsPage() {
               Doctors are forced to guess.
             </p>
           </div>
-          <div className="doctor-questions flex-1 rounded-[28px] border border-[#E3E0FF] bg-white/70 p-6 shadow-[0_20px_50px_rgba(40,38,114,0.12)] md:p-8">
+          <div className="doctor-questions relative z-10 flex-1 rounded-[28px] border border-white/60 bg-white/35 p-6 shadow-[0_20px_50px_rgba(40,38,114,0.12)] backdrop-blur-2xl md:p-8">
             <h2 className="text-lg font-semibold text-[#282672] md:text-xl">
               Every missing detail carries risk.
             </h2>
@@ -180,7 +181,7 @@ export default function DoctorsPage() {
                     ref={(el) => {
                       questionRefs.current[index] = el;
                     }}
-                    className={`doctor-question flex items-start gap-3 rounded-2xl border border-[#E6E3FF] bg-white/90 p-4 shadow-sm transition-all duration-300 ${textStyle}`}
+                    className={`doctor-question flex items-start gap-3 rounded-2xl border border-white/60 bg-white/40 p-4 shadow-sm backdrop-blur-xl transition-all duration-300 ${textStyle}`}
                   >
                     <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#6D4AFF]" />
                     <span>{item}</span>

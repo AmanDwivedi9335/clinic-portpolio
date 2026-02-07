@@ -52,7 +52,7 @@ export default function Hero() {
   }, [heroImages.length]);
 
   return (
-    <section ref={sectionRef} className="pt-[5px] pb-5">
+    <section ref={sectionRef} className="pt-[5px] pb-5 ">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
@@ -64,7 +64,7 @@ export default function Hero() {
               alt={`Hero background ${index + 1}`}
               fill
               priority={index === 0}
-              className={`object-cover transition-opacity duration-700 ${
+              className={`object-cover object-[50%_70%] transition-opacity duration-700 ${
                 index === activeImageIndex ? "opacity-100" : "opacity-0"
               }`}
             />

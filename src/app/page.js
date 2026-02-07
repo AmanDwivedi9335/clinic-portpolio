@@ -10,13 +10,13 @@ export default function Home() {
 	return (
 		<>
 			{/* Hero Section */}
-			<div className="pt-24">
+			<div className="sticky h-screen z-[-1] top-[5px]">
 				<Hero />
 			</div>
 			
 
 			{/* About Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
 				<ReportCarouselSection />
 			</div>
 
@@ -26,7 +26,7 @@ export default function Home() {
 			</div>
 
 			{/* LovedOnes Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
+			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
 				<LovedOnesSection />
 			</div>
 

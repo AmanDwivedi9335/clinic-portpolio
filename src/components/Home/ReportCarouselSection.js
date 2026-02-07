@@ -143,8 +143,22 @@ export default function ReportCarouselSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-10 md:py-16">
-      <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-[#F5F0FF] py-10 md:py-16"
+    >
+      <div className="absolute inset-0">
+        <Image
+          src={slides[activeIndex]?.image}
+          alt=""
+          fill
+          className="object-cover opacity-35 blur-3xl scale-110"
+          sizes="100vw"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/90" />
+      </div>
+      <div className="report-intro relative z-10 mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <span className="mb-4 rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
           The Moment No One Thinks About
         </span>
@@ -160,7 +174,7 @@ export default function ReportCarouselSection() {
         </p>
       </div>
 
-      <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
+      <div className="report-carousel relative z-10 mx-auto mt-10 max-w-6xl px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -179,7 +193,7 @@ export default function ReportCarouselSection() {
                 className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
               >
                 <div
-                  className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
+                  className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] border border-white/40 bg-white/25 text-left shadow-lg backdrop-blur-2xl transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
                     activeIndex === index
                       ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
                       : "scale-90 opacity-70 blur-[2px] saturate-75"
@@ -189,13 +203,13 @@ export default function ReportCarouselSection() {
                     src={slide.image}
                     alt={slide.alt}
                     fill
-                    className={`object-cover transition-transform duration-500 ease-in-out will-change-transform transform-gpu ${
+                    className={`object-cover opacity-90 transition-transform duration-500 ease-in-out will-change-transform transform-gpu ${
                       activeIndex === index ? "scale-105" : "scale-100"
                     }`}
                     sizes="(min-width: 1024px) 40vw, (min-width: 640px) 70vw, 100vw"
                     priority={index === 2}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
                   <div className="absolute inset-x-5 bottom-5 text-center text-base font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-lg">
                     {slide.caption}
                   </div>

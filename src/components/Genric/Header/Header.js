@@ -67,7 +67,7 @@ export default function Header() {
 							Home <FiArrowUpRight size={18} color="282672"/>
 						</a>
 
-						<a href="/doctor" className="flex items-center gap-1 hover:opacity-70">
+						<a href="/doctors" className="flex items-center gap-1 hover:opacity-70">
 							For Doctors <FiArrowUpRight size={18} color="282672"/>
 						</a>
 
@@ -124,6 +124,8 @@ export default function Header() {
 					<div className="px-4 flex flex-col gap-2">
 						{[
 							{url: "/", name: "Home"},
+							{url: "/doctors", name: "For Doctors"},
+							{url: "/users", name: "For Users"},
 							{url: "/partners", name: "Partners"},
 							{url: "/resources", name: "Resources"},
 							{url: "/about", name: "About Us"},

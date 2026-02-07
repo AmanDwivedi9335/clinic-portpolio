@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
 
 const questions = [
@@ -23,9 +23,13 @@ const benefits = [
 
 export default function DoctorsPage() {
   const sectionRef = useRef(null);
+  const questionRefs = useRef([]);
+  const [activeQuestion, setActiveQuestion] = useState(0);
 
   useEffect(() => {
-    return createGsapContext(sectionRef, (gsap) => {
+    const hoverCleanups = [];
+
+    const cleanupGsap = createGsapContext(sectionRef, (gsap) => {
       gsap.fromTo(
         ".doctor-hero",
         { y: 24, opacity: 0 },
@@ -41,21 +45,61 @@ export default function DoctorsPage() {
         }
       );
 
-      gsap.fromTo(
-        ".doctor-question",
-        { x: -20, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power2.out",
-          stagger: 0.08,
+      questionRefs.current.forEach((question, index) => {
+        if (!question) return;
+
+        gsap.fromTo(
+          question,
+          { y: 22, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: question,
+              start: "top 80%",
+            },
+          }
+        );
+
+        gsap.to(question, {
           scrollTrigger: {
-            trigger: ".doctor-questions",
-            start: "top 85%",
+            trigger: question,
+            start: "top 70%",
+            end: "bottom 30%",
+            onEnter: () => setActiveQuestion(index),
+            onEnterBack: () => setActiveQuestion(index),
           },
-        }
-      );
+        });
+      });
+
+      const hoverTargets = gsap.utils.toArray(".doctor-hover");
+      hoverTargets.forEach((target) => {
+        const enter = () => {
+          gsap.to(target, {
+            y: -6,
+            color: "#6D4AFF",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        };
+        const leave = () => {
+          gsap.to(target, {
+            y: 0,
+            color: "#3A3A5E",
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        };
+
+        target.addEventListener("mouseenter", enter);
+        target.addEventListener("mouseleave", leave);
+        hoverCleanups.push(() => {
+          target.removeEventListener("mouseenter", enter);
+          target.removeEventListener("mouseleave", leave);
+        });
+      });
 
       gsap.fromTo(
         ".doctor-panel",
@@ -88,6 +132,11 @@ export default function DoctorsPage() {
         }
       );
     });
+
+    return () => {
+      hoverCleanups.forEach((cleanup) => cleanup());
+      cleanupGsap();
+    };
   }, []);
 
   return (
@@ -98,42 +147,46 @@ export default function DoctorsPage() {
       <section className="relative overflow-hidden px-6">
         <div className="absolute -top-32 right-0 h-72 w-72 rounded-full bg-[#6D4AFF]/10 blur-3xl" />
         <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#282672]/10 blur-3xl" />
-        <div className="doctor-hero mx-auto flex w-full max-w-6xl flex-col gap-12 rounded-[32px] border border-[#E3E0FF] bg-gradient-to-br from-[#F7F6FF] via-white to-[#F0F4FF] px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:flex-row md:items-center md:px-12 md:py-16">
+        <div className="doctor-hero mx-auto flex w-full max-w-6xl flex-col gap-12 rounded-[32px] border border-[#E3E0FF] bg-gradient-to-br from-[#F7F6FF] via-white to-[#F0F4FF] px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:flex-row md:items-start md:gap-16 md:px-12 md:py-16">
           <div className="flex-1">
-            <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#282672]">
+            <span className="doctor-hover inline-flex cursor-pointer items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
               For Doctors
             </span>
-            <h1 className="mt-6 text-3xl font-semibold leading-tight text-[#121041] md:text-5xl">
+            <h1 className="mt-6 text-4xl font-semibold leading-tight text-[#121041] md:text-6xl">
               Blind consultations are dangerous consultations.
             </h1>
-            <p className="mt-6 text-base text-[#3A3A5E] md:text-lg">
+            <p className="doctor-hover mt-6 cursor-pointer text-lg text-[#3A3A5E] md:text-xl">
               Doctors are forced to guess.
             </p>
-            <div className="doctor-questions mt-8 grid gap-4 md:grid-cols-2">
-              {questions.map((item) => (
-                <div
-                  key={item}
-                  className="doctor-question flex items-start gap-3 rounded-2xl border border-[#E6E3FF] bg-white/80 p-4 text-sm text-[#1F245A] shadow-sm"
-                >
-                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#6D4AFF]" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
           </div>
-          <div className="flex-1">
-            <div className="rounded-[28px] border border-[#E3E0FF] bg-white p-8 shadow-[0_20px_50px_rgba(40,38,114,0.15)]">
-              <h2 className="text-xl font-semibold text-[#282672] md:text-2xl">
-                Every missing detail carries risk.
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-[#4C4C6A] md:text-base">
-                Without a complete medical history, each consultation becomes
-                a puzzle. The outcome depends on assumptions instead of clear
-                evidence, and patients pay the price.
-              </p>
-              <div className="mt-6 rounded-2xl border border-[#E6E3FF] bg-[#F7F6FF] p-4 text-sm text-[#1F245A]">
-                Accurate context turns uncertainty into confident care.
-              </div>
+          <div className="doctor-questions flex-1 rounded-[28px] border border-[#E3E0FF] bg-white/70 p-6 shadow-[0_20px_50px_rgba(40,38,114,0.12)] md:p-8">
+            <h2 className="text-lg font-semibold text-[#282672] md:text-xl">
+              Every missing detail carries risk.
+            </h2>
+            <div className="mt-6 space-y-5">
+              {questions.map((item, index) => {
+                const isActive = index === activeQuestion;
+                const isPrev = index === activeQuestion - 1;
+                const isNext = index === activeQuestion + 1;
+                const textStyle = isActive
+                  ? "text-xl md:text-2xl text-[#121041]"
+                  : isPrev || isNext
+                  ? "text-sm md:text-base text-[#58597A] blur-[1px]"
+                  : "text-sm text-[#9A9AB0]";
+
+                return (
+                  <div
+                    key={item}
+                    ref={(el) => {
+                      questionRefs.current[index] = el;
+                    }}
+                    className={`doctor-question flex items-start gap-3 rounded-2xl border border-[#E6E3FF] bg-white/90 p-4 shadow-sm transition-all duration-300 ${textStyle}`}
+                  >
+                    <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#6D4AFF]" />
+                    <span>{item}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

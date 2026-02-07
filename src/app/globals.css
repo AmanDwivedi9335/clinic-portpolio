@@ -123,6 +123,18 @@
 	animation-iteration-count: 1;
 }
 
+@keyframes wave {
+	0% {
+		transform: translateX(-30%);
+	}
+	50% {
+		transform: translateX(0%);
+	}
+	100% {
+		transform: translateX(30%);
+	}
+}
+
 ul,
 ol {
 	@apply pl-5 list-disc;

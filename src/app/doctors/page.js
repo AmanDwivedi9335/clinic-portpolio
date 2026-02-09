@@ -26,6 +26,9 @@ export default function DoctorsPage() {
   const sectionRef = useRef(null);
   const questionRefs = useRef([]);
   const [activeQuestion, setActiveQuestion] = useState(0);
+  const [typedText, setTypedText] = useState("");
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const hoverCleanups = [];
@@ -140,6 +143,27 @@ export default function DoctorsPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const currentQuestion = questions[questionIndex];
+    let timeoutId;
+
+    if (!isDeleting && typedText === currentQuestion) {
+      timeoutId = setTimeout(() => setIsDeleting(true), 1300);
+    } else if (isDeleting && typedText === "") {
+      timeoutId = setTimeout(() => {
+        setIsDeleting(false);
+        setQuestionIndex((prev) => (prev + 1) % questions.length);
+      }, 250);
+    } else {
+      timeoutId = setTimeout(() => {
+        const nextLength = typedText.length + (isDeleting ? -1 : 1);
+        setTypedText(currentQuestion.slice(0, nextLength));
+      }, isDeleting ? 45 : 80);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [typedText, isDeleting, questionIndex]);
+
   return (
     <main
       ref={sectionRef}
@@ -160,6 +184,13 @@ export default function DoctorsPage() {
               <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
                 For Doctors
               </span>
+              <p className="mt-4 text-lg font-medium text-[#2B2E59] md:text-xl">
+                <span className="sr-only">Questions doctors must answer:</span>
+                <span className="relative pr-1" aria-live="polite">
+                  {typedText}
+                  <span className="ml-1 inline-block h-5 w-px animate-pulse bg-[#2B2E59] align-middle" />
+                </span>
+              </p>
 
               <h1 className="mt-6 text-4xl font-semibold leading-[1.05] text-[#121041] md:text-6xl">
                 Blind consultations

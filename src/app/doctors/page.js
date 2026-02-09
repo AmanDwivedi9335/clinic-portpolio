@@ -157,8 +157,8 @@ export default function DoctorsPage() {
           <div className="relative z-10 flex flex-col gap-10 px-6 py-12 md:flex-row md:items-start md:justify-between md:gap-16 md:px-12 md:py-16">
             {/* LEFT */}
             <div className="flex-1">
-              <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-sm font-semibold tracking-[0.3em] text-[#3A3A5E]">
-                Doctors are forced to guess!
+              <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
+                For Doctors
               </span>
 
               <h1 className="mt-6 text-4xl font-semibold leading-[1.05] text-[#121041] md:text-6xl">
@@ -169,7 +169,9 @@ export default function DoctorsPage() {
                 consultations.
               </h1>
 
-              
+              <p className="mt-6 text-lg text-[#3A3A5E] md:text-xl">
+                Doctors are forced to guess-
+              </p>
             </div>
 
             {/* RIGHT (PILL like screenshot) */}

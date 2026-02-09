@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
 
@@ -145,53 +146,48 @@ export default function DoctorsPage() {
       className="bg-white text-[#0B0F2A] pt-28 md:pt-32"
     >
       <section className="relative overflow-hidden px-6">
-        <div className="absolute -top-32 right-0 h-72 w-72 rounded-full bg-[#6D4AFF]/10 blur-3xl" />
-        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-[#282672]/10 blur-3xl" />
-        <div className="doctor-hero relative mx-auto flex w-full max-w-6xl flex-col gap-12 overflow-hidden rounded-[32px] border border-[#E3E0FF] bg-[url('/images/reportmissing.png')] bg-cover bg-center px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:flex-row md:items-start md:gap-16 md:px-12 md:py-16">
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
-          <div className="relative z-10 flex-1">
-            <span className="doctor-hover inline-flex cursor-pointer items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
-              For Doctors
-            </span>
-            <h1 className="mt-6 text-4xl font-semibold leading-tight text-[#121041] md:text-6xl">
-              Blind consultations are dangerous consultations.
-            </h1>
-            <p className="doctor-hover mt-6 cursor-pointer text-lg text-[#3A3A5E] md:text-xl">
-              Doctors are forced to guess.
-            </p>
-          </div>
-          <div className="doctor-questions relative z-10 flex-1 rounded-[28px] border border-white/60 bg-white/35 p-6 shadow-[0_20px_50px_rgba(40,38,114,0.12)] backdrop-blur-2xl md:p-8">
-            <h2 className="text-lg font-semibold text-[#282672] md:text-xl">
-              Every missing detail carries risk.
-            </h2>
-            <div className="mt-6 space-y-5">
-              {questions.map((item, index) => {
-                const isActive = index === activeQuestion;
-                const isPrev = index === activeQuestion - 1;
-                const isNext = index === activeQuestion + 1;
-                const textStyle = isActive
-                  ? "text-xl md:text-2xl text-[#121041]"
-                  : isPrev || isNext
-                  ? "text-sm md:text-base text-[#58597A] blur-[1px]"
-                  : "text-sm text-[#9A9AB0]";
+        {/* outer soft glows */}
+        <div className="absolute -top-32 right-0 h-72 w-72 rounded-full" />
+        <div className="absolute bottom-0 left-0 h-72 w-72 rounded-full" />
 
-                return (
-                  <div
-                    key={item}
-                    ref={(el) => {
-                      questionRefs.current[index] = el;
-                    }}
-                    className={`doctor-question flex items-start gap-3 rounded-2xl border border-white/60 bg-white/40 p-4 shadow-sm backdrop-blur-xl transition-all duration-300 ${textStyle}`}
-                  >
-                    <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#6D4AFF]" />
-                    <span>{item}</span>
-                  </div>
-                );
-              })}
+        <div className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[32px] border border-[#E3E0FF] bg-[#6D4AFF] shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
+          {/* inner gradient wash */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
+
+          <div className="relative z-10 flex flex-col gap-10 px-6 py-12 md:flex-row md:items-start md:justify-between md:gap-16 md:px-12 md:py-16">
+            {/* LEFT */}
+            <div className="flex-1">
+              <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-sm font-semibold tracking-[0.3em] text-[#3A3A5E]">
+                Doctors are forced to guess!
+              </span>
+
+              <h1 className="mt-6 text-4xl font-semibold leading-[1.05] text-[#121041] md:text-6xl">
+                Blind consultations
+                <br />
+                are dangerous
+                <br />
+                consultations.
+              </h1>
+
+              
+            </div>
+
+            {/* RIGHT (PILL like screenshot) */}
+            <div className="relative flex-1">
+              <div className="relative ml-auto h-[50vh] w-full max-w-[520px] overflow-hidden">
+                <Image
+                  src="/images/vectorfordoctor.png"
+                  alt="vectorfordoctor"
+                  fill
+                  className="object-contain p-4"
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
+
 
       <section className="doctor-benefits relative px-6 py-16 md:py-20">
         <div className="doctor-panel mx-auto w-full max-w-6xl rounded-[32px] border border-[#E3E0FF] bg-white px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:px-12 md:py-16">

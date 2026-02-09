@@ -201,7 +201,7 @@ export default function DoctorsPage() {
               </h1>
 
               <p className="mt-6 text-lg text-[#3A3A5E] md:text-xl">
-                Doctors are forced to guess-
+                Doctors are forced to guess.
               </p>
             </div>
 

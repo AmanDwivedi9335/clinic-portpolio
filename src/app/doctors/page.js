@@ -13,7 +13,6 @@ const questions = [
 ];
 
 const benefits = [
-  "You see the whole patient, not fragments.",
   "A full picture of every patient",
   "Better-informed decisions",
   "Higher patient trust",
@@ -237,8 +236,13 @@ export default function DoctorsPage() {
               </p>
             </div>
             <div className="rounded-2xl border border-[#E6E3FF] bg-gradient-to-br from-[#F7F6FF] to-white px-6 py-5 text-sm text-[#4C4C6A] shadow-sm">
-              A unified, longitudinal record gives every consultation the
-              clarity it deserves.
+              <Image
+                  src="/images/vectorUser.png"
+                  alt="vectorforuser"
+                  fill
+                  className="object-contain p-4"
+                  priority
+              />
             </div>
           </div>
           <div className="doctor-benefits-grid mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

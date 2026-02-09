@@ -178,7 +178,7 @@ export default function DoctorsPage() {
           {/* inner gradient wash */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
 
-          <div className="relative z-10 flex flex-col gap-10 px-6 py-12 md:flex-row md:items-start md:justify-between md:gap-16 md:px-12 md:py-16">
+          <div className="relative z-10 flex flex-col gap-10 px-6 py-12 md:flex-row md:items-center md:justify-between md:gap-16 md:px-12 md:py-16">
             {/* LEFT */}
             <div className="flex-1">
               <span className="inline-flex items-center rounded-full bg-[#282672]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#3A3A5E]">
@@ -207,7 +207,7 @@ export default function DoctorsPage() {
 
             {/* RIGHT (PILL like screenshot) */}
             <div className="relative flex-1">
-              <div className="relative ml-auto h-[50vh] w-full max-w-[520px] overflow-hidden">
+              <div className="relative ml-auto h-[42vh] w-full max-w-[520px] overflow-hidden sm:h-[360px] lg:h-[420px]">
                 <Image
                   src="/images/vectorfordoctor.png"
                   alt="vectorfordoctor"
@@ -224,7 +224,7 @@ export default function DoctorsPage() {
 
       <section className="doctor-benefits relative px-6 py-16 md:py-20">
         <div className="doctor-panel mx-auto w-full max-w-6xl rounded-[32px] border border-[#E3E0FF] bg-white px-6 py-12 shadow-[0_20px_60px_rgba(15,23,42,0.08)] md:px-12 md:py-16">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="flex flex-col gap-6 md:grid md:grid-cols-[minmax(0,1fr)_240px] md:items-start md:gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
             <div className="max-w-xl">
               <span className="inline-flex items-center rounded-full bg-[#6D4AFF]/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#6D4AFF]">
                 MediBank Advantage
@@ -236,12 +236,12 @@ export default function DoctorsPage() {
                 You see the whole patient, not fragments.
               </p>
             </div>
-            <div className="rounded-2xl border border-[#E6E3FF] bg-gradient-to-br from-[#F7F6FF] to-white px-6 py-5 text-sm text-[#4C4C6A] shadow-sm">
+            <div className="rounded-2xl border border-[#E6E3FF] bg-gradient-to-br from-[#F7F6FF] to-white px-6 py-5 text-sm text-[#4C4C6A] shadow-sm md:justify-self-end">
               A unified, longitudinal record gives every consultation the
               clarity it deserves.
             </div>
           </div>
-          <div className="doctor-benefits-grid mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="doctor-benefits-grid mt-10 grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {benefits.map((item) => (
               <div
                 key={item}

@@ -114,11 +114,24 @@ export default function Hero() {
               <div className="hero-animate mt-7">
                 <a
                   href="/claim"
-                  className="inline-flex items-center justify-center rounded-xl bg-[#4b00a3] px-6 py-3 text-white font-semibold shadow-[0_10px_25px_rgba(75,0,163,0.28)] hover:opacity-95 active:scale-[0.99] transition"
+                  className="
+                    inline-flex items-center cursor-pointer justify-center
+                    rounded-2xl px-8 py-3
+                    font-semibold text-white
+                    bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
+                    shadow-[0_12px_30px_rgba(123,31,162,0.45)]
+                    transition-all duration-300 ease-out
+                    hover:animate-[floatUp_1.8s_ease-in-out_infinite]
+                    hover:shadow-[0_22px_50px_rgba(216,27,96,0.6)]
+                    hover:brightness-110
+                    active:scale-[0.97]
+                  "
                 >
                   Claim Your Health Identity
                 </a>
               </div>
+
+
             </div>
 
             {/* Right side kept mostly visual (optional) */}

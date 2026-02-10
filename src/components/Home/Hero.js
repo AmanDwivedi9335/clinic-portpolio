@@ -52,7 +52,7 @@ export default function Hero() {
   }, [heroImages.length]);
 
   return (
-    <section ref={sectionRef} className="pt-[5px] pb-5 ">
+    <section ref={sectionRef} className="pt-[104px] pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
@@ -74,7 +74,7 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
-          <div className="relative grid min-h-[95vh] md:min-h-[95vh] grid-cols-1 md:grid-cols-2 items-center">
+          <div className="relative grid min-h-[calc(100vh-124px)] md:min-h-[calc(100vh-124px)] grid-cols-1 md:grid-cols-2 items-center">
             {/* Left content */}
             <div className="px-6 md:px-10 py-12 md:py-16">
               <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">

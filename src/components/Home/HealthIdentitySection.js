@@ -29,7 +29,7 @@ export default function HealthIdentitySection() {
         scale: 0.94,
       });
 
-      gsap.set([".identity-heading", ".identity-footer", ".identity-tags"], {
+      gsap.set([".identity-heading", ".identity-subheading", ".identity-grid-title"], {
         opacity: 1,
       });
 
@@ -68,61 +68,45 @@ export default function HealthIdentitySection() {
     <div ref={pinWrapRef} className="relative">
       <section
         ref={sectionRef}
-        className="bg-gradient-to-br from-[#5A0BA0] via-[#6B128A] to-[#1C2E9C] py-8 md:py-10 border rounded-3xl"
+        className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0E1F83] via-[#4E0F9A] to-[#94009A] py-8 md:py-12"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-          <h2 className="text-xl font-semibold text-white md:text-3xl">
-            With MediBank, your &quot;what if&quot; becomes &quot;we&apos;re ready.&quot;
+          <span className="inline-flex rounded-full border border-[#F5B047] px-5 py-1 text-xs font-medium text-white/95">
+            The Promise
+          </span>
+          <h2 className="mt-4 text-2xl font-medium text-white md:text-[48px] md:leading-[1.12]">
+            With MediBank, your <span className="font-bold">&quot;what if&quot;</span> becomes
+            <span className="font-bold"> &quot;we&apos;re ready&quot;</span>
           </h2>
-          <p className="mt-2 text-sm text-white/80 md:text-base">
+          <p className="identity-subheading mt-3 text-sm text-white/85 md:text-[28px] md:leading-[1.2]">
             No Missing Reports | No blind emergencies | No guesswork | No repeated tests
           </p>
         </div>
 
-        <div className="identity-grid mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-4 px-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6 md:px-8">
-          {identityItems.map((item) => (
-            <div
-              key={item.title}
-              className="identity-card flex flex-col items-center gap-3 rounded-3xl bg-white/20 px-4 py-5 text-center shadow-lg backdrop-blur-sm"
-            >
-              <div className="flex h-24 w-24 items-center justify-center rounded-2xl">
-                <Image
-                  src={item.icon}
-                  alt={item.title}
-                  width={40}
-                  height={40}
-                  className="h-20 w-20 object-contain"
-                />
+        <h3 className="identity-grid-title mx-auto mt-8 w-fit bg-transparent px-4 text-center text-xl font-semibold text-white md:mt-10 md:text-[42px]">
+          Everything in One Place
+        </h3>
+
+        <div className="mx-auto mt-5 max-w-6xl rounded-[42px] border border-[#BC4AE7]/70 px-5 py-8 sm:px-7 md:mt-8 md:px-12">
+          <div className="identity-grid grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6">
+            {identityItems.map((item) => (
+              <div
+                key={item.title}
+                className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
+              >
+                <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
+                  <Image
+                    src={item.icon}
+                    alt={item.title}
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <span className="text-sm font-semibold text-white md:text-[28px]">{item.title}</span>
               </div>
-              <span className="text-sm font-semibold text-white">{item.title}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="identity-footer mx-auto mt-8 max-w-3xl px-4 text-center text-sm text-white/90 md:px-8 md:text-base">
-          And is instantly accessible. <span className="font-semibold">With your consent.</span>{" "}
-          To any doctor, in any city, at any time.
-        </div>
-
-        <div className="identity-tags mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-3 rounded-full bg-white/20 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur md:gap-6 md:text-sm">
-          <span className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF7A45] text-white">
-              ✕
-            </span>
-            Not a storage app
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF7A45] text-white">
-              ✕
-            </span>
-            Not an EMR
-          </span>
-          <span className="flex items-center gap-2">
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FF7A45] text-white">
-              ✕
-            </span>
-            Not a file locker
-          </span>
+            ))}
+          </div>
         </div>
       </section>
     </div>

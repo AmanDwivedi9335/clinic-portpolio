@@ -145,10 +145,13 @@ export default function ReportCarouselSection() {
   return (
     <section ref={sectionRef} className="bg-white py-10 md:py-16">
       <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-        <span className="mb-4 rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
-          The Moment No One Thinks About
+        <span className="inline-flex rounded-full bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 p-[2px]">
+          <span className="inline-flex items-center justify-center rounded-full bg-white px-4 py-1 text-[12px] font-semibold tracking-wide text-[#141E7A]">
+            The Moment No One Thinks About
+          </span>
         </span>
-        <h2 className="text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
+
+        <h2 className="text-2xl mt-4 font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
           What if the one report that could save your life...
           <span className="block font-normal text-[#5A2D82]">
             wasn&apos;t there when you needed it?

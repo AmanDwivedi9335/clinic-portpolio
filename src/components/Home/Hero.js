@@ -71,10 +71,10 @@ export default function Hero() {
           ))}
 
           {/* Soft left fade (so text stays readable) */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
-          <div className="relative grid min-h-[calc(100vh-124px)] md:min-h-[calc(100vh-124px)] grid-cols-1 md:grid-cols-2 items-center">
+          <div className="relative z-10 grid min-h-[calc(100vh-124px)] md:min-h-[calc(100vh-124px)] grid-cols-1 md:grid-cols-2 items-center">
             {/* Left content */}
             <div className="px-6 md:px-10 py-12 md:py-16">
               <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
@@ -121,7 +121,7 @@ export default function Hero() {
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
                     shadow-[0_12px_30px_rgba(123,31,162,0.45)]
                     transition-all duration-300 ease-out
-                    hover:animate-[floatUp_1.8s_ease-in-out_infinite]
+                    hover:-translate-y-1
                     hover:shadow-[0_22px_50px_rgba(216,27,96,0.6)]
                     hover:brightness-110
                     active:scale-[0.97]

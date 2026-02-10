@@ -8,6 +8,9 @@ const rotateY = plugin(function ({ addUtilities }) {
   });
 });
 module.exports = {
+  future: {
+    hoverOnlyWhenSupported: false,
+  },
   darkMode: ["class"],
   content: [
     './pages/**/*.{js,jsx}',

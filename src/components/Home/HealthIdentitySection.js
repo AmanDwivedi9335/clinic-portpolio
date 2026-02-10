@@ -74,7 +74,7 @@ export default function HealthIdentitySection() {
           <span className="inline-flex rounded-full border border-[#F5B047] px-5 py-1 text-xs font-medium text-white/95">
             The Promise
           </span>
-          <h2 className="mt-4 text-2xl font-medium text-white md:text-[48px] md:leading-[1.12]">
+          <h2 className="mt-4 text-2xl font-medium text-white md:text-[4xl] md:leading-[1.12]">
             With MediBank, your <span className="font-bold">&quot;what if&quot;</span> becomes
             <span className="font-bold"> &quot;we&apos;re ready&quot;</span>
           </h2>

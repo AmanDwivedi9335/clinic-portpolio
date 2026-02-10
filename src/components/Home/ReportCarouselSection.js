@@ -2,45 +2,29 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { createGsapContext } from "@/lib/gsap";
 
 const slides = [
   {
     image: "/images/panivpenicillin.png",
-    alt: "Doctor speaking with patient",
-    caption:
-      "What if your ER doctor doesn't know you're allergic to penicillin?",
-  },
-  {
-    image: "/images/newmedication.png",
-    alt: "Patients waiting in a clinic",
-    caption:
-      "What if a new medication conflicts with something you took 5 years ago?",
+    alt: "Person checking old health messages on phone",
+    caption: "What if... your medical history is stuck in a WhatsApp screenshot from 2021?",
   },
   {
     image: "/images/reportmissing.png",
-    alt: "Doctor with a patient in a clinic",
-    caption:
-      "What if the one report that could save your life is missing?",
+    alt: "Family and doctor discussing care",
+    caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
+  },
+  {
+    image: "/images/newmedication.png",
+    alt: "Patient and physician in consultation room",
+    caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
   },
   {
     image: "/images/reportscaterred.png",
-    alt: "Doctor reviewing notes",
-    caption:
-      "What if your health history is scattered across five hospitals?",
-  },
-  {
-    image: "/images/reportscaterred.png",
-    alt: "Clinicians discussing care",
-    caption:
-      "What if an emergency happens when your family can't find your records?",
+    alt: "Clinician searching through scattered records",
+    caption: "What if... your reports are scattered when every second matters?",
   },
 ];
 
@@ -61,9 +45,7 @@ export default function ReportCarouselSection() {
     handleSelect();
     api.on("select", handleSelect);
 
-    return () => {
-      api.off("select", handleSelect);
-    };
+    return () => api.off("select", handleSelect);
   }, [api]);
 
   useEffect(() => {
@@ -75,32 +57,29 @@ export default function ReportCarouselSection() {
         if (!isHoveredRef.current) {
           api.scrollNext();
         }
-      }, 4000);
+      }, 3500);
     };
 
     const stopAutoplay = () => {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-        autoplayRef.current = null;
-      }
+      if (!autoplayRef.current) return;
+      clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
     };
 
     startAutoplay();
 
-    return () => {
-      stopAutoplay();
-    };
+    return () => stopAutoplay();
   }, [api]);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
       gsap.fromTo(
         ".report-intro",
-        { y: 28, opacity: 0 },
+        { y: 24, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.9,
+          duration: 0.8,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -111,11 +90,11 @@ export default function ReportCarouselSection() {
 
       gsap.fromTo(
         ".report-carousel",
-        { y: 36, opacity: 0 },
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".report-carousel",
@@ -123,27 +102,11 @@ export default function ReportCarouselSection() {
           },
         }
       );
-
-      gsap.fromTo(
-        ".report-slide",
-        { scale: 0.95, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power2.out",
-          stagger: 0.12,
-          scrollTrigger: {
-            trigger: ".report-carousel",
-            start: "top 75%",
-          },
-        }
-      );
     });
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-10 md:py-16">
+    <section ref={sectionRef} className="bg-white py-10 md:py-14">
       <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <span className="inline-flex rounded-full bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 p-[2px]">
           <span className="inline-flex items-center justify-center rounded-full bg-white px-4 py-1 text-[12px] font-semibold tracking-wide text-[#141E7A]">
@@ -157,13 +120,9 @@ export default function ReportCarouselSection() {
             wasn&apos;t there when you needed it?
           </span>
         </h2>
-        <p className="mt-4 max-w-3xl text-sm text-[#3F2F63] md:text-base">
-          When your health history is missing, things go wrong. Not theoretically...
-          Not rarely...Every. Single. Day
-        </p>
       </div>
 
-      <div className="report-carousel mx-auto mt-10 max-w-6xl px-4 md:px-8">
+      <div className="report-carousel mx-auto mt-7 max-w-6xl px-2 sm:px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -175,39 +134,32 @@ export default function ReportCarouselSection() {
             isHoveredRef.current = false;
           }}
         >
-          <CarouselContent className="py-6">
+          <CarouselContent className="py-3 md:py-3">
             {slides.map((slide, index) => (
-              <CarouselItem
-                key={slide.caption}
-                className="report-slide basis-full sm:basis-[70%] lg:basis-[40%]"
-              >
-                <div
-                  className={`group relative aspect-[16/10] overflow-hidden rounded-[24px] bg-[#F3F0FF] text-left shadow-lg transition-all duration-500 ease-in-out will-change-transform transform-gpu focus-within:ring-2 focus-within:ring-[#7B1FA2] focus-within:ring-offset-2 ${
+              <CarouselItem key={`${slide.caption}-${index}`} className="basis-[75%] sm:basis-[42%] lg:basis-1/3">
+                <article
+                  className={`report-slide relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#E8E2F6] shadow-md transition duration-300 will-change-transform ${
                     activeIndex === index
-                      ? "scale-110 opacity-100 brightness-110 contrast-110 shadow-2xl"
-                      : "scale-90 opacity-70 blur-[2px] saturate-75"
+                      ? "scale-[1.01] opacity-100"
+                      : "scale-[0.97] opacity-85"
                   }`}
                 >
                   <Image
                     src={slide.image}
                     alt={slide.alt}
                     fill
-                    className={`object-cover transition-transform duration-500 ease-in-out will-change-transform transform-gpu ${
-                      activeIndex === index ? "scale-105" : "scale-100"
-                    }`}
-                    sizes="(min-width: 1024px) 40vw, (min-width: 640px) 70vw, 100vw"
-                    priority={index === 2}
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 84vw"
+                    priority={index === 0}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute inset-x-5 bottom-5 text-center text-base font-semibold text-white [text-shadow:0_2px_8px_rgba(0,0,0,0.55)] md:text-lg">
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/65 to-transparent" />
+                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white md:inset-x-5 md:bottom-5 md:text-base">
                     {slide.caption}
-                  </div>
-                </div>
+                  </p>
+                </article>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
         </Carousel>
       </div>
     </section>

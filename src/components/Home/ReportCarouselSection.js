@@ -138,7 +138,7 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem key={`${slide.caption}-${index}`} className="basis-[75%] sm:basis-[42%] lg:basis-1/3">
                 <article
-                  className={`report-slide relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#E8E2F6] shadow-md transition duration-300 will-change-transform ${
+                  className={`report-slide group relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#E8E2F6] shadow-md transition duration-300 will-change-transform ${
                     activeIndex === index
                       ? "scale-[1.01] opacity-100"
                       : "scale-[0.97] opacity-85"
@@ -152,8 +152,8 @@ export default function ReportCarouselSection() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 84vw"
                     priority={index === 0}
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/65 to-transparent" />
-                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white md:inset-x-5 md:bottom-5 md:text-base">
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/65 to-transparent transition duration-300 md:opacity-0 md:group-hover:opacity-100" />
+                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white transition duration-300 md:inset-x-5 md:bottom-5 md:text-base md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                     {slide.caption}
                   </p>
                 </article>

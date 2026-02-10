@@ -74,16 +74,16 @@ export default function HealthIdentitySection() {
           <span className="inline-flex rounded-full border border-[#F5B047] px-5 py-1 text-xs font-medium text-white/95">
             The Promise
           </span>
-          <h2 className="mt-4 text-2xl font-medium text-white md:text-[48px] md:leading-[1.12]">
+          <h2 className="mt-4 text-2xl font-medium text-white md:text-[40px] md:leading-[1.15]">
             With MediBank, your <span className="font-bold">&quot;what if&quot;</span> becomes
             <span className="font-bold"> &quot;we&apos;re ready&quot;</span>
           </h2>
-          <p className="identity-subheading mt-3 text-sm text-white/85 md:text-[28px] md:leading-[1.2]">
+          <p className="identity-subheading mt-3 text-sm text-white/85 md:text-[22px] md:leading-[1.25]">
             No Missing Reports | No blind emergencies | No guesswork | No repeated tests
           </p>
         </div>
 
-        <h3 className="identity-grid-title mx-auto mt-8 w-fit bg-transparent px-4 text-center text-xl font-semibold text-white md:mt-10 md:text-[42px]">
+        <h3 className="identity-grid-title mx-auto mt-8 w-fit bg-transparent px-4 text-center text-xl font-semibold text-white md:mt-10 md:text-[34px]">
           Everything in One Place
         </h3>
 
@@ -103,7 +103,7 @@ export default function HealthIdentitySection() {
                     className="h-full w-full object-contain"
                   />
                 </div>
-                <span className="text-sm font-semibold text-white md:text-[28px]">{item.title}</span>
+                <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
               </div>
             ))}
           </div>

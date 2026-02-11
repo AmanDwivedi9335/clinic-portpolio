@@ -109,10 +109,10 @@
 @keyframes wordColorWave {
 	0%,
 	100% {
-		color: #002c62;
+		color: #7b1fa2;
 	}
 	50% {
-		color: #282672;
+		color: #7b1fa2;
 	}
 }
 
@@ -175,4 +175,3 @@ ol {
   50% { transform: translateY(-6px); }
   100% { transform: translateY(0); }
 }
-

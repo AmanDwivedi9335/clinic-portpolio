@@ -7,22 +7,37 @@ import { createGsapContext } from "@/lib/gsap";
 
 const slides = [
   {
-    image: "/images/panivpenicillin.png",
+    image: "/images/img-carousel1.png",
     alt: "Person checking old health messages on phone",
     caption: "What if... your medical history is stuck in a WhatsApp screenshot from 2021?",
   },
   {
-    image: "/images/reportmissing.png",
+    image: "/images/img-carousel2.png",
     alt: "Family and doctor discussing care",
     caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
   },
   {
-    image: "/images/newmedication.png",
+    image: "/images/img-carousel3.png",
     alt: "Patient and physician in consultation room",
     caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
   },
   {
-    image: "/images/reportscaterred.png",
+    image: "/images/img-carousel4.png",
+    alt: "Clinician searching through scattered records",
+    caption: "What if... your reports are scattered when every second matters?",
+  },
+  {
+    image: "/images/img-carousel5.png",
+    alt: "Clinician searching through scattered records",
+    caption: "What if... your reports are scattered when every second matters?",
+  },
+  {
+    image: "/images/img-carousel6.png",
+    alt: "Clinician searching through scattered records",
+    caption: "What if... your reports are scattered when every second matters?",
+  },
+  {
+    image: "/images/img-carousel7.png",
     alt: "Clinician searching through scattered records",
     caption: "What if... your reports are scattered when every second matters?",
   },

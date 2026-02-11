@@ -26,12 +26,12 @@ export default function Home() {
 			</div>
 
 			{/* LovedOnes Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
 				<LovedOnesSection />
 			</div>
 
 			{/* Data Control Section */}
-			<div className="bg-[#F3F0FF] py-6 md:py-12 px-4 md:px-8">
+			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
 				<DataControlSection />
 			</div>
 		</>

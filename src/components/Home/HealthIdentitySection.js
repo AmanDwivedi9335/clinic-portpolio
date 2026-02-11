@@ -85,19 +85,19 @@ export default function HealthIdentitySection() {
           </p>
         </div>
 
-        <h3 className="identity-grid-title mx-auto mt-8 w-fit bg-transparent px-4 text-center text-xl font-semibold text-white md:mt-10 md:text-[34px]">
-          Everything in One Place
-        </h3>
+        <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[940px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-10 md:px-12 md:pb-14 md:pt-14">
+          <h3 className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#101976] to-[#7D0B98] px-4 text-center text-xl font-semibold text-white md:px-7 md:text-[38px] md:leading-none">
+            Everything in One Place
+          </h3>
 
-        <div className="mx-auto mt-5 max-w-6xl rounded-[42px] border border-[#BC4AE7]/70 px-5 py-8 sm:px-7 md:mt-8 md:px-12">
-          <div className="identity-grid flex flex-col gap-4 md:gap-6">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6">
+          <div className="identity-grid flex flex-col gap-4 md:gap-7">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-7">
               {identityItems.slice(0, 4).map((item) => (
                 <div
                   key={item.title}
-                  className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
+                  className="identity-card relative mt-8 flex min-h-[118px] flex-col items-center justify-end gap-2 rounded-[24px] bg-gradient-to-b from-[#9608BC] to-[#3325AF] px-4 pb-5 pt-8 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)] md:mt-10 md:min-h-[132px] md:rounded-[26px]"
                 >
-                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
+                  <div className="absolute -top-11 flex h-[84px] w-[84px] items-center justify-center md:-top-12 md:h-[96px] md:w-[96px]">
                     <Image
                       src={item.icon}
                       alt={item.title}
@@ -106,18 +106,20 @@ export default function HealthIdentitySection() {
                       className="h-full w-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
+                  <span className="text-sm font-semibold leading-tight text-white md:text-[30px] md:leading-none md:tracking-[-0.01em]">
+                    {item.title}
+                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-7">
               {identityItems.slice(4).map((item) => (
                 <div
                   key={item.title}
-                  className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
+                  className="identity-card relative mt-8 flex min-h-[118px] flex-col items-center justify-end gap-2 rounded-[24px] bg-gradient-to-b from-[#9608BC] to-[#3325AF] px-4 pb-5 pt-8 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)] md:mt-10 md:min-h-[132px] md:rounded-[26px]"
                 >
-                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
+                  <div className="absolute -top-11 flex h-[84px] w-[84px] items-center justify-center md:-top-12 md:h-[96px] md:w-[96px]">
                     <Image
                       src={item.icon}
                       alt={item.title}
@@ -126,7 +128,9 @@ export default function HealthIdentitySection() {
                       className="h-full w-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
+                  <span className="text-sm font-semibold leading-tight text-white md:text-[30px] md:leading-none md:tracking-[-0.01em]">
+                    {item.title}
+                  </span>
                 </div>
               ))}
             </div>

@@ -46,6 +46,8 @@ const slides = [
 export default function ReportCarouselSection() {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [typedCaption, setTypedCaption] = useState("");
   const autoplayRef = useRef(null);
   const isHoveredRef = useRef(false);
   const sectionRef = useRef(null);
@@ -62,6 +64,28 @@ export default function ReportCarouselSection() {
 
     return () => api.off("select", handleSelect);
   }, [api]);
+
+  useEffect(() => {
+    if (hoveredIndex === null) {
+      setTypedCaption("");
+      return;
+    }
+
+    const text = slides[hoveredIndex]?.caption ?? "";
+    let charIndex = 0;
+    setTypedCaption("");
+
+    const typingInterval = setInterval(() => {
+      charIndex += 1;
+      setTypedCaption(text.slice(0, charIndex));
+
+      if (charIndex >= text.length) {
+        clearInterval(typingInterval);
+      }
+    }, 24);
+
+    return () => clearInterval(typingInterval);
+  }, [hoveredIndex]);
 
   useEffect(() => {
     if (!api) return;
@@ -158,6 +182,8 @@ export default function ReportCarouselSection() {
                       ? "scale-[1.01] opacity-100"
                       : "scale-[0.97] opacity-85"
                   }`}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Image
                     src={slide.image}
@@ -167,10 +193,25 @@ export default function ReportCarouselSection() {
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 84vw"
                     priority={index === 0}
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/65 to-transparent transition duration-300 md:opacity-0 md:group-hover:opacity-100" />
-                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white transition duration-300 md:inset-x-5 md:bottom-5 md:text-base md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/70 to-transparent" />
+                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white md:inset-x-5 md:bottom-5 md:text-base">
                     {slide.caption}
                   </p>
+
+                  <div
+                    className={`pointer-events-none absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#7D1EA1]/98 via-[#7D1EA1]/82 to-[#7D1EA1]/20 px-5 text-center transition-all duration-500 ${
+                      hoveredIndex === index
+                        ? "translate-y-0 opacity-100"
+                        : "translate-y-12 opacity-0"
+                    }`}
+                  >
+                    <p className="max-w-[90%] text-base font-medium leading-snug text-white md:text-lg">
+                      {hoveredIndex === index ? typedCaption : ""}
+                      {hoveredIndex === index && typedCaption.length < slide.caption.length ? (
+                        <span className="ml-0.5 inline-block h-[1em] w-[2px] animate-pulse bg-white align-middle" />
+                      ) : null}
+                    </p>
+                  </div>
                 </article>
               </CarouselItem>
             ))}

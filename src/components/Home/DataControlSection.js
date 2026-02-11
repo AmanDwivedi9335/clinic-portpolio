@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { createGsapContext } from "@/lib/gsap";
+import GradientBadge from "@/components/ui/GradientBadge";
 
 const cardData = [
 	{
@@ -230,9 +231,12 @@ export default function DataControlSection() {
 	return (
 		<section ref={sectionRef} className="bg-white py-10 md:py-16 px-4 md:px-8">
 			<div className="mxxxl:container xl:container w-[90%] mx-auto text-center">
-				<div className="data-intro inline-flex items-center rounded-full bg-[#F1ECFF] px-4 py-1 text-[12px] font-semibold text-[#5C4AFF]">
+				<GradientBadge
+					className="data-intro"
+					innerClassName="bg-white text-[#141E7A]"
+				>
 					Privacy & Security
-				</div>
+				</GradientBadge>
 				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF] [perspective:800px]">
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
+import GradientBadge from "@/components/ui/GradientBadge";
 
 const lovedOnes = [
   {
@@ -113,9 +114,9 @@ export default function LovedOnesSection() {
   return (
     <section ref={sectionRef} className="bg-white py-12 md:py-20">
       <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
-        <span className="rounded-full bg-[#F4ECFF] px-4 py-1 text-xs font-semibold uppercase tracking-wide text-[#6B21A8]">
+        <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones
-        </span>
+        </GradientBadge>
         <h2 className="mt-5 text-2xl font-semibold text-[#6B21A8] md:text-4xl">
           Your Health Identity is Your “Protection”
         </h2>

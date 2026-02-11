@@ -63,25 +63,25 @@ export default function Header() {
 
 					{/* desktop menu */}
 					<nav className="hidden text-[#282672] hover:text-[#0B137A] lg:flex items-center ml-auto gap-14 text-[15px] font-semibold text-[#0d0d0d]">
-						<a href="/" className="flex items-center gap-1 hover:opacity-70">
-							Home <FiArrowUpRight size={18} color="282672"/>
+						<a href="/" className="group flex items-center gap-1 hover:opacity-70">
+							Home <FiArrowUpRight size={18} color="282672" className="transition-transform duration-200 group-hover:rotate-45"/>
 						</a>
 
-						<a href="/doctors" className="flex items-center gap-1 hover:opacity-70">
-							For Doctors <FiArrowUpRight size={18} color="282672"/>
+						<a href="/doctors" className="group flex items-center gap-1 hover:opacity-70">
+							For Doctors <FiArrowUpRight size={18} color="282672" className="transition-transform duration-200 group-hover:rotate-45"/>
 						</a>
 
-						<a href="/users" className="flex items-center gap-1 hover:opacity-70">
-							For Users <FiArrowUpRight size={18} color="282672"/>
+						<a href="/users" className="group flex items-center gap-1 hover:opacity-70">
+							For Users <FiArrowUpRight size={18} color="282672" className="transition-transform duration-200 group-hover:rotate-45"/>
 						</a>
 
-						<a href="/partners" className="flex items-center gap-1 hover:opacity-70">
-							Partners <FiArrowUpRight size={18} />
+						<a href="/partners" className="group flex items-center gap-1 hover:opacity-70">
+							Partners <FiArrowUpRight size={18} className="transition-transform duration-200 group-hover:rotate-45" />
 						</a>
 
 						<div className="relative group">
-							<a href="/resources" className="flex items-center gap-1 hover:opacity-70">
-								Resources <FiArrowUpRight size={18} />
+							<a href="/resources" className="group flex items-center gap-1 hover:opacity-70">
+								Resources <FiArrowUpRight size={18} className="transition-transform duration-200 group-hover:rotate-45" />
 							</a>
 							<div className="absolute left-0 top-[42px] hidden group-hover:block w-[220px] rounded-2xl bg-white shadow-xl border p-3">
 								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/resources#resources1">ABHA / ABDM</a>
@@ -92,8 +92,8 @@ export default function Header() {
 						</div>
 
 						<div className="relative group">
-							<a href="/about" className="flex items-center gap-1 hover:opacity-70">
-								About Us <FiArrowUpRight size={18} />
+							<a href="/about" className="group flex items-center gap-1 hover:opacity-70">
+								About Us <FiArrowUpRight size={18} className="transition-transform duration-200 group-hover:rotate-45" />
 							</a>
 							<div className="absolute left-0 top-[42px] hidden group-hover:block w-[220px] rounded-2xl bg-white shadow-xl border p-3">
 								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/about#about1">Our Story</a>

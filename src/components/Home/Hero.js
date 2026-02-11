@@ -88,7 +88,7 @@ export default function Hero() {
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">
+              <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-[#7B1FA2]">
                 {firstLineWords.map((word, index) => (
                   <span
                     key={`line-one-${word}-${index}`}

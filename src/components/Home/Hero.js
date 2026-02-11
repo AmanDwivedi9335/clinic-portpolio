@@ -64,7 +64,7 @@ export default function Hero() {
               alt={`Hero background ${index + 1}`}
               fill
               priority={index === 0}
-              className={`object-cover object-top transition-opacity duration-700 ${
+              className={`object-cover object-top !top-[-70px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
                 index === activeImageIndex ? "opacity-100" : "opacity-0"
               }`}
               sizes="100vw"
@@ -85,7 +85,7 @@ export default function Hero() {
               <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
                 Your Health Identity<br />
                 
-                For Life
+                for Life...
               </h1>
 
               <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-slate-400">

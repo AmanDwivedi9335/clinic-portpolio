@@ -6,14 +6,14 @@ import { createGsapContext } from "@/lib/gsap";
 import GradientBadge from "@/components/ui/GradientBadge";
 
 const identityItems = [
-  { title: "Past Treatments", icon: "/images/labtest.png" },
-  { title: "Medical History", icon: "/images/stethoscope.png" },
-  { title: "Doctor Notes", icon: "/images/doctornotes.png" },
-  { title: "Prescriptions", icon: "/images/prescription.png" },
-  { title: "Allergies", icon: "/images/allergies.png" },
-  { title: "Scans", icon: "/images/scans.png" },
-  { title: "Diagnoses", icon: "/images/diagnosis.png" },
-  { title: "Lab reports", icon: "/images/labreport.png" },
+  { title: "Past Treatments", icon: "/images/promise1.png" },
+  { title: "Medical History", icon: "/images/promise2.png" },
+  { title: "Doctor Notes", icon: "/images/promise3.png" },
+  { title: "Prescriptions", icon: "/images/promise4.png" },
+  { title: "Allergies", icon: "/images/promise5.png" },
+  { title: "Scans", icon: "/images/promise6.png" },
+  { title: "Diagnoses", icon: "/images/promise7.png" },
+  { title: "Lab reports", icon: "/images/promise8.png" },
 ];
 
 export default function HealthIdentitySection() {

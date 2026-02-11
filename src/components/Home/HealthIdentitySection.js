@@ -70,7 +70,7 @@ export default function HealthIdentitySection() {
     <div ref={pinWrapRef} className="relative">
       <section
         ref={sectionRef}
-        className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0E1F83] via-[#4E0F9A] to-[#94009A] py-8 md:h-[95vh] md:max-h-[95vh] md:py-6"
+        className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0E1F83] via-[#4E0F9A] to-[#94009A] py-8 md:h-[80vh] md:max-h-[80vh] md:py-6"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
           <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">
@@ -85,7 +85,7 @@ export default function HealthIdentitySection() {
           </p>
         </div>
 
-        <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[1120px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-6 md:h-[calc(95vh-230px)] md:max-h-[640px] md:px-8 md:pb-6 md:pt-10">
+        <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[1120px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-6 md:h-[calc(80vh-230px)] md:max-h-[640px] md:px-8 md:pb-6 md:pt-10">
           <h3 className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#101976] to-[#7D0B98] px-4 text-center text-xl font-semibold text-white md:px-6 md:text-[clamp(1.8rem,2.8vw,2.4rem)] md:leading-none">
             Everything in One Place
           </h3>

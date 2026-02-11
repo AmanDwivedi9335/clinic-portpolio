@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
+import GradientBadge from "@/components/ui/GradientBadge";
 
 const identityItems = [
   { title: "Past Treatments", icon: "/images/labtest.png" },
@@ -71,9 +72,9 @@ export default function HealthIdentitySection() {
         className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0E1F83] via-[#4E0F9A] to-[#94009A] py-8 md:py-12"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-          <span className="inline-flex rounded-full border border-[#F5B047] px-5 py-1 text-xs font-medium text-white/95">
+          <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">
             The Promise
-          </span>
+          </GradientBadge>
           <h2 className="mt-4 text-2xl font-medium text-white md:text-[40px] md:leading-[1.15]">
             With MediBank, your <span className="font-bold">&quot;what if&quot;</span> becomes
             <span className="font-bold"> &quot;we&apos;re ready&quot;</span>

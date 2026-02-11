@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { createGsapContext } from "@/lib/gsap";
+import GradientBadge from "@/components/ui/GradientBadge";
 
 const slides = [
   {
@@ -147,11 +148,9 @@ export default function ReportCarouselSection() {
   return (
     <section ref={sectionRef} className="bg-white py-10 md:py-14">
       <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
-        <span className="inline-flex rounded-full bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 p-[2px]">
-          <span className="inline-flex items-center justify-center rounded-full bg-white px-4 py-1 text-[12px] font-semibold tracking-wide text-[#141E7A]">
-            The Moment No One Thinks About
-          </span>
-        </span>
+        <GradientBadge innerClassName="bg-white text-[#141E7A]">
+          The Moment No One Thinks About
+        </GradientBadge>
 
         <h2 className="text-2xl mt-4 font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
           What if the one report that could save your life...

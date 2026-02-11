@@ -106,7 +106,7 @@ export default function HealthIdentitySection() {
                       className="h-full w-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-semibold leading-tight text-white md:text-[30px] md:leading-none md:tracking-[-0.01em]">
+                  <span className="text-sm font-normal text-white md:text-[25px] md:leading-none md:tracking-[-0.01em]">
                     {item.title}
                   </span>
                 </div>
@@ -128,7 +128,7 @@ export default function HealthIdentitySection() {
                       className="h-full w-full object-contain"
                     />
                   </div>
-                  <span className="text-sm font-semibold leading-tight text-white md:text-[30px] md:leading-none md:tracking-[-0.01em]">
+                  <span className="text-sm font-normal text-white md:text-[25px] md:leading-none md:tracking-[-0.01em]">
                     {item.title}
                   </span>
                 </div>

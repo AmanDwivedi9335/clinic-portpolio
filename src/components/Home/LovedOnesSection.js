@@ -150,7 +150,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-16 w-16 overflow-hidden rounded-full bg-transparent shadow-lg">
               <Image
                 src={lovedOnes[0].image}
                 alt={lovedOnes[0].label}
@@ -168,7 +168,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-16 w-16 overflow-hidden rounded-full bg-transparent shadow-lg">
               <Image
                 src={lovedOnes[1].image}
                 alt={lovedOnes[1].label}
@@ -186,7 +186,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
             data-x="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-16 w-16 overflow-hidden rounded-full bg-transparent shadow-lg">
               <Image
                 src={lovedOnes[2].image}
                 alt={lovedOnes[2].label}
@@ -204,7 +204,7 @@ export default function LovedOnesSection() {
             className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
             data-y="-120"
           >
-            <div className="h-16 w-16 overflow-hidden rounded-full border border-white shadow-lg">
+            <div className="h-16 w-16 overflow-hidden rounded-full bg-transparent shadow-lg">
               <Image
                 src={lovedOnes[3].image}
                 alt={lovedOnes[3].label}

@@ -64,9 +64,10 @@ export default function Hero() {
               alt={`Hero background ${index + 1}`}
               fill
               priority={index === 0}
-              className={`object-contain object-top transition-opacity duration-700 ${
+              className={`object-cover object-top transition-opacity duration-700 ${
                 index === activeImageIndex ? "opacity-100" : "opacity-0"
               }`}
+              sizes="100vw"
             />
           ))}
 

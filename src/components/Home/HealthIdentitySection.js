@@ -13,6 +13,7 @@ const identityItems = [
   { title: "Allergies", icon: "/images/promise5.png" },
   { title: "Scans", icon: "/images/promise6.png" },
   { title: "Diagnoses", icon: "/images/promise7.png" },
+  { title: "Medications", icon: "/images/promise9.png" },
   { title: "Lab reports", icon: "/images/promise8.png" },
 ];
 
@@ -89,24 +90,46 @@ export default function HealthIdentitySection() {
         </h3>
 
         <div className="mx-auto mt-5 max-w-6xl rounded-[42px] border border-[#BC4AE7]/70 px-5 py-8 sm:px-7 md:mt-8 md:px-12">
-          <div className="identity-grid grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6">
-            {identityItems.map((item) => (
-              <div
-                key={item.title}
-                className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
-              >
-                <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
-                  <Image
-                    src={item.icon}
-                    alt={item.title}
-                    width={96}
-                    height={96}
-                    className="h-full w-full object-contain"
-                  />
+          <div className="identity-grid flex flex-col gap-4 md:gap-6">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6">
+              {identityItems.slice(0, 4).map((item) => (
+                <div
+                  key={item.title}
+                  className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
+                >
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={96}
+                      height={96}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
                 </div>
-                <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
+              {identityItems.slice(4).map((item) => (
+                <div
+                  key={item.title}
+                  className="identity-card flex flex-col items-center gap-3 rounded-[24px] bg-gradient-to-b from-[#8E0CB4] to-[#3A2BBC] px-4 py-5 text-center shadow-[0_18px_32px_rgba(20,13,86,0.35)]"
+                >
+                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl md:h-24 md:w-24">
+                    <Image
+                      src={item.icon}
+                      alt={item.title}
+                      width={96}
+                      height={96}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <span className="text-sm font-semibold text-white md:text-[20px]">{item.title}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

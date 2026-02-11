@@ -5,7 +5,7 @@ import { createGsapContext } from "@/lib/gsap";
 
 const cardData = [
 	{
-		title: "AES-256 Encryption",
+		title: "Zero Data Reselling",
 		icon: "/images/pr1.png",
 	},
 	{
@@ -13,11 +13,11 @@ const cardData = [
 		icon: "/images/pr2.png",
 	},
 	{
-		title: "Zero Data Reselling",
+		title: "AES-256 Encryption",
 		icon: "/images/pr3.png",
 	},
 	{
-		title: "Consent-Based Access",
+		title: "You Own Your Data",
 		icon: "/images/pr4.png",
 	},
 	{
@@ -25,7 +25,7 @@ const cardData = [
 		icon: "/images/pr5.png",
 	},
 	{
-		title: "You Own Your Data",
+		title: "Consent-Based Access",
 		icon: "/images/pr6.png",
 	},
 ];

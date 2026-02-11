@@ -86,9 +86,13 @@ export default function HealthIdentitySection() {
         </div>
 
         <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[1120px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-6 md:h-[calc(95vh-230px)] md:max-h-[640px] md:px-8 md:pb-6 md:pt-10">
-          <h3 className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#101976] to-[#7D0B98] px-4 text-center text-xl font-semibold text-white md:px-6 md:text-[clamp(1.8rem,2.8vw,2.4rem)] md:leading-none">
-            Everything in One Place
-          </h3>
+          <div className="absolute left-1/2 top-0 z-10 flex w-[min(94%,640px)] -translate-x-1/2 -translate-y-1/2 items-center gap-3 md:gap-4">
+            <span className="h-px flex-1 bg-[#BC4AE7]/70" aria-hidden="true" />
+            <h3 className="shrink-0 whitespace-nowrap bg-inherit px-2 text-center text-xl font-semibold text-white md:px-3 md:text-[clamp(1.8rem,2.8vw,2.4rem)] md:leading-none">
+              Everything in One Place
+            </h3>
+            <span className="h-px flex-1 bg-[#BC4AE7]/70" aria-hidden="true" />
+          </div>
 
           <div className="identity-grid flex flex-col gap-4 md:h-full md:justify-between md:gap-4">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-5">

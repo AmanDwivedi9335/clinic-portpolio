@@ -115,7 +115,7 @@ export default function Hero() {
                 <a
                   href="/claim"
                   className="
-                    inline-flex items-center cursor-pointer justify-center
+                    inline-flex items-center !cursor-pointer justify-center
                     rounded-2xl px-8 py-3
                     font-semibold text-white
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]

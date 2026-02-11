@@ -134,16 +134,13 @@ export default function LovedOnesSection() {
           <div className="absolute left-1/2 top-1/2 h-px w-[210px] -translate-x-1/2 -translate-y-1/2 bg-[#D9C2FF]" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <div className="loved-center relative flex h-20 w-20 items-center justify-center rounded-2xl bg-white shadow-[0_0_30px_rgba(123,31,162,0.35)]">
-              <div className="absolute inset-[-10px] rounded-[24px] bg-[#EAD9FF] opacity-40" />
-              <Image
-                src="/images/ml_logo.png"
-                alt="MediBank"
-                width={44}
-                height={44}
-                className="relative h-10 w-10 object-contain"
-              />
-            </div>
+            <Image
+              src="/images/medibank-grd-logo.png"
+              alt="MediBank"
+              width={80}
+              height={80}
+              className="h-20 w-20 object-contain"
+            />
           </div>
 
           <div

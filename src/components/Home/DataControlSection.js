@@ -256,10 +256,13 @@ export default function DataControlSection() {
 					{cardData.map((card) => (
 						<div
 							key={card.title}
-							className="data-card relative overflow-hidden border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(92,74,255,0.18)] [transform-style:preserve-3d]"
+							className="data-card group relative overflow-hidden rounded-[24px] border border-[#D7D8E8] bg-[linear-gradient(170deg,_#F4F5FF_0%,_#EDEEFA_100%)] px-6 py-7 text-center [box-shadow:inset_0_2px_0_rgba(255,255,255,0.9),inset_0_-3px_5px_rgba(169,176,208,0.38),0_5px_0_rgba(186,191,217,0.9),0_10px_22px_rgba(48,65,141,0.1)] transition-all duration-300 hover:[box-shadow:inset_0_2px_0_rgba(255,255,255,0.95),inset_0_-4px_6px_rgba(157,164,199,0.5),0_8px_0_rgba(184,189,214,0.95),0_16px_28px_rgba(48,65,141,0.16)] [transform-style:preserve-3d]"
 						>
+							<div className="pointer-events-none absolute inset-[2px] rounded-[21px] border border-white/70" />
+							<div className="pointer-events-none absolute inset-x-5 top-[2px] h-3 rounded-full bg-white/70 blur-[2px]" />
+							<div className="pointer-events-none absolute inset-x-8 bottom-2 h-2 rounded-full bg-[#AAB0D4]/45 blur-[1px]" />
 							<div className="data-card-glow pointer-events-none absolute left-0 top-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(109,74,255,0.35)_0%,_rgba(109,74,255,0)_72%)] opacity-0" />
-							<div className="data-card-icon data-float-1 relative z-10 flex h-14 w-14 items-center justify-center">
+							<div className="data-card-icon data-float-1 relative z-10 mx-auto flex h-14 w-14 items-center justify-center drop-shadow-[0_8px_9px_rgba(125,104,199,0.22)]">
 								<Image
 									src={card.icon}
 									alt={card.title}
@@ -268,7 +271,7 @@ export default function DataControlSection() {
 									className="h-12 w-12 object-contain"
 								/>
 							</div>
-							<p className="data-card-title data-float-2 mt-3 text-[#000339] font-semibold">
+							<p className="data-card-title data-float-2 relative z-10 mt-3 text-[#111D75] font-semibold drop-shadow-[0_1px_0_rgba(255,255,255,0.65)]">
 								{card.title}
 							</p>
 						</div>

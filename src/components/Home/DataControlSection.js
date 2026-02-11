@@ -1,163 +1,32 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import { createGsapContext } from "@/lib/gsap";
 
 const cardData = [
 	{
 		title: "AES-256 Encryption",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					d="M32 6C20.402 6 11 15.402 11 27v9c0 12.598 9.402 22 21 22s21-9.402 21-22v-9C53 15.402 43.598 6 32 6Z"
-					fill="#E9E3FF"
-				/>
-				<path
-					d="M32 10c-9.941 0-18 8.059-18 18v8c0 9.941 8.059 18 18 18s18-8.059 18-18v-8c0-9.941-8.059-18-18-18Z"
-					fill="#B6A6FF"
-				/>
-				<path
-					d="M22 30a10 10 0 0 1 20 0v4h-4v-4a6 6 0 1 0-12 0v4h-4v-4Z"
-					fill="#5C4AFF"
-				/>
-				<rect x="20" y="34" width="24" height="18" rx="4" fill="#6D4AFF" />
-				<circle cx="32" cy="43" r="3.5" fill="#E9E3FF" />
-				<rect x="31" y="43" width="2" height="6" rx="1" fill="#E9E3FF" />
-			</svg>
-		),
+		icon: "/images/pr1.png",
 	},
 	{
 		title: "FHIR + ABDM Aligned",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<rect x="8" y="24" width="20" height="20" rx="6" fill="#C9C0FF" />
-				<rect x="36" y="16" width="20" height="20" rx="6" fill="#B6A6FF" />
-				<rect x="36" y="40" width="20" height="20" rx="6" fill="#E9E3FF" />
-				<rect x="8" y="8" width="20" height="20" rx="6" fill="#E9E3FF" />
-				<rect x="22" y="30" width="20" height="20" rx="6" fill="#6D4AFF" />
-				<path
-					d="M32 24v16M24 32h16"
-					stroke="#fff"
-					strokeWidth="3"
-					strokeLinecap="round"
-				/>
-			</svg>
-		),
+		icon: "/images/pr2.png",
 	},
 	{
 		title: "Zero Data Reselling",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<ellipse cx="32" cy="16" rx="18" ry="6" fill="#D9D1FF" />
-				<path
-					d="M14 16v20c0 3.314 8.059 6 18 6s18-2.686 18-6V16"
-					fill="#B6A6FF"
-				/>
-				<path
-					d="M14 28v20c0 3.314 8.059 6 18 6s18-2.686 18-6V28"
-					fill="#E9E3FF"
-				/>
-				<circle cx="46" cy="44" r="10" fill="#6D4AFF" />
-				<path
-					d="M42 44h8"
-					stroke="#fff"
-					strokeWidth="3"
-					strokeLinecap="round"
-				/>
-			</svg>
-		),
+		icon: "/images/pr3.png",
 	},
 	{
 		title: "Consent-Based Access",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<rect x="10" y="12" width="34" height="40" rx="6" fill="#E9E3FF" />
-				<rect x="16" y="20" width="22" height="4" rx="2" fill="#B6A6FF" />
-				<rect x="16" y="30" width="22" height="4" rx="2" fill="#B6A6FF" />
-				<rect x="16" y="40" width="14" height="4" rx="2" fill="#B6A6FF" />
-				<circle cx="48" cy="42" r="10" fill="#6D4AFF" />
-				<path
-					d="m44 42 3 3 5-6"
-					stroke="#fff"
-					strokeWidth="3"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-				/>
-			</svg>
-		),
+		icon: "/images/pr4.png",
 	},
 	{
 		title: "Complete Audit Trail",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<rect x="14" y="10" width="28" height="40" rx="6" fill="#E9E3FF" />
-				<path
-					d="M24 10h8a4 4 0 0 1 4 4v4H20v-4a4 4 0 0 1 4-4Z"
-					fill="#B6A6FF"
-				/>
-				<rect x="20" y="24" width="16" height="3" rx="1.5" fill="#B6A6FF" />
-				<rect x="20" y="31" width="16" height="3" rx="1.5" fill="#B6A6FF" />
-				<rect x="20" y="38" width="12" height="3" rx="1.5" fill="#B6A6FF" />
-				<path
-					d="M46 44c0 6.075-4.925 11-11 11-2.202 0-4.254-.65-5.975-1.77L18 58l4.77-11.025A10.94 10.94 0 0 1 22 44c0-6.075 4.925-11 11-11s13 4.925 13 11Z"
-					fill="#6D4AFF"
-				/>
-				<path
-					d="m30 44 3 3 6-6"
-					stroke="#fff"
-					strokeWidth="3"
-					strokeLinecap="round"
-					strokeLinejoin="round"
-				/>
-			</svg>
-		),
+		icon: "/images/pr5.png",
 	},
 	{
 		title: "You Own Your Data",
-		icon: (
-			<svg
-				viewBox="0 0 64 64"
-				className="h-12 w-12"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<circle cx="32" cy="18" r="10" fill="#C9C0FF" />
-				<path
-					d="M16 54c0-8.837 7.163-16 16-16s16 7.163 16 16"
-					fill="#E9E3FF"
-				/>
-				<path
-					d="M32 30c-9.941 0-18 8.059-18 18v6h36v-6c0-9.941-8.059-18-18-18Z"
-					fill="#B6A6FF"
-				/>
-				<rect x="26" y="34" width="12" height="16" rx="4" fill="#6D4AFF" />
-				<circle cx="32" cy="40" r="3" fill="#E9E3FF" />
-			</svg>
-		),
+		icon: "/images/pr6.png",
 	},
 ];
 
@@ -390,7 +259,15 @@ export default function DataControlSection() {
 							className="data-card relative overflow-hidden border border-[#5C4AFF] rounded-[18px] px-6 py-7 flex flex-col items-center justify-center text-center bg-white transition-shadow duration-300 hover:shadow-[0_18px_45px_rgba(92,74,255,0.18)] [transform-style:preserve-3d]"
 						>
 							<div className="data-card-glow pointer-events-none absolute left-0 top-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(109,74,255,0.35)_0%,_rgba(109,74,255,0)_72%)] opacity-0" />
-							<div className="data-card-icon data-float-1 relative z-10">{card.icon}</div>
+							<div className="data-card-icon data-float-1 relative z-10 flex h-14 w-14 items-center justify-center">
+								<Image
+									src={card.icon}
+									alt={card.title}
+									width={56}
+									height={56}
+									className="h-12 w-12 object-contain"
+								/>
+							</div>
 							<p className="data-card-title data-float-2 mt-3 text-[#000339] font-semibold">
 								{card.title}
 							</p>

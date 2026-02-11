@@ -85,7 +85,7 @@ export default function HealthIdentitySection() {
           </p>
         </div>
 
-        <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[940px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-10 md:px-12 md:pb-14 md:pt-14">
+        <div className="identity-grid-title relative mx-auto mt-8 w-full max-w-[1120px] rounded-[42px] border border-[#BC4AE7]/70 px-5 pb-10 pt-12 sm:px-7 md:mt-10 md:px-12 md:pb-14 md:pt-14">
           <h3 className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#101976] to-[#7D0B98] px-4 text-center text-xl font-semibold text-white md:px-7 md:text-[38px] md:leading-none">
             Everything in One Place
           </h3>

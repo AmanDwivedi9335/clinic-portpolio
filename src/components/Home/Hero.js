@@ -12,14 +12,15 @@ export default function Hero() {
     "/images/img4bg.png",
     "/images/img5bg.png",
   ];
-  const firstLineWords =
-    "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.".split(
-      " "
-    );
-  const secondLineWords =
-    "Because one missing detail can change everything...".split(" ");
+  const firstLineText =
+    "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.";
+  const secondLineText = "Because one missing detail can change everything...";
+  const typingSpeed = 60;
+  const totalTypingCharacters =
+    firstLineText.length + 1 + secondLineText.length;
   const sectionRef = useRef(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [typedCharacters, setTypedCharacters] = useState(0);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
@@ -50,6 +51,32 @@ export default function Hero() {
 
     return () => clearInterval(carouselInterval);
   }, [heroImages.length]);
+
+  useEffect(() => {
+    const typingInterval = setInterval(() => {
+      setTypedCharacters((currentCharacters) => {
+        if (currentCharacters >= totalTypingCharacters) {
+          clearInterval(typingInterval);
+          return currentCharacters;
+        }
+
+        return currentCharacters + 1;
+      });
+    }, typingSpeed);
+
+    return () => clearInterval(typingInterval);
+  }, [totalTypingCharacters]);
+
+  const hasStartedSecondLine = typedCharacters > firstLineText.length;
+  const firstLineVisible = firstLineText.slice(
+    0,
+    Math.min(typedCharacters, firstLineText.length)
+  );
+  const secondLineVisible = secondLineText.slice(
+    0,
+    Math.max(0, typedCharacters - firstLineText.length - 1)
+  );
+  const isTypingComplete = typedCharacters >= totalTypingCharacters;
 
   return (
     <section ref={sectionRef} className="pt-[104px] pb-5">
@@ -89,27 +116,12 @@ export default function Hero() {
               </h1>
 
               <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-[#7B1FA2]">
-                {firstLineWords.map((word, index) => (
-                  <span
-                    key={`line-one-${word}-${index}`}
-                    className="word-wave"
-                    style={{ "--delay": `${index * 0.12}s` }}
-                  >
-                    {word}{" "}
-                  </span>
-                ))}
-                <br />
-                {secondLineWords.map((word, index) => (
-                  <span
-                    key={`line-two-${word}-${index}`}
-                    className="word-wave font-semibold"
-                    style={{
-                      "--delay": `${(firstLineWords.length + index) * 0.12}s`,
-                    }}
-                  >
-                    {word}{" "}
-                  </span>
-                ))}
+                <span>{firstLineVisible}</span>
+                {hasStartedSecondLine && <br />}
+                <span className="font-semibold">{secondLineVisible}</span>
+                {!isTypingComplete && (
+                  <span className="ml-0.5 inline-block animate-pulse">|</span>
+                )}
               </p>
 
               <div className="hero-animate mt-7">

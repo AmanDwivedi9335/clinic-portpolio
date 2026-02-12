@@ -157,15 +157,19 @@ export default function ReportCarouselSection() {
         >
           <CarouselContent className="py-3 md:py-3">
             {slides.map((slide, index) => (
-              <CarouselItem key={`${slide.title}-${index}`} className="basis-[75%] sm:basis-[42%] lg:basis-1/3">
+              <CarouselItem key={`${slide.title}-${index}`} className="basis-[72%] sm:basis-[40%] lg:basis-1/3">
                 <article
-                  className={`report-slide group relative flex h-full min-h-[500px] flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300 hover:border-[#2A37BB] hover:shadow-[0_14px_30px_rgba(42,55,187,0.16)] ${
+                  className={`report-slide group relative flex h-[470px] flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300 ${
                     activeIndex === index
-                      ? "scale-[1.01] opacity-100"
+                      ? "scale-[1.01] opacity-100 hover:border-[#C22ECC] hover:shadow-[0_14px_30px_rgba(194,46,204,0.2)]"
                       : "scale-[0.97] opacity-85"
                   }`}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-[32px]">
+                  <div
+                    className={`relative h-[250px] overflow-hidden rounded-[32px] transition-[height] duration-300 ease-out ${
+                      activeIndex === index ? "group-hover:h-[245px]" : ""
+                    }`}
+                  >
                     <Image
                       src={slide.image}
                       alt={slide.alt}
@@ -176,11 +180,15 @@ export default function ReportCarouselSection() {
                     />
                   </div>
 
-                  <div className="flex flex-1 flex-col px-5 pb-6 pt-5">
-                    <h3 className="text-[28px] font-semibold leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
+                  <div
+                    className={`flex h-[206px] flex-col px-5 pb-5 pt-4 transition-[height] duration-300 ease-out ${
+                      activeIndex === index ? "group-hover:h-[211px]" : ""
+                    }`}
+                  >
+                    <h3 className="text-[25px] font-semibold leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
                       {slide.title}
                     </h3>
-                    <p className="mt-4 text-[20px] leading-[1.3] text-[#0A1C77]">
+                    <p className="mt-3 text-[18px] leading-[1.3] text-[#0A1C77]">
                       {slide.description}
                     </p>
                   </div>

@@ -117,10 +117,10 @@ export default function LovedOnesSection() {
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones
         </GradientBadge>
-        <h2 className="mt-5 bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] bg-clip-text text-2xl font-normal text-transparent md:text-4xl">
+        <h2 className="mt-5 text-2xl font-normal text-[#3B1ED0] md:text-4xl">
           Your Health Identity is Your <b>“Protection”</b>
         </h2>
-        <p className="mt-4 max-w-3xl text-sm text-[#0E1896] md:text-base">
+        <p className="mt-4 max-w-3xl text-sm text-[#000339] md:text-base">
           But your Family&apos;s Health Identity is you “Power”. Create linked health
           identities of your parents, your loved ones and your children so you are
           always prepared - even when they can&apos;t be

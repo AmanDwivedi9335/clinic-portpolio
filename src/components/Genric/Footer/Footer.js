@@ -83,43 +83,49 @@ export default function Footer() {
 						<div className="flex gap-3">
 							<Link
 								href="https://www.whatsapp.com/"
-								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+								className="flex h-10 w-10 items-center justify-center"
 							>
-								<span className="text-lg">💬</span>
+								<Image
+									src="/images/wa.png"
+									alt="WhatsApp"
+									width={24}
+									height={24}
+									loading="lazy"
+								/>
 							</Link>
 							<Link
 								href="https://instagram.com/"
-								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+								className="flex h-10 w-10 items-center justify-center"
 							>
 								<Image
-									src="/images/insta.png"
+									src="/images/instaMedi.png"
 									alt="Instagram"
-									width={18}
-									height={18}
+									width={24}
+									height={24}
 									loading="lazy"
 								/>
 							</Link>
 							<Link
 								href="https://x.com/"
-								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+								className="flex h-10 w-10 items-center justify-center"
 							>
 								<Image
-									src="/images/x.png"
-									alt="X"
-									width={18}
-									height={18}
+									src="/images/twitter.png"
+									alt="Twitter"
+									width={24}
+									height={24}
 									loading="lazy"
 								/>
 							</Link>
 							<Link
 								href="https://linkedin.com/"
-								className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E8E8F2] bg-white shadow-sm hover:border-[#5C4AFF]"
+								className="flex h-10 w-10 items-center justify-center"
 							>
 								<Image
-									src="/images/LinkedIn.png"
+									src="/images/LlinkedInMedi.png"
 									alt="LinkedIn"
-									width={18}
-									height={18}
+									width={24}
+									height={24}
 									loading="lazy"
 								/>
 							</Link>

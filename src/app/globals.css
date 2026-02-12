@@ -73,6 +73,14 @@
 	* {
 		@apply border-border;
 	}
+	html,
+	body,
+	button,
+	input,
+	select,
+	textarea {
+		font-family: "Aptos" !important;
+	}
 	body {
 		@apply bg-background text-foreground;
 		font-family: "Aptos" !important;

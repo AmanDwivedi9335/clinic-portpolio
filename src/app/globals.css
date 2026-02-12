@@ -1,3 +1,37 @@
+@font-face {
+	font-family: "Aptos";
+	src:
+		local("Aptos"),
+		local("Aptos Display"),
+		local("Aptos Text"),
+		local("Aptos Body");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Aptos";
+	src:
+		local("Aptos Semibold"),
+		local("Aptos Display Semibold"),
+		local("Aptos Text Semibold");
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Aptos";
+	src:
+		local("Aptos Bold"),
+		local("Aptos Display Bold"),
+		local("Aptos Text Bold");
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -65,6 +99,14 @@
 @layer base {
 	* {
 		@apply border-border;
+	}
+	html,
+	body,
+	button,
+	input,
+	select,
+	textarea {
+		font-family: "Aptos" !important;
 	}
 	body {
 		@apply bg-background text-foreground;

@@ -83,11 +83,11 @@ export default function Header() {
 							<a href="/resources" className="group flex items-center gap-1 hover:opacity-70">
 								Resources <FiArrowUpRight size={18} className="transition-transform duration-200 group-hover:rotate-45" />
 							</a>
-							<div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[220px] rounded-2xl bg-white shadow-xl border p-3">
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/resources#resources1">ABHA / ABDM</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/resources#resources2">Health Guides</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/resources#resources3">Blog</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/resources#resources4">Privacy policy</a>
+							<div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[145px] rounded-2xl bg-white shadow-xl border p-3">
+								<a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#resources1">ABHA / ABDM</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources2">Health Guides</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources3">Blog</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources4">Privacy policy</a>
 							</div>
 						</div>
 
@@ -95,11 +95,11 @@ export default function Header() {
 							<a href="/about" className="group flex items-center gap-1 hover:opacity-70">
 								About Us <FiArrowUpRight size={18} className="transition-transform duration-200 group-hover:rotate-45" />
 							</a>
-							<div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[220px] rounded-2xl bg-white shadow-xl border p-3">
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/about#about1">Our Story</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/about#about2">Our Team</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/about#about3">Careers</a>
-								<a className="block rounded-xl px-3 py-2 hover:bg-gray-50" href="/about#about4">Contact Us</a>
+							<div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[100px] rounded-2xl bg-white shadow-xl border p-3">
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about1">Our Story</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about2">Our Team</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about3">Careers</a>
+								<a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about4">Contact Us</a>
 							</div>
 						</div>
 

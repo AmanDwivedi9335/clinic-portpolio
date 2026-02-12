@@ -16,7 +16,7 @@ export default function Footer() {
 							loading="lazy"
 						/>
 						<p className="text-base md:text-[15px] text-[#1D225B] leading-tight max-w-sm">
-							India&apos;s First Health Identity Infrastructure™. Your complete medical history—secure, portable, and always with you.
+							India&apos;s First Health Identity Infrastructure™. Your complete medical history - secure, portable, and always with you.
 						</p>
 					</div>
 
@@ -49,23 +49,28 @@ export default function Footer() {
 						<h4 className="text-2xl md:text-[20px] font-semibold">Quick Links</h4>
 						<ul className="list-disc pl-5 space-y-3 text-base md:text-[15px] text-[#1D225B]">
 							<li>
-								<Link href="/account" className="hover:text-[#5C4AFF]">
-									My Account
+								<Link href="/resources/#resources2" className="hover:text-[#5C4AFF]">
+									Health Guides
 								</Link>
 							</li>
 							<li>
-								<Link href="/how-it-works" className="hover:text-[#5C4AFF]">
-									How it Works?
+								<Link href="/resources/#resources3" className="hover:text-[#5C4AFF]">
+									Blog
 								</Link>
 							</li>
 							<li>
-								<Link href="/knowledge-center" className="hover:text-[#5C4AFF]">
-									Knowledge Center
+								<Link href="/resources/#resources1" className="hover:text-[#5C4AFF]">
+									ABHA
 								</Link>
 							</li>
 							<li>
-								<Link href="/faq" className="hover:text-[#5C4AFF]">
-									FAQs
+								<Link href="/resources/#resources4" className="hover:text-[#5C4AFF]">
+									Privacy Policy
+								</Link>
+							</li>
+							<li>
+								<Link href="/about/" className="hover:text-[#5C4AFF]">
+									About Us
 								</Link>
 							</li>
 						</ul>
@@ -128,7 +133,7 @@ export default function Footer() {
 
 				<div className="mt-14 border-t border-[#CDD2E7] pt-6 text-base md:text-[20px] text-[#1D225B] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 					<p>© 2026 MediBank. All rights reserved.</p>
-					<p className="text-sm text-white">
+					<p className="text-sm text-[#1D225B]">
 						Made with{" "}
 						<span
 							className="

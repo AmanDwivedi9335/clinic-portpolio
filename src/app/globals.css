@@ -1,34 +1,6 @@
 @font-face {
 	font-family: "Aptos";
-	src:
-		local("Aptos"),
-		local("Aptos Display"),
-		local("Aptos Text"),
-		local("Aptos Body");
-	font-style: normal;
-	font-weight: 400;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Aptos";
-	src:
-		local("Aptos Semibold"),
-		local("Aptos Display Semibold"),
-		local("Aptos Text Semibold");
-	font-style: normal;
-	font-weight: 600;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Aptos";
-	src:
-		local("Aptos Bold"),
-		local("Aptos Display Bold"),
-		local("Aptos Text Bold");
-	font-style: normal;
-	font-weight: 700;
+	src: local("Aptos");
 	font-display: swap;
 }
 
@@ -38,6 +10,7 @@
 
 * {
 	scroll-behavior: smooth;
+	font-family: "Aptos" !important;
 }
 @layer base {
 	:root {
@@ -110,6 +83,7 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		font-family: "Aptos" !important;
 	}
 }
 @keyframes bounceUpDown {

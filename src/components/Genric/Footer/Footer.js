@@ -88,8 +88,8 @@ export default function Footer() {
 								<Image
 									src="/images/wa.png"
 									alt="WhatsApp"
-									width={24}
-									height={24}
+									width={44}
+									height={44}
 									loading="lazy"
 								/>
 							</Link>
@@ -100,8 +100,8 @@ export default function Footer() {
 								<Image
 									src="/images/instaMedi.png"
 									alt="Instagram"
-									width={24}
-									height={24}
+									width={44}
+									height={44}
 									loading="lazy"
 								/>
 							</Link>
@@ -112,8 +112,8 @@ export default function Footer() {
 								<Image
 									src="/images/twitter.png"
 									alt="Twitter"
-									width={24}
-									height={24}
+									width={44}
+									height={44}
 									loading="lazy"
 								/>
 							</Link>
@@ -124,8 +124,8 @@ export default function Footer() {
 								<Image
 									src="/images/LlinkedInMedi.png"
 									alt="LinkedIn"
-									width={24}
-									height={24}
+									width={44}
+									height={44}
 									loading="lazy"
 								/>
 							</Link>

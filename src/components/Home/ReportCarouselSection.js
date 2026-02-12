@@ -10,45 +10,50 @@ const slides = [
   {
     image: "/images/img-carousel1.png",
     alt: "Person checking old health messages on phone",
-    caption: "What if... your medical history is stuck in a WhatsApp screenshot from 2021?",
+    title: "What if your prescription history exists only in WhatsApp forwards?",
+    description: "Scattered across 47 chats. None backed up.",
   },
   {
     image: "/images/img-carousel2.png",
     alt: "Family and doctor discussing care",
-    caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
+    title: "What if the ER doctor doesn't know you're allergic to penicillin?",
+    description: "And your family is too panicked to remember.",
   },
   {
     image: "/images/img-carousel3.png",
     alt: "Patient and physician in consultation room",
-    caption: "What if... you arrive unconscious and no one knows your blood group or allergies?",
+    title: "What if your latest scan stays in one clinic's local system?",
+    description: "And treatment is delayed while records are requested.",
   },
   {
     image: "/images/img-carousel4.png",
     alt: "Clinician searching through scattered records",
-    caption: "What if... your reports are scattered when every second matters?",
+    title: "What if your reports are scattered when every second matters?",
+    description: "Critical decisions can't wait for file hunting.",
   },
   {
     image: "/images/img-carousel5.png",
     alt: "Clinician searching through scattered records",
-    caption: "What if... your reports are scattered when every second matters?",
+    title: "What if your blood group report is buried in old emails?",
+    description: "Emergency care needs immediate facts, not guesses.",
   },
   {
     image: "/images/img-carousel6.png",
     alt: "Clinician searching through scattered records",
-    caption: "What if... your reports are scattered when every second matters?",
+    title: "What if your medical timeline is split across three hospitals?",
+    description: "Fragmented records lead to repeated tests and delays.",
   },
   {
     image: "/images/img-carousel7.png",
     alt: "Clinician searching through scattered records",
-    caption: "What if... your reports are scattered when every second matters?",
+    title: "What if the one report that could save your life isn't available?",
+    description: "A missing document can change everything.",
   },
 ];
 
 export default function ReportCarouselSection() {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [typedCaption, setTypedCaption] = useState("");
   const autoplayRef = useRef(null);
   const isHoveredRef = useRef(false);
   const sectionRef = useRef(null);
@@ -65,28 +70,6 @@ export default function ReportCarouselSection() {
 
     return () => api.off("select", handleSelect);
   }, [api]);
-
-  useEffect(() => {
-    if (hoveredIndex === null) {
-      setTypedCaption("");
-      return;
-    }
-
-    const text = slides[hoveredIndex]?.caption ?? "";
-    let charIndex = 0;
-    setTypedCaption("");
-
-    const typingInterval = setInterval(() => {
-      charIndex += 1;
-      setTypedCaption(text.slice(0, charIndex));
-
-      if (charIndex >= text.length) {
-        clearInterval(typingInterval);
-      }
-    }, 24);
-
-    return () => clearInterval(typingInterval);
-  }, [hoveredIndex]);
 
   useEffect(() => {
     if (!api) return;
@@ -174,43 +157,38 @@ export default function ReportCarouselSection() {
         >
           <CarouselContent className="py-3 md:py-3">
             {slides.map((slide, index) => (
-              <CarouselItem key={`${slide.caption}-${index}`} className="basis-[75%] sm:basis-[42%] lg:basis-1/3">
+              <CarouselItem key={`${slide.title}-${index}`} className="basis-[75%] sm:basis-[42%] lg:basis-1/3">
                 <article
-                  className={`report-slide group relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#E8E2F6] shadow-md transition duration-300 will-change-transform ${
+                  className={`report-slide group relative flex h-full min-h-[500px] flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300 hover:border-[#2A37BB] hover:shadow-[0_14px_30px_rgba(42,55,187,0.16)] ${
                     activeIndex === index
                       ? "scale-[1.01] opacity-100"
                       : "scale-[0.97] opacity-85"
                   }`}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
                 >
-                  <Image
-                    src={slide.image}
-                    alt={slide.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 84vw"
-                    priority={index === 0}
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#7D1EA1]/95 via-[#7D1EA1]/70 to-transparent" />
-                  <p className="absolute inset-x-4 bottom-4 text-sm leading-snug text-white md:inset-x-5 md:bottom-5 md:text-base">
-                    {slide.caption}
-                  </p>
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-[32px]">
+                    <Image
+                      src={slide.image}
+                      alt={slide.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 84vw"
+                      priority={index === 0}
+                    />
+                  </div>
 
-                  <div
-                    className={`pointer-events-none absolute inset-0 flex items-center justify-center bg-gradient-to-t from-[#7D1EA1]/98 via-[#7D1EA1]/82 to-[#7D1EA1]/20 px-5 text-center transition-all duration-500 ${
-                      hoveredIndex === index
-                        ? "translate-y-0 opacity-100"
-                        : "translate-y-12 opacity-0"
-                    }`}
-                  >
-                    <p className="max-w-[90%] text-base font-medium leading-snug text-white md:text-lg">
-                      {hoveredIndex === index ? typedCaption : ""}
-                      {hoveredIndex === index && typedCaption.length < slide.caption.length ? (
-                        <span className="ml-0.5 inline-block h-[1em] w-[2px] animate-pulse bg-white align-middle" />
-                      ) : null}
+                  <div className="flex flex-1 flex-col px-5 pb-6 pt-5">
+                    <h3 className="text-[28px] font-semibold leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
+                      {slide.title}
+                    </h3>
+                    <p className="mt-4 text-[20px] leading-[1.3] text-[#0A1C77]">
+                      {slide.description}
                     </p>
                   </div>
+
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] rounded-t-[30px] bg-[#C22ECC] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <p className="sr-only">
+                    {slide.title}
+                  </p>
                 </article>
               </CarouselItem>
             ))}

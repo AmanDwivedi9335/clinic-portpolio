@@ -110,7 +110,7 @@ export default function HealthIdentitySection() {
               {identityItems.slice(0, 4).map((item) => (
                 <div
                   key={item.title}
-                  className="group relative mt-10 flex min-h-[100px] w-[255px] flex-col items-center justify-end rounded-[26px] px-4 pb-5 pt-10 text-center"
+                  className="identity-card group relative mt-10 flex min-h-[100px] w-[255px] flex-col items-center justify-end rounded-[26px] px-4 pb-5 pt-10 text-center"
                 >
                   {/* card body with exact “purple slab” look */}
                   <div className="absolute inset-0 rounded-[26px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_20px_40px_rgba(10,8,45,0.55)]" />
@@ -143,7 +143,7 @@ export default function HealthIdentitySection() {
               {identityItems.slice(4).map((item) => (
                 <div
                   key={item.title}
-                  className="group relative mt-12 flex min-h-[100px] w-[185px] flex-col items-center justify-end rounded-[26px] px-4 pb-5 pt-10 text-center"
+                  className="identity-card group relative mt-12 flex min-h-[100px] w-[185px] flex-col items-center justify-end rounded-[26px] px-4 pb-5 pt-10 text-center"
                 >
                   <div className="absolute inset-0 rounded-[26px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_20px_40px_rgba(10,8,45,0.55)]" />
 

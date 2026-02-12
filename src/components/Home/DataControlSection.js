@@ -286,33 +286,54 @@ export default function DataControlSection() {
 			</div>
 
 			<div className="data-cta mt-12 md:mt-16">
-				<div className="relative flex min-h-[320px] items-center overflow-hidden rounded-[24px] bg-[linear-gradient(110deg,_#2B0B78_0%,_#6D1AA6_45%,_#1C2A85_100%)] px-6 py-10 text-left text-white md:min-h-[320px] md:px-12 md:py-12">
-					<div className="relative z-10 w-full max-w-[600px] text-center md:text-left">
-						<h3 className="text-[30px] leading-tight md:text-[40px] md:leading-[1.2] font-semibold">
-							Don&apos;t wait for a crisis to organise your medical life.
+				<div className="relative overflow-hidden rounded-[22px] px-6 py-10 md:px-12 md:py-12">
+					{/* Base gradient (purple → blue) */}
+					<div className="absolute inset-0 bg-[linear-gradient(45deg,_#0E1896_0%,_#640B91_50%,_#9F028D_100%)]" />
+
+					{/* Concentric arcs on right */}
+					<div
+					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_200px,rgba(255,255,255,1)_100px_200px,rgba(255,255,255,0.8)_200px_300px,rgba(255,255,255,0.6)_300px_400px,rgba(255,255,255,0.5)_400px_500px,rgba(255,255,255,0.3)_500px_600px,rgba(255,255,255,0.2)_600px_700px,rgba(255,255,255,0.1)_800px)]"
+					aria-hidden="true"
+					/>
+
+					{/* Slight soft vignette to blend arcs into the base */}
+					<div
+					className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,_rgba(0,0,0,0)_0%,_rgba(0,0,0,0)_55%,_rgba(0,0,0,0.10)_100%)]"
+					aria-hidden="true"
+					/>
+
+					<div className="relative z-10 flex min-h-[260px] items-center">
+					<div className="w-full max-w-[640px] text-center md:text-left">
+						<h3 className="text-[28px] font-semibold leading-tight text-white md:text-[42px] md:leading-[1.15]">
+						Don&apos;t wait for a crisis to organise <br className="hidden sm:block" />
+						your medical life.
 						</h3>
-						<p className="mt-3 text-[15px] md:text-[16px] text-white/90 max-w-[520px] mx-auto md:mx-0">
-							The best time to claim your Health Identity is before you need it.
+
+						<p className="mt-3 max-w-[560px] text-[15px] text-white/90 md:text-[16px]">
+						The best time to claim your Health Identity is before you need it.
 						</p>
+
 						<button
-							type="button"
-							className="mt-6 inline-flex items-center rounded-[10px] bg-[#E2CCFF] px-5 py-2 text-sm font-semibold text-[#4A1A96] shadow-sm transition duration-200 hover:brightness-105"
+						type="button"
+						className="
+							mt-6 inline-flex items-center justify-center
+							rounded-[10px]
+							bg-[#E7D5FF]
+							px-5 py-2.5
+							text-sm font-semibold text-[#2B0B78]
+							shadow-[0_10px_18px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.65)]
+							transition
+							hover:brightness-105
+							active:scale-[0.98]
+						"
 						>
-							Claim Your Health Identity
+						Claim Your Health Identity
 						</button>
 					</div>
-
-					<div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] items-center justify-end md:flex">
-						<div className="relative h-[260px] w-[260px]">
-							<div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.25)_0%,_rgba(255,255,255,0.08)_48%,_rgba(255,255,255,0)_72%)]" />
-							<div className="absolute inset-6 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.3)_0%,_rgba(255,255,255,0.1)_50%,_rgba(255,255,255,0)_76%)]" />
-							<div className="absolute inset-12 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.35)_0%,_rgba(255,255,255,0.12)_52%,_rgba(255,255,255,0)_80%)]" />
-							<div className="absolute inset-16 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.5)_0%,_rgba(255,255,255,0.18)_55%,_rgba(255,255,255,0)_85%)]" />
-							<div className="absolute inset-20 rounded-full bg-[radial-gradient(circle,_rgba(255,255,255,0.7)_0%,_rgba(255,255,255,0.22)_60%,_rgba(255,255,255,0)_90%)]" />
-						</div>
 					</div>
 				</div>
 			</div>
+
 		</section>
 	);
 }

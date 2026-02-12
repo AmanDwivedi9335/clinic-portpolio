@@ -11,46 +11,43 @@ export default function Footer() {
 						<Image
 							src="/images/medibank-logo.png"
 							alt="MediBank logo"
-							width={182}
+							width={122}
 							height={85}
 							loading="lazy"
 						/>
-						<p className="text-base md:text-[25px] text-[#1D225B] leading-tight max-w-sm">
+						<p className="text-base md:text-[15px] text-[#1D225B] leading-tight max-w-sm">
 							India&apos;s First Health Identity Infrastructure™. Your complete medical history—secure, portable, and always with you.
 						</p>
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-2xl md:text-[32px] font-semibold">Contact Us</h4>
-						<ul className="space-y-3 text-base md:text-[22px] text-[#1D225B]">
+						<h4 className="text-2xl md:text-[20px] font-semibold">Contact Us</h4>
+						<ul className="space-y-3 text-base md:text-[15px] text-[#1D225B]">
 							<li className="flex items-center gap-2.5">
 								<Mail size={20} strokeWidth={1.8} />
 								<a
-									href="mailto:team@signelbiomedical.com"
+									href="mailto:contact@medibank.in"
 									className="hover:text-[#5C4AFF]"
 								>
-									team@signelbiomedical.com
+									contact@medibank.in
 								</a>
 							</li>
 							<li className="flex items-center gap-2.5">
 								<Phone size={20} strokeWidth={1.8} />
 								<a
-									href="tel:+918919117478"
+									href="tel:+919959095217"
 									className="hover:text-[#5C4AFF]"
 								>
-									+91 8919117478
+									+91 9959095217
 								</a>
 							</li>
-							<li className="flex items-center gap-2.5">
-								<Clock3 size={20} strokeWidth={1.8} />
-								<span>Mon–Sat | 10 AM to 7 PM</span>
-							</li>
+							
 						</ul>
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-2xl md:text-[32px] font-semibold">Quick Links</h4>
-						<ul className="list-disc pl-5 space-y-3 text-base md:text-[22px] text-[#1D225B]">
+						<h4 className="text-2xl md:text-[20px] font-semibold">Quick Links</h4>
+						<ul className="list-disc pl-5 space-y-3 text-base md:text-[15px] text-[#1D225B]">
 							<li>
 								<Link href="/account" className="hover:text-[#5C4AFF]">
 									My Account
@@ -75,7 +72,7 @@ export default function Footer() {
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-2xl md:text-[32px] font-semibold">Follow Us:</h4>
+						<h4 className="text-2xl md:text-[20px] font-semibold">Follow Us:</h4>
 						<div className="flex gap-3">
 							<Link
 								href="https://www.whatsapp.com/"
@@ -129,11 +126,24 @@ export default function Footer() {
 					</div>
 				</div>
 
-				<div className="mt-14 border-t border-[#CDD2E7] pt-6 text-base md:text-[30px] text-[#1D225B] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-					<p>© 2024 MediBank. All rights reserved.</p>
-					<p>
-						Made with <span className="text-[#6A14C9]">❤</span> in India
+				<div className="mt-14 border-t border-[#CDD2E7] pt-6 text-base md:text-[20px] text-[#1D225B] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+					<p>© 2026 MediBank. All rights reserved.</p>
+					<p className="text-sm text-white">
+						Made with{" "}
+						<span
+							className="
+							inline-block
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+							bg-clip-text
+							text-transparent
+							"
+							aria-hidden="true"
+						>
+							❤
+						</span>{" "}
+						in India
 					</p>
+
 				</div>
 			</div>
 		</footer>

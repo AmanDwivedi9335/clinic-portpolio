@@ -268,9 +268,9 @@ export default function DataControlSection() {
 								<Image
 									src={card.icon}
 									alt={card.title}
-									width={56}
-									height={56}
-									className="h-12 w-12 object-contain"
+									width={96}
+									height={96}
+									className="h-28 w-28 object-contain"
 								/>
 							</div>
 							<p className="data-card-title data-float-2 relative z-10 mt-3 text-[#111D75] font-semibold drop-shadow-[0_1px_0_rgba(255,255,255,0.65)]">

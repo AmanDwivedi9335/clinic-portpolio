@@ -106,7 +106,7 @@ export default function Hero() {
             {/* Left content */}
             <div className="px-6 md:px-10 py-12 md:py-16">
               <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
-                Medibank - India&apos;s 1st Health Identity Infrastructure
+                India&apos;s 1st Health Identity Infrastructure
               </p>
 
               <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">

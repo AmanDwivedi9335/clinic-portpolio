@@ -1,60 +1,56 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Mail, Phone, Clock3 } from "lucide-react";
 
 export default function Footer() {
 	return (
-		<footer className="bg-white text-[#0D0B4C]">
-			<div className="container mx-auto px-6 py-12">
-				<div className="grid gap-10 lg:grid-cols-[1.3fr_1fr_1fr_0.8fr]">
-					<div className="space-y-4">
-						<div className="flex items-center gap-3">
-							<Image
-								src="/images/MLicon.png"
-								alt="MediBank logo"
-								width={62}
-								height={62}
-								loading="lazy"
-							/>
-							<div>
-								<p className="text-lg font-semibold leading-tight">MediBank</p>
-								<p className="text-sm text-[#6B6B8F]">
-									India&apos;s First Health Identity Infrastructure™
-								</p>
-							</div>
-						</div>
-						<p className="text-sm text-[#6B6B8F] leading-relaxed max-w-sm">
-							Your complete medical history—secure, portable, and always with you.
+		<footer className="bg-[#F7F8FC] text-[#0D0B4C]">
+			<div className="container mx-auto px-6 py-14">
+				<div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_0.9fr]">
+					<div className="space-y-5">
+						<Image
+							src="/images/medibank-logo.png"
+							alt="MediBank logo"
+							width={182}
+							height={85}
+							loading="lazy"
+						/>
+						<p className="text-base md:text-[25px] text-[#1D225B] leading-tight max-w-sm">
+							India&apos;s First Health Identity Infrastructure™. Your complete medical history—secure, portable, and always with you.
 						</p>
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-base font-semibold">Contact Us</h4>
-						<ul className="space-y-3 text-sm text-[#3D3D66]">
-							<li className="flex items-start gap-2">
-								<span className="mt-0.5">✉️</span>
+						<h4 className="text-2xl md:text-[32px] font-semibold">Contact Us</h4>
+						<ul className="space-y-3 text-base md:text-[22px] text-[#1D225B]">
+							<li className="flex items-center gap-2.5">
+								<Mail size={20} strokeWidth={1.8} />
 								<a
-									href="mailto:contact@medibank.in"
+									href="mailto:team@signelbiomedical.com"
 									className="hover:text-[#5C4AFF]"
 								>
-									contact@medibank.in
+									team@signelbiomedical.com
 								</a>
 							</li>
-							<li className="flex items-start gap-2">
-								<span className="mt-0.5">📞</span>
+							<li className="flex items-center gap-2.5">
+								<Phone size={20} strokeWidth={1.8} />
 								<a
-									href="tel:+919959095217"
+									href="tel:+918919117478"
 									className="hover:text-[#5C4AFF]"
 								>
-									 +91 9959095217
+									+91 8919117478
 								</a>
 							</li>
-							
+							<li className="flex items-center gap-2.5">
+								<Clock3 size={20} strokeWidth={1.8} />
+								<span>Mon–Sat | 10 AM to 7 PM</span>
+							</li>
 						</ul>
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-base font-semibold">Quick Links</h4>
-						<ul className="space-y-3 text-sm text-[#3D3D66]">
+						<h4 className="text-2xl md:text-[32px] font-semibold">Quick Links</h4>
+						<ul className="list-disc pl-5 space-y-3 text-base md:text-[22px] text-[#1D225B]">
 							<li>
 								<Link href="/account" className="hover:text-[#5C4AFF]">
 									My Account
@@ -79,11 +75,11 @@ export default function Footer() {
 					</div>
 
 					<div className="space-y-4">
-						<h4 className="text-base font-semibold">Follow Us:</h4>
+						<h4 className="text-2xl md:text-[32px] font-semibold">Follow Us:</h4>
 						<div className="flex gap-3">
 							<Link
 								href="https://www.whatsapp.com/"
-								className="flex h-10 w-10 items-center justify-center"
+								className="flex h-12 w-12 items-center justify-center"
 							>
 								<Image
 									src="/images/wa.png"
@@ -95,7 +91,7 @@ export default function Footer() {
 							</Link>
 							<Link
 								href="https://instagram.com/"
-								className="flex h-10 w-10 items-center justify-center"
+								className="flex h-12 w-12 items-center justify-center"
 							>
 								<Image
 									src="/images/instaMedi.png"
@@ -107,7 +103,7 @@ export default function Footer() {
 							</Link>
 							<Link
 								href="https://x.com/"
-								className="flex h-10 w-10 items-center justify-center"
+								className="flex h-12 w-12 items-center justify-center"
 							>
 								<Image
 									src="/images/twitter.png"
@@ -119,7 +115,7 @@ export default function Footer() {
 							</Link>
 							<Link
 								href="https://linkedin.com/"
-								className="flex h-10 w-10 items-center justify-center"
+								className="flex h-12 w-12 items-center justify-center"
 							>
 								<Image
 									src="/images/LlinkedInMedi.png"
@@ -133,10 +129,10 @@ export default function Footer() {
 					</div>
 				</div>
 
-				<div className="mt-10 border-t border-[#E8E8F2] pt-6 text-sm text-[#6B6B8F] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<div className="mt-14 border-t border-[#CDD2E7] pt-6 text-base md:text-[30px] text-[#1D225B] flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 					<p>© 2024 MediBank. All rights reserved.</p>
 					<p>
-						Made with <span className="text-[#5C4AFF]">❤</span> in India
+						Made with <span className="text-[#6A14C9]">❤</span> in India
 					</p>
 				</div>
 			</div>

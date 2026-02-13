@@ -24,6 +24,10 @@ export default function HealthIdentitySection() {
   useEffect(() => {
     return createGsapContext(pinWrapRef, (gsap) => {
       const cards = gsap.utils.toArray(".identity-card");
+      const revealDuration = 0.45;
+      const revealOverlap = 0.15;
+      const postRevealHold = 0.9;
+      const totalScrollDistance = Math.max(cards.length * 220 + 560, 1900);
 
       gsap.set(cards, {
         opacity: 0,
@@ -37,16 +41,15 @@ export default function HealthIdentitySection() {
 
       const revealTimeline = gsap.timeline({
         defaults: {
-          duration: 0.7,
           ease: "power2.out",
         },
         scrollTrigger: {
           trigger: pinWrapRef.current,
           start: "top top+=88",
-          end: `+=${Math.max(cards.length * 170, 1280)}`,
+          end: `+=${totalScrollDistance}`,
           pin: true,
           pinSpacing: true,
-          scrub: 0.35,
+          scrub: 0.65,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -59,10 +62,13 @@ export default function HealthIdentitySection() {
             opacity: 1,
             y: 0,
             scale: 1,
+            duration: revealDuration,
           },
-          index === 0 ? 0 : ">-0.1"
+          index === 0 ? 0 : `>-${revealOverlap}`
         );
       });
+
+      revealTimeline.to({}, { duration: postRevealHold });
     });
   }, []);
 

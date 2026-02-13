@@ -1111,6 +1111,13 @@ const App = () => {
 		return "/images/default-icon.png";
 	};
 
+	const tabs = ["Doctors", "Labs", "Hospitals"];
+	const tabIcons = {
+		Doctors: "🧑‍⚕️",
+		Labs: "🧪",
+		Hospitals: "🏥",
+	};
+
 	return (
 		<>
 			<div className="bg-[#f4f4f7] mt-[90px] min-h-screen py-8">
@@ -1118,18 +1125,19 @@ const App = () => {
 					<h1 className="text-4xl font-bold text-[#1f2b8c] mb-8">Our Partners</h1>
 
 					<div className="border border-[#d7a8e8] rounded-xl p-4 md:p-6 bg-white/60">
-						<div className="flex items-center gap-2 md:gap-4 flex-wrap md:flex-nowrap -mt-10 mb-4">
-							{["Doctors", "Labs", "Hospitals"].map((tab) => (
+						<div className="flex items-end gap-4 border-b border-[#d7a8e8] mb-4 overflow-x-auto px-1">
+							{tabs.map((tab) => (
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
-									className={`rounded-t-xl px-4 py-2 font-medium border border-[#d7a8e8] transition-all ${
+									className={`flex items-center gap-1.5 whitespace-nowrap leading-none transition-all ${
 										activeTab === tab
-											? "bg-white text-[#2f2f7f] shadow-sm"
-											: "bg-transparent text-[#595982] border-transparent"
+											? "rounded-t-[10px] border border-[#d7a8e8] border-b-[#f4f4f7] bg-[#f4f4f7] px-4 py-2 text-[#282672]"
+											: "border border-transparent px-1 py-2 text-[#404284]"
 									}`}
 								>
-									{tab}
+									<span className="text-sm">{tabIcons[tab]}</span>
+									<span className="text-[14px] md:text-[14px]">{tab}</span>
 								</button>
 							))}
 						</div>

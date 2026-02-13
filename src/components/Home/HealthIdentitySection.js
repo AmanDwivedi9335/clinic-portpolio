@@ -27,7 +27,14 @@ export default function HealthIdentitySection() {
       const revealDuration = 0.45;
       const revealOverlap = 0.15;
       const postRevealHold = 0.9;
-      const totalScrollDistance = Math.max(cards.length * 220 + 560, 1900);
+      const revealStep = revealDuration - revealOverlap;
+      const revealTimelineDuration =
+        revealDuration + Math.max(cards.length - 1, 0) * revealStep;
+      const totalScrollDistance = Math.max(
+        (revealTimelineDuration + postRevealHold) * 420,
+        cards.length * 240 + 680,
+        2200
+      );
 
       gsap.set(cards, {
         opacity: 0,
@@ -45,7 +52,7 @@ export default function HealthIdentitySection() {
         },
         scrollTrigger: {
           trigger: pinWrapRef.current,
-          start: "top top+=88",
+          start: "top top",
           end: `+=${totalScrollDistance}`,
           pin: true,
           pinSpacing: true,
@@ -76,7 +83,7 @@ export default function HealthIdentitySection() {
     <div ref={pinWrapRef} className="relative">
       <section
         ref={sectionRef}
-        className="rounded-[80px] bg-[radial-gradient(54.48%_98.43%_at_99.17%_1.57%,_#9F028D_0%,_#070F6E_100%)] py-8 md:h-[86vh] md:max-h-[86vh] md:py-6"
+        className="rounded-[80px] bg-[radial-gradient(54.48%_98.43%_at_99.17%_1.57%,_#9F028D_0%,_#070F6E_100%)] min-h-screen py-8 md:py-6"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
           <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">

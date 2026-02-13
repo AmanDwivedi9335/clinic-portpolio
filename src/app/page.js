@@ -1,39 +1,51 @@
 "use client";
+
 import Hero from "@/components/Home/Hero";
 import ReportCarouselSection from "@/components/Home/ReportCarouselSection";
 import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import LovedOnesSection from "@/components/Home/LovedOnesSection";
 import DataControlSection from "@/components/Home/DataControlSection";
-import ContactCard from "@/components/Home/ContactCard";
+
+const homeSections = [
+	{
+		id: "hero",
+		Component: Hero,
+		className: "bg-white",
+	},
+	{
+		id: "report-carousel",
+		Component: ReportCarouselSection,
+		className: "bg-white px-4 py-6 md:px-8 md:py-12",
+	},
+	{
+		id: "health-identity",
+		Component: HealthIdentitySection,
+		className: "bg-white px-4 py-6 md:px-8 md:py-12",
+	},
+	{
+		id: "loved-ones",
+		Component: LovedOnesSection,
+		className: "bg-white px-4 py-6 md:px-8 md:py-12",
+	},
+	{
+		id: "data-control",
+		Component: DataControlSection,
+		className: "bg-white px-4 py-6 md:px-8 md:py-12",
+	},
+];
 
 export default function Home() {
 	return (
-		<>
-			{/* Hero Section */}
-			<div className="sticky h-screen z-[-1] top-[5px]">
-				<Hero />
-			</div>
-			
-
-			{/* About Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
-				<ReportCarouselSection />
-			</div>
-
-			{/* HealthIdentity Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
-				<HealthIdentitySection />
-			</div>
-
-			{/* LovedOnes Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky h-screen z-[-1] top-[5px]">
-				<LovedOnesSection />
-			</div>
-
-			{/* Data Control Section */}
-			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
-				<DataControlSection />
-			</div>
-		</>
+		<main className="snap-y snap-mandatory scroll-smooth">
+			{homeSections.map(({ id, Component, className }, index) => (
+				<section
+					key={id}
+					className={`${className} sticky top-0 h-screen snap-start overflow-hidden will-change-transform`}
+					style={{ zIndex: index + 1 }}
+				>
+					<Component />
+				</section>
+			))}
+		</main>
 	);
 }

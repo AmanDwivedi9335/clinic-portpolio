@@ -99,7 +99,7 @@ export default function Hero() {
           ))}
 
           {/* Soft left fade (so text stays readable) */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+          <div className="pointer-events-auto absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
 
           {/* Content */}
           <div className="relative z-10 grid min-h-[calc(100vh-124px)] md:min-h-[calc(100vh-124px)] grid-cols-1 md:grid-cols-2 items-center">
@@ -152,7 +152,7 @@ export default function Hero() {
           </div>
 
           {/* Subtle vignette like mock */}
-          <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
+          <div className="pointer-events-auto absolute inset-0 ring-1 ring-white/40" />
         </div>
       </div>
     </section>

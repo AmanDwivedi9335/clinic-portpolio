@@ -143,7 +143,7 @@ export default function ReportCarouselSection() {
         </h2>
       </div>
 
-      <div className="report-carousel mx-auto mt-7 max-w-6xl px-2 sm:px-4 md:px-8">
+      <div className="report-carousel mx-auto mt-7 max-w-5xl px-2 sm:px-4 md:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
@@ -159,7 +159,7 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem key={`${slide.title}-${index}`} className="basis-[72%] sm:basis-[40%] lg:basis-1/3">
                 <article
-                  className={`report-slide group relative flex h-[470px] flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300 ${
+                  className={`report-slide group relative flex h-[400px] flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300 ${
                     activeIndex === index
                       ? "scale-[1.01] opacity-100 hover:border-[#C22ECC] hover:shadow-[0_14px_30px_rgba(194,46,204,0.2)]"
                       : "scale-[0.97] opacity-85"
@@ -193,7 +193,7 @@ export default function ReportCarouselSection() {
                     </p>
                   </div>
 
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] rounded-t-[30px] bg-[#C22ECC] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-auto absolute inset-x-0 top-0 h-[3px] rounded-t-[30px] bg-[#C22ECC] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <p className="sr-only">
                     {slide.title}
                   </p>

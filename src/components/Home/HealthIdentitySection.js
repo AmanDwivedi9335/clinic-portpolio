@@ -87,10 +87,10 @@ export default function HealthIdentitySection() {
 
         <div className="relative mx-auto mt-10 w-full max-w-[1120px] rounded-[44px] px-6 pb-10 pt-16 sm:px-8">
           {/* Outer border */}
-          <div className="pointer-events-none absolute inset-0 rounded-[44px] border border-[#BC4AE7]/55" />
+          <div className="pointer-events-auto absolute inset-0 rounded-[44px] border border-[#BC4AE7]/55" />
 
           {/* subtle inner glow like reference */}
-          <div className="pointer-events-none absolute inset-0 rounded-[44px] [box-shadow:inset_0_0_0_1px_rgba(188,74,231,0.15),inset_0_0_120px_rgba(188,74,231,0.10)]" />
+          <div className="pointer-events-auto absolute inset-0 rounded-[44px] [box-shadow:inset_0_0_0_1px_rgba(188,74,231,0.15),inset_0_0_120px_rgba(188,74,231,0.10)]" />
 
           {/* Title sits on border with cut-out */}
           <div className="absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center">
@@ -116,9 +116,9 @@ export default function HealthIdentitySection() {
                   <div className="absolute inset-0 rounded-[26px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_20px_40px_rgba(10,8,45,0.55)]" />
 
                   {/* top highlight + edge glow */}
-                  <div className="pointer-events-none absolute inset-0 rounded-[26px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.20),0_0_0_1px_rgba(188,74,231,0.12)]" />
+                  <div className="pointer-events-auto absolute inset-0 rounded-[26px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.20),0_0_0_1px_rgba(188,74,231,0.12)]" />
 
-                  <div className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_10%,rgba(188,74,231,0.45)_0%,rgba(188,74,231,0.0)_65%)] opacity-40 blur-2xl" />
+                  <div className="pointer-events-auto absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_10%,rgba(188,74,231,0.45)_0%,rgba(188,74,231,0.0)_65%)] opacity-40 blur-2xl" />
 
                   {/* Floating icon */}
                   <div className="absolute -top-12 grid h-[105px] w-[102px] place-items-center">
@@ -147,9 +147,9 @@ export default function HealthIdentitySection() {
                 >
                   <div className="absolute inset-0 rounded-[26px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_20px_40px_rgba(10,8,45,0.55)]" />
 
-                  <div className="pointer-events-none absolute inset-0 rounded-[26px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.20),0_0_0_1px_rgba(188,74,231,0.12)]" />
+                  <div className="pointer-events-auto absolute inset-0 rounded-[26px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.20),0_0_0_1px_rgba(188,74,231,0.12)]" />
 
-                  <div className="pointer-events-none absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_10%,rgba(188,74,231,0.45)_0%,rgba(188,74,231,0.0)_65%)] opacity-40 blur-2xl" />
+                  <div className="pointer-events-auto absolute -inset-6 rounded-[34px] bg-[radial-gradient(circle_at_50%_10%,rgba(188,74,231,0.45)_0%,rgba(188,74,231,0.0)_65%)] opacity-40 blur-2xl" />
 
                   <div className="absolute -top-12 grid h-[92px] w-[102px] place-items-center">
                     <Image

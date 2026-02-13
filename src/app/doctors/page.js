@@ -175,7 +175,7 @@ export default function DoctorsPage() {
 
         <div className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[32px] border border-[#E3E0FF] bg-[#6D4AFF] shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
           {/* inner gradient wash */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
+          <div className="pointer-events-auto absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-[#F0F4FF]/80" />
 
           <div className="relative z-10 flex flex-col gap-10 px-6 py-12 md:flex-row md:items-center md:justify-between md:gap-16 md:px-12 md:py-16">
             {/* LEFT */}

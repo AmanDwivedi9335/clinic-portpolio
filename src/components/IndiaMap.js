@@ -1127,7 +1127,7 @@ const App = () => {
 									onClick={() => setActiveTab(tab)}
 									className={`flex items-center gap-2 whitespace-nowrap rounded-t-xl px-4 py-2 font-medium border border-b-0 transition-all ${
 										activeTab === tab
-											? "bg-white text-[#2f2f7f] border-[#d7a8e8]"
+											? "relative z-10 -mb-px -ml-px -mt-px bg-white text-[#2f2f7f] border-[#d7a8e8] border-b-white"
 											: "bg-transparent text-[#595982] border-transparent"
 									}`}
 								>

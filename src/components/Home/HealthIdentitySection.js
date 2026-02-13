@@ -26,15 +26,7 @@ export default function HealthIdentitySection() {
       const cards = gsap.utils.toArray(".identity-card");
       const revealDuration = 0.45;
       const revealOverlap = 0.15;
-      const postRevealHold = 0.9;
-      const revealStep = revealDuration - revealOverlap;
-      const revealTimelineDuration =
-        revealDuration + Math.max(cards.length - 1, 0) * revealStep;
-      const totalScrollDistance = Math.max(
-        (revealTimelineDuration + postRevealHold) * 420,
-        cards.length * 240 + 680,
-        2200
-      );
+      const totalScrollDistance = Math.max(cards.length * 220 + 560, 1900);
 
       gsap.set(cards, {
         opacity: 0,
@@ -74,8 +66,6 @@ export default function HealthIdentitySection() {
           index === 0 ? 0 : `>-${revealOverlap}`
         );
       });
-
-      revealTimeline.to({}, { duration: postRevealHold });
     });
   }, []);
 

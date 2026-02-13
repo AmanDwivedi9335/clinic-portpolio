@@ -1112,11 +1112,6 @@ const App = () => {
 	};
 
 	const tabs = ["Doctors", "Labs", "Hospitals"];
-	const tabIcons = {
-		Doctors: "🧑‍⚕️",
-		Labs: "🧪",
-		Hospitals: "🏥",
-	};
 
 	return (
 		<>
@@ -1125,19 +1120,25 @@ const App = () => {
 					<h1 className="text-4xl font-bold text-[#1f2b8c] mb-8">Our Partners</h1>
 
 					<div className="border border-[#d7a8e8] rounded-xl p-4 md:p-6 bg-white/60">
-						<div className="flex items-end gap-4 border-b border-[#d7a8e8] mb-4 overflow-x-auto px-1">
+						<div className="flex items-end gap-1 sm:gap-3 border-b border-[#d7a8e8] mb-4 overflow-x-auto">
 							{tabs.map((tab) => (
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
-									className={`flex items-center gap-1.5 whitespace-nowrap leading-none transition-all ${
+									className={`flex items-center gap-2 whitespace-nowrap rounded-t-xl px-4 py-2 font-medium border border-b-0 transition-all ${
 										activeTab === tab
-											? "rounded-t-[10px] border border-[#d7a8e8] border-b-[#f4f4f7] bg-[#f4f4f7] px-4 py-2 text-[#282672]"
-											: "border border-transparent px-1 py-2 text-[#404284]"
+											? "bg-white text-[#2f2f7f] border-[#d7a8e8]"
+											: "bg-transparent text-[#595982] border-transparent"
 									}`}
 								>
-									<span className="text-sm">{tabIcons[tab]}</span>
-									<span className="text-[14px] md:text-[14px]">{tab}</span>
+									<Image
+										src={getIconForCategory(tab)}
+										alt={`${tab} icon`}
+										width={14}
+										height={14}
+										className="w-3.5 h-3.5"
+									/>
+									{tab}
 								</button>
 							))}
 						</div>

@@ -24,11 +24,21 @@ export default function HealthIdentitySection() {
   useEffect(() => {
     return createGsapContext(pinWrapRef, (gsap) => {
       const cards = gsap.utils.toArray(".identity-card");
+      const entryVariants = [
+        { y: 88, rotation: -10, scale: 0.82, filter: "blur(10px)" },
+        { x: -90, y: 44, rotation: 14, scale: 0.85, filter: "blur(8px)" },
+        { x: 95, y: 48, rotation: -14, scale: 0.82, filter: "blur(8px)" },
+        { y: -70, rotationX: 28, scale: 0.78, filter: "blur(9px)" },
+        { x: -74, y: 82, rotation: -12, scale: 0.8, filter: "blur(9px)" },
+        { x: 85, y: -42, rotation: 16, scale: 0.8, filter: "blur(10px)" },
+        { y: 100, rotationY: -24, scale: 0.76, filter: "blur(9px)" },
+        { x: -80, y: -60, rotation: 12, scale: 0.83, filter: "blur(8px)" },
+        { x: 78, y: 78, rotation: -16, scale: 0.8, filter: "blur(10px)" },
+      ];
 
       gsap.set(cards, {
         opacity: 0,
-        y: 42,
-        scale: 0.94,
+        transformOrigin: "50% 80%",
       });
 
       gsap.set([".identity-heading", ".identity-subheading", ".identity-grid-title"], {
@@ -36,31 +46,33 @@ export default function HealthIdentitySection() {
       });
 
       const revealTimeline = gsap.timeline({
-        defaults: {
-          duration: 0.7,
-          ease: "power2.out",
-        },
         scrollTrigger: {
-          trigger: pinWrapRef.current,
-          start: "top top+=88",
-          end: `+=${Math.max(cards.length * 170, 1280)}`,
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.35,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
+          trigger: sectionRef.current,
+          start: "top 72%",
+          once: true,
         },
       });
 
       cards.forEach((card, index) => {
-        revealTimeline.to(
+        revealTimeline.fromTo(
           card,
           {
-            opacity: 1,
-            y: 0,
-            scale: 1,
+            ...entryVariants[index % entryVariants.length],
+            opacity: 0,
           },
-          index === 0 ? 0 : ">-0.1"
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            rotationX: 0,
+            rotationY: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 0.95,
+            ease: "back.out(1.45)",
+          },
+          index * 0.16
         );
       });
     });

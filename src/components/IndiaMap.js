@@ -1113,248 +1113,228 @@ const App = () => {
 
 	return (
 		<>
-			<div className="bg-gray-100 mt-[90px] min-h-screen flex flex-col justify-between">
-				<div className="py-6">
-					<div className="container mx-auto text-center">
-						<h1 className="text-4xl font-bold text-black">Our Partners</h1>
-					</div>
-				</div>
+			<div className="bg-[#f4f4f7] mt-[90px] min-h-screen py-8">
+				<div className="container mx-auto px-4">
+					<h1 className="text-4xl font-bold text-[#1f2b8c] mb-8">Our Partners</h1>
 
-				<div className="container mx-auto">
-					{/* Tabs for Doctors, Labs, Hospitals */}
-					<div className="flex justify-between items-center mb-4">
-						<div className="flex space-x-8">
+					<div className="border border-[#d7a8e8] rounded-xl p-4 md:p-6 bg-white/60">
+						<div className="flex items-center gap-2 md:gap-4 flex-wrap md:flex-nowrap -mt-10 mb-4">
 							{["Doctors", "Labs", "Hospitals"].map((tab) => (
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
-									className={`py-2 px-4 font-semibold ${
+									className={`rounded-t-xl px-4 py-2 font-medium border border-[#d7a8e8] transition-all ${
 										activeTab === tab
-											? "text-blue-500 border-b-2 border-blue-500"
-											: "text-gray-500"
+											? "bg-white text-[#2f2f7f] shadow-sm"
+											: "bg-transparent text-[#595982] border-transparent"
 									}`}
 								>
 									{tab}
 								</button>
 							))}
 						</div>
-					</div>
 
-					<hr className="border-gray-300 mb-6" />
-
-					{/* Subcategories Section */}
-					<div className="flex flex-wrap sm:flex-nowrap text-center gap-4 bg-gray-100 py-3 rounded-md mb-6 shadow relative">
-						{subcategoryEntries
-							.slice(
-								0,
-								showAllSubcategories[activeTab] ? subcategoryEntries.length : 3
-							)
-							.map(([category, count], index) => (
-								<p
-									key={index}
-									className="flex sm:items-center flex-col text-sm font-semibold text-gray-600"
-								>
-									<span>{category}</span>
-									<span>
-										(<span className="text-blue-500">{count}</span>)
-									</span>
-								</p>
-							))}
-						{subcategoryEntries.length > 4 && (
-							<button
-								className="text-blue-500 font-semibold text-sm"
-								onClick={() => toggleShowAllSubcategories(activeTab)}
-							>
-								{showAllSubcategories[activeTab] ? "Show Less" : "See More"}
-							</button>
-						)}
-					</div>
-
-					{/* Cards Section */}
-					<div className="flex flex-col-reverse md:flex-row gap-4 md:gap-8">
-						<div className="md:w-4/5 w-full md:mb-8 mx-auto">
-							<div className="grid grid-cols-2 lg:grid-cols-3 grid-rows-4 gap-2 lg:gap-6 relative">
-								<div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-sm w-full h-full flex items-center justify-center">
+						<div className="flex flex-wrap gap-2 mb-6">
+							{subcategoryEntries
+								.slice(
+									0,
+									showAllSubcategories[activeTab] ? subcategoryEntries.length : 3
+								)
+								.map(([category, count], index) => (
 									<span
-										className="text-white font-semibold bg-blue-500 locked-partners mx-auto my-auto rounded-lg p-2 cursor-pointer flex gap-1 items-center justify-center"
-										onClick={() => setIsOpenModel(true)}
+										key={index}
+										className="bg-[#ece8f9] text-[#3b3188] rounded-full px-3 py-1 text-xs font-semibold"
 									>
-										Join the Beta Waitlist
-										<Image
-											src="/images/lock.png"
-											width={500}
-											height={500}
-											alt="India Map"
-											className="w-6 h-6"
-										/>
+										{count} {category}
 									</span>
-								</div>
-
-								{Object.entries(subcategories)
-									.flatMap(([category, count]) =>
-										Array(count)
-											.fill(0)
-											.map((_, index) => ({ category, index }))
-									)
-									.slice(startIndex, endIndex)
-									.map(({ category, index }) => (
-										<div
-											key={`${category}-${index}`}
-											className="bg-white shadow-md rounded-lg p-4 flex items-center gap-2"
-										>
-											<div className="w-30 h-30 rounded-full flex items-center justify-center ">
-												<Image
-													src={getIconForCategory(activeTab)}
-													alt={`${category} Icon`}
-													className="text-center"
-													width="60"
-													height="60"
-													loading="lazy"
-												/>
-											</div>
-											<div className="flex flex-col w-full">
-												<div className="text-left">
-													<p className="font-bold text-sm">{`${category}  #${
-														index + 1
-													}`}</p>
-													<p className="text-xs text-gray-500">
-														Details for {activeTab.toLowerCase()}
-													</p>
-												</div>
-												<div className="mt-2 flex gap-2">
-													<button className="bg-blue-500 text-white text-xs px-3 py-1 rounded">
-														Book
-													</button>
-													<button className="bg-gray-200 text-gray-600 text-xs px-3 py-1 rounded">
-														Location
-													</button>
-												</div>
-											</div>
-										</div>
-									))}
-							</div>
-
-							{/* Pagination */}
-							<div className="my-12 flex justify-center items-center space-x-2">
+								))}
+							{subcategoryEntries.length > 4 && (
 								<button
-									onClick={handlePrevPage}
-									disabled={currentPage === 1}
-									className={`px-4 py-2 rounded-full ${
-										currentPage === 1
-											? "bg-gray-300 text-gray-500"
-											: "bg-blue-500 text-white"
-									}`}
+									className="text-[#5e4ac8] font-semibold text-xs"
+									onClick={() => toggleShowAllSubcategories(activeTab)}
 								>
-									&lt;
+									{showAllSubcategories[activeTab] ? "Show Less" : "See More"}
 								</button>
-								<div className="flex space-x-2 w-max overflow-x-auto">
-									{/* First Page */}
-									<button
-										onClick={() => setCurrentPage(1)}
-										className={`px-4 py-2 rounded-full ${
-											currentPage === 1
-												? "bg-blue-500 text-white"
-												: "bg-gray-200 text-gray-700"
-										}`}
-									>
-										1
-									</button>
-
-									{/* Dots before current page if needed */}
-									{currentPage > 3 && (
-										<span className="px-2 py-1 text-gray-500">...</span>
-									)}
-
-									{/* Current page and its neighbors */}
-									{Array.from({ length: totalPages }, (_, i) => i + 1)
-										.filter(
-											(page) =>
-												page !== 1 &&
-												page !== totalPages && // Exclude first and last pages
-												(page === currentPage ||
-													page === currentPage - 1 ||
-													page === currentPage + 1)
-										)
-										.map((page) => (
-											<button
-												key={page}
-												onClick={() => setCurrentPage(page)}
-												className={`px-4 py-2 rounded-full ${
-													currentPage === page
-														? "bg-blue-500 text-white"
-														: "bg-gray-200 text-gray-700"
-												}`}
-											>
-												{page}
-											</button>
-										))}
-
-									{/* Dots after current page if needed */}
-									{currentPage < totalPages - 2 && (
-										<span className="px-2 py-1 text-gray-500">...</span>
-									)}
-
-									{/* Last Page */}
-									{totalPages > 1 && (
-										<button
-											onClick={() => setCurrentPage(totalPages)}
-											className={`px-4 py-2 rounded-full ${
-												currentPage === totalPages
-													? "bg-blue-500 text-white"
-													: "bg-gray-200 text-gray-700"
-											}`}
-										>
-											{totalPages}
-										</button>
-									)}
-								</div>
-								<button
-									onClick={handleNextPage}
-									disabled={currentPage === totalPages}
-									className={`px-4 py-2 rounded-full ${
-										currentPage === totalPages
-											? "bg-gray-300 text-gray-500"
-											: "bg-blue-500 text-white"
-									}`}
-								>
-									&gt;
-								</button>
-							</div>
+							)}
 						</div>
 
-						{/* Map Section */}
-						<div className="md:w-3/5 relative w-full h-max bg-white shadow rounded-lg p-4 mb-2 md:mb-10 lg:mx-auto">
-							{/* Active State Name */}
-							<div className="text-center absolute top-[100px] right-[50px] mb-4">
-								<h2 className="text-2xl font-semibold bg-gradient-to-r from-indigo-500 to-blue-500 bg-clip-text text-transparent">
-									{activeState?.state
-										? `${activeState.state}`
-										: "Select a State"}
-								</h2>
+						<div className="flex flex-col-reverse md:flex-row gap-6">
+							<div className="md:w-3/5 w-full">
+								<div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 relative">
+									<div className="absolute inset-0 backdrop-blur-[2px] bg-white/35 z-10 rounded-xl flex items-center justify-center">
+										<span
+											className="text-white font-semibold bg-gradient-to-r from-[#b21ee2] to-[#31007f] mx-auto rounded-lg px-4 py-2 cursor-pointer flex gap-2 items-center justify-center shadow-lg"
+											onClick={() => setIsOpenModel(true)}
+										>
+											Join Betalist
+											<Image
+												src="/images/lock.png"
+												width={500}
+												height={500}
+												alt="lock"
+												className="w-4 h-4"
+											/>
+										</span>
+									</div>
+
+									{Object.entries(subcategories)
+										.flatMap(([category, count]) =>
+											Array(count)
+												.fill(0)
+												.map((_, index) => ({ category, index }))
+										)
+										.slice(startIndex, endIndex)
+										.map(({ category, index }) => (
+											<div
+												key={`${category}-${index}`}
+												className="bg-white/80 border border-[#ece4f3] shadow-sm rounded-xl p-3 flex items-center gap-2"
+											>
+												<div className="w-30 h-30 rounded-full flex items-center justify-center">
+													<Image
+														src={getIconForCategory(activeTab)}
+														alt={`${category} Icon`}
+														className="text-center"
+														width="60"
+														height="60"
+														loading="lazy"
+													/>
+												</div>
+												<div className="flex flex-col w-full">
+													<div className="text-left">
+														<p className="font-bold text-sm">{`${category}  #${
+															index + 1
+														}`}</p>
+														<p className="text-xs text-gray-500">
+															Details for {activeTab.toLowerCase()}
+														</p>
+													</div>
+													<div className="mt-2 flex gap-2">
+														<button className="bg-[#c48bed] text-white text-xs px-3 py-1 rounded-full">
+															Book
+														</button>
+														<button className="border border-[#dfd3ef] text-[#9c86b3] text-xs px-3 py-1 rounded-full bg-white">
+															Location
+														</button>
+													</div>
+												</div>
+											</div>
+										))}
+								</div>
+
+								<div className="my-10 flex justify-center items-center space-x-2">
+									<button
+										onClick={handlePrevPage}
+										disabled={currentPage === 1}
+										className={`px-4 py-2 rounded-full ${
+											currentPage === 1
+												? "bg-gray-200 text-gray-400"
+												: "bg-[#5b58b8] text-white"
+										}`}
+									>
+										&lt;
+									</button>
+									<div className="flex space-x-2 w-max overflow-x-auto">
+										<button
+											onClick={() => setCurrentPage(1)}
+											className={`px-4 py-2 rounded-full ${
+												currentPage === 1
+													? "bg-[#5b58b8] text-white"
+													: "bg-gray-100 text-gray-600"
+											}`}
+										>
+											1
+										</button>
+
+										{currentPage > 3 && (
+											<span className="px-2 py-1 text-gray-500">...</span>
+										)}
+
+										{Array.from({ length: totalPages }, (_, i) => i + 1)
+											.filter(
+												(page) =>
+													page !== 1 &&
+													page !== totalPages &&
+													(page === currentPage ||
+														page === currentPage - 1 ||
+														page === currentPage + 1)
+											)
+											.map((page) => (
+												<button
+													key={page}
+													onClick={() => setCurrentPage(page)}
+													className={`px-4 py-2 rounded-full ${
+														currentPage === page
+															? "bg-[#5b58b8] text-white"
+															: "bg-gray-100 text-gray-600"
+													}`}
+												>
+													{page}
+												</button>
+											))}
+
+										{currentPage < totalPages - 2 && (
+											<span className="px-2 py-1 text-gray-500">...</span>
+										)}
+
+										{totalPages > 1 && (
+											<button
+												onClick={() => setCurrentPage(totalPages)}
+												className={`px-4 py-2 rounded-full ${
+													currentPage === totalPages
+														? "bg-[#5b58b8] text-white"
+														: "bg-gray-100 text-gray-600"
+												}`}
+											>
+												{totalPages}
+											</button>
+										)}
+									</div>
+									<button
+										onClick={handleNextPage}
+										disabled={currentPage === totalPages}
+										className={`px-4 py-2 rounded-full ${
+											currentPage === totalPages
+												? "bg-gray-200 text-gray-400"
+												: "bg-[#5b58b8] text-white"
+										}`}
+									>
+										&gt;
+									</button>
+								</div>
 							</div>
-							<ComposableMap
-								projectionConfig={PROJECTION_CONFIG}
-								projection="geoMercator"
-								width={900}
-								height={950}
-							>
-								<Geographies geography={INDIA_TOPO_JSON}>
-									{({ geographies }) =>
-										geographies.map((geo) => {
-											const current = data.find((state) => state.id === geo.id);
-											return (
-												<Geography
-													key={geo.rsmKey}
-													geography={geo}
-													style={geographyStyle}
-													onClick={() => handleStateClick(geo)}
-													className="cursor-pointer"
-												/>
-											);
-										})
-									}
-								</Geographies>
-							</ComposableMap>
+
+							<div className="md:w-2/5 relative w-full h-max bg-transparent p-1 mb-2 md:mb-10 lg:mx-auto">
+								<div className="text-center absolute top-[24px] inset-x-0 mb-4 z-10">
+									<h2 className="text-xl font-semibold text-[#676787]">
+										{activeState?.state
+											? `${activeState.state}`
+											: "Select a State"}
+									</h2>
+								</div>
+								<ComposableMap
+									projectionConfig={PROJECTION_CONFIG}
+									projection="geoMercator"
+									width={900}
+									height={950}
+								>
+									<Geographies geography={INDIA_TOPO_JSON}>
+										{({ geographies }) =>
+											geographies.map((geo) => {
+												const current = data.find((state) => state.id === geo.id);
+												return (
+													<Geography
+														key={geo.rsmKey}
+														geography={geo}
+														style={geographyStyle}
+														onClick={() => handleStateClick(geo)}
+														className="cursor-pointer"
+													/>
+												);
+											})
+										}
+									</Geographies>
+								</ComposableMap>
+							</div>
 						</div>
 					</div>
 				</div>

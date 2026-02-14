@@ -262,8 +262,8 @@ export default function DataControlSection() {
 							key={card.title}
 							className="data-card group relative overflow-hidden rounded-[30px] border border-[#CED0E5] bg-[#ECECF5] px-6 py-8 text-center [box-shadow:0_2px_0_rgba(255,255,255,0.8)_inset,0_-1px_0_rgba(197,202,230,0.8)_inset,0_5px_0_rgba(216,219,237,0.95),0_11px_24px_rgba(51,61,122,0.14)] transition-all duration-300 hover:[box-shadow:0_2px_0_rgba(255,255,255,0.92)_inset,0_-1px_0_rgba(197,202,230,0.95)_inset,0_7px_0_rgba(212,216,236,1),0_14px_28px_rgba(51,61,122,0.18)] [transform-style:preserve-3d]"
 						>
-							<div className="pointer-events-auto absolute inset-[2px] rounded-[28px] border border-white/55" />
-							<div className="data-card-glow pointer-events-auto absolute left-0 top-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(109,74,255,0.35)_0%,_rgba(109,74,255,0)_72%)] opacity-0" />
+							<div className="pointer-events-none absolute inset-[2px] rounded-[28px] border border-white/55" />
+							<div className="data-card-glow pointer-events-none absolute left-0 top-0 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(109,74,255,0.35)_0%,_rgba(109,74,255,0)_72%)] opacity-0" />
 							<div className="data-card-icon data-float-1 relative z-10 mx-auto flex h-14 w-14 items-center justify-center drop-shadow-[0_8px_9px_rgba(125,104,199,0.22)]">
 								<Image
 									src={card.icon}
@@ -292,18 +292,18 @@ export default function DataControlSection() {
 
 					{/* Concentric arcs on right */}
 					<div
-						className="pointer-events-none absolute inset-y-0 right-0 w-[62%] bg-[repeating-radial-gradient(circle_at_right_center,rgba(255,255,255,0)_0_62px,rgba(255,255,255,0.44)_62px_78px)] opacity-85 md:w-[48%]"
-						aria-hidden="true"
+					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_200px,rgba(255,255,255,1)_100px_200px,rgba(255,255,255,0.8)_200px_300px,rgba(255,255,255,0.6)_300px_400px,rgba(255,255,255,0.5)_400px_500px,rgba(255,255,255,0.3)_500px_600px,rgba(255,255,255,0.2)_600px_700px,rgba(255,255,255,0.1)_800px)]"
+					aria-hidden="true"
 					/>
 
 					{/* Slight soft vignette to blend arcs into the base */}
 					<div
-					className="pointer-events-auto absolute inset-0 bg-[linear-gradient(90deg,_rgba(0,0,0,0)_0%,_rgba(0,0,0,0)_55%,_rgba(0,0,0,0.10)_100%)]"
+					className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,_rgba(0,0,0,0)_0%,_rgba(0,0,0,0)_55%,_rgba(0,0,0,0.10)_100%)]"
 					aria-hidden="true"
 					/>
 
 					<div className="relative z-10 flex min-h-[260px] items-center">
-					<div className="w-full max-w-[640px] text-center md:pr-8 md:text-left lg:pr-14">
+					<div className="w-full max-w-[640px] text-center md:text-left">
 						<h3 className="text-[28px] font-semibold leading-tight text-white md:text-[42px] md:leading-[1.15]">
 						Don&apos;t wait for a crisis to organise <br className="hidden sm:block" />
 						your medical life.

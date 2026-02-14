@@ -1237,7 +1237,7 @@ const App = () => {
 										className={`px-4 py-2 rounded-full ${
 											currentPage === 1
 												? "bg-gray-200 text-gray-400"
-												: "bg-[#5b58b8] text-white"
+												: "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] text-white"
 										}`}
 									>
 										&lt;
@@ -1247,7 +1247,7 @@ const App = () => {
 											onClick={() => setCurrentPage(1)}
 											className={`px-4 py-2 rounded-full ${
 												currentPage === 1
-													? "bg-[#5b58b8] text-white"
+													? "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] text-white"
 													: "bg-gray-100 text-gray-600"
 											}`}
 										>
@@ -1273,7 +1273,7 @@ const App = () => {
 													onClick={() => setCurrentPage(page)}
 													className={`px-4 py-2 rounded-full ${
 														currentPage === page
-															? "bg-[#5b58b8] text-white"
+															? "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] text-white"
 															: "bg-gray-100 text-gray-600"
 													}`}
 												>
@@ -1290,7 +1290,7 @@ const App = () => {
 												onClick={() => setCurrentPage(totalPages)}
 												className={`px-4 py-2 rounded-full ${
 													currentPage === totalPages
-														? "bg-[#5b58b8] text-white"
+														? "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] text-white"
 														: "bg-gray-100 text-gray-600"
 												}`}
 											>
@@ -1304,7 +1304,7 @@ const App = () => {
 										className={`px-4 py-2 rounded-full ${
 											currentPage === totalPages
 												? "bg-gray-200 text-gray-400"
-												: "bg-[#5b58b8] text-white"
+												: "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] text-white"
 										}`}
 									>
 										&gt;
@@ -1313,7 +1313,7 @@ const App = () => {
 							</div>
 
 							<div className="md:w-2/5 relative w-full h-max bg-transparent p-1 mb-2 md:mb-10 lg:mx-auto">
-								<div className="text-center absolute top-[24px] inset-x-0 mb-4 z-10">
+								<div className="text-center absolute top-1/4 left-1/2 mb-4 z-10">
 									<h2 className="text-xl font-semibold text-[#676787]">
 										{activeState?.state
 											? `${activeState.state}`

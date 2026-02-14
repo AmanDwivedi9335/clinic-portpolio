@@ -37,15 +37,23 @@ const homeSections = [
 export default function Home() {
 	return (
 		<main className="snap-y snap-mandatory scroll-smooth">
-			{homeSections.map(({ id, Component, className }, index) => (
-				<section
-					key={id}
-					className={`${className} sticky top-0 h-screen snap-start overflow-hidden will-change-transform`}
-					style={{ zIndex: index + 1 }}
-				>
-					<Component />
-				</section>
-			))}
+			{homeSections.map(({ id, Component, className }, index) => {
+				const isDataControlSection = id === "data-control";
+
+				return (
+					<section
+						key={id}
+						className={`${className} snap-start ${
+							isDataControlSection
+								? "relative min-h-screen overflow-visible"
+								: "sticky top-0 h-screen overflow-hidden will-change-transform"
+						}`}
+						style={{ zIndex: isDataControlSection ? "auto" : index + 1 }}
+					>
+						<Component />
+					</section>
+				);
+			})}
 		</main>
 	);
 }

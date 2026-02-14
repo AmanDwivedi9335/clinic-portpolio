@@ -5,12 +5,11 @@ import { createGsapContext } from "@/lib/gsap";
 
 export default function Hero() {
   const heroImages = [
-    "/images/hero.png",
-    // "/images/img1bg.png",
-    "/images/img2bg.png",
-    "/images/img3bg.png",
-    "/images/img4bg.png",
-    "/images/img5bg.png",
+    "/images/1.png",
+    "/images/2.png",
+    "/images/3.png",
+    "/images/4.png",
+    "/images/5.png",
   ];
   const firstLineText =
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.";
@@ -82,7 +81,7 @@ export default function Hero() {
     <section ref={sectionRef} className="pt-[104px] pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
-        <div className="relative overflow-hidden rounded-[28px] border border-white/70 shadow-[0_18px_60px_rgba(0,0,0,0.18)]">
+        <div className="relative overflow-hidden rounded-[28px] ">
           {/* Background image */}
           {heroImages.map((heroImage, index) => (
             <Image
@@ -91,7 +90,7 @@ export default function Hero() {
               alt={`Hero background ${index + 1}`}
               fill
               priority={index === 0}
-              className={`object-cover object-top !top-[-70px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
+              className={`object-cover object-top !top-[-0px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
                 index === activeImageIndex ? "opacity-100" : "opacity-0"
               }`}
               sizes="100vw"

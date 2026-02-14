@@ -15,8 +15,6 @@ export default function Hero() {
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.";
   const secondLineText = "Because one missing detail can change everything...";
   const typingSpeed = 60;
-  const totalTypingCharacters =
-    firstLineText.length + 1 + secondLineText.length;
   const sectionRef = useRef(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [typedCharacters, setTypedCharacters] = useState(0);
@@ -54,7 +52,7 @@ export default function Hero() {
   useEffect(() => {
     const typingInterval = setInterval(() => {
       setTypedCharacters((currentCharacters) => {
-        if (currentCharacters >= totalTypingCharacters) {
+        if (currentCharacters >= secondLineText.length) {
           clearInterval(typingInterval);
           return currentCharacters;
         }
@@ -64,18 +62,10 @@ export default function Hero() {
     }, typingSpeed);
 
     return () => clearInterval(typingInterval);
-  }, [totalTypingCharacters]);
+  }, [secondLineText.length]);
 
-  const hasStartedSecondLine = typedCharacters > firstLineText.length;
-  const firstLineVisible = firstLineText.slice(
-    0,
-    Math.min(typedCharacters, firstLineText.length)
-  );
-  const secondLineVisible = secondLineText.slice(
-    0,
-    Math.max(0, typedCharacters - firstLineText.length - 1)
-  );
-  const isTypingComplete = typedCharacters >= totalTypingCharacters;
+  const secondLineVisible = secondLineText.slice(0, typedCharacters);
+  const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
     <section ref={sectionRef} className="pt-[104px] pb-5">
@@ -131,8 +121,8 @@ export default function Hero() {
               </h1>
 
               <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-[#7B1FA2]">
-                <span>{firstLineVisible}</span>
-                {hasStartedSecondLine && <br />}
+                <span>{firstLineText}</span>
+                <br />
                 <span className="font-semibold">{secondLineVisible}</span>
                 {!isTypingComplete && (
                   <span className="ml-0.5 inline-block animate-pulse">|</span>

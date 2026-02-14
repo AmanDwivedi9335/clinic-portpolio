@@ -1125,9 +1125,9 @@ const App = () => {
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
-									className={`relative -mb-[2px] flex items-center gap-2 whitespace-nowrap px-6 py-3 text-sm font-medium transition-all ${
+									className={`relative -mb-px flex items-center gap-2 whitespace-nowrap px-6 py-3 text-sm font-medium transition-all ${
 										activeTab === tab
-											? "z-10 rounded-t-[12px] border border-[#d9a9ea] border-b-transparent bg-white text-[#2b317c] after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[4px] after:bg-white after:content-['']"
+											? "rounded-t-[12px] border border-[#d9a9ea] border-b-white bg-white text-[#2b317c]"
 											: `border-b border-transparent text-[#4a4f95] ${index < tabs.length - 1 ? "border-r border-[#ead8f4]" : ""}`
 									}`}
 								>

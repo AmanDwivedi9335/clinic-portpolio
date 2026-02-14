@@ -1,6 +1,47 @@
 import React from "react";
 import Image from "next/image";
-import Blogsection from "@/components/Home/Blogsection";
+
+const blogs = [
+	{
+		imgurl: "/images/blogs/blog1.webp",
+		title: "Need of the Hour: India Needs EHR Framework",
+		description:
+			"As a developing nation, India has the second-largest population in the world with an ever-growing...",
+		source: "TOI",
+		readTime: "2 min read",
+		path: "/blog/article1",
+	},
+	{
+		imgurl: "/images/blogs/blog2.webp",
+		title: "Digitalisation of Healthcare Data: The Next Startup Boom",
+		description:
+			"In much the same way India's digital banking revolution brought formal banking within the reach of anyone...",
+		source: "TOI",
+		readTime: "2 min read",
+		path: "/blog/article2",
+	},
+	{
+		imgurl: "/images/blogs/blog4new.webp",
+		title:
+			"Electronic Health Records: Adoption and Overcoming Challenges for India",
+		description:
+			"Considering the massive amount of medical and healthcare records being generated across multiple institutions...",
+		source: "TOI",
+		readTime: "2 min read",
+		path: "/blog/article4",
+	},
+	{
+		imgurl: "/images/blogs/blog3.webp",
+		title:
+			"India Bullish on AI in Healthcare Without Electronic Health Records",
+		description:
+			"With more than 75% of outpatients and more than 60% of inpatients in India being treated in private healthcare...",
+		source: "TOI",
+		readTime: "2 min read",
+		path: "/blog/article3",
+	},
+];
+
 export default function page() {
 	return (
 		<div className="mt-[100px]">
@@ -8,7 +49,7 @@ export default function page() {
 				<h1 className="text-[34px] sm:text-[42px] font-semibold text-[#1B1570]">
 					Resources
 				</h1>
-				
+
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
 					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
 						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
@@ -46,7 +87,7 @@ export default function page() {
 								className="h-full w-full object-cover"
 								alt="ABHA and ABDM awareness"
 								width="640"
-								height="1511"				
+								height="1511"
 							/>
 						</div>
 					</div>
@@ -72,24 +113,56 @@ export default function page() {
 					</div>
 					<div className="md:w-[42%] relative">
 						<div className="overflow-hidden rounded-[16px]">
-						<Image
-							src="/images/health-guides.png"
-							className="h-full w-full object-cover"
-							alt="she"
-							width="640"
-							height="1511"
-						/>
+							<Image
+								src="/images/health-guides.png"
+								className="h-full w-full object-cover"
+								alt="she"
+								width="640"
+								height="1511"
+							/>
 						</div>
-
-						
 					</div>
 				</div>
-				{/* <div className='text-center my-14'>
-            <a href='https://abha.abdm.gov.in/abha/v3/register' target='__blank' className='bg-blue-400 p-4 text-white rounded'>Register Now</a>
-        </div> */}
 			</div>
-			<div id="resources3">
-				<Blogsection />
+			<div id="resources3" className="bg-[#f3f2f4] px-6 py-10 md:px-16">
+				<h2 className="text-[32px] font-semibold text-[#1f2677]">Blogs</h2>
+				<div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+					{blogs.map((blog) => (
+						<a
+							key={blog.title}
+							href={blog.path}
+							className="rounded-[18px] border border-[#a32fb6] bg-[#e8e0ea] p-3 shadow-[0_2px_8px_rgba(68,43,132,0.08)] transition-transform duration-200 hover:-translate-y-1"
+						>
+							<Image
+								src={blog.imgurl}
+								alt={blog.title}
+								width={320}
+								height={190}
+								className="h-[190px] w-full rounded-[16px] object-cover"
+							/>
+							<div className="px-1 pb-1 pt-4">
+								<h3 className="line-clamp-2 text-[22px] leading-[1.25] text-[#1f2677] md:text-[20px]">
+									{blog.title}
+								</h3>
+								<p className="mt-2 line-clamp-2 text-[14px] leading-[1.5] text-[#5d6296] md:text-[13px]">
+									{blog.description}
+								</p>
+								<div className="mt-8 flex items-center justify-between text-[13px] text-[#6369a1]">
+									<span>Source: {blog.source}</span>
+									<span>{blog.readTime}</span>
+								</div>
+							</div>
+						</a>
+					))}
+				</div>
+				<div className="mt-10 text-center">
+					<a
+						href="/blog"
+						className="inline-flex items-center rounded-[12px] bg-gradient-to-r from-[#7f00b2] to-[#1f2ca2] px-10 py-3 text-[16px] font-medium text-white shadow-[0_10px_18px_rgba(47,33,150,0.35)]"
+					>
+						View All
+					</a>
+				</div>
 			</div>
 			<div id="resources4" className="bg-white text-black py-10 px-16">
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">

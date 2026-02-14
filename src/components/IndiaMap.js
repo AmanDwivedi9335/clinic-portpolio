@@ -1119,17 +1119,16 @@ const App = () => {
 				<div className="container mx-auto px-4">
 					<h1 className="text-4xl font-bold text-[#1f2b8c] mb-8">Our Partners</h1>
 
-					<div className="border border-[#d7a8e8] rounded-xl p-4 md:p-6 bg-white/60">
-						<div className="partner-tabs-wrap mb-4 overflow-x-auto">
-							<div className="partner-tabs-row">
+					<div className="border-l border-r border-b border-[#d7a8e8] rounded-xl bg-white/60">
+						<div className="flex items-end gap-1 sm:gap-3 border-[#d7a8e8] border-b overflow-x-auto">
 							{tabs.map((tab) => (
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
-									className={`partner-pill-tab flex items-center gap-2 whitespace-nowrap px-4 py-2 font-medium transition-all ${
+									className={`flex items-center gap-2 whitespace-nowrap rounded-t-xl px-4 py-2 font-medium border border-b-0 transition-all ${
 										activeTab === tab
-											? "is-active text-[#2f2f7f]"
-											: "text-[#595982]"
+											? "relative z-10 -mb-px -ml-px -mt-px bg-white text-[#2f2f7f] border-[#d7a8e8] border-b-white"
+											: "bg-transparent text-[#595982] border-transparent"
 									}`}
 								>
 									<Image
@@ -1140,14 +1139,11 @@ const App = () => {
 										className="w-3.5 h-3.5"
 									/>
 									{tab}
-									<span className="partner-tab-cutout" aria-hidden="true" />
-									<span className="partner-tab-cutout-right" aria-hidden="true" />
 								</button>
 							))}
-							</div>
 						</div>
 
-						<div className="flex flex-wrap gap-2 mb-6">
+						<div className="flex pt-4 border-t flex-wrap gap-2 mb-6">
 							{subcategoryEntries
 								.slice(
 									0,

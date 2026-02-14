@@ -88,7 +88,7 @@ export default function Page() {
 						<div key={item.id} className="guide-card-group guide-card-wrap h-[315px] rounded-[14px]">
 							<div className="guide-card-inner relative h-full w-full rounded-[14px]">
 								<div className="guide-card-front absolute inset-0 rounded-[14px] border border-[#cb8fe0] bg-[#efe8ff] p-2">
-									<div className="mb-2 flex items-center justify-between px-1 text-[14px] font-semibold text-[#2f2d77]">
+									<div className="mb-2 flex items-center justify-between px-1 text-[18px] font-semibold text-[#2f2d77]">
 										<span>{item.title}</span>
 										<FiChevronDown className="text-[#2f2d77]" />
 									</div>
@@ -108,7 +108,7 @@ export default function Page() {
 										<span>{item.title}</span>
 										<FiChevronUp />
 									</div>
-									<div className="guide-card-back-content rounded-[10px] border border-[#cb8fe0] bg-[#f4f0ff] p-3 text-[11px] leading-[1.35]">
+									<div className="guide-card-back-content rounded-[10px] border border-[#cb8fe0] bg-[#f4f0ff] p-3 text-[14px] leading-[1.35]">
 										{renderDescription(item.desc)}
 									</div>
 								</div>

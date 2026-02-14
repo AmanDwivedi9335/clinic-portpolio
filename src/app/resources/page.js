@@ -72,24 +72,12 @@ export default function page() {
 					</div>
 					<div className="md:w-[400px] w-[100%] m-auto mt-[20px] relative">
 						<Image
-							src="/images/healthResources.png"
+							src="/images/health-guides.png"
 							className="w-full h-full m-auto"
 							alt="she"
 							width="640"
 							height="1511"
 						/>
-
-						<a href="/health-guides">
-							<div className="absolute bottom-0 right-0 ">
-								<Image
-									src="/images/healthResourcesBtn.png"
-									className=""
-									alt="she"
-									width="112"
-									height="50"
-								/>
-							</div>
-						</a>
 					</div>
 				</div>
 				{/* <div className='text-center my-14'>
@@ -128,7 +116,7 @@ export default function page() {
 					</div>
 					<div className="md:w-[600px] w-[200px] m-auto">
 						<Image
-							src="/images/privacy.png"
+							src="/images/privacy-policy.png"
 							className="w-full h-full m-auto"
 							alt="she"
 							width="640"

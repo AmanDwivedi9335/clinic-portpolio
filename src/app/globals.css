@@ -153,6 +153,35 @@ ol {
 	backface-visibility: hidden;
 }
 
+
+.guide-card-wrap {
+	perspective: 1200px;
+}
+
+.guide-card-inner {
+	transition: transform 0.7s;
+	transform-style: preserve-3d;
+}
+
+.guide-card-group:hover .guide-card-inner {
+	transform: rotateX(180deg);
+}
+
+.guide-card-front,
+.guide-card-back {
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.guide-card-back {
+	transform: rotateX(180deg);
+}
+
+.guide-card-back-content {
+	height: 262px;
+	overflow-y: auto;
+}
+
 .comming-soon {
 	width: 450px;
 	position: absolute;

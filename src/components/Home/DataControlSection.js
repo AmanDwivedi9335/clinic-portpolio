@@ -292,8 +292,8 @@ export default function DataControlSection() {
 
 					{/* Concentric arcs on right */}
 					<div
-					className="pointer-events-auto absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_200px,rgba(255,255,255,1)_100px_200px,rgba(255,255,255,0.8)_200px_300px,rgba(255,255,255,0.6)_300px_400px,rgba(255,255,255,0.5)_400px_500px,rgba(255,255,255,0.3)_500px_600px,rgba(255,255,255,0.2)_600px_700px,rgba(255,255,255,0.1)_800px)]"
-					aria-hidden="true"
+						className="pointer-events-none absolute inset-y-0 right-0 w-[62%] bg-[repeating-radial-gradient(circle_at_right_center,rgba(255,255,255,0)_0_62px,rgba(255,255,255,0.44)_62px_78px)] opacity-85 md:w-[48%]"
+						aria-hidden="true"
 					/>
 
 					{/* Slight soft vignette to blend arcs into the base */}
@@ -303,7 +303,7 @@ export default function DataControlSection() {
 					/>
 
 					<div className="relative z-10 flex min-h-[260px] items-center">
-					<div className="w-full max-w-[640px] text-center md:text-left">
+					<div className="w-full max-w-[640px] text-center md:pr-8 md:text-left lg:pr-14">
 						<h3 className="text-[28px] font-semibold leading-tight text-white md:text-[42px] md:leading-[1.15]">
 						Don&apos;t wait for a crisis to organise <br className="hidden sm:block" />
 						your medical life.

@@ -1143,7 +1143,7 @@ const App = () => {
 							))}
 						</div>
 
-						<div className="flex flex-col-reverse md:flex-row gap-6">
+						<div className="flex border-l border-r border-b border-[#d9a9ea] flex-col-reverse md:flex-row gap-6">
 							<div className="md:w-3/5 w-full">
 								<div className="flex flex-wrap gap-2 px-4 pt-4 mb-6">
 									{subcategoryEntries

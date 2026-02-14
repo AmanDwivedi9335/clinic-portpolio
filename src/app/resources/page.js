@@ -53,9 +53,9 @@ export default function page() {
 				</div>
 			</div>
 			<div id="resources2" className="bg-white text-black py-10 px-16">
-				<div className=" flex flex-col flex-nowrap sm:py-[40px] md:flex-row rounded-[30px] justify-center items-center ">
-					<div className="text-[12px] md:text-[16px] md:w-1/2 m-auto w-full text-justify">
-						<div className="text-left text-2xl sm:text-[48px] font-semibold py-4 sm:py-7">
+				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
+					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
+						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
 							Health Guides
 						</div>
 						At Medibank we are not only working on improving healthcare
@@ -70,14 +70,18 @@ export default function page() {
 						different and for specific individual needs, please consult a
 						doctor.
 					</div>
-					<div className="md:w-[400px] w-[100%] m-auto mt-[20px] relative">
+					<div className="md:w-[42%] relative">
+						<div className="overflow-hidden rounded-[16px]">
 						<Image
 							src="/images/health-guides.png"
-							className="w-full h-full m-auto"
+							className="h-full w-full object-cover"
 							alt="she"
 							width="640"
 							height="1511"
 						/>
+						</div>
+
+						
 					</div>
 				</div>
 				{/* <div className='text-center my-14'>
@@ -88,9 +92,9 @@ export default function page() {
 				<Blogsection />
 			</div>
 			<div id="resources4" className="bg-white text-black py-10 px-16">
-				<div className=" flex flex-col-reverse flex-nowrap sm:py-[40px] md:flex-row rounded-[30px] justify-center items-center ">
-					<div className="text-[12px] md:text-[16px] md:w-1/2 m-auto w-full text-justify">
-						<div className="text-left text-2xl sm:text-[48px] font-semibold  py-4 sm:py-7">
+				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
+					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
+						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
 							Privacy Policy
 						</div>
 						We understand the sensitive nature of health data and peoples
@@ -105,23 +109,25 @@ export default function page() {
 						privacy policy clearly explains all that a user needs to know about
 						what information we collect, how we store it, use it and share it
 						with. Please click below to read more about it.
-						<div className="md:text-left sm:text-center mt-7">
+						<div className="mt-7 md:mt-8 text-left">
 							<a
 								href="/privacy-policy"
-								className="bg-[#6D4AFF] text-white rounded-[20px] p-3"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
 							>
 								Read More
 							</a>
 						</div>
 					</div>
-					<div className="md:w-[600px] w-[200px] m-auto">
-						<Image
-							src="/images/privacy-policy.png"
-							className="w-full h-full m-auto"
-							alt="she"
-							width="640"
-							height="1511"
-						/>
+					<div className="md:w-[42%]">
+						<div className="overflow-hidden rounded-[16px]">
+							<Image
+								src="/images/privacy-policy.png"
+								className="h-full w-full object-cover"
+								alt="she"
+								width="640"
+								height="1511"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

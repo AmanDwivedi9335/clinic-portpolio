@@ -5,21 +5,14 @@ export default function page() {
 	return (
 		<div className="mt-[100px]">
 			<div id="resources1" className="bg-white py-2 md:px-16 px-8">
-				<h1 className="text-[48px] font-semibold">Resources</h1>
-				<div className="text-left text-[22px] font-semibold py-3">
+				<h1 className="text-[34px] sm:text-[42px] font-semibold text-[#1B1570]">
+					Resources
+				</h1>
+				<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
 					ABHA / ABDM
 				</div>
-				<div className=" flex flex-col-reverse flex-nowrap py-[30px] px-[30px] bg-[#F7F5FF] md:flex-row rounded-[30px] justify-center items-center ">
-					<div className="md:w-[400px] w-[200px] m-auto">
-						<Image
-							src="/images/he.webp"
-							className="w-full h-full m-auto"
-							alt="she"
-							width="640"
-							height="1511"
-						/>
-					</div>
-					<div className="text-[12px] md:text-[16px] md:w-1/2 m-auto w-full text-justify">
+				<div className="flex flex-col gap-8 py-2 md:flex-row md:items-center md:gap-10">
+					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
 						Ayushman Bharat Digital Mission (ABDM) aims to develop the backbone
 						necessary to support the integrated digital health infrastructure of
 						the country. It will bridge the existing gap amongst different
@@ -34,16 +27,28 @@ export default function page() {
 						for registration at HFR registered healthcare facilities across the
 						country. If you haven’t already, you can generate your ABHA number
 						directly from the government website using the link below.
+
+						<div className="mt-7 md:mt-8 text-left">
+							<a
+								href="https://abha.abdm.gov.in/abha/v3/register"
+								target="__blank"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
+							>
+								Register Now
+							</a>
+						</div>
 					</div>
-				</div>
-				<div className="text-center my-10">
-					<a
-						href="https://abha.abdm.gov.in/abha/v3/register"
-						target="__blank"
-						className="bg-[#6D4AFF] p-4 text-white rounded-[30px]"
-					>
-						Register Now
-					</a>
+					<div className="md:w-[42%]">
+						<div className="overflow-hidden rounded-[16px] border-l-[6px] border-[#1D17AE] shadow-[10px_10px_0px_0px_rgba(176,157,255,0.4)]">
+							<Image
+								src="/images/he.webp"
+								className="h-full w-full object-cover"
+								alt="ABHA and ABDM awareness"
+								width="640"
+								height="1511"
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id="resources2" className="bg-white text-black py-10 px-16">

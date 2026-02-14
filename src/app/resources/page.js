@@ -8,11 +8,12 @@ export default function page() {
 				<h1 className="text-[34px] sm:text-[42px] font-semibold text-[#1B1570]">
 					Resources
 				</h1>
-				<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
-					ABHA / ABDM
-				</div>
-				<div className="flex flex-col gap-8 py-2 md:flex-row md:items-center md:gap-10">
+				
+				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
 					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
+						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
+							ABHA / ABDM
+						</div>
 						Ayushman Bharat Digital Mission (ABDM) aims to develop the backbone
 						necessary to support the integrated digital health infrastructure of
 						the country. It will bridge the existing gap amongst different
@@ -39,13 +40,13 @@ export default function page() {
 						</div>
 					</div>
 					<div className="md:w-[42%]">
-						<div className="overflow-hidden rounded-[16px] border-l-[6px] border-[#1D17AE] shadow-[10px_10px_0px_0px_rgba(176,157,255,0.4)]">
+						<div className="overflow-hidden rounded-[16px] ">
 							<Image
-								src="/images/he.webp"
+								src="/images/abha-pic.png"
 								className="h-full w-full object-cover"
 								alt="ABHA and ABDM awareness"
 								width="640"
-								height="1511"
+								height="1511"				
 							/>
 						</div>
 					</div>

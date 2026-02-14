@@ -97,7 +97,7 @@ export default function DataControlSection() {
 					ease: "power3.out",
 					scrollTrigger: {
 						trigger: ".data-cta",
-						start: "top 80%",
+						start: "top bottom",
 					},
 				}
 			);

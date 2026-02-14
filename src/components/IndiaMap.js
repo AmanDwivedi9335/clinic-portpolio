@@ -1143,32 +1143,32 @@ const App = () => {
 							))}
 						</div>
 
-						<div className="flex flex-wrap gap-2 px-4 pt-4 mb-6">
-							{subcategoryEntries
-								.slice(
-									0,
-									showAllSubcategories[activeTab] ? subcategoryEntries.length : 3
-								)
-								.map(([category, count], index) => (
-									<span
-										key={index}
-										className="bg-[#ece8f9] text-[#3b3188] rounded-full px-3 py-1 text-xs font-semibold"
-									>
-										{count} {category}
-									</span>
-								))}
-							{subcategoryEntries.length > 4 && (
-								<button
-									className="text-[#5e4ac8] font-semibold text-xs"
-									onClick={() => toggleShowAllSubcategories(activeTab)}
-								>
-									{showAllSubcategories[activeTab] ? "Show Less" : "See More"}
-								</button>
-							)}
-						</div>
-
 						<div className="flex flex-col-reverse md:flex-row gap-6">
 							<div className="md:w-3/5 w-full">
+								<div className="flex flex-wrap gap-2 px-4 pt-4 mb-6">
+									{subcategoryEntries
+										.slice(
+											0,
+											showAllSubcategories[activeTab] ? subcategoryEntries.length : 3
+										)
+										.map(([category, count], index) => (
+											<span
+												key={index}
+												className="bg-[#ece8f9] text-[#3b3188] rounded-full px-3 py-1 text-xs font-semibold"
+											>
+												{count} {category}
+											</span>
+										))}
+									{subcategoryEntries.length > 4 && (
+										<button
+											className="text-[#5e4ac8] font-semibold text-xs"
+											onClick={() => toggleShowAllSubcategories(activeTab)}
+										>
+											{showAllSubcategories[activeTab] ? "Show Less" : "See More"}
+										</button>
+									)}
+								</div>
+
 								<div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 relative">
 									<div className="absolute inset-0 backdrop-blur-[2px] bg-white/35 z-10 rounded-xl flex items-center justify-center">
 										<span

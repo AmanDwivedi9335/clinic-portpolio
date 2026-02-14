@@ -1119,16 +1119,16 @@ const App = () => {
 				<div className="container mx-auto px-4">
 					<h1 className="text-4xl font-bold text-[#1f2b8c] mb-8">Our Partners</h1>
 
-					<div className="rounded-[14px] border border-[#d9a9ea] bg-white/70">
-						<div className="flex items-end overflow-x-auto border-b border-[#ead8f4]">
+					<div className="rounded-[14px] border-[#d9a9ea] bg-white/70">
+						<div className="flex items-end border-b border-[#ead8f4]">
 							{tabs.map((tab, index) => (
 								<button
 									key={tab}
 									onClick={() => setActiveTab(tab)}
 									className={`relative -mb-px flex items-center gap-2 whitespace-nowrap px-6 py-3 text-sm font-medium transition-all ${
 										activeTab === tab
-											? "rounded-t-[12px] border border-[#d9a9ea] border-b-white bg-white text-[#2b317c]"
-											: `border-b border-transparent text-[#4a4f95] ${index < tabs.length - 1 ? "border-r border-[#ead8f4]" : ""}`
+											? "rounded-t-[12px] border border-[#d9a9ea] bg-white z-100 border-b-white text-[#2b317c]"
+											: `border-b border-transparent text-[#4a4f95] ${index < tabs.length - 1 ? " border-[#ead8f4]" : ""}`
 									}`}
 								>
 									<Image

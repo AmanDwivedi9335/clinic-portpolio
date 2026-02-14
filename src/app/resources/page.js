@@ -110,6 +110,15 @@ export default function page() {
 						general advice and knowledge as each individual situation is
 						different and for specific individual needs, please consult a
 						doctor.
+
+						<div className="mt-7 md:mt-8 text-left">
+							<a
+								href="/health-guides"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
+							>
+								View Guides
+							</a>
+						</div>
 					</div>
 					<div className="md:w-[42%] relative">
 						<div className="overflow-hidden rounded-[16px]">

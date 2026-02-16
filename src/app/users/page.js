@@ -15,17 +15,64 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[90vh] overflow-hidden">
-      {/* Base hero gradient (same vibe as reference) */}
+    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[90vh] overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#C9C6EA_0%,#E8C9DF_55%,#F3E6F2_100%)]" />
 
-      {/* Top soft band */}
+      {/* TOP BAND */}
       <svg
-        className="hero-band hero-band-top absolute inset-x-0 top-[10%] h-[38%] w-full"
+        className="hero-band absolute inset-x-0 top-[10%] h-[38%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <g className="hero-band-track hero-band-track-1">
+        <defs>
+          <filter id="waveTop" x="-20%" y="-60%" width="140%" height="220%">
+            {/* moving noise field */}
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.012 0.06"
+              numOctaves="2"
+              seed="11"
+              result="noise"
+            >
+              {/* animate the noise so the shape deforms (true wave) */}
+              <animate
+                attributeName="baseFrequency"
+                dur="8s"
+                values="
+                  0.012 0.060;
+                  0.016 0.080;
+                  0.012 0.060
+                "
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="seed"
+                dur="12s"
+                values="11;12;13;11"
+                repeatCount="indefinite"
+              />
+            </feTurbulence>
+
+            {/* displace the source graphics using the noise */}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="18"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            >
+              {/* subtle pulsing intensity */}
+              <animate
+                attributeName="scale"
+                dur="6s"
+                values="14;20;14"
+                repeatCount="indefinite"
+              />
+            </feDisplacementMap>
+          </filter>
+        </defs>
+
+        <g filter="url(#waveTop)">
           <path
             d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
             fill="#FFFFFF"
@@ -39,13 +86,57 @@ function HeroWaveBackground() {
         </g>
       </svg>
 
-      {/* Middle band */}
+      {/* MIDDLE BAND */}
       <svg
-        className="hero-band hero-band-mid absolute inset-x-0 top-[26%] h-[46%] w-full"
+        className="hero-band absolute inset-x-0 top-[26%] h-[46%] w-full"
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-        <g className="hero-band-track hero-band-track-2">
+        <defs>
+          <filter id="waveMid" x="-20%" y="-60%" width="140%" height="220%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.010 0.05"
+              numOctaves="2"
+              seed="21"
+              result="noise"
+            >
+              <animate
+                attributeName="baseFrequency"
+                dur="10s"
+                values="
+                  0.010 0.050;
+                  0.014 0.070;
+                  0.010 0.050
+                "
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="seed"
+                dur="14s"
+                values="21;22;23;21"
+                repeatCount="indefinite"
+              />
+            </feTurbulence>
+
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="22"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            >
+              <animate
+                attributeName="scale"
+                dur="7s"
+                values="18;26;18"
+                repeatCount="indefinite"
+              />
+            </feDisplacementMap>
+          </filter>
+        </defs>
+
+        <g filter="url(#waveMid)">
           <path
             d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
             fill="#FFFFFF"
@@ -59,13 +150,57 @@ function HeroWaveBackground() {
         </g>
       </svg>
 
-      {/* Bottom white band */}
+      {/* BOTTOM BAND */}
       <svg
-        className="hero-band hero-band-bottom absolute inset-x-0 bottom-0 h-[42%] w-full"
+        className="hero-band absolute inset-x-0 bottom-0 h-[42%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <g className="hero-band-track hero-band-track-3">
+        <defs>
+          <filter id="waveBottom" x="-20%" y="-60%" width="140%" height="220%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.008 0.04"
+              numOctaves="2"
+              seed="31"
+              result="noise"
+            >
+              <animate
+                attributeName="baseFrequency"
+                dur="12s"
+                values="
+                  0.008 0.040;
+                  0.012 0.060;
+                  0.008 0.040
+                "
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="seed"
+                dur="16s"
+                values="31;32;33;31"
+                repeatCount="indefinite"
+              />
+            </feTurbulence>
+
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="12"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            >
+              <animate
+                attributeName="scale"
+                dur="8s"
+                values="10;16;10"
+                repeatCount="indefinite"
+              />
+            </feDisplacementMap>
+          </filter>
+        </defs>
+
+        <g filter="url(#waveBottom)">
           <path
             d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
             fill="#FFFFFF"
@@ -81,131 +216,23 @@ function HeroWaveBackground() {
 
       <style jsx>{`
         .hero-band {
-          transform-origin: center;
           will-change: transform;
+          /* tiny float so it feels alive, but wave motion is from displacement */
+          animation: bandFloat 9s ease-in-out infinite;
         }
-
-        .hero-band-top {
-          animation: heroWaveShiftTop 11s ease-in-out infinite;
-        }
-
-        .hero-band-mid {
-          animation: heroWaveShiftMid 14s ease-in-out infinite;
-        }
-
-        .hero-band-bottom {
-          animation: heroWaveShiftBottom 17s ease-in-out infinite;
-        }
-
-        @keyframes heroWaveShiftTop {
+        @keyframes bandFloat {
           0%,
           100% {
             transform: translate3d(0, 0, 0);
           }
           50% {
-            transform: translate3d(-1.2%, 1.2%, 0);
-          }
-        }
-
-        @keyframes heroWaveShiftMid {
-          0%,
-          100% {
-            transform: translate3d(0, 0, 0);
-          }
-          50% {
-            transform: translate3d(1.5%, -1%, 0);
-          }
-        }
-
-        @keyframes heroWaveShiftBottom {
-          0%,
-          100% {
-            transform: translate3d(0, 0, 0);
-          }
-          50% {
-            transform: translate3d(-1%, 0.9%, 0);
+            transform: translate3d(0, 6px, 0);
           }
         }
       `}</style>
     </div>
   );
 }
-
-      <style jsx>{`
-        .hero-band {
-          overflow: hidden;
-        }
-
-        .hero-band-track {
-          transform-box: fill-box;
-          transform-origin: center;
-          will-change: transform;
-        }
-
-        .hero-band-track-1 {
-          animation: waveDriftLeft 12s linear infinite, waveLiftA 6s ease-in-out infinite;
-        }
-
-        .hero-band-track-2 {
-          animation: waveDriftRight 16s linear infinite, waveLiftB 8s ease-in-out infinite;
-        }
-
-        .hero-band-track-3 {
-          animation: waveDriftLeft 20s linear infinite, waveLiftC 10s ease-in-out infinite;
-        }
-
-        @keyframes waveDriftLeft {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        @keyframes waveDriftRight {
-          from {
-            transform: translateX(-50%);
-          }
-          to {
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes waveLiftA {
-          0%,
-          100% {
-            margin-top: 0;
-          }
-          50% {
-            margin-top: -8px;
-          }
-        }
-
-        @keyframes waveLiftB {
-          0%,
-          100% {
-            margin-top: 0;
-          }
-          50% {
-            margin-top: 6px;
-          }
-        }
-
-        @keyframes waveLiftC {
-          0%,
-          100% {
-            margin-top: 0;
-          }
-          50% {
-            margin-top: -5px;
-          }
-        }
-      `}</style>
-    </div>
-  );
-}
-
 
 
 export default function UsersPage() {
@@ -213,11 +240,8 @@ export default function UsersPage() {
     <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
 
-            {/* HERO */}
+      {/* HERO */}
       <section className="relative isolate overflow-hidden h-[100vh] pt-12 md:pt-16">
-        {/* Base gradient like screenshot */}
-        {/* <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" /> */}
-
         {/* Content ALWAYS above waves */}
         <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4F2C84]">
@@ -235,10 +259,10 @@ export default function UsersPage() {
           </p>
 
           <div className="mt-7 flex items-center justify-center gap-4">
-            <button className="rounded-xl bg-gradient-to-b from-[#7b2ed6] to-[#5f1fa8] px-8 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(123,46,214,0.25)] hover:brightness-110 active:scale-[0.98] transition">
+            <button className="rounded-xl bg-gradient-to-b from-[#7b2ed6] to-[#5f1fa8] px-8 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(123,46,214,0.25)] transition hover:brightness-110 active:scale-[0.98]">
               Subscribe Now
             </button>
-            <button className="rounded-xl border border-[#8f6bb8] bg-white/80 px-8 py-3 text-sm font-semibold text-[#4D267F] shadow-sm hover:bg-white transition">
+            <button className="rounded-xl border border-[#8f6bb8] bg-white/80 px-8 py-3 text-sm font-semibold text-[#4D267F] shadow-sm transition hover:bg-white">
               Watch Demo
             </button>
           </div>
@@ -247,6 +271,7 @@ export default function UsersPage() {
         </div>
       </section>
 
+      {/* REST */}
       <section className="mx-auto mt-12 grid max-w-6xl gap-y-16 px-6 md:mt-16 md:grid-cols-2 md:items-center">
         <div>
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -347,7 +372,7 @@ export default function UsersPage() {
         </div>
 
         <PhoneMockup className="md:justify-self-center">
-          <div className="h-full bg-[#FBF8FF] p-3 pt-7">
+          <div className="relative h-full bg-[#FBF8FF] p-3 pt-7">
             <div className="mb-3 flex gap-2 text-[11px] font-semibold">
               <span className="rounded-full bg-[#6f1cb5] px-3 py-1 text-white">
                 Records
@@ -356,12 +381,10 @@ export default function UsersPage() {
                 Appointments
               </span>
             </div>
+
             {["Blood Test Report", "MRI Scan Result", "Prescription - Jan", "Wellness Report"].map(
               (item, idx) => (
-                <div
-                  key={item}
-                  className="mb-2 rounded-xl border border-[#eadff6] bg-white p-3"
-                >
+                <div key={item} className="mb-2 rounded-xl border border-[#eadff6] bg-white p-3">
                   <p className="text-xs font-semibold text-[#32114f]">{item}</p>
                   <div className="mt-2 flex items-center justify-between text-[10px] text-[#6f6480]">
                     <span>Updated {idx + 1}d ago</span>
@@ -372,13 +395,13 @@ export default function UsersPage() {
                 </div>
               )
             )}
+
             <div className="absolute bottom-4 right-4 rounded-full bg-[#1eb980] px-3 py-2 text-xs font-semibold text-white shadow-md">
               + Add
             </div>
           </div>
         </PhoneMockup>
       </section>
-
     </main>
   );
 }

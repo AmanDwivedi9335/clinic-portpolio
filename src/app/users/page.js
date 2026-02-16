@@ -230,8 +230,44 @@ export default function UsersPage() {
             </button>
           </div>
 
-
-          <div className="mt-10 text-2xl text-[#8c62c0]">⌄</div>
+          <div className="mt-10" aria-hidden="true">
+            <svg
+              className="scroll-indicator"
+              width="50"
+              height="56"
+              viewBox="0 0 50 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                className="scroll-indicator-chevron"
+                d="M12 8L25 21L38 8"
+                stroke="#8F129A"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ "--chevron-delay": "0s" }}
+              />
+              <path
+                className="scroll-indicator-chevron"
+                d="M12 24L25 37L38 24"
+                stroke="#BB79C7"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ "--chevron-delay": "0.2s" }}
+              />
+              <path
+                className="scroll-indicator-chevron"
+                d="M12 40L25 53L38 40"
+                stroke="#D9B8DD"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ "--chevron-delay": "0.4s" }}
+              />
+            </svg>
+          </div>
         </div>
       </section>
 

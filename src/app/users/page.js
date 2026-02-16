@@ -161,28 +161,75 @@ export default function UsersPage() {
       <section className="relative isolate overflow-hidden h-[100vh] pt-12 md:pt-16">
         {/* Content ALWAYS above waves */}
         <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4F2C84]">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
             INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
           </p>
 
-          <h1 className="mx-auto mt-4 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-[-0.02em] text-[#47108A] md:text-7xl">
+          <h1
+            className="
+              mx-auto mt-4 max-w-4xl
+              text-5xl md:text-7xl
+              font-extrabold
+              leading-[1.05]
+              tracking-[-0.02em]
+              bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+              bg-clip-text text-transparent
+            "
+          >
             Sneak Peek of
             <br />
             What You Get
           </h1>
 
-          <p className="mt-4 text-sm font-medium text-[#5b3a84] md:text-base">
+
+          <p className="mt-4 text-sm font-medium text-[#282672] md:text-base">
             See how the app works in just a few scrolls.
           </p>
 
           <div className="mt-7 flex items-center justify-center gap-4">
-            <button className="rounded-xl bg-gradient-to-b from-[#7b2ed6] to-[#5f1fa8] px-8 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(123,46,214,0.25)] transition hover:brightness-110 active:scale-[0.98]">
+            {/* Subscribe Now */}
+            <button
+              className="
+                rounded-xl
+                px-8 py-3
+                text-sm font-semibold text-white
+                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                shadow-[0_18px_40px_rgba(159,2,141,0.35)]
+                transition
+                hover:brightness-110
+                active:scale-[0.98]
+              "
+            >
               Subscribe Now
             </button>
-            <button className="rounded-xl border border-[#8f6bb8] bg-white/80 px-8 py-3 text-sm font-semibold text-[#4D267F] shadow-sm transition hover:bg-white">
-              Watch Demo
+
+            {/* Watch Demo with gradient border */}
+            <button
+              className="
+                relative
+                rounded-xl
+                p-[1.5px]
+                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                transition
+                hover:brightness-110
+              "
+            >
+              <span
+                className="
+                  flex h-full w-full items-center justify-center
+                  rounded-[10px]
+                  bg-white/90
+                  px-8 py-3
+                  text-sm font-semibold
+                  text-[#4D267F]
+                  shadow-sm
+                "
+              >
+                Watch Demo
+              </span>
             </button>
           </div>
+
 
           <div className="mt-10 text-2xl text-[#8c62c0]">⌄</div>
         </div>

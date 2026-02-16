@@ -366,7 +366,7 @@ export default function Page() {
 
 			{/* Contact Us */}
 			<div id="about4" className="bg-white md:pt-[88px] pb-12">
-				<div className="mx-6 md:mx-16 rounded-[18px] bg-[#F8F8FC] border border-[#EBEBF4] p-6 md:p-8">
+				<div className="mx-6 md:mx-16 p-6 md:p-8">
 					<h2 className="text-center text-[36px] leading-tight font-bold text-[#12127A] mb-8">
 						Get in Touch!
 					</h2>
@@ -377,7 +377,7 @@ export default function Page() {
 						<div className="w-full">
 							<iframe
 								className="w-full h-[340px] md:h-[392px] rounded-3xl border border-[#E5E5EF]"
-								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.0676962975026!2d78.3737762749364!3d17.456473683442557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93da776e3347%3A0xd43f52aa73cb4014!2sBizness%20Square!5e0!3m2!1sen!2sin!4v1732107222387!5m2!1sen!2sin"
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.387854022113!2d78.37834407493604!3d17.44114078345521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93547b7c9039%3A0x852fa9e76e4ca65!2sWeWork%20Raheja%20Mindspace%20-%20Coworking%20%26%20Office%20Space%20in%20Madhpur%2C%20Hyderabad!5e0!3m2!1sen!2sin!4v1771228558321!5m2!1sen!2sin"
 								width="auto"
 								height="450"
 								allowFullScreen=""

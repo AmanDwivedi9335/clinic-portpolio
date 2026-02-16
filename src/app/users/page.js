@@ -15,11 +15,68 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
-      <div className="absolute -top-10 left-[-10%] h-60 w-[130%] rounded-[50%] bg-[#b786e6]/50" />
-      <div className="absolute top-24 left-[-20%] h-85 w-[140%] rounded-[50%] bg-[#d4b5ef]/60" />
-      <div className="absolute top-48 left-[-5%] h-80 w-[120%] rounded-[50%] bg-[#ebd9f8]" />
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,#08087D_0%,#2B1098_26%,#5A18AE_55%,#8D1CB8_78%,#B31AB6_100%)]" />
+
+      {/* Curved wave bands to match the reference hero background */}
+      <svg
+        className="absolute left-0 top-[26%] h-[140px] w-full"
+        viewBox="0 0 1440 220"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="#5D20A9"
+          fillOpacity="0.55"
+          d="M0,104 C172,78 302,72 444,98 C566,120 660,160 772,158 C894,154 1008,84 1128,88 C1248,94 1354,128 1440,98 L1440,220 L0,220 Z"
+        />
+      </svg>
+
+      <svg
+        className="absolute left-0 top-[42%] h-[150px] w-full"
+        viewBox="0 0 1440 220"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="#7D1FB4"
+          fillOpacity="0.58"
+          d="M0,126 C160,168 332,138 486,108 C648,76 762,94 888,128 C1026,168 1162,154 1292,112 C1364,88 1414,86 1440,94 L1440,220 L0,220 Z"
+        />
+      </svg>
+
+      <svg
+        className="absolute left-0 top-[58%] h-[160px] w-full"
+        viewBox="0 0 1440 220"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="#9A1DBB"
+          fillOpacity="0.62"
+          d="M0,120 C166,96 318,76 468,106 C608,134 742,168 892,144 C1034,120 1140,72 1272,88 C1356,98 1408,108 1440,102 L1440,220 L0,220 Z"
+        />
+      </svg>
+
+      <svg
+        className="absolute bottom-0 left-0 h-[170px] w-full"
+        viewBox="0 0 1440 220"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="#B01EB9"
+          fillOpacity="0.72"
+          d="M0,136 C168,164 298,120 434,96 C546,76 654,108 768,152 C896,198 1014,172 1128,130 C1240,88 1342,92 1440,98 L1440,220 L0,220 Z"
+        />
+      </svg>
+
+      <svg
+        className="absolute -bottom-1 left-0 h-[95px] w-full"
+        viewBox="0 0 1440 120"
+        preserveAspectRatio="none"
+      >
+        <path
+          fill="#0A0120"
+          d="M0,80 C120,118 252,98 374,66 C504,32 618,48 746,88 C876,126 1008,84 1120,70 C1246,54 1352,68 1440,74 L1440,120 L0,120 Z"
+        />
+      </svg>
     </div>
   );
 }

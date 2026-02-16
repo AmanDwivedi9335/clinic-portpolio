@@ -17,9 +17,9 @@ function HeroWaveBackground() {
   return (
     <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
-      <div className="absolute -top-10 left-[-10%] h-48 w-[130%] rounded-[50%] bg-[#b786e6]/50" />
-      <div className="absolute top-24 left-[-20%] h-44 w-[140%] rounded-[50%] bg-[#d4b5ef]/60" />
-      <div className="absolute top-48 left-[-5%] h-40 w-[120%] rounded-[50%] bg-[#ebd9f8]" />
+      <div className="absolute -top-10 left-[-10%] h-60 w-[130%] rounded-[50%] bg-[#b786e6]/50" />
+      <div className="absolute top-24 left-[-20%] h-85 w-[140%] rounded-[50%] bg-[#d4b5ef]/60" />
+      <div className="absolute top-48 left-[-5%] h-80 w-[120%] rounded-[50%] bg-[#ebd9f8]" />
     </div>
   );
 }
@@ -89,7 +89,7 @@ export default function UsersPage() {
             {/* HERO */}
       <section className="relative isolate overflow-hidden pt-12 md:pt-16">
         {/* Base gradient like screenshot */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
+        {/* <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" /> */}
 
         {/* Animated wave layers */}
         <HeroWaves />

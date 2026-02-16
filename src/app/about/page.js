@@ -18,6 +18,41 @@ export default function Page() {
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		},
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		},
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		},
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		},
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		}
 		
 	];
 
@@ -59,28 +94,7 @@ export default function Page() {
 				"Dr Anupam is a Dentist, Endodontist and Implantologist. He has been in clinical practice since 1996 and has interest in the fields of Endodontics, restorative dentistry, and dental implants.",
 			imgurl: "/images/doctors/Dr-Anupam-B.png",
 			Designation: "BDS, MDS - Operative Dentistry",
-		},
-		{
-			Name: "Dr Urmi Sanyal",
-			Details:
-				"Dr Urmi is a Senior Resident at Institute of Psychiatry (IOP), Kolkata. She manages the whole spectrum of mental health problems like Anxiety, PTSD, Depression, Bipolar disorder, Schizophrenia, Autistic Spectrum, Dementia, as well as drug abuse to name a few. She has special interest in Child Psychiatry.",
-			imgurl: "/images/doctors/Dr-Urmi-S.png",
-			Designation: "MBBS, MD (Psychiatry)",
-		},
-		{
-			Name: "Dr Anurag Agarwal",
-			Details:
-				"Dr Anurag Agarwal is an ophthalmologist/eye surgeon from Mumbai with over 25 years of experience. His expertise involves canaloplasty, refractive surgery, corneal surgery, cataract surgery, Lasik eye surgery, and general eye surgery.",
-			imgurl: "/images/doctors/Dr-Anurag-A.png",
-			Designation: "MBBS, MS – Ophthalmology",
-		},
-		{
-			Name: "Dr Khushi Bhambhani",
-			Details:
-				"With over a decade of experience in healthcare management, Dr Khushi is the Chief Operating Officer at Halani Healthcare in Mumbai. She is also a Consultant Anaesthesiologist and Pain Physician.",
-			imgurl: "/images/doctors/Dr-Khushi-B.png",
-			Designation: "MBBS, DNB – Anaesthesiology",
-		},
+		}
 	];
 
 	return (
@@ -192,7 +206,7 @@ export default function Page() {
 					</div>
 
 					{smallFounders.length > 0 && (
-						<div className="mt-8 md:mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+						<div className="mt-8 md:mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
 							{smallFounders.map((item, index) => (
 							<div
 								key={`small-founder-${index}`}
@@ -230,7 +244,16 @@ export default function Page() {
 			{/* Advisory Panel */}
 			<div className="bg-white">
 				<div className="w-4/5 container py-16 pb-0">
-					<div className="text-center my-8 lg:my-6 text-[28px] md:text-[38px] font-bold text-black">
+					<div className="relative
+							font-bold
+							text-[32px]
+							text-[#0b137a]
+							text-center
+							py-16
+							[-webkit-text-stroke:0.5px_transparent]
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
+							bg-clip-text
+							[-webkit-background-clip:text]">
 						Advisory Panel
 					</div>
 					<div className="flex justify-around items-center flex-col md:flex-row w-full flex-wrap">
@@ -238,7 +261,7 @@ export default function Page() {
 							return (
 								<div
 									key={index}
-									className="group w-full md:w-1/5 md:mx-1 mb-2 md:my-4 bg-white rounded-[10px]"
+									className="group w-full md:w-1/6 md:mx-1 mb-2 md:my-4 bg-white rounded-[10px]"
 								>
 									<div className="relative  h-56 sog_animation group-hover:rotate-y-180">
 										<div className="absolute top-0 bottom-0 w-full h-full backface_hidden overflow-hidden rounded-[10px]">

@@ -21,11 +21,11 @@ function HeroWaveBackground() {
 
       {/* Top soft band */}
       <svg
-        className="users-hero-band absolute inset-x-0 top-[10%] h-[38%] w-full"
+        className="hero-band hero-band-top absolute inset-x-0 top-[10%] h-[38%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <g className="users-hero-band-track users-hero-band-track-1">
+        <g className="hero-band-track hero-band-track-1">
           <path
             d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
             fill="#FFFFFF"
@@ -41,11 +41,11 @@ function HeroWaveBackground() {
 
       {/* Middle band */}
       <svg
-        className="users-hero-band absolute inset-x-0 top-[26%] h-[46%] w-full"
+        className="hero-band hero-band-mid absolute inset-x-0 top-[26%] h-[46%] w-full"
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-        <g className="users-hero-band-track users-hero-band-track-2">
+        <g className="hero-band-track hero-band-track-2">
           <path
             d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
             fill="#FFFFFF"
@@ -61,11 +61,11 @@ function HeroWaveBackground() {
 
       {/* Bottom white band */}
       <svg
-        className="users-hero-band absolute inset-x-0 bottom-0 h-[42%] w-full"
+        className="hero-band hero-band-bottom absolute inset-x-0 bottom-0 h-[42%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <g className="users-hero-band-track users-hero-band-track-3">
+        <g className="hero-band-track hero-band-track-3">
           <path
             d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
             fill="#FFFFFF"
@@ -79,6 +79,129 @@ function HeroWaveBackground() {
         </g>
       </svg>
 
+      <style jsx>{`
+        .hero-band {
+          transform-origin: center;
+          will-change: transform;
+        }
+
+        .hero-band-top {
+          animation: heroWaveShiftTop 11s ease-in-out infinite;
+        }
+
+        .hero-band-mid {
+          animation: heroWaveShiftMid 14s ease-in-out infinite;
+        }
+
+        .hero-band-bottom {
+          animation: heroWaveShiftBottom 17s ease-in-out infinite;
+        }
+
+        @keyframes heroWaveShiftTop {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(-1.2%, 1.2%, 0);
+          }
+        }
+
+        @keyframes heroWaveShiftMid {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(1.5%, -1%, 0);
+          }
+        }
+
+        @keyframes heroWaveShiftBottom {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(-1%, 0.9%, 0);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+      <style jsx>{`
+        .hero-band {
+          overflow: hidden;
+        }
+
+        .hero-band-track {
+          transform-box: fill-box;
+          transform-origin: center;
+          will-change: transform;
+        }
+
+        .hero-band-track-1 {
+          animation: waveDriftLeft 12s linear infinite, waveLiftA 6s ease-in-out infinite;
+        }
+
+        .hero-band-track-2 {
+          animation: waveDriftRight 16s linear infinite, waveLiftB 8s ease-in-out infinite;
+        }
+
+        .hero-band-track-3 {
+          animation: waveDriftLeft 20s linear infinite, waveLiftC 10s ease-in-out infinite;
+        }
+
+        @keyframes waveDriftLeft {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        @keyframes waveDriftRight {
+          from {
+            transform: translateX(-50%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes waveLiftA {
+          0%,
+          100% {
+            margin-top: 0;
+          }
+          50% {
+            margin-top: -8px;
+          }
+        }
+
+        @keyframes waveLiftB {
+          0%,
+          100% {
+            margin-top: 0;
+          }
+          50% {
+            margin-top: 6px;
+          }
+        }
+
+        @keyframes waveLiftC {
+          0%,
+          100% {
+            margin-top: 0;
+          }
+          50% {
+            margin-top: -5px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

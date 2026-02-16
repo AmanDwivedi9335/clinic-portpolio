@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 function PhoneMockup({ children, className = "" }) {
@@ -13,7 +15,7 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] overflow-hidden">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[520px] overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
       <div className="absolute -top-10 left-[-10%] h-48 w-[130%] rounded-[50%] bg-[#b786e6]/50" />
       <div className="absolute top-24 left-[-20%] h-44 w-[140%] rounded-[50%] bg-[#d4b5ef]/60" />
@@ -22,34 +24,91 @@ function HeroWaveBackground() {
   );
 }
 
+/** Animated waves that sit BEHIND content but ABOVE base gradient */
+function HeroWaves() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-0">
+      {/* Each layer uses a repeating SVG wave background and moves horizontally */}
+      <div className="wave wave-1 absolute left-0 top-[12%] h-[180px] w-[200%] opacity-70" />
+      <div className="wave wave-2 absolute left-0 top-[33%] h-[170px] w-[200%] opacity-60" />
+      <div className="wave wave-3 absolute left-0 top-[56%] h-[160px] w-[200%] opacity-55" />
+
+      {/* Local CSS for the wave background + animation */}
+      <style jsx global>{`
+        .wave {
+          background-repeat: repeat-x;
+          background-size: 50% 100%;
+          will-change: transform;
+          filter: blur(0.2px);
+        }
+
+        /* Slightly different speeds for parallax feel */
+        .wave-1 {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.55' d='M0,120 C180,190 360,70 540,120 C720,170 900,110 1080,135 C1260,160 1350,120 1440,110 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
+          animation: waveMove 14s linear infinite;
+        }
+        .wave-2 {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.48' d='M0,140 C220,90 420,200 640,140 C860,80 1040,190 1260,130 C1360,105 1410,115 1440,120 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
+          animation: waveMove 18s linear infinite;
+        }
+        .wave-3 {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.42' d='M0,130 C240,170 420,70 660,130 C900,190 1080,85 1260,120 C1360,140 1410,130 1440,125 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
+          animation: waveMove 22s linear infinite;
+        }
+
+        @keyframes waveMove {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export default function UsersPage() {
   return (
-    <main className="relative overflow-hidden bg-[#F4F4F8] pb-24 pt-28 text-[#220A56] md:pt-36">
+    <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-28 text-[#220A56] md:pt-[35vh]">
       <HeroWaveBackground />
 
-      <section className="mx-auto max-w-6xl px-6 text-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4F2C84]">
-          INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE
-        </p>
-        <h1 className="mx-auto mt-3 max-w-2xl text-5xl font-bold leading-[1.05] text-[#47108A] md:text-7xl">
-          Sneak Peek of
-          <br />
-          What You Get
-        </h1>
-        <p className="mt-3 text-sm font-medium text-[#5b3a84] md:text-base">
-          See how the app works in just a few scrolls.
-        </p>
+            {/* HERO */}
+      <section className="relative isolate overflow-hidden pt-24 md:pt-28">
+        {/* Base gradient like screenshot */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
 
-        <div className="mt-6 flex items-center justify-center gap-4">
-          <button className="rounded-full bg-gradient-to-r from-[#7b2ed6] to-[#5f1fa8] px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-[#7b2ed6]/30">
-            Subscribe Now
-          </button>
-          <button className="rounded-full border border-[#8f6bb8] bg-white px-7 py-3 text-sm font-semibold text-[#4D267F]">
-            Watch Demo
-          </button>
+        {/* Animated wave layers */}
+        <HeroWaves />
+
+        {/* Content ALWAYS above waves */}
+        <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-6xl flex-col items-center justify-center px-6 text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4F2C84]">
+            INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
+          </p>
+
+          <h1 className="mx-auto mt-4 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-[-0.02em] text-[#47108A] md:text-7xl">
+            Sneak Peek of
+            <br />
+            What You Get
+          </h1>
+
+          <p className="mt-4 text-sm font-medium text-[#5b3a84] md:text-base">
+            See how the app works in just a few scrolls.
+          </p>
+
+          <div className="mt-7 flex items-center justify-center gap-4">
+            <button className="rounded-xl bg-gradient-to-b from-[#7b2ed6] to-[#5f1fa8] px-8 py-3 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(123,46,214,0.25)] hover:brightness-110 active:scale-[0.98] transition">
+              Subscribe Now
+            </button>
+            <button className="rounded-xl border border-[#8f6bb8] bg-white/80 px-8 py-3 text-sm font-semibold text-[#4D267F] shadow-sm hover:bg-white transition">
+              Watch Demo
+            </button>
+          </div>
+
+          <div className="mt-10 text-2xl text-[#8c62c0]">⌄</div>
         </div>
-
-        <div className="mt-5 text-xl text-[#8c62c0]">⌄</div>
       </section>
 
       <section className="mx-auto mt-12 grid max-w-6xl gap-y-16 px-6 md:mt-16 md:grid-cols-2 md:items-center">
@@ -184,9 +243,6 @@ export default function UsersPage() {
         </PhoneMockup>
       </section>
 
-      <div className="pointer-events-none absolute left-6 top-6 opacity-85">
-        <Image src="/images/ml_logo.png" alt="Medilink" width={90} height={36} />
-      </div>
     </main>
   );
 }

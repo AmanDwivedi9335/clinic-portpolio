@@ -138,6 +138,27 @@
 	animation-iteration-count: 1;
 }
 
+.herowavebackground {
+	width: 200%;
+	height: 100%;
+	background-image: url("/images/waveline.png");
+	background-repeat: repeat-x;
+	background-size: auto 100%;
+	background-position: left bottom;
+	opacity: 0.55;
+	animation: heroWaveStripLoop 28s linear infinite;
+	will-change: transform;
+}
+
+@keyframes heroWaveStripLoop {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
 ul,
 ol {
 	@apply pl-5 list-disc;

@@ -158,6 +158,11 @@ export default function Hero() {
 
           {/* Subtle vignette like mock */}
           <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
+
+          {/* Long ocean-wave strip */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[88px] overflow-hidden">
+            <div className="herowavebackground" aria-hidden="true" />
+          </div>
         </div>
       </div>
     </section>

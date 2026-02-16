@@ -155,7 +155,7 @@ export default function Page() {
 						Our Founding Team
 					</h2>
 
-					<div className="flex justify-around gap-5 items-center flex-wrap">
+					<div className="flex justify-center gap-6 md:gap-10 items-center flex-wrap">
 						{founderData.map((item, index) => (
 							<div
 								key={index}
@@ -171,8 +171,8 @@ export default function Page() {
 											alt={item.Name}
 										/>
 									</div>
-									<div className="absolute inset-0 backface_hidden rotate-y-180 rounded-2xl border bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 text-black">
-										<p className="p-4 text-[13px] leading-[16px] md:text-[14px] md:leading-[18px]">
+									<div className="absolute inset-0 backface_hidden rotate-y-180 rounded-2xl border bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 text-black overflow-y-auto">
+										<p className="p-4 text-[12px] leading-[16px] md:text-[13px] md:leading-[18px]">
 											{item.Details}
 										</p>
 									</div>

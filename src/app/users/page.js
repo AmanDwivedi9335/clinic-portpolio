@@ -21,7 +21,7 @@ function HeroWaveBackground() {
 
       {/* Top soft band */}
       <svg
-        className="absolute inset-x-0 top-[10%] h-[38%] w-full"
+        className="hero-band hero-band-top absolute inset-x-0 top-[10%] h-[38%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
@@ -34,7 +34,7 @@ function HeroWaveBackground() {
 
       {/* Middle band */}
       <svg
-        className="absolute inset-x-0 top-[26%] h-[46%] w-full"
+        className="hero-band hero-band-mid absolute inset-x-0 top-[26%] h-[46%] w-full"
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
@@ -47,7 +47,7 @@ function HeroWaveBackground() {
 
       {/* Bottom white band */}
       <svg
-        className="absolute inset-x-0 bottom-0 h-[42%] w-full"
+        className="hero-band hero-band-bottom absolute inset-x-0 bottom-0 h-[42%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
@@ -57,6 +57,55 @@ function HeroWaveBackground() {
           fillOpacity="0.98"
         />
       </svg>
+
+      <style jsx>{`
+        .hero-band {
+          transform-origin: center;
+          will-change: transform;
+        }
+
+        .hero-band-top {
+          animation: heroWaveShiftTop 11s ease-in-out infinite;
+        }
+
+        .hero-band-mid {
+          animation: heroWaveShiftMid 14s ease-in-out infinite;
+        }
+
+        .hero-band-bottom {
+          animation: heroWaveShiftBottom 17s ease-in-out infinite;
+        }
+
+        @keyframes heroWaveShiftTop {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(-1.2%, 1.2%, 0);
+          }
+        }
+
+        @keyframes heroWaveShiftMid {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(1.5%, -1%, 0);
+          }
+        }
+
+        @keyframes heroWaveShiftBottom {
+          0%,
+          100% {
+            transform: translate3d(0, 0, 0);
+          }
+          50% {
+            transform: translate3d(-1%, 0.9%, 0);
+          }
+        }
+      `}</style>
     </div>
   );
 }

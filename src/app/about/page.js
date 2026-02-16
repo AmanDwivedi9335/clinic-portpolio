@@ -11,13 +11,13 @@ export default function Page() {
 				"Adi is an Australian expat of Indian origin, with nearly two decades of expertise in Business Development, Risk Management, and operations mainly with Australia’s most prominent banking and financial services organisations. He is renowned for his ability to establish and scale profitable business operations, forging strategic partnerships and streamlining business processes. Now, as the founder and CEO of Medibank, Adi’s goal is to drive innovation in India’s healthcare ecosystem by spearheading the development of the nation’s first patient-centric Electronic Health Record (EHR) platform.",
 			imgurl: "/images/founders/Adi.png",
 		},
-		// {
-		// 	Name: "Yogendra Shukla",
-		// 	Designation: "CTO & Co-Founder",
-		// 	Details:
-		// 		"Yogi is a Technology Evangelist with 28 years of progressive leadership experience across Technology, People, Sales & Business Management in diverse global roles of multinational organisations. He has keen interest in medicine & mediTech domains which he keeps abreast via his network of medical practitioners & domain experts in the field of medicine. As the CTO of Medibank, He is driving technological innovation & its execution in healthcare with India’s first patient-centric electronic health record platform.",
-		// 	imgurl: "/images/founders/Yogi.png",
-		// },
+		{
+			Name: "Yogendra Shukla",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"Yogi is a Technology Evangelist with 28 years of progressive leadership experience across Technology, People, Sales & Business Management in diverse global roles of multinational organisations. He has keen interest in medicine & mediTech domains which he keeps abreast via his network of medical practitioners & domain experts in the field of medicine. As the CTO of Medibank, He is driving technological innovation & its execution in healthcare with India’s first patient-centric electronic health record platform.",
+			imgurl: "/images/founders/Yogi.png",
+		},
 	];
 
 	const advisoryData = [
@@ -121,45 +121,49 @@ export default function Page() {
 
 			{/* Founding Team */}
 			<div className="bg-white md:pt-[88px]" id="about2">
-				<h2 className="container text-center text-[28px] md:text-[30px] mb-8 md:mb-0 font-bold pt-0">
-					Founding Team
-				</h2>
-				<div className="founding-team md:py-16 mx-10 md:mx-16 rounded-[30px] md:bg-[#F6F5FF]">
-					<div className="flex justify-around gap-5 items-center flex-wrap">
+				<div className="mx-4 md:mx-16 rounded-[30px] bg-[#F1EDF7] p-6 md:p-10 lg:p-12">
+					<h2 className="text-center text-[28px] md:text-[36px] font-bold text-[#1E1E8C]">
+						Our Founding Team
+					</h2>
+
+					<div className="mt-8 md:mt-10 flex flex-wrap justify-center gap-6 md:gap-8">
 						{founderData.map((item, index) => (
 							<div
 								key={index}
-								className="group relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-80 mb-4"
+								className="group relative w-full max-w-[260px] md:max-w-[280px] overflow-hidden rounded-2xl bg-white shadow-sm"
 							>
-								<div className="relative mx-4 mt-4 text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-[250px] md:h-[300px] sog_animation group-hover:rotate-y-180">
-									<div className="absolute top-0 bottom-0 w-full h-max backface_hidden overflow-hidden">
-										{" "}
+								<div className="relative h-[260px] md:h-[300px] sog_animation group-hover:rotate-y-180">
+									<div className="absolute inset-0 backface_hidden overflow-hidden rounded-2xl">
 										<Image
 											src={item.imgurl}
-											className="w-full h-[250px] md:h-[300px] "
-											width="612"
-											height="612"
-											alt="profile-picture"
+											className="h-full w-full object-cover"
+											width={612}
+											height={612}
+											alt={item.Name}
 										/>
 									</div>
-									<div className=" absolute top-0 bottom-0 w-full h-[273px] md:h-full backface_hidden rotate-y-180 pb-4  bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 border text-black">
-										{" "}
-										{/*backcard */}
-										<p className="p-4 text-[13px] mb-4 leading-[16px] max-h-[257px] overflow-hidden box-border ">
+									<div className="absolute inset-0 backface_hidden rotate-y-180 rounded-2xl border bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 text-black">
+										<p className="p-4 text-[13px] leading-[16px] md:text-[14px] md:leading-[18px]">
 											{item.Details}
 										</p>
 									</div>
 								</div>
-
-								<div className="p-6 text-center">
-									<h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+								<div className="p-4 text-center">
+									<h4 className="text-lg font-semibold text-[#1B1B1B]">
 										{item.Name}
 									</h4>
-									<p className="block font-sans text-base antialiased font-medium leading-relaxed  bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
-										{item.Designation}
-									</p>
+									<p className="text-sm text-[#4C4C6D]">{item.Designation}</p>
 								</div>
 							</div>
+						))}
+					</div>
+
+					<div className="mt-8 md:mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
+						{Array.from({ length: 5 }).map((_, index) => (
+							<div
+								key={index}
+								className="h-[150px] rounded-2xl bg-white shadow-sm sm:h-[170px] md:h-[190px]"
+							/>
 						))}
 					</div>
 				</div>

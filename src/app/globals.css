@@ -102,6 +102,28 @@
 	animation: bounceUpDown 3s infinite; /* Adjust duration as needed */
 }
 
+
+@keyframes scrollChevronPulse {
+	0%,
+	100% {
+		opacity: 0.35;
+		transform: translateY(0);
+	}
+	50% {
+		opacity: 1;
+		transform: translateY(2px);
+	}
+}
+
+.scroll-indicator {
+	display: block;
+}
+
+.scroll-indicator-chevron {
+	animation: scrollChevronPulse 1.2s ease-in-out infinite;
+	animation-delay: var(--chevron-delay, 0s);
+}
+
 @keyframes textWave {
 	0% {
 		background-position: 0% 50%;

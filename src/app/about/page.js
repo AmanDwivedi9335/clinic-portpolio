@@ -159,37 +159,40 @@ export default function Page() {
 						{founderData.map((item, index) => (
 							<div
 								key={index}
-								className="group relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-80 mb-4"
+								className="group relative w-full max-w-[260px] md:max-w-[280px] overflow-hidden rounded-2xl bg-white shadow-sm"
 							>
-								<div className="relative mx-4 mt-4 text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-[250px] md:h-[300px] sog_animation group-hover:rotate-y-180">
-									<div className="absolute top-0 bottom-0 w-full h-max backface_hidden overflow-hidden">
-										{" "}
+								<div className="relative h-[260px] md:h-[300px] sog_animation group-hover:rotate-y-180">
+									<div className="absolute inset-0 backface_hidden overflow-hidden rounded-2xl">
 										<Image
 											src={item.imgurl}
-											className="w-full h-[250px] md:h-[300px] "
-											width="612"
-											height="612"
-											alt="profile-picture"
+											className="h-full w-full object-cover"
+											width={612}
+											height={612}
+											alt={item.Name}
 										/>
 									</div>
-									<div className=" absolute top-0 bottom-0 w-full h-[273px] md:h-full backface_hidden rotate-y-180 pb-4  bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 border text-black">
-										{" "}
-										{/*backcard */}
-										<p className="p-4 text-[13px] mb-4 leading-[16px] max-h-[257px] overflow-hidden box-border ">
+									<div className="absolute inset-0 backface_hidden rotate-y-180 rounded-2xl border bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 text-black">
+										<p className="p-4 text-[13px] leading-[16px] md:text-[14px] md:leading-[18px]">
 											{item.Details}
 										</p>
 									</div>
 								</div>
-
-								<div className="p-6 text-center">
-									<h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+								<div className="p-4 text-center">
+									<h4 className="text-lg font-semibold text-[#1B1B1B]">
 										{item.Name}
 									</h4>
-									<p className="block font-sans text-base antialiased font-medium leading-relaxed  bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
-										{item.Designation}
-									</p>
+									<p className="text-sm text-[#4C4C6D]">{item.Designation}</p>
 								</div>
 							</div>
+						))}
+					</div>
+
+					<div className="mt-8 md:mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
+						{Array.from({ length: 5 }).map((_, index) => (
+							<div
+								key={index}
+								className="h-[150px] rounded-2xl bg-white shadow-sm sm:h-[170px] md:h-[190px]"
+							/>
 						))}
 					</div>
 				</div>

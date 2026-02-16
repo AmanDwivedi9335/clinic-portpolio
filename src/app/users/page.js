@@ -29,9 +29,9 @@ function HeroWaves() {
   return (
     <div className="pointer-events-none absolute inset-0 z-0">
       {/* Each layer uses a repeating SVG wave background and moves horizontally */}
-      <div className="wave wave-1 absolute left-0 top-[12%] h-[180px] w-[200%] opacity-70" />
-      <div className="wave wave-2 absolute left-0 top-[33%] h-[170px] w-[200%] opacity-60" />
-      <div className="wave wave-3 absolute left-0 top-[56%] h-[160px] w-[200%] opacity-55" />
+      <div className="wave wave-1 absolute left-0 top-[18%] h-[220px] w-[220%] opacity-75" />
+      <div className="wave wave-2 absolute left-0 top-[38%] h-[210px] w-[220%] opacity-65" />
+      <div className="wave wave-3 absolute left-0 top-[58%] h-[200px] w-[220%] opacity-55" />
 
       {/* Local CSS for the wave background + animation */}
       <style jsx global>{`
@@ -40,20 +40,22 @@ function HeroWaves() {
           background-size: 50% 100%;
           will-change: transform;
           filter: blur(0.2px);
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
         }
 
         /* Slightly different speeds for parallax feel */
         .wave-1 {
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.55' d='M0,120 C180,190 360,70 540,120 C720,170 900,110 1080,135 C1260,160 1350,120 1440,110 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 14s linear infinite;
+          animation: waveMove 8s linear infinite, waveFloat 4s ease-in-out infinite;
         }
         .wave-2 {
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.48' d='M0,140 C220,90 420,200 640,140 C860,80 1040,190 1260,130 C1360,105 1410,115 1440,120 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 18s linear infinite;
+          animation: waveMove 11s linear infinite reverse, waveFloat 5s ease-in-out infinite;
         }
         .wave-3 {
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.42' d='M0,130 C240,170 420,70 660,130 C900,190 1080,85 1260,120 C1360,140 1410,130 1440,125 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 22s linear infinite;
+          animation: waveMove 14s linear infinite, waveFloat 6s ease-in-out infinite;
         }
 
         @keyframes waveMove {
@@ -64,6 +66,16 @@ function HeroWaves() {
             transform: translateX(-50%);
           }
         }
+
+        @keyframes waveFloat {
+          0%,
+          100% {
+            margin-top: 0;
+          }
+          50% {
+            margin-top: -14px;
+          }
+        }
       `}</style>
     </div>
   );
@@ -71,11 +83,11 @@ function HeroWaves() {
 
 export default function UsersPage() {
   return (
-    <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-28 text-[#220A56] md:pt-[35vh]">
+    <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
 
             {/* HERO */}
-      <section className="relative isolate overflow-hidden pt-24 md:pt-28">
+      <section className="relative isolate overflow-hidden pt-12 md:pt-16">
         {/* Base gradient like screenshot */}
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" />
 
@@ -83,7 +95,7 @@ export default function UsersPage() {
         <HeroWaves />
 
         {/* Content ALWAYS above waves */}
-        <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-6xl flex-col items-center justify-center px-6 text-center">
+        <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#4F2C84]">
             INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
           </p>

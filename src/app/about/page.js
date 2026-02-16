@@ -20,6 +20,9 @@ export default function Page() {
 		},
 	];
 
+	const largeFounders = founderData.slice(0, 2);
+	const smallFounders = founderData.slice(2);
+
 	const advisoryData = [
 		{
 			Name: "Dr Navin Bhambhani",
@@ -156,9 +159,9 @@ export default function Page() {
 					</h2>
 
 					<div className="flex justify-center gap-6 md:gap-10 items-center flex-wrap">
-						{founderData.map((item, index) => (
+						{largeFounders.map((item, index) => (
 							<div
-								key={index}
+								key={`large-founder-${index}`}
 								className="group relative w-full max-w-[260px] md:max-w-[280px] overflow-hidden rounded-2xl bg-white shadow-sm"
 							>
 								<div className="relative h-[260px] md:h-[300px] sog_animation group-hover:rotate-y-180">
@@ -187,14 +190,39 @@ export default function Page() {
 						))}
 					</div>
 
-					<div className="mt-8 md:mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
-						{Array.from({ length: 5 }).map((_, index) => (
+					{smallFounders.length > 0 && (
+						<div className="mt-8 md:mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+							{smallFounders.map((item, index) => (
 							<div
-								key={index}
-								className="h-[150px] rounded-2xl bg-white shadow-sm sm:h-[170px] md:h-[190px]"
-							/>
-						))}
-					</div>
+								key={`small-founder-${index}`}
+								className="group relative w-full overflow-hidden rounded-2xl bg-white shadow-sm"
+							>
+								<div className="relative h-[220px] sog_animation group-hover:rotate-y-180">
+									<div className="absolute inset-0 backface_hidden overflow-hidden rounded-2xl">
+										<Image
+											src={item.imgurl}
+											className="h-full w-full object-cover"
+											width={612}
+											height={612}
+											alt={item.Name}
+										/>
+									</div>
+									<div className="absolute inset-0 backface_hidden rotate-y-180 rounded-2xl border bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 text-black overflow-y-auto">
+										<p className="p-4 text-[12px] leading-[16px] md:text-[13px] md:leading-[18px]">
+											{item.Details}
+										</p>
+									</div>
+								</div>
+								<div className="p-3 text-center">
+									<h4 className="text-base font-semibold text-[#1B1B1B]">
+										{item.Name}
+									</h4>
+									<p className="text-xs text-[#4C4C6D]">{item.Designation}</p>
+								</div>
+							</div>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 

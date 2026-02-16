@@ -21,103 +21,69 @@ function HeroWaveBackground() {
 
       {/* Top soft band */}
       <svg
-        className="absolute inset-x-0 top-[10%] h-[38%] w-full"
+        className="users-hero-band absolute inset-x-0 top-[10%] h-[38%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <path
-          d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
-          fill="#FFFFFF"
-          fillOpacity="0.18"
-        />
+        <g className="users-hero-band-track users-hero-band-track-1">
+          <path
+            d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.18"
+          />
+          <path
+            d="M1440,140 C1680,90 1960,90 2160,135 C2380,185 2620,185 2880,135 L2880,0 L1440,0 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.18"
+          />
+        </g>
       </svg>
 
       {/* Middle band */}
       <svg
-        className="absolute inset-x-0 top-[26%] h-[46%] w-full"
+        className="users-hero-band absolute inset-x-0 top-[26%] h-[46%] w-full"
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-        <path
-          d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
-          fill="#FFFFFF"
-          fillOpacity="0.28"
-        />
+        <g className="users-hero-band-track users-hero-band-track-2">
+          <path
+            d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.28"
+          />
+          <path
+            d="M1440,155 C1700,215 1960,215 2180,165 C2420,110 2650,115 2880,165 L2880,340 L1440,340 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.28"
+          />
+        </g>
       </svg>
 
       {/* Bottom white band */}
       <svg
-        className="absolute inset-x-0 bottom-0 h-[42%] w-full"
+        className="users-hero-band absolute inset-x-0 bottom-0 h-[42%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <path
-          d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
-          fill="#FFFFFF"
-          fillOpacity="0.98"
-        />
+        <g className="users-hero-band-track users-hero-band-track-3">
+          <path
+            d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.98"
+          />
+          <path
+            d="M1440,110 C1690,35 1960,40 2160,105 C2390,180 2620,185 2880,115 L2880,320 L1440,320 Z"
+            fill="#FFFFFF"
+            fillOpacity="0.98"
+          />
+        </g>
       </svg>
+
     </div>
   );
 }
 
 
-/** Animated waves that sit BEHIND content but ABOVE base gradient */
-function HeroWaves() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-0">
-      {/* Each layer uses a repeating SVG wave background and moves horizontally */}
-      <div className="wave wave-1 absolute left-0 top-[18%] h-[220px] w-[220%] opacity-75" />
-      <div className="wave wave-2 absolute left-0 top-[38%] h-[210px] w-[220%] opacity-65" />
-      <div className="wave wave-3 absolute left-0 top-[58%] h-[200px] w-[220%] opacity-55" />
-
-      {/* Local CSS for the wave background + animation */}
-      <style jsx global>{`
-        .wave {
-          background-repeat: repeat-x;
-          background-size: 50% 100%;
-          will-change: transform;
-          filter: blur(0.2px);
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-        }
-
-        /* Slightly different speeds for parallax feel */
-        .wave-1 {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.55' d='M0,120 C180,190 360,70 540,120 C720,170 900,110 1080,135 C1260,160 1350,120 1440,110 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 8s linear infinite, waveFloat 4s ease-in-out infinite;
-        }
-        .wave-2 {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.48' d='M0,140 C220,90 420,200 640,140 C860,80 1040,190 1260,130 C1360,105 1410,115 1440,120 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 11s linear infinite reverse, waveFloat 5s ease-in-out infinite;
-        }
-        .wave-3 {
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220'%3E%3Cpath fill='%23FFFFFF' fill-opacity='0.42' d='M0,130 C240,170 420,70 660,130 C900,190 1080,85 1260,120 C1360,140 1410,130 1440,125 L1440,220 L0,220 Z'/%3E%3C/svg%3E");
-          animation: waveMove 14s linear infinite, waveFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes waveMove {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        @keyframes waveFloat {
-          0%,
-          100% {
-            margin-top: 0;
-          }
-          50% {
-            margin-top: -14px;
-          }
-        }
-      `}</style>
-    </div>
-  );
-}
 
 export default function UsersPage() {
   return (
@@ -128,9 +94,6 @@ export default function UsersPage() {
       <section className="relative isolate overflow-hidden h-[100vh] pt-12 md:pt-16">
         {/* Base gradient like screenshot */}
         {/* <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#C7A4ED] via-[#E8D7FA] to-[#F4F4F8]" /> */}
-
-        {/* Animated wave layers */}
-        <HeroWaves />
 
         {/* Content ALWAYS above waves */}
         <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">

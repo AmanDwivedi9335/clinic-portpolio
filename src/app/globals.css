@@ -316,3 +316,74 @@ ol {
 .partner-pill-tab .partner-tab-cutout-right {
 	right: -12px;
 }
+
+/* Users page hero SVG wave animation */
+.users-hero-band {
+	overflow: hidden;
+}
+
+.users-hero-band-track {
+	transform-box: fill-box;
+	transform-origin: center;
+	will-change: transform;
+}
+
+.users-hero-band-track-1 {
+	animation: usersWaveDriftLeft 12s linear infinite, usersWaveLiftA 6s ease-in-out infinite;
+}
+
+.users-hero-band-track-2 {
+	animation: usersWaveDriftRight 16s linear infinite, usersWaveLiftB 8s ease-in-out infinite;
+}
+
+.users-hero-band-track-3 {
+	animation: usersWaveDriftLeft 20s linear infinite, usersWaveLiftC 10s ease-in-out infinite;
+}
+
+@keyframes usersWaveDriftLeft {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes usersWaveDriftRight {
+	from {
+		transform: translateX(-50%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes usersWaveLiftA {
+	0%,
+	100% {
+		margin-top: 0;
+	}
+	50% {
+		margin-top: -8px;
+	}
+}
+
+@keyframes usersWaveLiftB {
+	0%,
+	100% {
+		margin-top: 0;
+	}
+	50% {
+		margin-top: 6px;
+	}
+}
+
+@keyframes usersWaveLiftC {
+	0%,
+	100% {
+		margin-top: 0;
+	}
+	50% {
+		margin-top: -5px;
+	}
+}

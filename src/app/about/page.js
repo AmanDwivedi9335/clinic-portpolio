@@ -9,15 +9,15 @@ export default function Page() {
 			Designation: "CEO & Founder",
 			Details:
 				"Adi is an Australian expat of Indian origin, with nearly two decades of expertise in Business Development, Risk Management, and operations mainly with Australia’s most prominent banking and financial services organisations. He is renowned for his ability to establish and scale profitable business operations, forging strategic partnerships and streamlining business processes. Now, as the founder and CEO of Medibank, Adi’s goal is to drive innovation in India’s healthcare ecosystem by spearheading the development of the nation’s first patient-centric Electronic Health Record (EHR) platform.",
-			imgurl: "/images/founders/Adi.png",
+			imgurl: "/images/founders/adi.jpg",
 		},
-		// {
-		// 	Name: "Yogendra Shukla",
-		// 	Designation: "CTO & Co-Founder",
-		// 	Details:
-		// 		"Yogi is a Technology Evangelist with 28 years of progressive leadership experience across Technology, People, Sales & Business Management in diverse global roles of multinational organisations. He has keen interest in medicine & mediTech domains which he keeps abreast via his network of medical practitioners & domain experts in the field of medicine. As the CTO of Medibank, He is driving technological innovation & its execution in healthcare with India’s first patient-centric electronic health record platform.",
-		// 	imgurl: "/images/founders/Yogi.png",
-		// },
+		{
+			Name: "Vaishnavi Reddy",
+			Designation: "CTO & Co-Founder",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/vaishnavi.jpg",
+		},
 	];
 
 	const advisoryData = [
@@ -87,8 +87,23 @@ export default function Page() {
 				className="mx-10 md:mx-16 h-max flex flex-col md:flex-row items-center mb-8 md:mb-0 md:pt-[88px]"
 			>
 				<div className="md:container text-left text-[22px] pt-28 md:pt-16 w-full md:w-1/2">
-					<h2 className="font-bold">Our Story</h2>
-					<div className="text-justify text-[15px] py-8">
+					<h2
+						className="
+							relative
+							font-bold
+							text-[32px]
+							text-[#0b137a]
+
+							[-webkit-text-stroke:0.5px_transparent]
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
+							bg-clip-text
+							[-webkit-background-clip:text]
+						"
+						>
+						Our Story
+					</h2>
+
+					<div className="text-justify text-[15px] text-[#282672] py-8">
 						India has witnessed remarkable digital advancements across various
 						sectors, yet health records remain largely confined to pen, paper &
 						folders, making them difficult to maintain and track. <br />
@@ -110,7 +125,7 @@ export default function Page() {
 				</div>
 				<div className="md:container flex justify-center w-full md:w-1/2">
 					<Image
-						src="/images/OurStoryTiled.png"
+						src="/images/ourstorynew.png"
 						width={500}
 						height={200}
 						alt="Our Story"
@@ -121,10 +136,25 @@ export default function Page() {
 
 			{/* Founding Team */}
 			<div className="bg-white md:pt-[88px]" id="about2">
-				<h2 className="container text-center text-[28px] md:text-[30px] mb-8 md:mb-0 font-bold pt-0">
-					Founding Team
-				</h2>
-				<div className="founding-team md:py-16 mx-10 md:mx-16 rounded-[30px] md:bg-[#F6F5FF]">
+				
+				<div className="founding-team md:py-4 mx-10 md:mx-16 rounded-[30px] md:bg-[#F6F5FF]">
+					<h2
+						className="
+							relative
+							font-bold
+							text-[32px]
+							text-[#0b137a]
+							text-center
+							py-16
+							[-webkit-text-stroke:0.5px_transparent]
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
+							bg-clip-text
+							[-webkit-background-clip:text]
+						"
+						>
+						Our Founding Team
+					</h2>
+
 					<div className="flex justify-around gap-5 items-center flex-wrap">
 						{founderData.map((item, index) => (
 							<div

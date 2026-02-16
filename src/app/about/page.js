@@ -293,17 +293,70 @@ export default function Page() {
 				</div>
 			</div>
 
+			{/* Doctors who helped us */}
+			<div className="bg-white">
+				<div className="w-4/5 container py-16 pb-0">
+					<div className="relative
+							font-bold
+							text-[32px]
+							text-[#0b137a]
+							text-center
+							py-16
+							[-webkit-text-stroke:0.5px_transparent]
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
+							bg-clip-text
+							[-webkit-background-clip:text]">
+						The Doctors who help us in initial time
+					</div>
+					<div className="flex justify-around items-center flex-col md:flex-row w-full flex-wrap">
+						{advisoryData.map((item, index) => {
+							return (
+								<div
+									key={index}
+									className="group w-full md:w-1/6 md:mx-1 mb-2 md:my-4 bg-white rounded-[10px]"
+								>
+									<div className="relative  h-56 sog_animation group-hover:rotate-y-180">
+										<div className="absolute top-0 bottom-0 w-full h-full backface_hidden overflow-hidden rounded-[10px]">
+											{" "}
+											<Image
+												src={item.imgurl}
+												className=" rounded-[10px]"
+												width="400"
+												height="400"
+												alt="profile-picture"
+											/>
+										</div>
+										<div className=" absolute rounded-[10px] top-0 bottom-0 w-full h-full backface_hidden rotate-y-180 bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 border text-black">
+											{" "}
+											{/* "Backcard (remove this line when make this section line)" */}
+											<p className="p-4 text-[13px] leading-[16px]">
+												{item.Details}
+											</p>
+										</div>
+									</div>
+									<div className="text-center">{item.Name}</div>
+									<div className="text-center text-[12px] py-2">
+										{item.Designation}
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</div>
+
 			{/* Careers */}
 			<div id="about3" className="bg-white md:pt-[88px]">
-				<div className="text-center text-[28px] md:text-[48px] font-bold">
-					Careers
-				</div>
-				<div className="w-4/5 container py-10 mt-6 bg-red-50">
-					<div className="text-center">
+				
+				<div className="w-4/5 rounded-3xl container py-10 mt-6 bg-[#0b137a]">
+					<div className="text-center text-white text-[28px] md:text-[48px] font-bold">
+						Careers
+					</div>
+					<div className="text-center text-white md:text-[20px]">
 						If you&apos;re passionate about joining our team and believe
 						you&apos;d be a great fit, we&apos;d love to hear from you! Please
 						send your resume to{" "}
-						<a href="mailto:careers@medibank.in" className="text-blue-600">
+						<a href="mailto:careers@medibank.in" className="text-white-600 bold italic">
 							careers@medibank.in
 						</a>
 						, and let&apos;s explore the exciting opportunities together.

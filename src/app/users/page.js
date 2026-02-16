@@ -20,57 +20,54 @@ function HeroWaveBackground() {
 
       {/* TOP BAND */}
       <svg
-        className="hero-band absolute inset-x-0 top-[10%] h-[38%] w-full"
+        className="hero-band hero-band-top absolute inset-x-0 top-[10%] h-[40%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        
 
-        <g filter="url(#waveTop)">
+        <g className="wave-track wave-track-top" filter="url(#waveTop)">
           <path
             d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
             fill="#FFFFFF"
-            fillOpacity="0.18"
+            fillOpacity="0.34"
           />
           <path
             d="M1440,140 C1680,90 1960,90 2160,135 C2380,185 2620,185 2880,135 L2880,0 L1440,0 Z"
             fill="#FFFFFF"
-            fillOpacity="0.18"
+            fillOpacity="0.34"
           />
         </g>
       </svg>
 
       {/* MIDDLE BAND */}
       <svg
-        className="hero-band absolute inset-x-0 top-[26%] h-[46%] w-full"
+        className="hero-band hero-band-mid absolute inset-x-0 top-[24%] h-[50%] w-full"
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-        
 
-        <g filter="url(#waveMid)">
+        <g className="wave-track wave-track-mid" filter="url(#waveMid)">
           <path
             d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
             fill="#FFFFFF"
-            fillOpacity="0.28"
+            fillOpacity="0.42"
           />
           <path
             d="M1440,155 C1700,215 1960,215 2180,165 C2420,110 2650,115 2880,165 L2880,340 L1440,340 Z"
             fill="#FFFFFF"
-            fillOpacity="0.28"
+            fillOpacity="0.42"
           />
         </g>
       </svg>
 
       {/* BOTTOM BAND */}
       <svg
-        className="hero-band absolute inset-x-0 bottom-0 h-[42%] w-full"
+        className="hero-band hero-band-bottom absolute inset-x-0 bottom-0 h-[48%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-       
 
-        <g filter="url(#waveBottom)">
+        <g className="wave-track wave-track-bottom" filter="url(#waveBottom)">
           <path
             d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
             fill="#FFFFFF"
@@ -87,16 +84,66 @@ function HeroWaveBackground() {
       <style jsx>{`
         .hero-band {
           will-change: transform;
-          /* tiny float so it feels alive, but wave motion is from displacement */
-          animation: bandFloat 9s ease-in-out infinite;
+          mix-blend-mode: screen;
+          animation: bandFloat 7.5s ease-in-out infinite;
         }
+
+        .hero-band-top {
+          filter: drop-shadow(0 10px 28px rgba(255, 255, 255, 0.45));
+        }
+
+        .hero-band-mid {
+          filter: drop-shadow(0 12px 30px rgba(255, 255, 255, 0.5));
+          animation-delay: -1.8s;
+        }
+
+        .hero-band-bottom {
+          filter: drop-shadow(0 14px 30px rgba(255, 255, 255, 0.55));
+          animation-delay: -3.4s;
+        }
+
+        .wave-track {
+          will-change: transform;
+          transform: translateX(0);
+        }
+
+        .wave-track-top {
+          animation: waveSlideLeft 12s linear infinite;
+        }
+
+        .wave-track-mid {
+          animation: waveSlideRight 15s linear infinite;
+        }
+
+        .wave-track-bottom {
+          animation: waveSlideLeft 9s linear infinite;
+        }
+
         @keyframes bandFloat {
           0%,
           100% {
             transform: translate3d(0, 0, 0);
           }
           50% {
-            transform: translate3d(0, 6px, 0);
+            transform: translate3d(0, 12px, 0);
+          }
+        }
+
+        @keyframes waveSlideLeft {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-1440px);
+          }
+        }
+
+        @keyframes waveSlideRight {
+          0% {
+            transform: translateX(-1440px);
+          }
+          100% {
+            transform: translateX(0);
           }
         }
       `}</style>

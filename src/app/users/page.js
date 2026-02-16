@@ -24,53 +24,7 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <defs>
-          <filter id="waveTop" x="-20%" y="-60%" width="140%" height="220%">
-            {/* moving noise field */}
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.012 0.06"
-              numOctaves="2"
-              seed="11"
-              result="noise"
-            >
-              {/* animate the noise so the shape deforms (true wave) */}
-              <animate
-                attributeName="baseFrequency"
-                dur="8s"
-                values="
-                  0.012 0.060;
-                  0.016 0.080;
-                  0.012 0.060
-                "
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="seed"
-                dur="12s"
-                values="11;12;13;11"
-                repeatCount="indefinite"
-              />
-            </feTurbulence>
-
-            {/* displace the source graphics using the noise */}
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="18"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            >
-              {/* subtle pulsing intensity */}
-              <animate
-                attributeName="scale"
-                dur="6s"
-                values="14;20;14"
-                repeatCount="indefinite"
-              />
-            </feDisplacementMap>
-          </filter>
-        </defs>
+        
 
         <g filter="url(#waveTop)">
           <path
@@ -92,49 +46,7 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-        <defs>
-          <filter id="waveMid" x="-20%" y="-60%" width="140%" height="220%">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.010 0.05"
-              numOctaves="2"
-              seed="21"
-              result="noise"
-            >
-              <animate
-                attributeName="baseFrequency"
-                dur="10s"
-                values="
-                  0.010 0.050;
-                  0.014 0.070;
-                  0.010 0.050
-                "
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="seed"
-                dur="14s"
-                values="21;22;23;21"
-                repeatCount="indefinite"
-              />
-            </feTurbulence>
-
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="22"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            >
-              <animate
-                attributeName="scale"
-                dur="7s"
-                values="18;26;18"
-                repeatCount="indefinite"
-              />
-            </feDisplacementMap>
-          </filter>
-        </defs>
+        
 
         <g filter="url(#waveMid)">
           <path
@@ -156,49 +68,7 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-        <defs>
-          <filter id="waveBottom" x="-20%" y="-60%" width="140%" height="220%">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.008 0.04"
-              numOctaves="2"
-              seed="31"
-              result="noise"
-            >
-              <animate
-                attributeName="baseFrequency"
-                dur="12s"
-                values="
-                  0.008 0.040;
-                  0.012 0.060;
-                  0.008 0.040
-                "
-                repeatCount="indefinite"
-              />
-              <animate
-                attributeName="seed"
-                dur="16s"
-                values="31;32;33;31"
-                repeatCount="indefinite"
-              />
-            </feTurbulence>
-
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="noise"
-              scale="12"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            >
-              <animate
-                attributeName="scale"
-                dur="8s"
-                values="10;16;10"
-                repeatCount="indefinite"
-              />
-            </feDisplacementMap>
-          </filter>
-        </defs>
+       
 
         <g filter="url(#waveBottom)">
           <path

@@ -67,13 +67,27 @@ const Subscription = () => {
         {/* Card */}
         <div className="mt-10 flex justify-center md:mt-12">
           <div className="relative w-full max-w-[980px]">
+            <svg
+              className="pointer-events-none absolute bottom-[-130px] left-1/2 z-0 w-[190%] max-w-none -translate-x-1/2 opacity-90"
+              viewBox="0 0 1440 444"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              preserveAspectRatio="none"
+            >
+              <path d="M-287 1.97016C-287 1.97016 195.165 -16.286 195.165 75.8671C195.165 168.02 81.1438 267.128 243.685 315.378C406.226 363.629 1021.21 62.3913 1218.93 148.459C1416.65 234.527 1057 335.809 1322.64 400.142C1588.29 464.475 1860 234.527 1860 234.527" stroke="#9F028D" />
+              <path d="M-290 10.9702C-290 10.9702 191.941 -7.28597 191.941 84.8671C191.941 177.02 77.9723 276.128 240.438 324.378C402.903 372.629 1017.61 71.3913 1215.23 157.459C1412.86 243.527 1053.37 344.809 1318.89 409.142C1584.42 473.475 1856 243.527 1856 243.527" stroke="#9F028D" strokeOpacity="0.5" />
+              <path d="M-290 22.9702C-290 22.9702 191.941 4.71403 191.941 96.8671C191.941 189.02 77.9723 288.128 240.438 336.378C402.903 384.629 1017.61 83.3913 1215.23 169.459C1412.86 255.527 1053.37 356.809 1318.89 421.142C1584.42 485.475 1856 255.527 1856 255.527" stroke="#9F028D" strokeOpacity="0.3" />
+              <path d="M-290 33.9702C-290 33.9702 191.941 15.714 191.941 107.867C191.941 200.02 77.9723 299.128 240.438 347.378C402.903 395.629 1017.61 94.3913 1215.23 180.459C1412.86 266.527 1053.37 367.809 1318.89 432.142C1584.42 496.475 1856 266.527 1856 266.527" stroke="#9F028D" strokeOpacity="0.1" />
+            </svg>
+
             {/* glow */}
             <div className="pointer-events-none absolute -inset-6 rounded-[36px] [background: linear-gradient(138.58deg, #02042B 0%, #060B4E 40%, #7D2A84 100%);
 ] blur-2xl" />
 
             <div
               className="
-                relative overflow-hidden rounded-[28px]
+                relative z-10 overflow-hidden rounded-[28px]
                 bg-[linear-gradient(175deg,#02042B_0%,#060B4E_40%,#7D2A84_100%)]
                 shadow-[0_28px_70px_rgba(24,14,74,0.35)]
               "

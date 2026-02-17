@@ -33,6 +33,7 @@ const cardData = [
 
 export default function DataControlSection() {
 	const sectionRef = useRef(null);
+	const ctaPanelRef = useRef(null);
 
 	useEffect(() => {
 		return createGsapContext(sectionRef, (gsap) => {
@@ -119,7 +120,37 @@ export default function DataControlSection() {
 				ease: "sine.inOut",
 			});
 
+			gsap.fromTo(
+				".cta-arc",
+				{ xPercent: 16, scale: 0.92, opacity: 0 },
+				{
+					xPercent: 0,
+					scale: 1,
+					opacity: 1,
+					duration: 1.15,
+					ease: "power3.out",
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: ".data-cta",
+						start: "top 82%",
+					},
+				}
+			);
+
+			gsap.to(".cta-arc", {
+				xPercent: -1.5,
+				duration: 3.5,
+				stagger: 0.18,
+				repeat: -1,
+				yoyo: true,
+				ease: "sine.inOut",
+			});
+
 			mm.add("(pointer: fine)", () => {
+				const ctaPanel = ctaPanelRef.current;
+				const ctaArcs = ctaPanel ? ctaPanel.querySelectorAll(".cta-arc") : [];
+				let ctaHoverTween;
+
 				const cards = gsap.utils.toArray(".data-card");
 				const cleanups = cards.map((card) => {
 					const glow = card.querySelector(".data-card-glow");
@@ -219,8 +250,49 @@ export default function DataControlSection() {
 					};
 				});
 
+				let onCtaMouseEnter;
+				let onCtaMouseLeave;
+
+				if (ctaPanel && ctaArcs.length > 0) {
+					onCtaMouseEnter = () => {
+						ctaHoverTween?.kill();
+						ctaHoverTween = gsap.to(ctaArcs, {
+							xPercent: -7,
+							scale: 1.035,
+							opacity: (_, target) =>
+								target.classList.contains("cta-arc-soft") ? 0.88 : 1,
+							duration: 0.65,
+							ease: "power2.out",
+							stagger: 0.06,
+							overwrite: true,
+						});
+					};
+
+					onCtaMouseLeave = () => {
+						ctaHoverTween?.kill();
+						ctaHoverTween = gsap.to(ctaArcs, {
+							xPercent: 0,
+							scale: 1,
+							opacity: (_, target) =>
+								target.classList.contains("cta-arc-soft") ? 0.72 : 1,
+							duration: 0.75,
+							ease: "power3.out",
+							stagger: 0.06,
+							overwrite: true,
+						});
+					};
+
+					ctaPanel.addEventListener("mouseenter", onCtaMouseEnter);
+					ctaPanel.addEventListener("mouseleave", onCtaMouseLeave);
+				}
+
 				return () => {
 					cleanups.forEach((cleanup) => cleanup());
+					ctaHoverTween?.kill();
+					if (ctaPanel && onCtaMouseEnter && onCtaMouseLeave) {
+						ctaPanel.removeEventListener("mouseenter", onCtaMouseEnter);
+						ctaPanel.removeEventListener("mouseleave", onCtaMouseLeave);
+					}
 				};
 			});
 
@@ -286,7 +358,10 @@ export default function DataControlSection() {
 			</div>
 
 			<div className="data-cta mt-12 md:mt-16">
-				<div className="relative overflow-hidden rounded-[22px] px-6 py-10 md:px-12 md:py-12">
+				<div
+					ref={ctaPanelRef}
+					className="data-cta-panel relative overflow-hidden rounded-[22px] px-6 py-10 md:px-12 md:py-12"
+				>
 					{/* Base gradient (purple → blue) */}
 					<div className="absolute inset-0 bg-[linear-gradient(45deg,_#0E1896_0%,_#640B91_50%,_#9F028D_100%)]" />
 
@@ -299,10 +374,16 @@ export default function DataControlSection() {
 					/>
 
 					{/* Concentric arcs on right */}
-					<div
-					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_100px,rgba(255,255,255,1)_100px_300px,rgba(255,255,255,0.8)_300px_400px,rgba(255,255,255,0.6)_400px_500px,rgba(255,255,255,0.5)_500px_600px,rgba(255,255,255,0.3)_600px_700px,rgba(255,255,255,0.2)_700px_800px,rgba(255,255,255,0.1)_800px)]"
-					aria-hidden="true"
-					/>
+					<div className="pointer-events-none absolute inset-0" aria-hidden="true">
+						{["h-[540px] w-[540px]", "h-[660px] w-[660px]", "h-[780px] w-[780px]", "h-[900px] w-[900px]"]
+							.map((size, index) => (
+								<div
+									key={size}
+									className={`cta-arc ${index > 1 ? "cta-arc-soft" : ""} absolute right-[-410px] top-1/2 ${size} -translate-y-1/2 rounded-full border border-white/70`}
+									style={{ opacity: index > 1 ? 0.72 : 1 }}
+								/>
+							))}
+					</div>
 
 					<div className="relative z-10 flex min-h-[260px] items-center">
 					<div className="w-full max-w-[640px] text-center md:text-left">

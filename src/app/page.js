@@ -5,6 +5,7 @@ import HealthIdentitySection from "@/components/Home/HealthIdentitySection";
 import LovedOnesSection from "@/components/Home/LovedOnesSection";
 import DataControlSection from "@/components/Home/DataControlSection";
 import ContactCard from "@/components/Home/ContactCard";
+import Howitworks from "@/components/Home/Howitworks";
 
 export default function Home() {
 	return (
@@ -23,6 +24,10 @@ export default function Home() {
 			{/* HealthIdentity Section */}
 			<div className="bg-white py-6 md:py-12 px-4 md:px-8">
 				<HealthIdentitySection />
+			</div>
+
+				<div className="">
+				<Howitworks />
 			</div>
 
 			{/* LovedOnes Section */}

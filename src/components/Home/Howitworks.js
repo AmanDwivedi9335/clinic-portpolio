@@ -2,109 +2,148 @@
 
 import Image from "next/image";
 import React from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import GradientBadge from "../ui/GradientBadge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "../ui/carousel";
 
-const steps = [
+const stories = [
   {
-    icon: "/images/UserAdd.png",
-    title: "Claim Your Health Identity",
-    desc: "Create your secure, lifetime health identity in minutes. No paperwork, no hassle.",
+    title: "Pacemaker at 22?",
+    description:
+      "Her complete medical history was unavailable. A crucial report—showing that her symptoms were a medication side effect, not a heart condition—was missing because she did not carry it.",
+    highlight: "MediBank prevents this.",
+    image: "/images/doctors2.png",
   },
   {
-    icon: "/images/UploadOutline.png",
-    title: "Upload or Pull Records",
-    desc: "Import existing records or connect with hospitals to automatically sync your data.",
+    title: "Unconscious in ER",
+    description:
+      "The patient arrived with no accompanying files and no access to past diagnostics. Doctors lost precious minutes before understanding his blood group and pre-existing conditions.",
+    highlight: "MediBank prevents this.",
+    image: "/images/hospital.png",
   },
   {
-    icon: "/images/Share.png",
-    title: "Share with Consent",
-    desc: "Grant temporary or permanent access to doctors, hospitals, or family members.",
-  },
-  {
-    icon: "/images/ChartSquareBar.png",
-    title: "AI Monitors Trends",
-    desc: "Intelligent analysis spots patterns and potential concerns before they escalate.",
-  },
-  {
-    icon: "/images/ShieldCheck.png",
-    title: "Stay Protected Always",
-    desc: "Your complete health story stays secure and accessible whenever you need it.",
+    title: "Critical allergy missed",
+    description:
+      "A life-threatening allergy was buried in old records at another facility. With no instant visibility, treatment decisions became risky in a critical moment.",
+    highlight: "MediBank prevents this.",
+    image: "/images/allergies.png",
   },
 ];
 
 const Howitworks = () => {
+  const [api, setApi] = React.useState();
+  const [current, setCurrent] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const onSelect = () => {
+      setCurrent(api.selectedScrollSnap());
+    };
+
+    onSelect();
+    api.on("select", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [api]);
+
   return (
-    <section
-      className="
-        relative overflow-hidden py-20
-        bg-[radial-gradient(circle_at_center,_#4E0663_0%,_#060B45_55%)]
-      "
-    >
-      {/* Header */}
-      <div className="mx-auto max-w-7xl  text-center ">
-        <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">
-          How It Works
-        </GradientBadge>
+    <section className="bg-white py-14 md:py-20 overflow-hidden">
+      <div className="mx-auto max-w-7xl">
+        <div className="text-center px-4">
+          <GradientBadge innerClassName="bg-white text-[#2A2FAE] border border-[#F2A400] px-6 py-1 font-semibold">
+            Real Consequences
+          </GradientBadge>
 
-        <h2 className="mt-4 text-4xl font-bold text-white md:text-5xl">
-          Simple, Safe, Control-Focused
-        </h2>
+          <h2 className="mt-6 text-3xl md:text-5xl font-medium text-[#5A1FA8]">
+            These stories happen <span className="font-bold">every day</span> in hospitals across India
+          </h2>
+          <p className="mt-3 text-xl md:text-4xl text-[#111D89]">How MediBank Fixes Them</p>
+        </div>
 
-        <p className="mt-4 text-white text-3xl">Your health deserves that.</p>
-      </div>
-
-      {/* Cards */}
-      <div
-        className="
-          mx-auto mt-14 grid max-w-7xl gap-6  
-          grid-cols-1
-          md:grid-cols-2
-          lg:grid-cols-3
-          xl:grid-cols-5
-        "
-      >
-        {steps.map((step, index) => (
-          <div
-            key={index}
-            className="
-              relative rounded-2xl bg-white px-6 py-10
-              shadow-[0_25px_60px_rgba(0,0,0,0.15)]
-            "
+        <div className="mt-12">
+          <Carousel
+            opts={{ align: "start", loop: true }}
+            setApi={setApi}
+            className="w-full"
           >
-            {/* Step pill */}
-            <span
-              className="
-                absolute -top-5 left-1/4 -translate-x-1/2
-                rounded-full px-4 py-2 text-md font-semibold text-white
-                bg-[linear-gradient(180deg,#030B6F,#060B45)]
-              "
-            >
-              Step {index + 1}
-            </span>
+            <CarouselContent className="pl-4 md:pl-8">
+              {stories.map((story) => (
+                <CarouselItem
+                  key={story.title}
+                  className="basis-[95%] md:basis-[78%] lg:basis-[70%]"
+                >
+                  <article className="relative min-h-[340px] md:min-h-[380px] rounded-[28px] bg-[#E8DFF3] px-6 pb-8 pt-[170px] md:px-10 md:pt-12 lg:pl-[340px]">
+                    <div className="absolute left-6 top-[-24px] h-[220px] w-[180px] overflow-hidden rounded-[24px] md:left-8 md:h-[300px] md:w-[260px] lg:left-10 lg:top-1/2 lg:-translate-y-1/2">
+                      <Image
+                        src={story.image}
+                        alt={story.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 180px, 260px"
+                      />
+                    </div>
 
-            {/* Icon */}
-            <div
-              className="
-    flex h-14 w-14 items-center justify-center rounded-2xl
-    bg-[linear-gradient(180deg,rgba(159,2,141,0.2)_0%,rgba(14,24,150,0.2)_105%)]
-  "
+                    <h3 className="text-3xl font-semibold text-[#0E1463]">{story.title}</h3>
+                    <p className="mt-4 max-w-2xl text-2xl leading-relaxed text-[#141B63]">
+                      {story.description}
+                    </p>
+                    <p className="mt-8 text-2xl font-semibold text-[#5821AC]">| {story.highlight}</p>
+                  </article>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+
+          <div className="mt-8 flex items-center justify-center gap-6 text-[#2230B4]">
+            <button
+              onClick={() => api?.scrollPrev()}
+              className="transition hover:opacity-70"
+              aria-label="Previous story"
             >
-              <Image
-                src={step.icon}
-                alt={`Step ${index + 1} icon`}
-                width={28}
-                height={28}
-              />
+              <ArrowLeft size={24} />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {stories.map((_, index) => (
+                <span
+                  key={index}
+                  className={`h-2 rounded-full transition-all ${
+                    current === index ? "w-6 bg-[#2230B4]" : "w-2 bg-[#8E95DC]"
+                  }`}
+                />
+              ))}
             </div>
 
-            {/* Content */}
-            <h3 className="mt-4 text-2xl font-semibold text-[#0B137A]">
-              {step.title}
-            </h3>
-
-            <p className="mt-2 text-lg text-[#0B137A]/80">{step.desc}</p>
+            <button
+              onClick={() => api?.scrollNext()}
+              className="transition hover:opacity-70"
+              aria-label="Next story"
+            >
+              <ArrowRight size={24} />
+            </button>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

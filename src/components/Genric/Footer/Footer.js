@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, Clock3 } from "lucide-react";
+import { MdAlternateEmail } from "react-icons/md";
+import { IoLocationOutline } from "react-icons/io5";
+
 
 export default function Footer() {
 	return (
@@ -22,26 +25,32 @@ export default function Footer() {
 
 					<div className="space-y-4">
 						<h4 className="text-2xl md:text-[20px] font-semibold">Contact Us</h4>
-						<ul className="space-y-3 text-base md:text-[15px] text-[#1D225B]">
+
+						<ul className="list-none p-0 m-0 space-y-3 text-base md:text-[15px] text-[#1D225B]">
+							{/* Email */}
 							<li className="flex items-center gap-2.5">
-								<Mail size={20} strokeWidth={1.8} />
-								<a
-									href="mailto:contact@medibank.in"
-									className="hover:text-[#5C4AFF]"
-								>
-									contact@medibank.in
-								</a>
+							<MdAlternateEmail size={20} />
+							<a
+								href="mailto:contact@medibank.in"
+								className="hover:text-[#5C4AFF]"
+							>
+								contact@medibank.in
+							</a>
 							</li>
+
+							{/* Address */}
 							<li className="flex items-center gap-2.5">
-								<Phone size={20} strokeWidth={1.8} />
-								<a
-									href="tel:+919959095217"
-									className="hover:text-[#5C4AFF]"
-								>
-									+91 9959095217
-								</a>
+							<IoLocationOutline size={50} className="mt-[2px]" />
+							<a
+								href="https://maps.app.goo.gl/nspnknPVhS5T4skU8"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="hover:text-[#5C4AFF] leading-relaxed"
+							>
+								WeWork-Raheja Mindspace, Building Number 9, Madhapur, Hyderabad,
+								Telangana 500081
+							</a>
 							</li>
-							
 						</ul>
 					</div>
 
@@ -80,11 +89,23 @@ export default function Footer() {
 						<h4 className="text-2xl md:text-[20px] font-semibold">Follow Us:</h4>
 						<div className="flex gap-3">
 							<Link
+								href="https://linkedin.com/"
+								className="flex h-12 w-12 items-center justify-center"
+							>
+								<Image
+									src="/images/LlinkedInMedi.png"
+									alt="LinkedIn"
+									width={44}
+									height={44}
+									loading="lazy"
+								/>
+							</Link>
+							<Link
 								href="https://www.whatsapp.com/"
 								className="flex h-12 w-12 items-center justify-center"
 							>
 								<Image
-									src="/images/wa.png"
+									src="/images/fb.png"
 									alt="WhatsApp"
 									width={44}
 									height={44}
@@ -115,18 +136,7 @@ export default function Footer() {
 									loading="lazy"
 								/>
 							</Link>
-							<Link
-								href="https://linkedin.com/"
-								className="flex h-12 w-12 items-center justify-center"
-							>
-								<Image
-									src="/images/LlinkedInMedi.png"
-									alt="LinkedIn"
-									width={44}
-									height={44}
-									loading="lazy"
-								/>
-							</Link>
+							
 						</div>
 					</div>
 				</div>

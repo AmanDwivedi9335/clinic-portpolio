@@ -290,15 +290,17 @@ export default function DataControlSection() {
 					{/* Base gradient (purple → blue) */}
 					<div className="absolute inset-0 bg-[linear-gradient(45deg,_#0E1896_0%,_#640B91_50%,_#9F028D_100%)]" />
 
-					{/* Concentric arcs on right */}
-					<div
-					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_200px,rgba(255,255,255,1)_100px_200px,rgba(255,255,255,0.8)_200px_300px,rgba(255,255,255,0.6)_300px_400px,rgba(255,255,255,0.5)_400px_500px,rgba(255,255,255,0.3)_500px_600px,rgba(255,255,255,0.2)_600px_700px,rgba(255,255,255,0.1)_800px)]"
-					aria-hidden="true"
-					/>
+					
 
 					{/* Slight soft vignette to blend arcs into the base */}
 					<div
-					className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,_rgba(0,0,0,0)_0%,_rgba(0,0,0,0)_55%,_rgba(0,0,0,0.10)_100%)]"
+					className="pointer-events-none absolute inset-0 bg-[linear-gradient(240.72deg,_#9F028D_11.75%,_#640B91_59.36%,_#0E1896_97.85%)]"
+					aria-hidden="true"
+					/>
+
+					{/* Concentric arcs on right */}
+					<div
+					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_100px,rgba(255,255,255,1)_100px_300px,rgba(255,255,255,0.8)_300px_400px,rgba(255,255,255,0.6)_400px_500px,rgba(255,255,255,0.5)_500px_600px,rgba(255,255,255,0.3)_600px_700px,rgba(255,255,255,0.2)_700px_800px,rgba(255,255,255,0.1)_800px)]"
 					aria-hidden="true"
 					/>
 

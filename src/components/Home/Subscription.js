@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 const CheckCircle = ({ className = "" }) => (
   <svg
@@ -67,13 +68,22 @@ const Subscription = () => {
         {/* Card */}
         <div className="mt-10 flex justify-center md:mt-12">
           <div className="relative w-full max-w-[980px]">
+            <Image
+              src="/images/wavesSubscription.png"
+              alt=""
+              aria-hidden="true"
+              width={1400}
+              height={700}
+              className="pointer-events-none absolute left-1/2 top-1/2 z-0 hidden w-[140%] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-90 md:block"
+            />
+
             {/* glow */}
             <div className="pointer-events-none absolute -inset-6 rounded-[36px] [background: linear-gradient(138.58deg, #02042B 0%, #060B4E 40%, #7D2A84 100%);
 ] blur-2xl" />
 
             <div
               className="
-                relative overflow-hidden rounded-[28px]
+                relative z-10 overflow-hidden rounded-[28px]
                 bg-[linear-gradient(175deg,#02042B_0%,#060B4E_40%,#7D2A84_100%)]
                 shadow-[0_28px_70px_rgba(24,14,74,0.35)]
               "

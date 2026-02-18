@@ -10,6 +10,7 @@ export default function Hero() {
     "/images/2.png",
     "/images/3.png",
     "/images/4.png",
+    "/images/14.png",
     "/images/5.png",
   ];
 
@@ -90,7 +91,7 @@ export default function Hero() {
             ))}
 
             {/* Soft left fade (same as your original) */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent z-0" />
           </div>
 
           {/* ===== Mobile image at top (object-contain) ===== */}
@@ -121,7 +122,7 @@ export default function Hero() {
           {/* Content */}
           <div
             className="
-              relative z-10
+              relative z-20
               grid grid-cols-1 md:grid-cols-2
               items-center
               md:min-h-[calc(100vh-124px)]
@@ -129,31 +130,31 @@ export default function Hero() {
           >
             {/* Left content */}
             <div className="px-6 py-10 md:px-10 md:py-16">
-              <p className="hero-animate text-[12px] font-medium text-slate-700 md:text-sm">
+              <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
                 <Image
                   src="/images/star.png"
-                  width={20}
-                  height={20}
+                  width={40}
+                  height={40}
                   alt="Hero star"
                   className="inline-block !top-[-2px] !h-[18px] object-contain mr-2"
                 />
-                India&apos;s 1st Health Identity Infrastructure &nbsp;
+                India&apos;s 1st Health Identity Infrastructure 
                 <Image
                   src="/images/star.png"
-                  width={20}
-                  height={20}
+                  width={40}
+                  height={40}
                   alt="Hero star"
                   className="inline-block !top-[-2px] !h-[18px] object-contain ml-2"
                 />
               </p>
 
-              <h1 className="hero-animate mt-4 text-[38px] font-extrabold leading-[1.05] text-wave md:text-[60px] md:leading-[1.02]">
+              <h1 className="hero-animate mt-4 text-[38px] font-semibold leading-[1.05] text-wave md:text-[60px] md:leading-[1.02]">
                 Your Health Identity
                 <br />
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-5 max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">
+              <p className="hero-animate mt-5 max-w-xl text-[14px] font-medium leading-relaxed text-[#7B1FA2] md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
                 <span className="font-semibold">{secondLineVisible}</span>
@@ -162,7 +163,7 @@ export default function Hero() {
                 )}
               </p>
 
-              <div className="hero-animate mt-7">
+              <div className="hero-animate mt-7 ">
                 <a
                   href="/claim"
                   className="
@@ -188,10 +189,10 @@ export default function Hero() {
           </div>
 
           {/* Subtle vignette like mock (same) */}
-          <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40 " />
 
           {/* Long ocean-wave strip (same) */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[88px] overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-0 z-10 bottom-0 h-[88px] overflow-hidden">
             <div className="herowavebackground" aria-hidden="true" />
           </div>
         </div>

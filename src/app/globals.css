@@ -137,7 +137,7 @@
 }
 
 .text-wave {
-	background: linear-gradient(90deg, #8b0ea6 0%, #5b20b4 55%, #2f2dbf 100%);
+	background: linear-gradient(180deg, #9F028D 0%, #0E1896 105%);
 	background-size: 100% 100%;
 	-webkit-background-clip: text;
 	color: transparent;

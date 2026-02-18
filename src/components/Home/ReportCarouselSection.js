@@ -157,7 +157,7 @@ export default function ReportCarouselSection() {
                     // Responsive height without sm:
                     "h-[clamp(340px,62vh,400px)]",
                     activeIndex === index
-                      ? "scale-[1.01] opacity-100 hover:border-[#C22ECC] hover:shadow-[0_14px_30px_rgba(194,46,204,0.2)]"
+                      ? "scale-[1.01] opacity-100 hover:border-[#C22ECC] hover:cursor-move hover:shadow-[0_14px_30px_rgba(194,46,204,0.2)]"
                       : "scale-[0.97] opacity-85",
                   ].join(" ")}
                 >
@@ -197,9 +197,6 @@ export default function ReportCarouselSection() {
                       {slide.description}
                     </p>
                   </div>
-
-                  {/* Hover highlight line */}
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-[3px] rounded-t-[30px] bg-[#C22ECC] opacity-0 transition-opacity duration-300 lg:group-hover:opacity-100" />
 
                   <p className="sr-only">{slide.title}</p>
                 </article>

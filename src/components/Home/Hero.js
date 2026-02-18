@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
@@ -11,11 +12,14 @@ export default function Hero() {
     "/images/4.png",
     "/images/5.png",
   ];
+
   const firstLineText =
     "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.";
   const secondLineText = "Because one missing detail can change everything...";
   const typingSpeed = 60;
+
   const sectionRef = useRef(null);
+
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [typedCharacters, setTypedCharacters] = useState(0);
 
@@ -41,9 +45,7 @@ export default function Hero() {
 
   useEffect(() => {
     const carouselInterval = setInterval(() => {
-      setActiveImageIndex((currentIndex) =>
-        currentIndex === heroImages.length - 1 ? 0 : currentIndex + 1
-      );
+      setActiveImageIndex((i) => (i === heroImages.length - 1 ? 0 : i + 1));
     }, 3000);
 
     return () => clearInterval(carouselInterval);
@@ -51,13 +53,12 @@ export default function Hero() {
 
   useEffect(() => {
     const typingInterval = setInterval(() => {
-      setTypedCharacters((currentCharacters) => {
-        if (currentCharacters >= secondLineText.length) {
+      setTypedCharacters((c) => {
+        if (c >= secondLineText.length) {
           clearInterval(typingInterval);
-          return currentCharacters;
+          return c;
         }
-
-        return currentCharacters + 1;
+        return c + 1;
       });
     }, typingSpeed);
 
@@ -71,56 +72,88 @@ export default function Hero() {
     <section ref={sectionRef} className="pt-[104px] pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
-        <div className="relative overflow-hidden rounded-[28px] ">
-          {/* Background image */}
-          {heroImages.map((heroImage, index) => (
-            <Image
-              key={heroImage}
-              src={heroImage}
-              alt={`Hero background ${index + 1}`}
-              fill
-              priority={index === 0}
-              className={`object-cover object-top !top-[-0px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
-                index === activeImageIndex ? "opacity-100" : "opacity-0"
-              }`}
-              sizes="100vw"
-            />
-          ))}
+        <div className="relative overflow-hidden rounded-[28px]">
+          {/* ===== Desktop background (UNCHANGED UI) ===== */}
+          <div className="hidden md:block">
+            {heroImages.map((heroImage, index) => (
+              <Image
+                key={heroImage}
+                src={heroImage}
+                alt={`Hero background ${index + 1}`}
+                fill
+                priority={index === 0}
+                className={`object-cover object-top !top-[-0px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
+                  index === activeImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+                sizes="100vw"
+              />
+            ))}
 
-          {/* Soft left fade (so text stays readable) */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+            {/* Soft left fade (same as your original) */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+          </div>
+
+          {/* ===== Mobile image at top (object-contain) ===== */}
+          <div className="relative md:hidden">
+            <div
+              className="
+                relative h-[320px] w-full
+                [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+                [-webkit-mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+              "
+            >
+              {heroImages.map((heroImage, index) => (
+                <Image
+                  key={`${heroImage}-mobile`}
+                  src={heroImage}
+                  alt={`Hero image ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  className={`object-contain object-center transition-opacity duration-700 ${
+                    index === activeImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                  sizes="100vw"
+                />
+              ))}
+            </div>
+          </div>
 
           {/* Content */}
-          <div className="relative z-10 grid min-h-[calc(100vh-124px)] md:min-h-[calc(100vh-124px)] grid-cols-1 md:grid-cols-2 items-center">
+          <div
+            className="
+              relative z-10
+              grid grid-cols-1 md:grid-cols-2
+              items-center
+              md:min-h-[calc(100vh-124px)]
+            "
+          >
             {/* Left content */}
-            <div className="px-6 md:px-10 py-12 md:py-16">
-              <p className="hero-animate text-[12px] md:text-sm font-medium text-slate-700">
+            <div className="px-6 py-10 md:px-10 md:py-16">
+              <p className="hero-animate text-[12px] font-medium text-slate-700 md:text-sm">
                 <Image
-                  key="heroStar"
                   src="/images/star.png"
-                  width={10}
-                  height={10}
-                  alt={`Hero star`}
-                  className="object-contain !top-[-2px] !h-[18px] inline-block mr-2"
+                  width={20}
+                  height={20}
+                  alt="Hero star"
+                  className="inline-block !top-[-2px] !h-[18px] object-contain mr-2"
                 />
                 India&apos;s 1st Health Identity Infrastructure &nbsp;
                 <Image
-                  key="heroStar"
                   src="/images/star.png"
-                  width={10}
-                  height={10}
-                  alt={`Hero star`}
-                  className="object-contain !top-[-2px] !h-[18px] inline-block mr-2"
+                  width={20}
+                  height={20}
+                  alt="Hero star"
+                  className="inline-block !top-[-2px] !h-[18px] object-contain ml-2"
                 />
               </p>
 
-              <h1 className="hero-animate mt-4 text-[38px] leading-[1.05] md:text-[60px] md:leading-[1.02] font-extrabold text-wave">
-                Your Health Identity<br />
-                
+              <h1 className="hero-animate mt-4 text-[38px] font-extrabold leading-[1.05] text-wave md:text-[60px] md:leading-[1.02]">
+                Your Health Identity
+                <br />
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-5 max-w-xl text-[14px] md:text-[15px] leading-relaxed text-[#7B1FA2]">
+              <p className="hero-animate mt-5 max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
                 <span className="font-semibold">{secondLineVisible}</span>
@@ -133,7 +166,7 @@ export default function Hero() {
                 <a
                   href="/claim"
                   className="
-                    inline-flex items-center !cursor-pointer justify-center
+                    inline-flex items-center justify-center !cursor-pointer
                     rounded-2xl px-8 py-3
                     font-semibold text-white
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
@@ -148,18 +181,16 @@ export default function Hero() {
                   Claim Your Health Identity
                 </a>
               </div>
-
-
             </div>
 
             {/* Right side kept mostly visual (optional) */}
             <div className="hidden md:block" />
           </div>
 
-          {/* Subtle vignette like mock */}
+          {/* Subtle vignette like mock (same) */}
           <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
 
-          {/* Long ocean-wave strip */}
+          {/* Long ocean-wave strip (same) */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[88px] overflow-hidden">
             <div className="herowavebackground" aria-hidden="true" />
           </div>

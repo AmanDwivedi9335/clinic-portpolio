@@ -156,6 +156,7 @@ function HeroWaveBackground() {
 
 export default function UsersPage() {
   const showcaseRef = useRef(null);
+  const pinPanelRef = useRef(null);
 
   useEffect(() => {
     return createGsapContext(showcaseRef, (gsap) => {
@@ -163,37 +164,31 @@ export default function UsersPage() {
 
       mm.add("(min-width: 768px)", () => {
         const rows = gsap.utils.toArray(".users-showcase-row");
-        if (!rows.length || !showcaseRef.current) return;
+        if (!rows.length) return;
 
         gsap.set(rows, {
           autoAlpha: 0,
-          yPercent: 10,
-          pointerEvents: "none",
+          yPercent: 14,
         });
-        gsap.set(rows[0], { autoAlpha: 1, yPercent: 0, pointerEvents: "auto" });
+        gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
 
         const timeline = gsap.timeline({
-          defaults: { duration: 0.38, ease: "power2.out" },
+          defaults: { duration: 0.55, ease: "power2.out" },
           scrollTrigger: {
             trigger: showcaseRef.current,
-            start: "top center",
-            end: "+=200%",
-            scrub: 0.35,
-            pin: true,
+            start: "top top",
+            end: "+=230%",
+            scrub: 0.75,
+            pin: pinPanelRef.current,
             anticipatePin: 1,
-            invalidateOnRefresh: true,
           },
         });
 
         timeline
-          .to(rows[0], { yPercent: -10 }, 0.62)
-          .set(rows[0], { autoAlpha: 0, pointerEvents: "none" }, 0.8)
-          .set(rows[1], { autoAlpha: 1, yPercent: 10, pointerEvents: "auto" }, 0.8)
-          .to(rows[1], { yPercent: 0 }, 0.8)
-          .to(rows[1], { yPercent: -10 }, 1.42)
-          .set(rows[1], { autoAlpha: 0, pointerEvents: "none" }, 1.62)
-          .set(rows[2], { autoAlpha: 1, yPercent: 10, pointerEvents: "auto" }, 1.62)
-          .to(rows[2], { yPercent: 0 }, 1.62);
+          .to(rows[0], { autoAlpha: 0, yPercent: -12 }, 0.2)
+          .to(rows[1], { autoAlpha: 1, yPercent: 0 }, 0.2)
+          .to(rows[1], { autoAlpha: 0, yPercent: -12 }, 1.25)
+          .to(rows[2], { autoAlpha: 1, yPercent: 0 }, 1.25);
       });
 
       mm.add("(max-width: 767px)", () => {
@@ -325,14 +320,15 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:min-h-[280vh]"
+        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:h-[300vh]"
       >
         <div
-          className="relative grid gap-14 py-6 md:h-[82vh] md:items-center md:overflow-hidden md:py-0"
+          ref={pinPanelRef}
+          className="relative grid gap-14 py-6 md:h-screen md:overflow-hidden md:py-0"
         >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -363,7 +359,7 @@ export default function UsersPage() {
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -396,7 +392,7 @@ export default function UsersPage() {
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">

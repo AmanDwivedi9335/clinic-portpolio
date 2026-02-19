@@ -1105,7 +1105,7 @@ const App = () => {
 	};
 
 	const getIconForCategory = (tab) => {
-		if (tab === "Doctors") return "/images/plus.png";
+		if (tab === "Doctors") return "/images/doctorIcon.png";
 		if (tab === "Labs") return "/images/microscope.png";
 		if (tab === "Hospitals") return "/images/hospital.png";
 		return "/images/default-icon.png";
@@ -1218,9 +1218,10 @@ const App = () => {
 														</p>
 													</div>
 													<div className="mt-2 flex gap-2">
-														<button className="bg-[#c48bed] text-white text-xs px-3 py-1 rounded-full">
-															Book
+														<button className="bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] text-white text-xs px-3 py-1 rounded-full">
+														Book
 														</button>
+
 														<button className="border border-[#dfd3ef] text-[#9c86b3] text-xs px-3 py-1 rounded-full bg-white">
 															Location
 														</button>

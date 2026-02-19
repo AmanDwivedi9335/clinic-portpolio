@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
+import Howitworks from "@/components/Home/Howitworks";
+import Subscription from "@/components/Home/Subscription";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -162,8 +164,8 @@ function RowPillIndicators({ activeIndex = 0 }) {
         return (
           <span
             key={index}
-            className={`relative h-2.5 overflow-hidden rounded-full transition-all duration-500 ${
-              isActive ? "w-14 bg-[#d9c5ec]" : "w-7 bg-[#e9def5]"
+            className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
+              isActive ? "w-10 bg-[#8F129A]" : "w-5 bg-[#e9def5]"
             }`}
           >
             {isActive ? <span className="users-pill-fill absolute inset-y-0 left-0 rounded-full" /> : null}
@@ -352,15 +354,26 @@ export default function UsersPage() {
             className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+              <h2 className="text-4xl font-extrabold leading-tight 
+                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                bg-clip-text text-transparent">
                 Smart Health Overview
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#452169]">
+
+              <p
+                className="
+                  mt-2 text-lg font-normal
+                  bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                  bg-clip-text text-transparent
+                  leading-snug
+                "
+              >
                 Track appointments, vitals, and daily health
                 <br />
                 insights in one place.
               </p>
-              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+
+              <p className="mt-4 max-w-[430px] text-sm text-[#0b137a]">
                 A personalized multidimensional record of your ecosystem&apos;s daily
                 health journey, and your vital trends.
               </p>
@@ -447,6 +460,14 @@ export default function UsersPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <Howitworks/>
+      </section>
+
+      <section>
+        <Subscription/>
       </section>
 
       <style jsx>{`

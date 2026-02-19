@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -153,8 +154,58 @@ function HeroWaveBackground() {
 
 
 export default function UsersPage() {
+  const pageRef = useRef(null);
+
+  useEffect(() => {
+    return createGsapContext(pageRef, (gsap) => {
+      const rows = gsap.utils.toArray(".users-feature-row");
+
+      rows.forEach((row) => {
+        const text = row.querySelector(".users-feature-text");
+        const phone = row.querySelector(".users-feature-phone");
+
+        if (!text || !phone) return;
+
+        gsap.fromTo(
+          text,
+          { autoAlpha: 0, x: -72 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 78%",
+            },
+          }
+        );
+
+        gsap.fromTo(
+          phone,
+          { autoAlpha: 0, x: 72, y: 30, scale: 0.96 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 78%",
+            },
+          }
+        );
+      });
+    });
+  }, []);
+
   return (
-    <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
+    <main
+      ref={pageRef}
+      className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24"
+    >
       <HeroWaveBackground />
 
       {/* HERO */}
@@ -313,21 +364,27 @@ export default function UsersPage() {
           />
         </div>
 
-        <div className="md:order-4 md:justify-self-end">
-          <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
-            Discover Nearby
-            <br />
-            Healthcare Providers
-          </h2>
-          <p className="mt-2 text-lg font-semibold text-[#452169]">
-            Search doctors, labs, and hospitals around your
-            <br />
-            location.
-          </p>
-          <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
-            An interactive map-based directory to explore, view availability,
-            and book appointments with nearby providers.
-          </p>
+          <PhoneMockup className="users-feature-phone md:justify-self-center">
+            <div className="relative h-full bg-white p-3 pt-7">
+              <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#cce4ff] to-transparent" />
+              <div className="relative z-10 rounded-xl bg-white p-2 shadow-sm">
+                <div className="h-36 rounded-lg border border-[#d4d8e8] bg-[radial-gradient(circle_at_30%_40%,#7ec9ff_0_8px,transparent_9px),radial-gradient(circle_at_65%_35%,#f973b0_0_8px,transparent_9px),radial-gradient(circle_at_50%_70%,#8b5cf6_0_8px,transparent_9px),linear-gradient(#eef2ff_1px,transparent_1px),linear-gradient(90deg,#eef2ff_1px,transparent_1px)] bg-[length:auto,auto,auto,20px_20px,20px_20px]" />
+              </div>
+              <div className="relative z-10 mt-3 space-y-2">
+                {["Dr. John D.", "Dr. Sneha M.", "Ana Wellness"].map((name) => (
+                  <div
+                    key={name}
+                    className="flex items-center justify-between rounded-xl bg-[#f7f2ff] px-3 py-2 text-xs"
+                  >
+                    <span className="font-medium text-[#3D245D]">{name}</span>
+                    <span className="rounded-full bg-[#6f1cb5] px-2 py-1 text-[10px] text-white">
+                      Connect
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </PhoneMockup>
         </div>
 
         {/* ===== Row 3: Text Left, Image Right ===== */}

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
 
@@ -385,7 +386,6 @@ export default function UsersPage() {
               </div>
             </div>
           </PhoneMockup>
-        </div>
 
         {/* ===== Row 3: Text Left, Image Right ===== */}
         <div className="md:order-5  h-[100vh]">

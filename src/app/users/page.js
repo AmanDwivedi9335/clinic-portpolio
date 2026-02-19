@@ -317,9 +317,9 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-12 max-w-6xl bg-[#F4F4F8] px-6 md:mt-16 md:h-[280vh]"
+        className="relative mx-auto mt-12 max-w-6xl bg-[#F4F4F8] px-6 md:mt-16 md:h-[320vh]"
       >
-        <div className="relative grid gap-14 py-6 md:sticky md:top-24 md:h-[calc(100vh-6rem)] md:py-0 md:overflow-hidden">
+        <div className="relative grid gap-14 py-6 md:sticky md:top-1/2 md:h-[82vh] md:-translate-y-1/2 md:overflow-hidden">
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
             className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"

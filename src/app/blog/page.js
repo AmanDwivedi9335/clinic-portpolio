@@ -44,10 +44,10 @@ export default function page() {
 	];
 	return (
 		<div className="mt-[100px]">
-			<div className="bg-slate-500">
+			<div className="bg-[#D9C6E3]">
 				<div className="w-4/5 m-auto py-16">
-					<Breadcrumb items={breadcrumbItems} textColor="text-white" />
-					<div className="text-center my-8 text-[28px] font-bold text-white">
+					<Breadcrumb items={breadcrumbItems} textColor="text-black" />
+					<div className="text-center my-8 text-[28px] font-bold text-black">
 						Blogs
 					</div>
 					<div className="flex justify-around items-center flex-col md:flex-row w-full flex-wrap">

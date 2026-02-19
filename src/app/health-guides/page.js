@@ -75,10 +75,10 @@ export default function Page() {
 	};
 
 	return (
-		<div className="mt-[80px] bg-[#f3dfe3] py-10 md:py-16">
-			<div className="mx-auto w-[92%] max-w-[1240px]">
+		<div className=" bg-[#D9C6E3] py-10 md:py-16">
+			<div className="mx-auto mt-[80px] w-[92%] max-w-[1240px]">
 				<nav aria-label="Breadcrumb" className="mb-8">
-					<ol className="flex flex-wrap items-center gap-2 text-[30px] font-semibold leading-tight text-[#2665dc]">
+					<ol className="flex flex-wrap items-center gap-2 text-[20px] font-semibold leading-tight text-[#2665dc]">
 						{breadcrumbs.map((crumb, index) => (
 							<li key={crumb.label} className="flex items-center gap-2">
 								{index > 0 && <span className="text-[#9aa3b5]">/</span>}
@@ -95,7 +95,7 @@ export default function Page() {
 						const isOpen = openGuideId === guide.id;
 
 						return (
-							<section key={guide.id} className="overflow-hidden rounded-2xl border border-[#d2d8e1] bg-[#f5f6f8]">
+							<section key={guide.id} className="overflow-hidden rounded-3xl border border-[#d2d8e1] bg-[#f5f6f8]">
 								<button
 									type="button"
 									onClick={() => toggleGuide(guide.id)}
@@ -110,12 +110,12 @@ export default function Page() {
 											className="object-cover"
 										/>
 									</div>
-									<h2 className="flex-1 text-xl font-semibold text-[#091226] md:text-5xl">{guide.title}</h2>
-									<span className="text-3xl font-bold text-[#0d1527]">{isOpen ? <FiMinus /> : <FiPlus />}</span>
+									<h2 className="flex-1 text-xl font-semibold text-[#091226] md:text-3xl">{guide.title}</h2>
+									<span className="text-xl font-bold text-[#0d1527]">{isOpen ? <FiMinus /> : <FiPlus />}</span>
 								</button>
 
 								{isOpen && (
-									<div className="border-t border-[#d2d8e1] px-4 py-5 text-[21px] leading-[1.55] text-[#0f1a31] md:px-6">
+									<div className="border-t border-[#d2d8e1] px-4 py-5 text-[18px] leading-[1.55] text-[#0f1a31] md:px-6">
 										<p>{guide.desc}</p>
 									</div>
 								)}

@@ -15,7 +15,7 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[90vh] overflow-hidden">
+    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100vh] overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#C9C6EA_0%,#E8C9DF_55%,#F3E6F2_100%)]" />
 
       {/* TOP BAND */}
@@ -233,8 +233,8 @@ export default function UsersPage() {
           <div className="mt-10" aria-hidden="true">
             <svg
               className="scroll-indicator"
-              width="50"
-              height="56"
+              width="30"
+              height="36"
               viewBox="0 0 50 56"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +273,9 @@ export default function UsersPage() {
 
       {/* REST */}
       <section className="mx-auto mt-12 grid max-w-6xl gap-y-16 px-6 md:mt-16 md:grid-cols-2 md:items-center">
-        <div>
+
+        {/* ===== Row 1: Text Left, Image Right ===== */}
+        <div className="md:order-1 h-[100vh]">
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
             Smart Health Overview
           </h2>
@@ -288,54 +290,28 @@ export default function UsersPage() {
           </p>
         </div>
 
-        <PhoneMockup className="md:justify-self-center">
-          <div className="h-full bg-[#F6F1FF] p-3 pt-7">
-            <div className="rounded-xl bg-[#6f1cb5] p-3 text-xs text-white shadow-md">
-              <p className="font-semibold">Upcoming Appointments</p>
-              <p className="opacity-90">Today, 5:30 PM • Dr. Priya</p>
-            </div>
-            <div className="mt-3 rounded-xl bg-white p-3 shadow-sm">
-              <p className="text-xs font-semibold text-[#6622b5]">Health Score</p>
-              <div className="mt-2 flex h-20 items-end gap-2">
-                <span className="h-9 w-5 rounded-t bg-[#9f7ddd]" />
-                <span className="h-14 w-5 rounded-t bg-[#8f62d9]" />
-                <span className="h-8 w-5 rounded-t bg-[#c4a1ea]" />
-                <span className="h-16 w-5 rounded-t bg-[#7741c3]" />
-                <span className="h-11 w-5 rounded-t bg-[#a679e2]" />
-              </div>
-            </div>
-            <div className="mt-3 rounded-xl bg-white p-3 shadow-sm">
-              <p className="text-xs font-semibold text-[#33154f]">Daily Vitals</p>
-              <div className="mt-2 flex items-center justify-between text-[11px] text-[#6b4c8f]">
-                <span>Pulse 74</span>
-                <span>Sleep 7.4h</span>
-                <span>Steps 6,200</span>
-              </div>
-            </div>
-          </div>
-        </PhoneMockup>
+        <div className="mx-auto w-full max-w-[220px] md:order-2 md:justify-self-end">
+          <Image
+            src="/images/users/smart-health-overview.svg"
+            alt="Smart Health Overview mobile dashboard"
+            width={354}
+            height={695}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
 
-        <PhoneMockup className="md:order-3 md:justify-self-start">
-          <div className="relative h-full bg-white p-3 pt-7">
-            <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#cce4ff] to-transparent" />
-            <div className="relative z-10 rounded-xl bg-white p-2 shadow-sm">
-              <div className="h-36 rounded-lg border border-[#d4d8e8] bg-[radial-gradient(circle_at_30%_40%,#7ec9ff_0_8px,transparent_9px),radial-gradient(circle_at_65%_35%,#f973b0_0_8px,transparent_9px),radial-gradient(circle_at_50%_70%,#8b5cf6_0_8px,transparent_9px),linear-gradient(#eef2ff_1px,transparent_1px),linear-gradient(90deg,#eef2ff_1px,transparent_1px)] bg-[length:auto,auto,auto,20px_20px,20px_20px]" />
-            </div>
-            <div className="relative z-10 mt-3 space-y-2">
-              {["Dr. John D.", "Dr. Sneha M.", "Ana Wellness"].map((name) => (
-                <div
-                  key={name}
-                  className="flex items-center justify-between rounded-xl bg-[#f7f2ff] px-3 py-2 text-xs"
-                >
-                  <span className="font-medium text-[#3D245D]">{name}</span>
-                  <span className="rounded-full bg-[#6f1cb5] px-2 py-1 text-[10px] text-white">
-                    Connect
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </PhoneMockup>
+        {/* ===== Row 2: Image Left, Text Right ===== */}
+        <div className="mx-auto w-full max-w-[220px] md:order-3  h-[100vh] md:justify-self-start">
+          <Image
+            src="/images/users/discover-nearby.svg"
+            alt="Discover nearby mobile dashboard"
+            width={354}
+            height={695}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
 
         <div className="md:order-4 md:justify-self-end">
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -354,7 +330,8 @@ export default function UsersPage() {
           </p>
         </div>
 
-        <div>
+        {/* ===== Row 3: Text Left, Image Right ===== */}
+        <div className="md:order-5  h-[100vh]">
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
             Centralized Health
             <br />
@@ -371,37 +348,19 @@ export default function UsersPage() {
           </p>
         </div>
 
-        <PhoneMockup className="md:justify-self-center">
-          <div className="relative h-full bg-[#FBF8FF] p-3 pt-7">
-            <div className="mb-3 flex gap-2 text-[11px] font-semibold">
-              <span className="rounded-full bg-[#6f1cb5] px-3 py-1 text-white">
-                Records
-              </span>
-              <span className="rounded-full bg-[#ead9ff] px-3 py-1 text-[#5f2d9f]">
-                Appointments
-              </span>
-            </div>
+        <div className="mx-auto w-full max-w-[220px] md:order-6 md:justify-self-end">
+          <Image
+            src="/images/users/centralized.svg"
+            alt="Centralized Overview mobile dashboard"
+            width={354}
+            height={695}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
 
-            {["Blood Test Report", "MRI Scan Result", "Prescription - Jan", "Wellness Report"].map(
-              (item, idx) => (
-                <div key={item} className="mb-2 rounded-xl border border-[#eadff6] bg-white p-3">
-                  <p className="text-xs font-semibold text-[#32114f]">{item}</p>
-                  <div className="mt-2 flex items-center justify-between text-[10px] text-[#6f6480]">
-                    <span>Updated {idx + 1}d ago</span>
-                    <span className="rounded-full bg-[#6f1cb5] px-2 py-1 text-white">
-                      View
-                    </span>
-                  </div>
-                </div>
-              )
-            )}
-
-            <div className="absolute bottom-4 right-4 rounded-full bg-[#1eb980] px-3 py-2 text-xs font-semibold text-white shadow-md">
-              + Add
-            </div>
-          </div>
-        </PhoneMockup>
       </section>
+
     </main>
   );
 }

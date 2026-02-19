@@ -156,6 +156,7 @@ function HeroWaveBackground() {
 
 export default function UsersPage() {
   const showcaseRef = useRef(null);
+  const pinPanelRef = useRef(null);
 
   useEffect(() => {
     return createGsapContext(showcaseRef, (gsap) => {
@@ -163,32 +164,31 @@ export default function UsersPage() {
 
       mm.add("(min-width: 768px)", () => {
         const rows = gsap.utils.toArray(".users-showcase-row");
-        if (!rows.length || !showcaseRef.current) return;
+        if (!rows.length) return;
 
         gsap.set(rows, {
           autoAlpha: 0,
-          yPercent: 10,
+          yPercent: 14,
         });
         gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
 
         const timeline = gsap.timeline({
-          defaults: { duration: 0.45, ease: "power2.out" },
+          defaults: { duration: 0.55, ease: "power2.out" },
           scrollTrigger: {
             trigger: showcaseRef.current,
-            start: "top center",
-            end: "+=200%",
-            scrub: 0.45,
-            pin: true,
+            start: "top top",
+            end: "+=230%",
+            scrub: 0.75,
+            pin: pinPanelRef.current,
             anticipatePin: 1,
-            invalidateOnRefresh: true,
           },
         });
 
         timeline
-          .to(rows[0], { autoAlpha: 0, yPercent: -10 }, 0.65)
-          .to(rows[1], { autoAlpha: 1, yPercent: 0 }, 0.65)
-          .to(rows[1], { autoAlpha: 0, yPercent: -10 }, 1.45)
-          .to(rows[2], { autoAlpha: 1, yPercent: 0 }, 1.45);
+          .to(rows[0], { autoAlpha: 0, yPercent: -12 }, 0.2)
+          .to(rows[1], { autoAlpha: 1, yPercent: 0 }, 0.2)
+          .to(rows[1], { autoAlpha: 0, yPercent: -12 }, 1.25)
+          .to(rows[2], { autoAlpha: 1, yPercent: 0 }, 1.25);
       });
 
       mm.add("(max-width: 767px)", () => {
@@ -320,10 +320,11 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:min-h-[280vh]"
+        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:h-[300vh]"
       >
         <div
-          className="relative grid gap-14 py-6 md:h-[82vh] md:items-center md:overflow-hidden md:py-0"
+          ref={pinPanelRef}
+          className="relative grid gap-14 py-6 md:h-screen md:overflow-hidden md:py-0"
         >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div

@@ -11,6 +11,9 @@ const PROJECTION_CONFIG = {
 	center: [82.9629, 22.5937],
 };
 
+const ACTIVE_STATE_GRADIENT_ID = "activeStateGradient";
+const ACTIVE_STATE_GRADIENT = `url(#${ACTIVE_STATE_GRADIENT_ID})`;
+
 const geographyStyle = {
 	default: {
 		outline: "none",
@@ -1315,7 +1318,13 @@ const App = () => {
 
 							<div className="md:w-2/5 relative w-full h-max bg-transparent p-1 mb-2 md:mb-10 lg:mx-auto">
 								<div className="text-center absolute top-1/4 left-1/2 mb-4 z-10">
-									<h2 className="text-xl font-semibold text-[#676787]">
+									<h2
+										className={`text-xl font-semibold ${
+											activeState?.state
+												? "bg-[linear-gradient(180deg,_#9F028D_0%,_#0E1896_105%)] bg-clip-text text-transparent"
+												: "text-[#676787]"
+										}`}
+									>
 										{activeState?.state
 											? `${activeState.state}`
 											: "Select a State"}
@@ -1327,15 +1336,28 @@ const App = () => {
 									width={900}
 									height={950}
 								>
+									<defs>
+										<linearGradient id={ACTIVE_STATE_GRADIENT_ID} x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stopColor="#9F028D" />
+											<stop offset="100%" stopColor="#0E1896" />
+										</linearGradient>
+									</defs>
 									<Geographies geography={INDIA_TOPO_JSON}>
 										{({ geographies }) =>
 											geographies.map((geo) => {
 												const current = data.find((state) => state.id === geo.id);
+												const isActiveState = activeState?.id === current?.id;
 												return (
 													<Geography
 														key={geo.rsmKey}
 														geography={geo}
-														style={geographyStyle}
+														style={{
+															...geographyStyle,
+															default: {
+																...geographyStyle.default,
+																fill: isActiveState ? ACTIVE_STATE_GRADIENT : geographyStyle.default.fill,
+															},
+														}}
 														onClick={() => handleStateClick(geo)}
 														className="cursor-pointer"
 													/>

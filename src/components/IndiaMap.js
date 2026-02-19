@@ -824,6 +824,7 @@ const getHeatMapData = () => [
 				Private: 15,
 				Multispecialty: 10,
 				"Children's": 5,
+				Islands: 5,
 			},
 		},
 	},

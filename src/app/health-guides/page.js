@@ -1,7 +1,8 @@
-import React from "react";
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import Breadcrumb from "@/components/Breadcrumb";
+import { FiMinus, FiPlus } from "react-icons/fi";
 
 const guidesData = [
 	{
@@ -56,65 +57,71 @@ const guidesData = [
 		id: 9,
 		imgurl: "/images/healthguides/Screening-tests.png",
 		title: "Common Screening Tests",
-		desc: "<ul><li>Blood Sugar Screening (A1C test) – Used to diagnose prediabetes, type 1 and type 2 diabetes.</li><li>Cholesterol Screening (Lipid panel or Lipid profile) – Measures the levels of cholesterol and triglycerides in blood.</li><li>Blood Pressure Test – Determines if an individual has hypertension (high blood pressure) or hypotension (low blood pressure).</li><li>Thyroid Function Test – Measures how well your thyroid gland is working.</li><li>Liver Function Tests – Help determine the health of the liver by measuring the levels of proteins, liver enzymes, and bilirubin in blood.</li><li>Blood and Urine Tests – Can identify kidney problems.</li><li>Electrocardiography (ECG or EKG) – Measures the heart's electrical activity, allowing a doctor to check for cardiac arrhythmias and palpitations or any other heart issues.</li><li>Exercise Electrocardiogram (Stress Test) – Assesses heart function during physical activity.</li><li>Echocardiogram (Echo) – Uses ultrasound to visualize the heart and check for structural problems.</li><li>Pap Smear – A screening procedure for cervical cancer in women.</li><li>Prostate Screening – Used to detect undiagnosed prostate cancer in men.</li><li>Mammograms – Used as a screening tool, on a routine basis, to detect breast cancer in women at an early stage.</li></ul>",
+		desc: "Blood Sugar Screening (A1C test), Cholesterol Screening (Lipid panel), Blood Pressure Test, Thyroid Function Test, Liver Function Tests, Blood and Urine Tests, ECG, Stress Test, Echocardiogram, Pap Smear, Prostate Screening and Mammograms are common checks used to detect diseases early and improve treatment outcomes.",
 	},
 ];
 
-const breadcrumbItems = [
+const breadcrumbs = [
 	{ label: "Home", href: "/" },
 	{ label: "Resources", href: "/resources" },
 	{ label: "Health Guides", href: "/health-guides" },
 ];
 
-const renderDescription = (content) => {
-	const isHTML = /<\/?[a-z][\s\S]*>/i.test(content);
-
-	if (isHTML) {
-		return <div dangerouslySetInnerHTML={{ __html: content }} />;
-	}
-
-	return <p>{content}</p>;
-};
-
 export default function Page() {
-	return (
-		<div className="bg-[#efeff2]">
-			<div className="container mt-[100px] w-11/12 px-0 py-12 md:w-4/5">
-				<h1 className="text-[30px] font-bold text-[#1f1c5f]">Health Guides</h1>
-				<Breadcrumb items={breadcrumbItems} />
+	const [openGuideId, setOpenGuideId] = useState(1);
 
-				<div className="mt-4 grid grid-cols-1 gap-4 pb-4 md:grid-cols-2 xl:grid-cols-3">
-					{guidesData.map((item) => (
-						<div key={item.id} className="guide-card-group guide-card-wrap h-[315px] rounded-[14px]">
-							<div className="guide-card-inner relative h-full w-full rounded-[14px]">
-								<div className="guide-card-front absolute inset-0 rounded-[14px] border border-[#cb8fe0] bg-[#efe8ff] p-2">
-									<div className="mb-2 flex items-center justify-between px-1 text-[18px] font-semibold text-[#2f2d77]">
-										<span>{item.title}</span>
-										<FiChevronDown className="text-[#2f2d77]" />
-									</div>
-									<div className="relative h-[265px] w-full overflow-hidden rounded-[10px] border border-[#2f2d77]">
+	const toggleGuide = (id) => {
+		setOpenGuideId((current) => (current === id ? null : id));
+	};
+
+	return (
+		<div className="mt-[80px] bg-[#f3dfe3] py-10 md:py-16">
+			<div className="mx-auto w-[92%] max-w-[1240px]">
+				<nav aria-label="Breadcrumb" className="mb-8">
+					<ol className="flex flex-wrap items-center gap-2 text-[30px] font-semibold leading-tight text-[#2665dc]">
+						{breadcrumbs.map((crumb, index) => (
+							<li key={crumb.label} className="flex items-center gap-2">
+								{index > 0 && <span className="text-[#9aa3b5]">/</span>}
+								<a href={crumb.href} className="transition-opacity hover:opacity-80">
+									{crumb.label}
+								</a>
+							</li>
+						))}
+					</ol>
+				</nav>
+
+				<div className="space-y-5">
+					{guidesData.map((guide) => {
+						const isOpen = openGuideId === guide.id;
+
+						return (
+							<section key={guide.id} className="overflow-hidden rounded-2xl border border-[#d2d8e1] bg-[#f5f6f8]">
+								<button
+									type="button"
+									onClick={() => toggleGuide(guide.id)}
+									className="flex w-full items-center gap-4 px-4 py-4 text-left md:gap-8 md:px-6"
+								>
+									<div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-md md:h-24 md:w-28">
 										<Image
-											src={item.imgurl}
-											alt={item.title}
+											src={guide.imgurl}
+											alt={guide.title}
 											fill
-											sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+											sizes="112px"
 											className="object-cover"
 										/>
 									</div>
-								</div>
+									<h2 className="flex-1 text-xl font-semibold text-[#091226] md:text-5xl">{guide.title}</h2>
+									<span className="text-3xl font-bold text-[#0d1527]">{isOpen ? <FiMinus /> : <FiPlus />}</span>
+								</button>
 
-								<div className="guide-card-back absolute inset-0 rounded-[14px] border border-[#cb8fe0] bg-[#efe8ff] p-3 text-[#2f2d77]">
-									<div className="mb-2 flex items-center justify-between text-[14px] font-semibold">
-										<span>{item.title}</span>
-										<FiChevronUp />
+								{isOpen && (
+									<div className="border-t border-[#d2d8e1] px-4 py-5 text-[21px] leading-[1.55] text-[#0f1a31] md:px-6">
+										<p>{guide.desc}</p>
 									</div>
-									<div className="guide-card-back-content rounded-[10px] border border-[#cb8fe0] bg-[#f4f0ff] p-3 text-[14px] leading-[1.35]">
-										{renderDescription(item.desc)}
-									</div>
-								</div>
-							</div>
-						</div>
-					))}
+								)}
+							</section>
+						);
+					})}
 				</div>
 			</div>
 		</div>

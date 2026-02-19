@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -153,6 +154,48 @@ function HeroWaveBackground() {
 
 
 export default function UsersPage() {
+  const showcaseRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = showcaseRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+      const sectionHeight = el.offsetHeight;
+      const maxScrollable = Math.max(sectionHeight - window.innerHeight, 1);
+      const raw = (window.scrollY - sectionTop) / maxScrollable;
+      const clamped = Math.max(0, Math.min(1, raw));
+
+      setScrollProgress(clamped);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
+  const getRowStyle = (index) => {
+    const timelinePosition = scrollProgress * 2;
+    const distance = Math.abs(timelinePosition - index);
+    const opacity = Math.max(0, 1 - distance);
+    const yShift = (index - timelinePosition) * 44;
+    const scale = 1 - Math.min(distance, 1) * 0.05;
+
+    return {
+      opacity,
+      transform: `translate3d(0, ${yShift}px, 0) scale(${scale})`,
+      pointerEvents: opacity > 0.55 ? "auto" : "none",
+    };
+  };
+
   return (
     <main className="relative isolate overflow-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
@@ -272,93 +315,99 @@ export default function UsersPage() {
       </section>
 
       {/* REST */}
-      <section className="mx-auto mt-12 grid max-w-6xl gap-y-16 px-6 md:mt-16 md:grid-cols-2 md:items-center">
+      <section ref={showcaseRef} className="relative mx-auto mt-12 h-[300vh] max-w-6xl px-6 md:mt-16">
+        <div className="sticky top-0 h-screen overflow-hidden">
+          {/* ===== Row 1: Text Left, Image Right ===== */}
+          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(0)}>
+            <div>
+              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+                Smart Health Overview
+              </h2>
+              <p className="mt-2 text-lg font-semibold text-[#452169]">
+                Track appointments, vitals, and daily health
+                <br />
+                insights in one place.
+              </p>
+              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+                A personalized multidimensional record of your ecosystem&apos;s daily
+                health journey, and your vital trends.
+              </p>
+            </div>
 
-        {/* ===== Row 1: Text Left, Image Right ===== */}
-        <div className="md:order-1">
-          <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
-            Smart Health Overview
-          </h2>
-          <p className="mt-2 text-lg font-semibold text-[#452169]">
-            Track appointments, vitals, and daily health
-            <br />
-            insights in one place.
-          </p>
-          <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
-            A personalized multidimensional record of your ecosystem&apos;s daily
-            health journey, and your vital trends.
-          </p>
+            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+              <Image
+                src="/images/users/smart-health-overview.svg"
+                alt="Smart Health Overview mobile dashboard"
+                width={354}
+                height={695}
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* ===== Row 2: Text Left, Image Right ===== */}
+          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(1)}>
+            <div>
+              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+                Discover Nearby
+                <br />
+                Healthcare Providers
+              </h2>
+              <p className="mt-2 text-lg font-semibold text-[#452169]">
+                Search doctors, labs, and hospitals around your
+                <br />
+                location.
+              </p>
+              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+                An interactive map-based directory to explore, view availability,
+                and book appointments with nearby providers.
+              </p>
+            </div>
+
+            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+              <Image
+                src="/images/users/discover-nearby.svg"
+                alt="Discover nearby mobile dashboard"
+                width={354}
+                height={695}
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* ===== Row 3: Text Left, Image Right ===== */}
+          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(2)}>
+            <div>
+              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+                Centralized Health
+                <br />
+                Records
+              </h2>
+              <p className="mt-2 text-lg font-semibold text-[#452169]">
+                Access appointments, lab reports, and hospital
+                <br />
+                documents anytime.
+              </p>
+              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+                A structured record management center for securely viewing and
+                managing essential reports with clarity.
+              </p>
+            </div>
+
+            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+              <Image
+                src="/images/users/centralized.svg"
+                alt="Centralized Overview mobile dashboard"
+                width={354}
+                height={695}
+                className="h-auto w-full"
+                priority
+              />
+            </div>
+          </div>
         </div>
-
-        <div className="mx-auto w-full max-w-[220px] md:order-2 md:justify-self-end">
-          <Image
-            src="/images/users/smart-health-overview.svg"
-            alt="Smart Health Overview mobile dashboard"
-            width={354}
-            height={695}
-            className="h-auto w-full"
-            priority
-          />
-        </div>
-
-        {/* ===== Row 2: Image Left, Text Right ===== */}
-        <div className="mx-auto w-full max-w-[220px] md:order-3 md:justify-self-start">
-          <Image
-            src="/images/users/discover-nearby.svg"
-            alt="Discover nearby mobile dashboard"
-            width={354}
-            height={695}
-            className="h-auto w-full"
-            priority
-          />
-        </div>
-
-        <div className="md:order-4 md:justify-self-end">
-          <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
-            Discover Nearby
-            <br />
-            Healthcare Providers
-          </h2>
-          <p className="mt-2 text-lg font-semibold text-[#452169]">
-            Search doctors, labs, and hospitals around your
-            <br />
-            location.
-          </p>
-          <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
-            An interactive map-based directory to explore, view availability,
-            and book appointments with nearby providers.
-          </p>
-        </div>
-
-        {/* ===== Row 3: Text Left, Image Right ===== */}
-        <div className="md:order-5">
-          <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
-            Centralized Health
-            <br />
-            Records
-          </h2>
-          <p className="mt-2 text-lg font-semibold text-[#452169]">
-            Access appointments, lab reports, and hospital
-            <br />
-            documents anytime.
-          </p>
-          <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
-            A structured record management center for securely viewing and
-            managing essential reports with clarity.
-          </p>
-        </div>
-
-        <div className="mx-auto w-full max-w-[220px] md:order-6 md:justify-self-end">
-          <Image
-            src="/images/users/centralized.svg"
-            alt="Centralized Overview mobile dashboard"
-            width={354}
-            height={695}
-            className="h-auto w-full"
-            priority
-          />
-        </div>
-
       </section>
 
     </main>

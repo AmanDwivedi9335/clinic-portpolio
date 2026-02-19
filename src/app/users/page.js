@@ -185,14 +185,14 @@ export default function UsersPage() {
   const getRowStyle = (index) => {
     const timelinePosition = scrollProgress * 2;
     const distance = Math.abs(timelinePosition - index);
-    const opacity = Math.max(0, 1 - distance);
-    const yShift = (index - timelinePosition) * 44;
-    const scale = 1 - Math.min(distance, 1) * 0.05;
+    const opacity = Math.max(0, 1 - distance * 1.4);
+    const yShift = (index - timelinePosition) * 72;
+    const scale = 1 - Math.min(distance, 1) * 0.08;
 
     return {
       opacity,
       transform: `translate3d(0, ${yShift}px, 0) scale(${scale})`,
-      pointerEvents: opacity > 0.55 ? "auto" : "none",
+      pointerEvents: opacity > 0.6 ? "auto" : "none",
     };
   };
 

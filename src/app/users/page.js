@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -155,49 +156,56 @@ function HeroWaveBackground() {
 
 export default function UsersPage() {
   const showcaseRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const el = showcaseRef.current;
-      if (!el) return;
+    return createGsapContext(showcaseRef, (gsap) => {
+      const mm = gsap.matchMedia();
 
-      const rect = el.getBoundingClientRect();
-      const sectionTop = window.scrollY + rect.top;
-      const sectionHeight = el.offsetHeight;
-      const maxScrollable = Math.max(sectionHeight - window.innerHeight, 1);
-      const raw = (window.scrollY - sectionTop) / maxScrollable;
-      const clamped = Math.max(0, Math.min(1, raw));
+      mm.add("(min-width: 768px)", () => {
+        const rows = gsap.utils.toArray(".users-showcase-row");
+        if (!rows.length || !showcaseRef.current) return;
 
-      setScrollProgress(clamped);
-    };
+        gsap.set(rows, {
+          autoAlpha: 0,
+          yPercent: 10,
+          pointerEvents: "none",
+        });
+        gsap.set(rows[0], { autoAlpha: 1, yPercent: 0, pointerEvents: "auto" });
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+        const timeline = gsap.timeline({
+          defaults: { duration: 0.38, ease: "power2.out" },
+          scrollTrigger: {
+            trigger: showcaseRef.current,
+            start: "top center",
+            end: "+=200%",
+            scrub: 0.35,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
+        timeline
+          .to(rows[0], { yPercent: -10 }, 0.62)
+          .set(rows[0], { autoAlpha: 0, pointerEvents: "none" }, 0.8)
+          .set(rows[1], { autoAlpha: 1, yPercent: 10, pointerEvents: "auto" }, 0.8)
+          .to(rows[1], { yPercent: 0 }, 0.8)
+          .to(rows[1], { yPercent: -10 }, 1.42)
+          .set(rows[1], { autoAlpha: 0, pointerEvents: "none" }, 1.62)
+          .set(rows[2], { autoAlpha: 1, yPercent: 10, pointerEvents: "auto" }, 1.62)
+          .to(rows[2], { yPercent: 0 }, 1.62);
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        gsap.set(".users-showcase-row", { clearProps: "all" });
+      });
+
+      return () => mm.revert();
+    });
   }, []);
 
-  const getRowStyle = (index) => {
-    const timelinePosition = scrollProgress * 2;
-    const distance = Math.abs(timelinePosition - index);
-    const opacity = Math.max(0, 1 - distance * 1.4);
-    const yShift = (index - timelinePosition) * 72;
-    const scale = 1 - Math.min(distance, 1) * 0.08;
-
-    return {
-      opacity,
-      transform: `translate3d(0, ${yShift}px, 0) scale(${scale})`,
-      pointerEvents: opacity > 0.6 ? "auto" : "none",
-    };
-  };
-
   return (
-    <main className="relative isolate overflow-x-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
+    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
 
       {/* HERO */}
@@ -317,13 +325,14 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-12 max-w-6xl bg-[#F4F4F8] px-6 md:mt-16 md:h-[320vh]"
+        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:min-h-[280vh]"
       >
-        <div className="relative grid gap-14 py-6 md:sticky md:top-1/2 md:h-[82vh] md:-translate-y-1/2 md:overflow-hidden">
+        <div
+          className="relative grid gap-14 py-6 md:h-[82vh] md:items-center md:overflow-hidden md:py-0"
+        >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
-            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
-            style={getRowStyle(0)}
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -354,8 +363,7 @@ export default function UsersPage() {
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
           <div
-            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
-            style={getRowStyle(1)}
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -388,8 +396,7 @@ export default function UsersPage() {
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
           <div
-            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
-            style={getRowStyle(2)}
+            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0 md:transition-none"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">

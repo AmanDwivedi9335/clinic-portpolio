@@ -95,6 +95,17 @@ export default function page() {
 			</div>
 			<div id="resources2" className="bg-white text-black py-10 px-16">
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
+					<div className="md:w-[42%] relative">
+						<div className="overflow-hidden rounded-[16px]">
+							<Image
+								src="/images/health-guides.png"
+								className="h-full w-full object-cover"
+								alt="she"
+								width="640"
+								height="1511"
+							/>
+						</div>
+					</div>
 					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
 						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
 							Health Guides
@@ -118,17 +129,6 @@ export default function page() {
 							>
 								View Guides
 							</a>
-						</div>
-					</div>
-					<div className="md:w-[42%] relative">
-						<div className="overflow-hidden rounded-[16px]">
-							<Image
-								src="/images/health-guides.png"
-								className="h-full w-full object-cover"
-								alt="she"
-								width="640"
-								height="1511"
-							/>
 						</div>
 					</div>
 				</div>

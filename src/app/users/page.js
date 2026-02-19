@@ -153,6 +153,27 @@ function HeroWaveBackground() {
   );
 }
 
+function RowPillIndicators({ activeIndex = 0 }) {
+  return (
+    <div className="mt-6 flex items-center gap-2" aria-hidden="true">
+      {[0, 1, 2].map((index) => {
+        const isActive = index === activeIndex;
+
+        return (
+          <span
+            key={index}
+            className={`relative h-2.5 overflow-hidden rounded-full transition-all duration-500 ${
+              isActive ? "w-14 bg-[#d9c5ec]" : "w-7 bg-[#e9def5]"
+            }`}
+          >
+            {isActive ? <span className="users-pill-fill absolute inset-y-0 left-0 rounded-full" /> : null}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 
 export default function UsersPage() {
   const showcaseRef = useRef(null);
@@ -343,6 +364,7 @@ export default function UsersPage() {
                 A personalized multidimensional record of your ecosystem&apos;s daily
                 health journey, and your vital trends.
               </p>
+              <RowPillIndicators activeIndex={0} />
             </div>
 
             <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
@@ -376,6 +398,7 @@ export default function UsersPage() {
                 An interactive map-based directory to explore, view availability,
                 and book appointments with nearby providers.
               </p>
+              <RowPillIndicators activeIndex={1} />
             </div>
 
             <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
@@ -409,6 +432,7 @@ export default function UsersPage() {
                 A structured record management center for securely viewing and
                 managing essential reports with clarity.
               </p>
+              <RowPillIndicators activeIndex={2} />
             </div>
 
             <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
@@ -424,6 +448,29 @@ export default function UsersPage() {
           </div>
         </div>
       </section>
+
+      <style jsx>{`
+        .users-pill-fill {
+          background: linear-gradient(90deg, #9f028d 0%, #0e1896 100%);
+          animation: pillFill 2.4s ease-in-out infinite;
+          transform-origin: left;
+        }
+
+        @keyframes pillFill {
+          0% {
+            transform: scaleX(0.1);
+            opacity: 0.7;
+          }
+          65% {
+            transform: scaleX(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scaleX(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
 
     </main>
   );

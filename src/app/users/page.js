@@ -276,18 +276,22 @@ export default function UsersPage() {
 
         {/* ===== Row 1: Text Left, Image Right ===== */}
         <div className="md:order-1">
-          <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+          <h2 className="text-4xl font-extrabold leading-tight tracking-[-0.01em] text-[#5B0AA3] md:text-[64px] md:leading-[1.03]">
             Smart Health Overview
           </h2>
-          <p className="mt-2 text-lg font-semibold text-[#452169]">
-            Track appointments, vitals, and daily health
-            <br />
-            insights in one place.
+          <p className="mt-3 bg-[linear-gradient(180deg,#9B169F_0%,#262697_100%)] bg-clip-text text-2xl font-medium leading-[1.35] text-transparent md:text-[45px] md:leading-[1.2]">
+            Track appointments, vitals, and daily health insights in one place
           </p>
-          <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
-            A personalized multidimensional record of your ecosystem&apos;s daily
-            health journey, and your vital trends.
+          <p className="mt-8 max-w-[640px] text-base leading-[1.35] text-[#0C2186] md:text-[38px] md:leading-[1.3]">
+            A personalized dashboard displaying upcoming appointments, daily
+            health tips, and real-time vital trends.
           </p>
+
+          <div className="smart-overview-progress mt-6" aria-hidden="true">
+            <span className="progress-pill" />
+            <span className="progress-pill" />
+            <span className="progress-pill" />
+          </div>
         </div>
 
         <div className="mx-auto w-full max-w-[220px] md:order-2 md:justify-self-end">
@@ -361,6 +365,53 @@ export default function UsersPage() {
 
       </section>
 
+      <style jsx>{`
+        .smart-overview-progress {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        }
+
+        .progress-pill {
+          width: 52px;
+          height: 8px;
+          border-radius: 9999px;
+          background: #d8a8df;
+          opacity: 0.65;
+          animation: sectionProgress 2.4s infinite ease-in-out;
+        }
+
+        .progress-pill:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+
+        .progress-pill:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+
+        @keyframes sectionProgress {
+          0%,
+          100% {
+            opacity: 0.45;
+            background: #c785d4;
+          }
+          33% {
+            opacity: 1;
+            background: #af1dad;
+          }
+          66% {
+            opacity: 0.75;
+            background: #c24fc4;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .progress-pill {
+            animation: none;
+            opacity: 1;
+          }
+        }
+      `}</style>
     </main>
   );
 }

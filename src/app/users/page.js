@@ -200,7 +200,7 @@ export default function UsersPage() {
   }, []);
 
   return (
-    <main className="relative isolate overflow-x-hidden bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
+    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
 
       {/* HERO */}

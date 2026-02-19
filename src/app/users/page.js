@@ -275,7 +275,7 @@ export default function UsersPage() {
       <section className="mx-auto mt-12 grid max-w-6xl gap-y-16 px-6 md:mt-16 md:grid-cols-2 md:items-center">
 
         {/* ===== Row 1: Text Left, Image Right ===== */}
-        <div className="md:order-1 h-[100vh]">
+        <div className="md:order-1">
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
             Smart Health Overview
           </h2>
@@ -302,7 +302,7 @@ export default function UsersPage() {
         </div>
 
         {/* ===== Row 2: Image Left, Text Right ===== */}
-        <div className="mx-auto w-full max-w-[220px] md:order-3  h-[100vh] md:justify-self-start">
+        <div className="mx-auto w-full max-w-[220px] md:order-3 md:justify-self-start">
           <Image
             src="/images/users/discover-nearby.svg"
             alt="Discover nearby mobile dashboard"
@@ -331,7 +331,7 @@ export default function UsersPage() {
         </div>
 
         {/* ===== Row 3: Text Left, Image Right ===== */}
-        <div className="md:order-5  h-[100vh]">
+        <div className="md:order-5">
           <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
             Centralized Health
             <br />

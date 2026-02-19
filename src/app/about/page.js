@@ -40,11 +40,11 @@ export default function Page() {
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Vaishnavi Reddy",
-			Designation: "CTO & Co-Founder",
+			Name: "Meet Mathukiya",
+			Designation: "App Developer",
 			Details:
-				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/vaishnavi.jpg",
+				"With 3+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/meet-main.png",
 		},
 		{
 			Name: "Aman Dwivedi",
@@ -170,7 +170,7 @@ export default function Page() {
 							[-webkit-background-clip:text]
 						"
 						>
-						Our Founding Team
+						The Founders
 					</h2>
 
 					<div className="flex justify-center gap-6 md:gap-10 items-center flex-wrap">
@@ -204,9 +204,25 @@ export default function Page() {
 							</div>
 						))}
 					</div>
-
+					<h2
+						className="
+							relative
+							font-bold
+							text-[32px]
+							text-[#0b137a]
+							text-center
+							mt-8
+							py-8
+							[-webkit-text-stroke:0.5px_transparent]
+							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
+							bg-clip-text
+							[-webkit-background-clip:text]
+						"
+						>
+						The team that built MediBank
+					</h2>
 					{smallFounders.length > 0 && (
-						<div className="mt-8 md:mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
+						<div className=" grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
 							{smallFounders.map((item, index) => (
 							<div
 								key={`small-founder-${index}`}

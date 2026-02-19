@@ -315,10 +315,16 @@ export default function UsersPage() {
       </section>
 
       {/* REST */}
-      <section ref={showcaseRef} className="relative mx-auto mt-12 h-[300vh] max-w-6xl px-6 md:mt-16">
-        <div className="sticky top-0 h-screen overflow-hidden">
+      <section
+        ref={showcaseRef}
+        className="relative mx-auto mt-12 max-w-6xl bg-[#F4F4F8] px-6 md:mt-16 md:h-[320vh]"
+      >
+        <div className="relative grid gap-14 py-6 md:sticky md:top-1/2 md:h-[82vh] md:-translate-y-1/2 md:overflow-hidden">
           {/* ===== Row 1: Text Left, Image Right ===== */}
-          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(0)}>
+          <div
+            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            style={getRowStyle(0)}
+          >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
                 Smart Health Overview
@@ -347,7 +353,10 @@ export default function UsersPage() {
           </div>
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
-          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(1)}>
+          <div
+            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            style={getRowStyle(1)}
+          >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
                 Discover Nearby
@@ -378,7 +387,10 @@ export default function UsersPage() {
           </div>
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
-          <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(2)}>
+          <div
+            className="grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            style={getRowStyle(2)}
+          >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
                 Centralized Health

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 export default function page() {
 	const blogList = [
@@ -44,34 +45,39 @@ export default function page() {
 	];
 	return (
 		<div className="mt-[100px]">
-			<div className="bg-slate-500">
-				<div className="w-4/5 m-auto py-16">
+			<div className="bg-gradient-to-b from-[#c8badb] via-[#c3b4d8] to-[#b6a3cc]">
+				<div className="w-[90%] max-w-[1240px] m-auto py-16 md:py-20">
 					<Breadcrumb items={breadcrumbItems} textColor="text-white" />
-					<div className="text-center my-8 text-[28px] font-bold text-white">
+					<div className="text-center my-10 text-[30px] md:text-[36px] font-bold tracking-tight text-white">
 						Blogs
 					</div>
-					<div className="flex justify-around items-center flex-col md:flex-row w-full flex-wrap">
+					<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 w-full items-stretch">
 						{blogList.map((item, index) => {
 							return (
-								<div
+								<Link
 									key={index}
-									className="shadow-[0_4px_4px_rgba(0,0,0,0.25)] rounded-[10px] p-4 bg-white w-full m-0 my-2 md:w-1/3 md:m-4 "
+									href={item.path}
+									className="group flex h-full flex-col rounded-2xl border border-white/60 bg-white/95 p-4 shadow-[0_8px_28px_rgba(25,19,45,0.16)] transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(25,19,45,0.25)]"
 								>
-									<a href={item.path} tabIndex="0">
+									<div className="overflow-hidden rounded-xl">
 										<Image
 											src={item.imgurl}
-											alt="National Poker Series"
-											className="rounded-[7px]"
+											alt={item.title}
+											className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
 											width="358"
-											height="298"
+											height="240"
 											loading="lazy"
 										/>
-									</a>
-									<div className="text-left py-1">{item.title}</div>
-									<div className="text-left text-[#636384] text-[14px]">
-										Source: {item.source}
 									</div>
-								</div>
+									<div className="flex grow flex-col justify-between pt-4">
+										<div className="text-left text-[24px] leading-[32px] font-medium text-[#1b204a]">
+											{item.title}
+										</div>
+										<div className="mt-4 text-left text-[#636384] text-[14px]">
+											Source: {item.source}
+										</div>
+									</div>
+								</Link>
 							);
 						})}
 					</div>

@@ -9,7 +9,7 @@ export default function Page() {
 			Designation: "CEO & Founder",
 			Details:
 				"Adi is an Australian expat of Indian origin, with nearly two decades of expertise in Business Development, Risk Management, and operations mainly with Australia’s most prominent banking and financial services organisations. He is renowned for his ability to establish and scale profitable business operations, forging strategic partnerships and streamlining business processes. Now, as the founder and CEO of Medibank, Adi’s goal is to drive innovation in India’s healthcare ecosystem by spearheading the development of the nation’s first patient-centric Electronic Health Record (EHR) platform.",
-			imgurl: "/images/founders/adi.jpg",
+			imgurl: "/images/founders/adi-main.png",
 		},
 		{
 			Name: "Vaishnavi Reddy",
@@ -47,11 +47,11 @@ export default function Page() {
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Vaishnavi Reddy",
-			Designation: "CTO & Co-Founder",
+			Name: "Aman Dwivedi",
+			Designation: "Front-end Developer",
 			Details:
-				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/vaishnavi.jpg",
+				"With 3+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/aman-main.png",
 		}
 		
 	];

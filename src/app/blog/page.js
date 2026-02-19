@@ -26,14 +26,14 @@ export default function page() {
 			imgurl: "/images/blogs/blog4new.webp",
 			title:
 				"Electronic Health Records: Adoption and Overcoming Challenges for India",
-			source: "appknox",
+			source: "Medibank",
 			path: "/blog/article4",
 		},
 		{
 			imgurl: "/images/art5Mb1.png",
 			title:
 				"The Future of Healthcare: How EHR can Transform Patient Care in India",
-			source: "appknox",
+			source: "Medibank",
 			path: "/blog/article5",
 		},
 	];

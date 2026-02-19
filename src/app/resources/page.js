@@ -16,7 +16,7 @@ const blogs = [
 		title: "Digitalisation of Healthcare Data: The Next Startup Boom",
 		description:
 			"In much the same way India's digital banking revolution brought formal banking within the reach of anyone...",
-		source: "TOI",
+		source: "ET CONTRIBUTORS",
 		readTime: "2 min read",
 		path: "/blog/article2",
 	},
@@ -26,7 +26,7 @@ const blogs = [
 			"Electronic Health Records: Adoption and Overcoming Challenges for India",
 		description:
 			"Considering the massive amount of medical and healthcare records being generated across multiple institutions...",
-		source: "TOI",
+		source: "Medibank",
 		readTime: "2 min read",
 		path: "/blog/article4",
 	},
@@ -36,7 +36,7 @@ const blogs = [
 			"India Bullish on AI in Healthcare Without Electronic Health Records",
 		description:
 			"With more than 75% of outpatients and more than 60% of inpatients in India being treated in private healthcare...",
-		source: "TOI",
+		source: "Medibank",
 		readTime: "2 min read",
 		path: "/blog/article3",
 	},
@@ -158,7 +158,7 @@ export default function page() {
 								</p>
 								<div className="mt-8 flex items-center justify-between text-[13px] text-[#6369a1]">
 									<span>Source: {blog.source}</span>
-									<span>{blog.readTime}</span>
+									{/* <span>{blog.readTime}</span> */}
 								</div>
 							</div>
 						</a>

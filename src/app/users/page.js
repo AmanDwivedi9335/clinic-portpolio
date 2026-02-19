@@ -315,9 +315,8 @@ export default function UsersPage() {
       </section>
 
       {/* REST */}
-      <section ref={showcaseRef} className="relative mx-auto mt-12 h-[340vh] max-w-6xl px-6 md:mt-16">
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-          <div className="relative h-[78vh] w-full">
+      <section ref={showcaseRef} className="relative mx-auto mt-12 h-[300vh] max-w-6xl px-6 md:mt-16">
+        <div className="sticky top-0 h-screen overflow-hidden">
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div className="absolute inset-0 grid items-center gap-12 transition-all duration-500 md:grid-cols-2" style={getRowStyle(0)}>
             <div>
@@ -407,7 +406,6 @@ export default function UsersPage() {
                 priority
               />
             </div>
-          </div>
           </div>
         </div>
       </section>

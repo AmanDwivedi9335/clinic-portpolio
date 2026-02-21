@@ -1,0 +1,200 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { createGsapContext } from "@/lib/gsap";
+
+export default function DoctorHero() {
+  const heroImages = [
+    "/images/doctorhero.png",
+  ];
+
+  const firstLineText =
+    "When doctors don't have complete patient history, they are forced to guess";
+  const secondLineText = "Was this condition chronic?";
+  const typingSpeed = 60;
+
+  const sectionRef = useRef(null);
+
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [typedCharacters, setTypedCharacters] = useState(0);
+
+  useEffect(() => {
+    return createGsapContext(sectionRef, (gsap) => {
+      gsap.fromTo(
+        ".hero-animate",
+        { y: 24, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    const carouselInterval = setInterval(() => {
+      setActiveImageIndex((i) => (i === heroImages.length - 1 ? 0 : i + 1));
+    }, 3000);
+
+    return () => clearInterval(carouselInterval);
+  }, [heroImages.length]);
+
+  useEffect(() => {
+    const typingInterval = setInterval(() => {
+      setTypedCharacters((c) => {
+        if (c >= secondLineText.length) {
+          clearInterval(typingInterval);
+          return c;
+        }
+        return c + 1;
+      });
+    }, typingSpeed);
+
+    return () => clearInterval(typingInterval);
+  }, [secondLineText.length]);
+
+  const secondLineVisible = secondLineText.slice(0, typedCharacters);
+  const isTypingComplete = typedCharacters >= secondLineText.length;
+
+  return (
+    <section ref={sectionRef} className="pt-[104px] pb-5">
+      <div className="mx-auto px-3 md:px-6">
+        {/* Rounded hero frame */}
+        <div className="relative overflow-hidden rounded-[28px]">
+          {/* ===== Desktop background (UNCHANGED UI) ===== */}
+          <div className="hidden md:block">
+            {heroImages.map((heroImage, index) => (
+              <Image
+                key={heroImage}
+                src={heroImage}
+                alt={`Hero background ${index + 1}`}
+                fill
+                priority={index === 0}
+                className={`object-cover object-top !top-[-0px] !h-[calc(100%+70px)] transition-opacity duration-700 ${
+                  index === activeImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+                sizes="100vw"
+              />
+            ))}
+
+            {/* Soft left fade (same as your original) */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/55 via-white/15 to-transparent" />
+          </div>
+
+          {/* ===== Mobile image at top (object-contain) ===== */}
+          <div className="relative md:hidden">
+            <div
+              className="
+                relative h-[320px] w-full
+                [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+                [-webkit-mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+              "
+            >
+              {heroImages.map((heroImage, index) => (
+                <Image
+                  key={`${heroImage}-mobile`}
+                  src={heroImage}
+                  alt={`Hero image ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  className={`object-contain object-center transition-opacity duration-700 ${
+                    index === activeImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                  sizes="100vw"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Content */}
+          <div
+            className="
+              relative z-10
+              grid grid-cols-1 md:grid-cols-2
+              items-center
+              md:min-h-[calc(100vh-124px)]
+            "
+          >
+            {/* Left content */}
+            <div className="px-6 py-10 md:px-10 md:py-16">
+              <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
+                
+                India'&apos;s First Health Identity Infrastructure™ &nbsp;
+                
+              </p>
+
+              <h1 className="hero-animate mt-4 text-[30px] font-extrabold leading-[1.05] text-wave md:text-[65px] md:leading-[0.8]">
+                Blind<br /> Consultations<br /> Are Dangerous<br /> Consultations
+              </h1>
+
+              <p className="hero-animate mt-5 font-semibold max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">
+                <span>{firstLineText}</span>
+                <br />
+                <span className="font-extrabold">{secondLineVisible}</span>
+                {!isTypingComplete && (
+                  <span className="ml-0.5 inline-block animate-pulse">|</span>
+                )}
+              </p>
+
+              <div className="hero-animate mt-7 flex flex-wrap items-center gap-4">
+                <a
+                  href="/claim"
+                  className="
+                    inline-flex items-center justify-center !cursor-pointer
+                    rounded-2xl px-8 py-3
+                    font-semibold text-white
+                    bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
+                    shadow-[0_12px_30px_rgba(123,31,162,0.45)]
+                    transition-all duration-300 ease-out
+                    hover:-translate-y-1
+                    hover:shadow-[0_22px_50px_rgba(216,27,96,0.6)]
+                    hover:brightness-110
+                    active:scale-[0.97]
+                  "
+                >
+                  Claim Your Health Identity
+                </a>
+
+                <a
+                  href="/doctors"
+                  className="
+                    inline-flex items-center justify-center !cursor-pointer
+                    rounded-2xl border-2 border-[#5a1ac6] px-8 py-3
+                    font-semibold text-[#4d189e]
+                    backdrop-blur-[1px]
+                    shadow-[0_8px_22px_rgba(76,22,167,0.2)]
+                    transition-all duration-300 ease-out
+                    hover:-translate-y-1 hover:bg-white
+                    hover:shadow-[0_14px_30px_rgba(76,22,167,0.28)]
+                    active:scale-[0.97]
+                  "
+                >
+                  For Doctors
+                </a>
+              </div>
+            </div>
+
+            {/* Right side kept mostly visual (optional) */}
+            <div className="hidden md:block" />
+          </div>
+
+          {/* Subtle vignette like mock (same) */}
+          <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
+
+          {/* Long ocean-wave strip (same) */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[88px] overflow-hidden">
+            <div className="herowavebackground" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

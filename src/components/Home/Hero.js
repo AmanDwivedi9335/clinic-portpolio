@@ -129,7 +129,7 @@ export default function Hero() {
           >
             {/* Left content */}
             <div className="px-6 py-10 md:px-10 md:py-16">
-              <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
+              <p className="hero-animate text-[12px] font-extrabold text-[#282672] md:text-sm">
                 <Image
                   src="/images/star.png"
                   width={40}

@@ -3,6 +3,7 @@
 import DoctorHero from "@/components/DoctorHome/DoctorHero";
 import DoctorAdvantage from "@/components/DoctorHome/DoctorAdvantage";
 import DoctorPortalPreview from "@/components/DoctorHome/DoctorPortalPreview";
+import DoctorPricing from "@/components/DoctorHome/DoctorPricing";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
         <DoctorHero />
         <DoctorAdvantage />
         <DoctorPortalPreview />
+        <DoctorPricing />
       </div>
     </>
   );

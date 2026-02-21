@@ -40,7 +40,7 @@ export default function DoctorPricing() {
   return (
     <section className="bg-[#f2f2f5] py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <h2 className="text-center text-4xl font-extrabold text-[#4b159f] md:text-6xl">Our Pricing</h2>
+        <h2 className="text-center text-5xl font-extrabold text-[#4b159f] md:text-5xl">Our Pricing</h2>
 
         <div className="mt-12 grid gap-7 lg:grid-cols-2">
           <div className="rounded-[18px] border border-[#a74dd4] bg-[#f7f7fb] px-7 py-8 md:px-9">

@@ -40,7 +40,7 @@ export default function DoctorPricing() {
   return (
     <section className="bg-[#f2f2f5] py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <h2 className="text-center text-5xl font-extrabold text-[#4b159f] md:text-5xl">Our Pricing</h2>
+        <h2 className="text-center text-4xl font-extrabold text-wave md:text-6xl">Our Pricing</h2>
 
         <div className="mt-12 grid gap-7 lg:grid-cols-2">
           <div className="rounded-[18px] border border-[#a74dd4] bg-[#f7f7fb] px-7 py-8 md:px-9">
@@ -55,13 +55,13 @@ export default function DoctorPricing() {
 
             <button
               type="button"
-              className="mt-8 w-full rounded-xl bg-gradient-to-r from-[#8609cf] to-[#2a0e9e] py-3 text-center text-[30px] font-semibold text-white shadow-[0_6px_18px_rgba(86,4,145,0.25)] md:text-[32px]"
+              className="mt-8 w-full rounded-xl bg-[linear-gradient(0deg,#3D0F93_0%,#94008E_100%)] py-3 text-center text-[30px] font-semibold text-white shadow-[0_6px_18px_rgba(86,4,145,0.25)] md:text-[32px]"
             >
               Buy Basic Plan
             </button>
           </div>
 
-          <div className="rounded-[18px] bg-[linear-gradient(130deg,#080247_0%,#2d0c6f_45%,#5f1f82_100%)] px-7 py-8 shadow-[0_18px_35px_rgba(92,35,142,0.35)] md:px-9">
+          <div className="rounded-[18px] border border-transparent bg-[linear-gradient(130deg,#080247_0%,#2d0c6f_45%,#5f1f82_100%)] [border-image:linear-gradient(0deg,#3D0F93_0%,#94008E_100%)_1] px-7 py-8 shadow-[0_18px_35px_rgba(92,35,142,0.35)] md:px-9">
             <p className="text-2xl text-white/90 md:text-[28px]">Pro Plan</p>
             <p className="mt-3 flex items-end gap-1 text-white">
               <span className="text-6xl font-bold md:text-7xl">Rs. 500</span>

@@ -127,7 +127,7 @@ export default function DoctorHero() {
             <div className="px-6 py-10 md:px-10 md:py-16">
               <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
                 
-                India'&apos;s First Health Identity Infrastructure™ &nbsp;
+                India&apos;s First Health Identity Infrastructure™ &nbsp;
                 
               </p>
 

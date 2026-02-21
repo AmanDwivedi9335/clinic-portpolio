@@ -1,16 +1,14 @@
 "use client";
-import Hero from "@/components/Home/Hero";
+
 import DoctorHero from "@/components/DoctorHome/DoctorHero";
+import DoctorAdvantage from "@/components/DoctorHome/DoctorAdvantage";
 
 export default function Home() {
   return (
     <>
-      {/* Sticky stack panels */}
       <div className="relative isolate">
-        <div className="">
-          <DoctorHero />
-        </div>
-
+        <DoctorHero />
+        <DoctorAdvantage />
       </div>
     </>
   );

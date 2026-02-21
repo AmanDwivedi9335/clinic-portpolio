@@ -38,14 +38,16 @@ export default function DoctorPortalPreview() {
   return (
     <section className="pb-16 pt-8 md:pt-14">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        <div className="mx-auto w-fit rounded-full border border-[#7f5af0] bg-white px-6 py-1 text-xs font-semibold text-[#282672]">
-          Doctor Portal Preview
+        <div className="mx-auto w-fit rounded-full bg-[linear-gradient(98.79deg,#FACC15_0%,#F87171_33.33%,#A855F7_66.67%,#3B82F6_100%)] p-[1.5px] shadow-sm">
+          <div className="rounded-full bg-white px-5 py-1 text-xs font-medium text-[#282672]">
+            Doctor Portal Preview
+          </div>
         </div>
 
-        <h2 className="mt-5 text-center text-3xl font-extrabold leading-tight text-wave md:text-6xl">
+        <h2 className="mt-4 text-center text-3xl font-extrabold text-wave md:text-5xl">
           Built for Doctors. Designed for Clinical Clarity.
         </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-center text-base text-[#2c277e] md:text-3xl">
+        <p className="mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">
           MediBank isn&apos;t another software dashboard.
           <br className="hidden md:block" />
           It&apos;s a clinical decision-support system built around real consultation workflows.

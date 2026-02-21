@@ -101,7 +101,18 @@ export default function DoctorPortalPreview() {
 
             <a
               href="/doctors"
-              className="mt-8 inline-flex rounded-xl bg-gradient-to-r from-[#620ea4] to-[#8c25c6] px-6 py-3 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(102,17,168,0.35)]"
+              className="
+                mt-8 inline-flex items-center justify-center !cursor-pointer
+                rounded-2xl px-8 py-3
+                text-sm font-semibold text-white
+                bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
+                shadow-[0_12px_30px_rgba(123,31,162,0.45)]
+                transition-all duration-300 ease-out
+                hover:-translate-y-1
+                hover:shadow-[0_22px_50px_rgba(216,27,96,0.6)]
+                hover:brightness-110
+                active:scale-[0.97]
+              "
             >
               Explore Doctor Portal
             </a>

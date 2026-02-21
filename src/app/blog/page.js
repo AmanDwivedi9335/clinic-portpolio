@@ -46,22 +46,20 @@ export default function page() {
 	return (
 		<div className="mt-[100px]">
 			<div className="relative overflow-hidden bg-gradient-to-b from-[#c8badb] via-[#c3b4d8] to-[#b6a3cc]">
-				<div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[88px] overflow-hidden">
+				<div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[88px] overflow-hidden">
 					<div className="herowavebackground" aria-hidden="true" />
 				</div>
 
-				<div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[88px] overflow-hidden">
-					<div className="h-full w-full -scale-y-100">
-						<div className="herowavebackground" aria-hidden="true" />
-					</div>
+				<div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[88px] overflow-hidden">
+					<div className="herowavebackground rotate-180" aria-hidden="true" />
 				</div>
 
-				<div className="relative z-20 w-[90%] max-w-[1240px] m-auto py-16 md:py-20">
+				<div className="w-[90%] max-w-[1240px] m-auto py-16 md:py-20">
 					<Breadcrumb items={breadcrumbItems} textColor="text-white" />
-					<div className="text-center my-10 text-[30px] md:text-[36px] font-bold tracking-tight text-white">
+					<div className="relative z-10 text-center my-10 text-[30px] md:text-[36px] font-bold tracking-tight text-white">
 						Blogs
 					</div>
-					<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 w-full items-stretch">
+					<div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 w-full items-stretch">
 						{blogList.map((item, index) => {
 							return (
 								<Link

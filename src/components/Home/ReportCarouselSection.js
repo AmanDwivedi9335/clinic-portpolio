@@ -117,7 +117,7 @@ export default function ReportCarouselSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-10 md:py-14">
+    <section ref={sectionRef} className="bg-[#D9C6E3] py-10 md:py-14">
       <div className="report-intro mx-auto flex max-w-6xl flex-col items-center px-4 text-center md:px-8">
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           The Moment No One Thinks About
@@ -152,7 +152,7 @@ export default function ReportCarouselSection() {
               >
                 <article
                   className={[
-                    "group relative flex flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2",
+                    "group relative flex flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#c3a3d4] p-2",
                     "shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300",
                     // Responsive height without sm:
                     "h-[clamp(340px,62vh,400px)]",

@@ -229,7 +229,7 @@ export default function DataControlSection() {
 	}, []);
 
 	return (
-		<section ref={sectionRef} className="bg-white py-10 md:py-16 px-4 md:px-8">
+		<section ref={sectionRef} className=" bg-[#D9C6E3] py-10 md:py-16 px-4 md:px-8">
 			<div className="mxxxl:container xl:container w-[90%] mx-auto text-center">
 				<GradientBadge
 					className="data-intro"

@@ -69,10 +69,10 @@ export default function Hero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="pt-[104px] pb-5">
+    <section ref={sectionRef} className="min-h-screen pt-[92px] pb-3 md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
-        <div className="relative overflow-hidden rounded-[28px]">
+        <div className="relative overflow-hidden rounded-[28px] min-h-[calc(100svh-108px)] md:min-h-0">
           {/* ===== Desktop background (UNCHANGED UI) ===== */}
           <div className="hidden md:block">
             {heroImages.map((heroImage, index) => (
@@ -97,9 +97,7 @@ export default function Hero() {
           <div className="relative md:hidden">
             <div
               className="
-                relative h-[320px] w-full
-                [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
-                [-webkit-mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+                relative h-[34svh] min-h-[220px] max-h-[280px] w-full
               "
             >
               {heroImages.map((heroImage, index) => (
@@ -115,6 +113,7 @@ export default function Hero() {
                   sizes="100vw"
                 />
               ))}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
             </div>
           </div>
 
@@ -124,18 +123,19 @@ export default function Hero() {
               relative z-20
               grid grid-cols-1 md:grid-cols-2
               items-center
+              h-full
               md:min-h-[calc(100vh-124px)]
             "
           >
             {/* Left content */}
-            <div className="px-6 py-10 md:px-10 md:py-16">
-              <p className="hero-animate text-[12px] font-extrabold text-[#282672] md:text-sm">
+            <div className="px-5 pb-6 pt-2 md:px-10 md:py-16">
+              <p className="hero-animate text-[11px] font-extrabold text-[#282672] md:text-sm">
                 <Image
                   src="/images/star.png"
                   width={40}
                   height={40}
                   alt="Hero star"
-                  className="inline-block !top-[-2px] !h-[18px] object-contain mr-2"
+                  className="inline-block !top-[-2px] !h-[16px] object-contain mr-2 md:!h-[18px]"
                 />
                 India&apos;s 1st Health Identity Infrastructure 
                 <Image
@@ -143,17 +143,17 @@ export default function Hero() {
                   width={40}
                   height={40}
                   alt="Hero star"
-                  className="inline-block !top-[-2px] !h-[18px] object-contain ml-2"
+                  className="inline-block !top-[-2px] !h-[16px] object-contain ml-2 md:!h-[18px]"
                 />
               </p>
 
-              <h1 className="hero-animate mt-4 text-[38px] font-semibold leading-[1.05] text-wave md:text-[60px] md:leading-[1.02]">
+              <h1 className="hero-animate mt-3 text-[32px] font-semibold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
                 Your Health Identity
                 <br />
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-5 max-w-xl text-[14px] font-medium leading-relaxed text-[#7B1FA2] md:text-[15px]">
+              <p className="hero-animate mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-[#7B1FA2] md:mt-5 md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
                 <span className="font-semibold">{secondLineVisible}</span>
@@ -162,12 +162,12 @@ export default function Hero() {
                 )}
               </p>
 
-              <div className="hero-animate mt-7 ">
+              <div className="hero-animate mt-5 md:mt-7">
                 <a
                   href="/claim"
                   className="
                     inline-flex items-center justify-center !cursor-pointer
-                    rounded-2xl px-8 py-3
+                    rounded-2xl px-6 py-2.5 text-sm md:px-8 md:py-3 md:text-base
                     font-semibold text-white
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
                     shadow-[0_12px_30px_rgba(123,31,162,0.45)]
@@ -191,7 +191,7 @@ export default function Hero() {
           <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40 " />
 
           {/* Long ocean-wave strip (same) */}
-          <div className="pointer-events-none absolute inset-x-0 z-10 bottom-0 h-[88px] overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-0 z-10 bottom-0 hidden h-[88px] overflow-hidden md:block">
             <div className="herowavebackground" aria-hidden="true" />
           </div>
         </div>

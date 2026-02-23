@@ -47,16 +47,16 @@ export default function Header() {
   return (
     <header
       className="
-        fixed bg-red z-50 w-[95%] 
-        top-0 left-0 translate-x-0
-        md:top-4 md:left-1/2 md:-translate-x-1/2
+        fixed z-50 w-[95%] max-w-[1320px]
+        top-2 left-1/2 -translate-x-1/2
+        md:top-4
       "
     >
       {/* pill conatainer */}
       <div
         className="
-          bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12) border border-white/60 gap-2
-          rounded-none
+          bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/60 gap-2
+          rounded-[18px]
           md:rounded-[50px]
         "
       >

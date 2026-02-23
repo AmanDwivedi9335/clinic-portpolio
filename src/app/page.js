@@ -13,7 +13,7 @@ export default function Home() {
     <>
       {/* Sticky stack panels */}
       <div className="relative isolate">
-        <div className="sticky h-screen z-0">
+        <div className="sticky  top-[1px]  h-screen z-0">
           <Hero />
         </div>
 

@@ -130,10 +130,10 @@ export default function LovedOnesSection() {
 
       <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
         <div className="loved-diagram relative h-[340px] w-full max-w-[420px]">
-          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 -translate-y-[calc(100%+30px)] bg-[#D9C2FF]" />
-          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 translate-y-[30px] bg-[#D9C2FF]" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 -translate-x-[calc(100%+36px)] bg-[#D9C2FF]" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 translate-x-[36px] bg-[#D9C2FF]" />
+          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 -translate-y-[calc(100%+30px)] bg-black" />
+          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 translate-y-[30px] bg-black" />
+          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 -translate-x-[calc(100%+36px)] bg-black" />
+          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 translate-x-[36px] bg-black" />
 
           <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
             <Image

@@ -94,7 +94,28 @@ export default function Page() {
 				"Dr Anupam is a Dentist, Endodontist and Implantologist. He has been in clinical practice since 1996 and has interest in the fields of Endodontics, restorative dentistry, and dental implants.",
 			imgurl: "/images/doctors/Dr-Anupam-B.png",
 			Designation: "BDS, MDS - Operative Dentistry",
-		}
+		},
+		{
+			Name: "Dr Urmi Sanyal",
+			Details:
+				"Dr Urmi is a Senior Resident at Institute of Psychiatry (IOP), Kolkata. She manages the whole spectrum of mental health problems like Anxiety, PTSD, Depression, Bipolar disorder, Schizophrenia, Autistic Spectrum, Dementia, as well as drug abuse to name a few. She has special interest in Child Psychiatry.",
+			imgurl: "/images/doctors/Dr-Urmi-S.png",
+			Designation: "MBBS, MD (Psychiatry)",
+		},
+		{
+			Name: "Dr Anurag Agarwal",
+			Details:
+				"Dr Anurag Agarwal is an ophthalmologist/eye surgeon from Mumbai with over 25 years of experience. His expertise involves canaloplasty, refractive surgery, corneal surgery, cataract surgery, Lasik eye surgery, and general eye surgery.",
+			imgurl: "/images/doctors/Dr-Anurag-A.png",
+			Designation: "MBBS, MS – Ophthalmology",
+		},
+		{
+			Name: "Dr Khushi Bhambhani",
+			Details:
+				"With over a decade of experience in healthcare management, Dr Khushi is the Chief Operating Officer at Halani Healthcare in Mumbai. She is also a Consultant Anaesthesiologist and Pain Physician.",
+			imgurl: "/images/doctors/Dr-Khushi-B.png",
+			Designation: "MBBS, DNB – Anaesthesiology",
+		},
 	];
 
 	return (
@@ -228,13 +249,13 @@ export default function Page() {
 								key={`small-founder-${index}`}
 								className="group relative w-full overflow-hidden rounded-2xl bg-white shadow-sm"
 							>
-								<div className="relative h-[220px] sog_animation group-hover:rotate-y-180">
+								<div className="relative h-[250px] sog_animation group-hover:rotate-y-180">
 									<div className="absolute inset-0 backface_hidden overflow-hidden rounded-2xl">
 										<Image
 											src={item.imgurl}
 											className="h-full w-full object-cover"
 											width={612}
-											height={612}
+											height={912}
 											alt={item.Name}
 										/>
 									</div>
@@ -258,7 +279,7 @@ export default function Page() {
 			</div>
 
 			{/* Advisory Panel */}
-			<div className="bg-white">
+			{/* <div className="bg-white">
 				<div className="w-4/5 container py-16 pb-0">
 					<div className="relative
 							font-bold
@@ -292,7 +313,6 @@ export default function Page() {
 										</div>
 										<div className=" absolute rounded-[10px] top-0 bottom-0 w-full h-full backface_hidden rotate-y-180 bg-gradient-to-r from-purple-200 via-purple-100 to-blue-200 border text-black">
 											{" "}
-											{/* "Backcard (remove this line when make this section line)" */}
 											<p className="p-4 text-[13px] leading-[16px]">
 												{item.Details}
 											</p>
@@ -307,7 +327,7 @@ export default function Page() {
 						})}
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 			{/* Doctors who helped us */}
 			<div className="bg-white">

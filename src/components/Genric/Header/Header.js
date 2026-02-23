@@ -119,16 +119,16 @@ export default function Header() {
                 />
               </a>
               <div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[145px] rounded-2xl bg-white shadow-xl border p-3">
-                <a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#resources1">
+                <a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#abha-abdm">
                   ABHA / ABDM
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources2">
+                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#health-guides">
                   Health Guides
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources3">
+                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#blogs">
                   Blog
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#resources4">
+                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#privacy-policy">
                   Privacy policy
                 </a>
               </div>

@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 const blogs = [
@@ -42,10 +44,50 @@ const blogs = [
 	},
 ];
 
-export default function page() {
+export default function Page() {
+	useEffect(() => {
+		const sectionAliases = {
+			resources1: "abha-abdm",
+			resources2: "health-guides",
+			resources3: "blogs",
+			resources4: "privacy-policy",
+		};
+
+		const scrollToHashSection = () => {
+			const currentHash = decodeURIComponent(window.location.hash.replace("#", ""));
+
+			if (!currentHash) {
+				return;
+			}
+
+			const normalizedHash = sectionAliases[currentHash] || currentHash;
+			const section = document.getElementById(normalizedHash);
+
+			if (!section) {
+				return;
+			}
+
+			requestAnimationFrame(() => {
+				setTimeout(() => {
+					section.scrollIntoView({ behavior: "smooth", block: "start" });
+				}, 80);
+			});
+		};
+
+		scrollToHashSection();
+		window.addEventListener("hashchange", scrollToHashSection);
+		window.addEventListener("load", scrollToHashSection);
+
+		return () => {
+			window.removeEventListener("hashchange", scrollToHashSection);
+			window.removeEventListener("load", scrollToHashSection);
+		};
+	}, []);
+
 	return (
 		<div className="mt-[100px]">
-			<div id="resources1" className="bg-white py-2 md:px-16 px-8">
+			<div id="abha-abdm" className="scroll-mt-28 bg-white py-2 md:px-16 px-8">
+				<span id="resources1" className="sr-only" aria-hidden="true" />
 				<h1 className="text-[34px] sm:text-[42px] font-semibold text-[#1B1570]">
 					Resources
 				</h1>
@@ -93,7 +135,8 @@ export default function page() {
 					</div>
 				</div>
 			</div>
-			<div id="resources2" className="bg-white text-black py-10 px-16">
+			<div id="health-guides" className="scroll-mt-28 bg-white text-black py-10 px-16">
+				<span id="resources2" className="sr-only" aria-hidden="true" />
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
 					<div className="md:w-[42%] relative">
 						<div className="overflow-hidden rounded-[16px]">
@@ -133,7 +176,8 @@ export default function page() {
 					</div>
 				</div>
 			</div>
-			<div id="resources3" className="bg-[#f3f2f4] px-6 py-10 md:px-16">
+			<div id="blogs" className="scroll-mt-28 bg-[#f3f2f4] px-6 py-10 md:px-16">
+				<span id="resources3" className="sr-only" aria-hidden="true" />
 				<h2 className="text-[32px] font-semibold text-[#1f2677]">Blogs</h2>
 				<div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
 					{blogs.map((blog) => (
@@ -173,7 +217,8 @@ export default function page() {
 					</a>
 				</div>
 			</div>
-			<div id="resources4" className="bg-white text-black py-10 px-16">
+			<div id="privacy-policy" className="scroll-mt-28 bg-white text-black py-10 px-16">
+				<span id="resources4" className="sr-only" aria-hidden="true" />
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
 					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
 						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">

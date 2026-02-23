@@ -69,7 +69,7 @@ export default function Hero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="min-h-screen bg-[#D9C6E3] pt-[92px] pb-3 md:pt-[104px] md:pb-5">
+    <section ref={sectionRef} className="min-h-screen bg-white pt-[92px] pb-3 md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[28px] min-h-[calc(100svh-108px)] md:min-h-0">

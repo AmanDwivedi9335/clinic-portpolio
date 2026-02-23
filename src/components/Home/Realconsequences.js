@@ -53,10 +53,10 @@ const Realconsequences = () => {
 
   return (
     // ✅ REMOVE overflow-hidden so the top-floating image is not clipped
-    <section className="bg-[#D9C6E3] py-14 md:py-20 overflow-hidden">
+    <section className="bg-white py-14 md:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="text-center px-4">
-          <GradientBadge innerClassName="bg-[#D9C6E3] text-[#2A2FAE] border border-[#F2A400] px-6 py-1 font-semibold">
+          <GradientBadge innerClassName="bg-white text-[#2A2FAE] border border-[#F2A400] px-6 py-1 font-semibold">
             Real Consequences
           </GradientBadge>
 

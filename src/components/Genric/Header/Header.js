@@ -47,9 +47,9 @@ export default function Header() {
   return (
     <header
       className="
-        fixed z-50 w-[95%] max-w-[1320px]
-        top-2 left-1/2 -translate-x-1/2
-        md:top-4
+        sticky z-50 w-[95%] max-w-[1320px] mx-auto
+        top-2
+        md:fixed md:top-4 md:left-1/2 md:-translate-x-1/2
       "
     >
       {/* pill conatainer */}

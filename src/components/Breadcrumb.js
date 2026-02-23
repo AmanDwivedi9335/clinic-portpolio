@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const Breadcrumb = ({ items, textColor }) => {
 	return (
@@ -7,14 +8,14 @@ const Breadcrumb = ({ items, textColor }) => {
 				{items.map((item, index) => (
 					<li key={index} className="inline-flex items-center">
 						{index > 0 && <span className="mx-2 text-gray-400">&gt;</span>}
-						<a
-							href={`${item.href}.html`}
+						<Link
+							href={item.href}
 							className={`text-sm md:text-[18px] font-medium ${
 								textColor ? textColor : "text-[#282672]"
 							} hover:text-blue-500`}
 						>
 							{item.label}
-						</a>
+						</Link>
 					</li>
 				))}
 			</ol>

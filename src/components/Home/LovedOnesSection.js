@@ -117,7 +117,7 @@ export default function LovedOnesSection() {
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones
         </GradientBadge>
-        <h2 className="mt-5 text-2xl font-normal text-[#3B1ED0] md:text-4xl">
+        <h2 className="mt-5 text-2xl font-extrabold text-[#3B1ED0] md:text-4xl">
           Your Health Identity is Your <b>“Protection”</b>
         </h2>
         <p className="mt-4 max-w-3xl text-sm text-[#000339] md:text-base">

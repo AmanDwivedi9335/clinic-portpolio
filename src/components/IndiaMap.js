@@ -57,6 +57,30 @@ const getHeatMapData = () => [
 		},
 	},
 	{
+		id: "AR",
+		state: "Arunachal Pradesh",
+		value: {
+			Doctors: {
+				"General Physician": 12,
+				Cardiologist: 6,
+				Dermatologist: 4,
+				Dentist: 3,
+			},
+			Labs: {
+				Pathology: 10,
+				Radiology: 8,
+				Biochemistry: 6,
+				Microbiology: 4,
+			},
+			Hospitals: {
+				Government: 4,
+				Private: 2,
+				Multispecialty: 1,
+				"Children's": 1,
+			},
+		},
+	},
+	{
 		id: "JK",
 		state: "Jammu and Kashmir",
 		value: {

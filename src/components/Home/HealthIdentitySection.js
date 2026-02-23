@@ -90,7 +90,7 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
             The Promise
           </GradientBadge>
 
-          <h2 className="mt-4 text-lg font-normal leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
+          <h2 className="mt-4 text-lg font-extrabold leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
             With MediBank, your <span className="font-bold">&quot;what if&quot;</span>{" "}
             becomes
             <span className="font-bold"> &quot;we&apos;re ready&quot;</span>

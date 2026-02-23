@@ -21,13 +21,13 @@ export default function Home() {
           <ReportCarouselSection />
         </div>
 
-        <div className="sticky top-[5px] h-screen z-0 bg-[#D9C6E3] py-6 md:py-12 px-4 md:px-8">
+        <div className="sticky top-[45px] h-screen z-0 bg-[#D9C6E3] py-6 md:py-12 px-4 md:px-8">
           <HealthIdentitySection />
         </div>
 
-        {/* <div className="sticky top-[5px] h-screen z-0">
+        <div className="sticky top-[5px] h-screen z-0">
           <Realconsequences />
-        </div> */}
+        </div>
 
         {/* <div className="sticky top-[5px] h-screen z-0">
           <Howitworks />

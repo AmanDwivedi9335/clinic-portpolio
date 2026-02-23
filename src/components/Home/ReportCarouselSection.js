@@ -123,7 +123,7 @@ export default function ReportCarouselSection() {
           The Moment No One Thinks About
         </GradientBadge>
 
-        <h2 className="mt-4 text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
+        <h2 className="mt-4 text-2xl font-extrabold leading-snug text-[#7B1FA2] md:text-4xl">
           What if the one report that could save your life...
           <span className="block font-normal text-[#5A2D82]">
             wasn&apos;t there when you needed it?

@@ -237,7 +237,7 @@ export default function DataControlSection() {
 				>
 					Privacy & Security
 				</GradientBadge>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-semibold text-[#5C4AFF] [perspective:800px]">
+				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-extrabold text-[#5C4AFF] [perspective:800px]">
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
 							<span
@@ -306,7 +306,7 @@ export default function DataControlSection() {
 
 					<div className="relative z-10 flex min-h-[260px] items-center">
 					<div className="w-full max-w-[640px] text-center md:text-left">
-						<h3 className="text-[28px] font-semibold leading-tight text-white md:text-[42px] md:leading-[1.15]">
+						<h3 className="text-[28px] font-extrabold leading-tight text-white md:text-[42px] md:leading-[1.15]">
 						Don&apos;t wait for a crisis to organise <br className="hidden sm:block" />
 						your medical life.
 						</h3>

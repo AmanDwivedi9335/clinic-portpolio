@@ -147,7 +147,7 @@ export default function Hero() {
                 />
               </p>
 
-              <h1 className="hero-animate mt-3 text-[32px] font-semibold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
+              <h1 className="hero-animate mt-3 text-[32px] font-extrabold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
                 Your Health Identity
                 <br />
                 for Life...

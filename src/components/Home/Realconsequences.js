@@ -82,13 +82,13 @@ const Realconsequences = () => {
             setApi={setApi}
             className="w-full overflow-visible [&>div]:overflow-visible [&>div>div]:overflow-visible"
           >
-            <CarouselContent className="overflow-visible">
+            <CarouselContent className="px-4 md:px-7 overflow-visible">
               {stories.map((story) => (
                 <CarouselItem
                   key={story.title}
-                  className="basis-full md:basis-[78%] lg:basis-[70%] overflow-visible"
+                  className="basis-[94%] md:basis-[78%] lg:basis-[70%] overflow-visible"
                 >
-                  <article className="relative mx-auto w-full max-w-[23rem] overflow-visible rounded-[28px] bg-[#E8DFF3] px-5 pb-8 pt-28 text-center md:ml-[120px] md:max-w-none md:px-10 md:pt-8 md:text-left lg:pl-[340px]">
+                  <article className="relative overflow-visible ml-0 rounded-[28px] bg-[#E8DFF3] px-5 pb-8 pt-28 text-center md:ml-[120px] md:px-10 md:pt-8 md:text-left lg:pl-[340px]">
                     <div className="absolute left-1/2 top-[-45px] z-30 -translate-x-1/2 h-[150px] w-[150px] rounded-[24px] overflow-hidden md:left-[-40px] md:translate-x-0 md:h-[250px] md:w-[250px]">
                       <Image
                         src={story.image}

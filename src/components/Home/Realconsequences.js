@@ -78,7 +78,7 @@ const Realconsequences = () => {
 
         <div className="mt-12">
           <Carousel
-            opts={{ align: "start", loop: true }}
+            opts={{ align: "center", loop: true }}
             setApi={setApi}
             className="w-full overflow-visible [&>div]:overflow-visible [&>div>div]:overflow-visible"
           >

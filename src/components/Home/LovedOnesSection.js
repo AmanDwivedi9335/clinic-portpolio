@@ -112,7 +112,7 @@ export default function LovedOnesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-12 md:py-20">
+    <section ref={sectionRef} className="overflow-x-hidden bg-white py-12 md:py-20">
       <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones
@@ -129,7 +129,7 @@ export default function LovedOnesSection() {
       </div>
 
       <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
-        <div className="loved-diagram relative h-[340px] w-full max-w-[420px]">
+        <div className="loved-diagram relative h-[280px] w-full max-w-[320px] md:h-[340px] md:max-w-[420px]">
           <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 -translate-y-[calc(100%+30px)] bg-black" />
           <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 translate-y-[30px] bg-black" />
           <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 -translate-x-[calc(100%+36px)] bg-black" />
@@ -139,17 +139,17 @@ export default function LovedOnesSection() {
             <Image
               src="/images/medibank-grd-logo.png"
               alt="MediBank"
-              width={140}
-              height={140}
-              className="h-70 w-70 object-contain"
+              width={110}
+              height={110}
+              className="h-[110px] w-[110px] object-contain md:h-[140px] md:w-[140px]"
             />
           </div>
 
           <div
-            className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-2"
+            className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2"
             data-y="120"
           >
-            <div className="h-16 w-16 overflow-hidden">
+            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
               <Image
                 src={lovedOnes[0].image}
                 alt={lovedOnes[0].label}
@@ -158,16 +158,16 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
               {lovedOnes[0].label}
             </span>
           </div>
 
           <div
-            className="loved-orbit absolute left-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
+            className="loved-orbit absolute left-2 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:left-0 md:gap-2"
             data-x="120"
           >
-            <div className="h-16 w-16 overflow-hidden">
+            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
               <Image
                 src={lovedOnes[1].image}
                 alt={lovedOnes[1].label}
@@ -176,16 +176,16 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
               {lovedOnes[1].label}
             </span>
           </div>
 
           <div
-            className="loved-orbit absolute right-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-2"
+            className="loved-orbit absolute right-2 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:right-0 md:gap-2"
             data-x="-120"
           >
-            <div className="h-16 w-16 overflow-hidden">
+            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
               <Image
                 src={lovedOnes[2].image}
                 alt={lovedOnes[2].label}
@@ -194,16 +194,16 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
               {lovedOnes[2].label}
             </span>
           </div>
 
           <div
-            className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
+            className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2"
             data-y="-120"
           >
-            <div className="h-16 w-16 overflow-hidden">
+            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
               <Image
                 src={lovedOnes[3].image}
                 alt={lovedOnes[3].label}
@@ -212,7 +212,7 @@ export default function LovedOnesSection() {
                 className="h-full w-full object-cover"
               />
             </div>
-            <span className="text-xs font-medium text-[#2D2261]">
+            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
               {lovedOnes[3].label}
             </span>
           </div>

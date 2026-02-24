@@ -53,7 +53,7 @@ const Realconsequences = () => {
 
   return (
     // ✅ REMOVE overflow-hidden so the top-floating image is not clipped
-    <section className="bg-white py-14 md:py-20 overflow-hidden">
+    <section className="bg-white py-10 md:py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="text-center px-4">
           <GradientBadge innerClassName="bg-white text-[#2A2FAE] border border-[#F2A400] px-6 py-1 font-semibold">
@@ -62,8 +62,8 @@ const Realconsequences = () => {
 
           <h2
             className="
-              mt-6
-              text-3xl md:text-4xl
+              mt-4 md:mt-6
+              text-2xl md:text-4xl
               font-extrabold
               bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
               bg-clip-text
@@ -73,10 +73,10 @@ const Realconsequences = () => {
             These stories happen <span className="font-bold">every day</span> in hospitals across India
           </h2>
 
-          <p className="mt-3 text-xl md:text-xl text-[#111D89]">How MediBank Fixes Them</p>
+          <p className="mt-2 text-base md:mt-3 md:text-xl text-[#111D89]">How MediBank Fixes Them</p>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-7 md:mt-12">
           <Carousel
             opts={{ align: "center", loop: true }}
             setApi={setApi}
@@ -84,26 +84,23 @@ const Realconsequences = () => {
           >
             <CarouselContent className="px-4 md:px-7 overflow-visible">
               {stories.map((story) => (
-                <CarouselItem
-                  key={story.title}
-                  className="basis-[94%] md:basis-[78%] lg:basis-[70%] overflow-visible"
-                >
-                  <article className="relative overflow-visible ml-0 rounded-[28px] bg-[#E8DFF3] px-5 pb-8 pt-28 text-center md:ml-[120px] md:px-10 md:pt-8 md:text-left lg:pl-[340px]">
-                    <div className="absolute left-1/2 top-[-45px] z-30 -translate-x-1/2 h-[150px] w-[150px] rounded-[24px] overflow-hidden md:left-[-40px] md:translate-x-0 md:h-[250px] md:w-[250px]">
+                <CarouselItem key={story.title} className="basis-[88%] md:basis-[78%] lg:basis-[70%] overflow-visible">
+                  <article className="relative overflow-visible ml-0 rounded-[28px] bg-[#E8DFF3] px-4 pb-6 pt-20 text-center md:ml-[120px] md:px-10 md:pb-8 md:pt-8 md:text-left lg:pl-[340px]">
+                    <div className="absolute left-1/2 top-[-34px] z-30 -translate-x-1/2 h-[108px] w-[108px] rounded-[18px] overflow-hidden md:left-[-40px] md:top-[-45px] md:translate-x-0 md:h-[250px] md:w-[250px] md:rounded-[24px]">
                       <Image
                         src={story.image}
                         alt={story.title}
                         fill
-                        sizes="(max-width: 768px) 150px, 250px"
+                        sizes="(max-width: 768px) 108px, 250px"
                         className="object-cover object-top"
                       />
                     </div>
 
-                    <h3 className="text-2xl font-semibold text-[#0E1463]">{story.title}</h3>
-                    <p className="mt-2 text-lg leading-8 text-[#141B63] md:max-w-2xl md:text-xl md:leading-relaxed">
+                    <h3 className="text-xl md:text-2xl font-semibold text-[#0E1463]">{story.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-[#141B63] md:max-w-2xl md:text-xl md:leading-relaxed">
                       {story.description}
                     </p>
-                    <p className="mt-8 text-xl font-semibold text-[#5821AC] md:text-2xl">| {story.highlight}</p>
+                    <p className="mt-4 text-base font-semibold text-[#5821AC] md:mt-8 md:text-2xl">| {story.highlight}</p>
                   </article>
                 </CarouselItem>
               ))}
@@ -111,7 +108,7 @@ const Realconsequences = () => {
           </Carousel>
 
 
-          <div className="mt-8 flex items-center justify-center gap-6 text-[#2230B4]">
+          <div className="mt-5 md:mt-8 flex items-center justify-center gap-4 md:gap-6 text-[#2230B4]">
             <button
               onClick={() => api?.scrollPrev()}
               className="transition hover:opacity-70"

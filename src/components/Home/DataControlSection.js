@@ -256,7 +256,7 @@ export default function DataControlSection() {
 					just protect your data—we give you complete ownership of it.
 				</p>
 
-				<div className="data-grid mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				<div className="data-grid mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
 					{cardData.map((card) => (
 						<div
 							key={card.title}

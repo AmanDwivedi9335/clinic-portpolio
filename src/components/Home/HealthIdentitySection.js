@@ -23,8 +23,14 @@ export default function HealthIdentitySection() {
 
   useEffect(() => {
     return createGsapContext(pinWrapRef, (gsap) => {
-     const cardsRaw = gsap.utils.toArray(".identity-card");
-const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
+      const cardsRaw = gsap.utils.toArray(".identity-card");
+      const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
+
+      if (window.innerWidth < 768) {
+        gsap.set(cards, { opacity: 1, clearProps: "all" });
+        return;
+      }
+
       const entryVariants = [
         { y: 88, rotation: -10, scale: 0.82, filter: "blur(10px)" },
         { x: -90, y: 44, rotation: 14, scale: 0.85, filter: "blur(8px)" },

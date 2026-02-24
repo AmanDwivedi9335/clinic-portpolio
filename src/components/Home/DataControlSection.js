@@ -286,7 +286,7 @@ export default function DataControlSection() {
 			</div>
 
 			<div className="data-cta mt-12 md:mt-16">
-				<div className="relative overflow-hidden rounded-[22px] px-6 py-10 md:px-12 md:py-12">
+				<div className="relative overflow-hidden rounded-[22px] px-5 py-8 sm:px-6 sm:py-10 md:px-12 md:py-12">
 					{/* Base gradient (purple → blue) */}
 					<div className="absolute inset-0 bg-[linear-gradient(45deg,_#0E1896_0%,_#640B91_50%,_#9F028D_100%)]" />
 
@@ -300,25 +300,25 @@ export default function DataControlSection() {
 
 					{/* Concentric arcs on right */}
 					<div
-					className="pointer-events-none absolute inset-0 opacity-95 bg-no-repeat bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_100px,rgba(255,255,255,1)_100px_300px,rgba(255,255,255,0.8)_300px_400px,rgba(255,255,255,0.6)_400px_500px,rgba(255,255,255,0.5)_500px_600px,rgba(255,255,255,0.3)_600px_700px,rgba(255,255,255,0.2)_700px_800px,rgba(255,255,255,0.1)_800px)]"
+					className="pointer-events-none absolute inset-0 opacity-90 bg-no-repeat bg-[radial-gradient(circle_at_118%_50%,rgba(255,255,255,0.95)_0_45px,rgba(255,255,255,0.88)_45px_120px,rgba(255,255,255,0.64)_120px_180px,rgba(255,255,255,0.4)_180px_240px,rgba(255,255,255,0.2)_240px_300px,rgba(255,255,255,0.1)_300px)] md:bg-[radial-gradient(circle_at_112%_50%,rgba(255,255,255,1)_0_100px,rgba(255,255,255,1)_100px_300px,rgba(255,255,255,0.8)_300px_400px,rgba(255,255,255,0.6)_400px_500px,rgba(255,255,255,0.5)_500px_600px,rgba(255,255,255,0.3)_600px_700px,rgba(255,255,255,0.2)_700px_800px,rgba(255,255,255,0.1)_800px)]"
 					aria-hidden="true"
 					/>
 
-					<div className="relative z-10 flex min-h-[260px] items-center">
+					<div className="relative z-10 flex min-h-[220px] items-center md:min-h-[260px]">
 					<div className="w-full max-w-[640px] text-center md:text-left">
-						<h3 className="text-[28px] font-extrabold leading-tight text-white md:text-[42px] md:leading-[1.15]">
-						Don&apos;t wait for a crisis to organise <br className="hidden sm:block" />
+						<h3 className="text-[24px] font-extrabold leading-[1.2] text-white sm:text-[28px] md:text-[42px] md:leading-[1.15]">
+						Don&apos;t wait for a crisis to organise <br className="hidden md:block" />
 						your medical life.
 						</h3>
 
-						<p className="mt-3 max-w-[560px] text-[15px] text-white/90 md:text-[16px]">
+						<p className="mx-auto mt-3 max-w-[560px] text-[14px] leading-relaxed text-white/90 sm:text-[15px] md:mx-0 md:text-[16px]">
 						The best time to claim your Health Identity is before you need it.
 						</p>
 
 						<button
 						type="button"
 						className="
-							mt-6 inline-flex items-center justify-center
+							mt-6 inline-flex w-full items-center justify-center sm:w-auto
 							rounded-[10px]
 							bg-[#E7D5FF]
 							px-5 py-2.5

@@ -342,7 +342,7 @@ export default function Page() {
 							bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_185%)]
 							bg-clip-text
 							[-webkit-background-clip:text]">
-						The Doctors who help us in initial time
+						The Doctors who helped us initially
 					</div>
 					<div className="flex justify-around items-center flex-col md:flex-row w-full flex-wrap">
 						{advisoryData.map((item, index) => {

@@ -83,14 +83,14 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
     <div ref={pinWrapRef} className="relative">
       <section
         ref={sectionRef}
-        className="rounded-[80px] bg-[radial-gradient(54.48%_98.43%_at_99.17%_1.57%,_#9F028D_0%,_#070F6E_100%)] py-4 px-6 md:px-0 md:py-6"
+        className="rounded-[56px] bg-[radial-gradient(54.48%_98.43%_at_99.17%_1.57%,_#9F028D_0%,_#070F6E_100%)] px-4 py-8 md:rounded-[80px] md:px-0 md:py-6"
       >
         <div className="identity-heading mx-auto flex max-w-6xl flex-col items-center px-2 text-center md:px-8">
           <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">
             The Promise
           </GradientBadge>
 
-          <h2 className="mt-4 text-lg font-extrabold leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
+          <h2 className="mt-4 text-xl font-extrabold leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
             With MediBank, your <span className="font-bold">&quot;what if&quot;</span>{" "}
             becomes
             <span className="font-bold"> &quot;we&apos;re ready&quot;</span>
@@ -102,12 +102,12 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
           </p>
         </div>
 
-        <div className="relative mx-auto mt-5 w-full max-w-[1120px] rounded-[36px] md:mt-10 md:rounded-[44px] md:px-8 px-3 pb-4 pt-8 md:pb-10 md:pt-16">
+        <div className="relative mx-auto mt-6 w-full max-w-[1120px] rounded-[30px] px-3 pb-8 pt-8 md:mt-10 md:rounded-[44px] md:px-8 md:pb-10 md:pt-16">
           {/* Outer border */}
-          <div className="pointer-events-auto absolute inset-0 rounded-[36px] border border-[#BC4AE7]/55 md:rounded-[44px]" />
+          <div className="pointer-events-auto absolute inset-0 rounded-[30px] border border-[#BC4AE7]/55 md:rounded-[44px]" />
 
           {/* subtle inner glow like reference */}
-          <div className="pointer-events-auto absolute inset-0 rounded-[36px] [box-shadow:inset_0_0_0_1px_rgba(188,74,231,0.15),inset_0_0_120px_rgba(188,74,231,0.10)] md:rounded-[44px]" />
+          <div className="pointer-events-auto absolute inset-0 rounded-[30px] [box-shadow:inset_0_0_0_1px_rgba(188,74,231,0.15),inset_0_0_120px_rgba(188,74,231,0.10)] md:rounded-[44px]" />
 
           {/* Title sits on border with cut-out */}
           <div className="absolute left-1/2 top-0 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center">
@@ -183,26 +183,26 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
               ))}
             </div>
 
-            {/* Mobile: compact 3x3 grid to keep the full section visible in one screen */}
-            <div className="grid grid-cols-3 gap-3 md:hidden">
+            {/* Mobile: balanced 3-column grid with larger cards to avoid clipping */}
+            <div className="grid grid-cols-3 gap-3.5 md:hidden">
               {identityItems.map((item) => (
                 <div
                   key={item.title}
-                  className="identity-card group relative flex min-h-[88px] w-full flex-col items-center justify-center rounded-[16px] px-2 py-2 text-center"
+                  className="identity-card group relative flex min-h-[104px] w-full flex-col items-center justify-center rounded-[18px] px-2.5 py-3 text-center"
                 >
-                  <div className="absolute inset-0 rounded-[16px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_12px_24px_rgba(10,8,45,0.42)]" />
+                  <div className="absolute inset-0 rounded-[18px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_12px_24px_rgba(10,8,45,0.42)]" />
 
-                  <div className="pointer-events-auto absolute inset-0 rounded-[16px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(188,74,231,0.16)]" />
+                  <div className="pointer-events-auto absolute inset-0 rounded-[18px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(188,74,231,0.16)]" />
 
                   <Image
                     src={item.icon}
                     alt={item.title}
-                    width={34}
-                    height={34}
-                    className="relative z-10 h-[34px] w-[34px] object-contain"
+                    width={38}
+                    height={38}
+                    className="relative z-10 h-[38px] w-[38px] object-contain"
                   />
 
-                  <span className="relative z-10 mt-1 text-[11px] font-medium leading-tight text-white/95">
+                  <span className="relative z-10 mt-1.5 text-[11.5px] font-medium leading-tight text-white/95">
                     {item.title}
                   </span>
                 </div>

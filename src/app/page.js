@@ -20,10 +20,10 @@ export default function Home() {
         <div className="sticky top-[5px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
           <ReportCarouselSection />
         </div>
-        <div className="sticky top-[5px] h-screen z-0 top-5">
+        <div className="sticky top-[45px] md:top-[5px] h-screen z-0 bg-white top-5">
           <Realconsequences />
         </div>
-        <div className="sticky top-[45px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className="sticky top-[55px]  md:top-[45px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
           <HealthIdentitySection />
         </div>
 

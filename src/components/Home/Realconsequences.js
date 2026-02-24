@@ -76,7 +76,7 @@ const Realconsequences = () => {
           <p className="mt-2 text-base md:mt-3 md:text-xl text-[#111D89]">How MediBank Fixes Them</p>
         </div>
 
-        <div className="mt-7 md:mt-12">
+        <div className="mt-12 md:mt-12">
           <Carousel
             opts={{ align: "center", loop: true }}
             setApi={setApi}

@@ -102,7 +102,7 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
           </p>
         </div>
 
-        <div className="relative mx-auto mt-6 w-full max-w-[1120px] rounded-[30px] px-3 pb-8 pt-8 md:mt-10 md:rounded-[44px] md:px-8 md:pb-10 md:pt-16">
+        <div className="relative mx-auto mt-6 w-full max-w-[1120px] rounded-[30px] px-3 pb-6 pt-8 md:mt-10 md:rounded-[44px] md:px-8 md:pb-10 md:pt-16">
           {/* Outer border */}
           <div className="pointer-events-auto absolute inset-0 rounded-[30px] border border-[#BC4AE7]/55 md:rounded-[44px]" />
 
@@ -183,26 +183,28 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
               ))}
             </div>
 
-            {/* Mobile: balanced 3-column grid with larger cards to avoid clipping */}
-            <div className="grid grid-cols-3 gap-3.5 md:hidden">
-              {identityItems.map((item) => (
+            {/* Mobile: spacious 2-column grid for better readability and alignment */}
+            <div className="grid grid-cols-2 gap-4 md:hidden">
+              {identityItems.map((item, index) => (
                 <div
                   key={item.title}
-                  className="identity-card group relative flex min-h-[104px] w-full flex-col items-center justify-center rounded-[18px] px-2.5 py-3 text-center"
+                  className={`identity-card group relative flex min-h-[120px] w-full flex-col items-center justify-center rounded-[20px] px-3 py-4 text-center ${
+                    index === identityItems.length - 1 ? "col-span-2 mx-auto max-w-[52%]" : ""
+                  }`}
                 >
-                  <div className="absolute inset-0 rounded-[18px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_12px_24px_rgba(10,8,45,0.42)]" />
+                  <div className="absolute inset-0 rounded-[20px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_12px_24px_rgba(10,8,45,0.42)]" />
 
-                  <div className="pointer-events-auto absolute inset-0 rounded-[18px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(188,74,231,0.16)]" />
+                  <div className="pointer-events-auto absolute inset-0 rounded-[20px] [box-shadow:inset_0_1px_0_rgba(255,255,255,0.12),inset_0_-1px_0_rgba(0,0,0,0.25),0_0_0_1px_rgba(188,74,231,0.16)]" />
 
                   <Image
                     src={item.icon}
                     alt={item.title}
-                    width={38}
-                    height={38}
-                    className="relative z-10 h-[38px] w-[38px] object-contain"
+                    width={42}
+                    height={42}
+                    className="relative z-10 h-[42px] w-[42px] object-contain"
                   />
 
-                  <span className="relative z-10 mt-1.5 text-[11.5px] font-medium leading-tight text-white/95">
+                  <span className="relative z-10 mt-2 text-[12px] font-medium leading-tight text-white/95">
                     {item.title}
                   </span>
                 </div>

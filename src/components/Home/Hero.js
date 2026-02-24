@@ -69,10 +69,10 @@ export default function Hero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="min-h-screen bg-white pt-[92px] pb-3 md:pt-[104px] md:pb-5">
+    <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[82px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
-        <div className="relative overflow-hidden rounded-[28px] min-h-[calc(100svh-108px)] md:min-h-0">
+        <div className="relative overflow-hidden rounded-[24px] min-h-[calc(100dvh-94px)] md:rounded-[28px] md:min-h-0">
           {/* ===== Desktop background (UNCHANGED UI) ===== */}
           <div className="hidden md:block">
             {heroImages.map((heroImage, index) => (
@@ -97,7 +97,7 @@ export default function Hero() {
           <div className="relative md:hidden">
             <div
               className="
-                relative h-[34svh] min-h-[220px] max-h-[280px] w-full
+                relative h-[30dvh] min-h-[180px] max-h-[250px] w-full
               "
             >
               {heroImages.map((heroImage, index) => (
@@ -124,18 +124,19 @@ export default function Hero() {
               grid grid-cols-1 md:grid-cols-2
               items-center
               h-full
+              gap-1
               md:min-h-[calc(100vh-124px)]
             "
           >
             {/* Left content */}
-            <div className="px-5 pb-6 pt-2 md:px-10 md:py-16">
-              <p className="hero-animate text-[11px] font-extrabold text-[#282672] md:text-sm">
+            <div className="px-4 pb-4 pt-1.5 md:px-10 md:py-16">
+              <p className="hero-animate text-[10px] font-extrabold leading-snug text-[#282672] md:text-sm">
                 <Image
                   src="/images/star.png"
                   width={40}
                   height={40}
                   alt="Hero star"
-                  className="inline-block !top-[-2px] !h-[16px] object-contain mr-2 md:!h-[18px]"
+                  className="inline-block !top-[-2px] !h-[14px] object-contain mr-1.5 md:mr-2 md:!h-[18px]"
                 />
                 India&apos;s 1st Health Identity Infrastructure 
                 <Image
@@ -143,17 +144,17 @@ export default function Hero() {
                   width={40}
                   height={40}
                   alt="Hero star"
-                  className="inline-block !top-[-2px] !h-[16px] object-contain ml-2 md:!h-[18px]"
+                  className="inline-block !top-[-2px] !h-[14px] object-contain ml-1.5 md:ml-2 md:!h-[18px]"
                 />
               </p>
 
-              <h1 className="hero-animate mt-3 text-[32px] font-extrabold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
+              <h1 className="hero-animate mt-2.5 text-[clamp(28px,8.5vw,36px)] font-extrabold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
                 Your Health Identity
                 <br />
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-3 max-w-xl text-[13px] font-medium leading-relaxed text-[#7B1FA2] md:mt-5 md:text-[15px]">
+              <p className="hero-animate mt-2.5 max-w-xl text-[12px] font-medium leading-[1.45] text-[#7B1FA2] md:mt-5 md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
                 <span className="font-semibold">{secondLineVisible}</span>
@@ -162,12 +163,12 @@ export default function Hero() {
                 )}
               </p>
 
-              <div className="hero-animate mt-5 md:mt-7">
+              <div className="hero-animate mt-4 md:mt-7">
                 <a
                   href="/claim"
                   className="
                     inline-flex items-center justify-center !cursor-pointer
-                    rounded-2xl px-6 py-2.5 text-sm md:px-8 md:py-3 md:text-base
+                    rounded-2xl px-5 py-2.5 text-[13px] md:px-8 md:py-3 md:text-base
                     font-semibold text-white
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
                     shadow-[0_12px_30px_rgba(123,31,162,0.45)]

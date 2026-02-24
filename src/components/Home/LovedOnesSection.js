@@ -112,7 +112,7 @@ export default function LovedOnesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white py-12 md:py-20">
+    <section ref={sectionRef} className="overflow-x-hidden bg-white py-12 md:py-20">
       <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones

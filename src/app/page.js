@@ -23,7 +23,7 @@ export default function Home() {
         <div className="sticky top-[5px] h-screen z-0 top-5">
           <Realconsequences />
         </div>
-        <div className="sticky top-[45px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className="relative z-0 bg-white px-4 py-6 md:sticky md:top-[45px] md:h-screen md:px-8 md:py-12">
           <HealthIdentitySection />
         </div>
 

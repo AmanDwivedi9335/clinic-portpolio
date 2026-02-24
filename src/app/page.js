@@ -41,7 +41,7 @@ export default function Home() {
         </div> */}
 
          {/* Normal scrolling section after sticky stack ends */}
-      <div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky top-5 ">
+      <div className="bg-white py-6 md:py-12 px-4 md:px-8">
         <DataControlSection />
       </div>
       </div>

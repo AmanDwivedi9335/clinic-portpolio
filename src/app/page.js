@@ -13,14 +13,14 @@ export default function Home() {
     <>
       {/* Sticky stack panels */}
       <div className="relative isolate">
-        <div className="sticky  top-[1px]  h-screen z-0">
+        <div className="sticky  top-[5px]  h-screen z-0">
           <Hero />
         </div>
 
-        <div className="sticky top-[1px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className="sticky top-[5px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
           <ReportCarouselSection />
         </div>
-        <div className="sticky top-[1px] h-screen z-0 top-5">
+        <div className="sticky top-[5px] h-screen z-0 top-5">
           <Realconsequences />
         </div>
         <div className="sticky top-[45px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">

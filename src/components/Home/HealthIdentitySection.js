@@ -184,13 +184,11 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
             </div>
 
             {/* Mobile: spacious 2-column grid for better readability and alignment */}
-            <div className="grid grid-cols-2 gap-4 md:hidden">
+            <div className="grid grid-cols-3 gap-5 md:hidden">
               {identityItems.map((item, index) => (
                 <div
                   key={item.title}
-                  className={`identity-card group relative flex min-h-[120px] w-full flex-col items-center justify-center rounded-[20px] px-3 py-4 text-center ${
-                    index === identityItems.length - 1 ? "col-span-2 mx-auto max-w-[52%]" : ""
-                  }`}
+                  className="identity-card group relative flex h-[80px] w-full flex-col items-center justify-center rounded-[20px] px-5 py-4 text-center"
                 >
                   <div className="absolute inset-0 rounded-[20px] bg-[linear-gradient(2400deg,#9F028D_0%,#630B91_20%,#0E1896_100%)] shadow-[0_12px_24px_rgba(10,8,45,0.42)]" />
 

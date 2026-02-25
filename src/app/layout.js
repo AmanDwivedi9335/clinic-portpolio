@@ -23,6 +23,12 @@ export default function RootLayout({ children }) {
         />
         <Header/>
           {children}
+        <a
+          href="/login"
+          className="fixed bottom-5 right-5 z-40 rounded-full bg-[#282672] px-5 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#1f1d59]"
+        >
+          Claim your health identity
+        </a>
         <Footer/>
         </body>
     </html>

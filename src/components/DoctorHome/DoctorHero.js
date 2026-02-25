@@ -93,7 +93,7 @@ export default function DoctorHero() {
           <div className="relative md:hidden">
             <div
               className="
-                relative h-[24dvh] min-h-[140px] max-h-[220px] w-full
+                relative h-[30dvh] min-h-[180px] max-h-[250px] w-full
               "
             >
               {heroImages.map((heroImage, index) => (
@@ -125,7 +125,7 @@ export default function DoctorHero() {
             "
           >
             {/* Left content */}
-            <div className="px-4 pb-4 pt-1 md:px-10 md:py-16">
+            <div className="px-4 pb-4 pt-1.5 md:px-10 md:py-16">
               <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
                 
                 India&apos;s First Health Identity Infrastructure™ &nbsp;

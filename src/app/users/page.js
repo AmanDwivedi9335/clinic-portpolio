@@ -182,6 +182,8 @@ export default function UsersPage() {
   const pinPanelRef = useRef(null);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
+
     return createGsapContext(showcaseRef, (gsap) => {
       const { ScrollTrigger } = window;
       const rows = gsap.utils.toArray(".users-showcase-row");
@@ -222,11 +224,11 @@ export default function UsersPage() {
   }, []);
 
   return (
-    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
+    <main className="relative isolate overflow-x-hidden bg-[#F4F4F8] pb-24 pt-24 text-[#220A56] md:overflow-y-clip md:pt-24">
       <HeroWaveBackground />
 
       {/* HERO */}
-      <section className="relative isolate overflow-hidden h-[100vh] pt-12 md:pt-16">
+      <section className="relative isolate overflow-hidden min-h-[100vh] pt-20 md:h-[100vh] md:pt-16">
         {/* Content ALWAYS above waves */}
         <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
@@ -342,18 +344,18 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-4 h-[400vh] max-w-6xl bg-[#F4F4F8] px-6 md:mt-0"
+        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:h-[400vh]"
       >
         <div
           ref={pinPanelRef}
-          className="relative h-[100svh] overflow-hidden py-6 md:py-0"
+          className="relative overflow-visible py-6 md:h-[100svh] md:overflow-hidden md:py-0"
         >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative mb-14 grid items-center gap-8 px-0 py-2 transition-all duration-500 md:absolute md:inset-0 md:mb-0 md:gap-12 md:py-0 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight 
+              <h2 className="text-3xl font-extrabold leading-tight md:text-4xl 
                 bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
                 bg-clip-text text-transparent">
                 Smart Health Overview
@@ -361,14 +363,14 @@ export default function UsersPage() {
 
               <p
                 className="
-                  mt-2 text-lg font-normal
+                  mt-2 text-base font-normal md:text-lg
                   bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
                   bg-clip-text text-transparent
                   leading-snug
                 "
               >
                 Track appointments, vitals, and daily health
-                <br />
+                <br className="hidden md:block" />
                 insights in one place.
               </p>
 
@@ -379,7 +381,7 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={0} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div className="mx-auto w-full max-w-[185px] md:max-w-[220px] md:justify-self-end">
               <Image
                 src="/images/users/smart-health-overview.svg"
                 alt="Smart Health Overview mobile dashboard"
@@ -393,17 +395,17 @@ export default function UsersPage() {
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative mb-14 grid items-center gap-8 px-0 py-2 transition-all duration-500 md:absolute md:inset-0 md:mb-0 md:gap-12 md:py-0 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+              <h2 className="text-3xl font-extrabold leading-tight text-[#5b0aa3] md:text-4xl">
                 Discover Nearby
                 <br />
                 Healthcare Providers
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#452169]">
+              <p className="mt-2 text-base font-semibold text-[#452169] md:text-lg">
                 Search doctors, labs, and hospitals around your
-                <br />
+                <br className="hidden md:block" />
                 location.
               </p>
               <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
@@ -413,7 +415,7 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={1} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div className="mx-auto w-full max-w-[185px] md:max-w-[220px] md:justify-self-end">
               <Image
                 src="/images/users/discover-nearby.svg"
                 alt="Discover nearby mobile dashboard"
@@ -427,17 +429,17 @@ export default function UsersPage() {
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative grid items-center gap-8 px-0 py-2 transition-all duration-500 md:absolute md:inset-0 md:gap-12 md:py-0 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+              <h2 className="text-3xl font-extrabold leading-tight text-[#5b0aa3] md:text-4xl">
                 Centralized Health
                 <br />
                 Records
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#452169]">
+              <p className="mt-2 text-base font-semibold text-[#452169] md:text-lg">
                 Access appointments, lab reports, and hospital
-                <br />
+                <br className="hidden md:block" />
                 documents anytime.
               </p>
               <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
@@ -447,7 +449,7 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={2} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div className="mx-auto w-full max-w-[185px] md:max-w-[220px] md:justify-self-end">
               <Image
                 src="/images/users/centralized.svg"
                 alt="Centralized Overview mobile dashboard"

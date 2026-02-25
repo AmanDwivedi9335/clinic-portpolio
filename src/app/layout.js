@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
           {children}
         <a
           href="/login"
-          className="fixed bottom-5 right-5 z-40 rounded-full bg-[#282672] px-5 py-3 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-[#1f1d59]"
+          className="fixed bottom-5 right-5 z-40 rounded-full bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(123,31,162,0.45)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(216,27,96,0.6)] hover:brightness-110"
         >
           Claim your health identity
         </a>

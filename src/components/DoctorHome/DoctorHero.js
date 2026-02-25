@@ -65,10 +65,10 @@ export default function DoctorHero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="pt-[104px] pb-5">
+    <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[82px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
-        <div className="relative overflow-hidden rounded-[28px]">
+        <div className="relative overflow-hidden rounded-[24px] min-h-[calc(100dvh-94px)] md:rounded-[28px] md:min-h-0">
           {/* ===== Desktop background (UNCHANGED UI) ===== */}
           <div className="hidden md:block">
             {heroImages.map((heroImage, index) => (
@@ -93,9 +93,7 @@ export default function DoctorHero() {
           <div className="relative md:hidden">
             <div
               className="
-                relative h-[320px] w-full
-                [mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
-                [-webkit-mask-image:linear-gradient(to_bottom,black_80%,transparent_100%)]
+                relative h-[24dvh] min-h-[140px] max-h-[220px] w-full
               "
             >
               {heroImages.map((heroImage, index) => (
@@ -105,26 +103,29 @@ export default function DoctorHero() {
                   alt={`Hero image ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className={`object-contain object-center transition-opacity duration-700 ${
+                  className={`object-contain object-top transition-opacity duration-700 ${
                     index === activeImageIndex ? "opacity-100" : "opacity-0"
                   }`}
                   sizes="100vw"
                 />
               ))}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white" />
             </div>
           </div>
 
           {/* Content */}
           <div
             className="
-              relative z-10
+              relative z-20
               grid grid-cols-1 md:grid-cols-2
               items-center
+              h-full
+              gap-1
               md:min-h-[calc(100vh-124px)]
             "
           >
             {/* Left content */}
-            <div className="px-6 py-10 md:px-10 md:py-16">
+            <div className="px-4 pb-4 pt-1 md:px-10 md:py-16">
               <p className="hero-animate text-[12px] font-semibold text-[#282672] md:text-sm">
                 
                 India&apos;s First Health Identity Infrastructure™ &nbsp;
@@ -190,7 +191,7 @@ export default function DoctorHero() {
           <div className="pointer-events-none absolute inset-0 ring-1 ring-white/40" />
 
           {/* Long ocean-wave strip (same) */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[88px] overflow-hidden">
+          <div className="pointer-events-none absolute inset-x-0 z-10 bottom-0 hidden h-[88px] overflow-hidden md:block">
             <div className="herowavebackground" aria-hidden="true" />
           </div>
         </div>

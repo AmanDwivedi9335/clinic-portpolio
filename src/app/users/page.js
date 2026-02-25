@@ -19,7 +19,7 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100vh] overflow-hidden">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100vh] overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#C9C6EA_0%,#E8C9DF_55%,#F3E6F2_100%)]" />
 
       {/* TOP BAND */}

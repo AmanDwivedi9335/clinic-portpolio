@@ -103,7 +103,7 @@ export default function DoctorHero() {
                   alt={`Hero image ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className={`object-contain object-center transition-opacity duration-700 ${
+                  className={`object-contain object-top transition-opacity duration-700 ${
                     index === activeImageIndex ? "opacity-100" : "opacity-0"
                   }`}
                   sizes="100vw"

@@ -65,7 +65,7 @@ export default function DoctorHero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[82px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
+    <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[22px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[calc(100dvh-94px)] md:rounded-[28px] md:min-h-0">
@@ -148,10 +148,10 @@ export default function DoctorHero() {
               <div className="hero-animate mt-7 flex flex-wrap items-center gap-4">
                 <a
                   href="/claim"
-                  className="
+                  className="h-[44px] md:h-[48px]
                     inline-flex items-center justify-center !cursor-pointer
-                    rounded-2xl px-8 py-3
-                    font-semibold text-white
+                    rounded-2xl md:px-8 md:py-3 px-4 py-2
+                    font-semibold text-white text-sm
                     bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3]
                     shadow-[0_12px_30px_rgba(123,31,162,0.45)]
                     transition-all duration-300 ease-out
@@ -166,10 +166,10 @@ export default function DoctorHero() {
 
                 <a
                   href="/doctors"
-                  className="
+                  className="h-[44px] md:h-[48px]
                     inline-flex items-center justify-center !cursor-pointer
-                    rounded-2xl border-2 border-[#5a1ac6] px-8 py-3
-                    font-semibold text-[#4d189e]
+                    rounded-2xl border-2 border-[#5a1ac6] md:px-8 md:py-3 px-4 py-2
+                    font-semibold text-[#4d189e] text-sm
                     backdrop-blur-[1px]
                     shadow-[0_8px_22px_rgba(76,22,167,0.2)]
                     transition-all duration-300 ease-out

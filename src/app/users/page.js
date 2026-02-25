@@ -24,7 +24,7 @@ function HeroWaveBackground() {
 
       {/* TOP BAND */}
       <svg
-        className="hero-band hero-band-top absolute inset-x-0 top-[10%] h-[40%] w-full"
+        className="hero-band hero-band-top absolute inset-x-0 h-[40%] w-full"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >

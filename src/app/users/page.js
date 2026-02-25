@@ -19,7 +19,7 @@ function PhoneMockup({ children, className = "" }) {
 
 function HeroWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[100vh] overflow-hidden">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100vh] overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#C9C6EA_0%,#E8C9DF_55%,#F3E6F2_100%)]" />
 
       {/* TOP BAND */}
@@ -29,7 +29,7 @@ function HeroWaveBackground() {
         preserveAspectRatio="none"
       >
 
-        <g className="wave-track wave-track-top" filter="url(#waveTop)">
+        <g className="wave-track wave-track-top">
           <path
             d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
             fill="#FFFFFF"
@@ -50,7 +50,7 @@ function HeroWaveBackground() {
         preserveAspectRatio="none"
       >
 
-        <g className="wave-track wave-track-mid" filter="url(#waveMid)">
+        <g className="wave-track wave-track-mid">
           <path
             d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
             fill="#FFFFFF"
@@ -71,7 +71,7 @@ function HeroWaveBackground() {
         preserveAspectRatio="none"
       >
 
-        <g className="wave-track wave-track-bottom" filter="url(#waveBottom)">
+        <g className="wave-track wave-track-bottom">
           <path
             d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
             fill="#FFFFFF"

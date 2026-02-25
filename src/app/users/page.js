@@ -183,53 +183,41 @@ export default function UsersPage() {
 
   useEffect(() => {
     return createGsapContext(showcaseRef, (gsap) => {
-      const mm = gsap.matchMedia();
+      const { ScrollTrigger } = window;
+      const rows = gsap.utils.toArray(".users-showcase-row");
 
-      mm.add("(min-width: 768px)", () => {
-  const rows = gsap.utils.toArray(".users-showcase-row");
-  if (!rows.length) return;
+      if (!rows.length || !ScrollTrigger) return;
 
-  const totalSteps = rows.length - 1;
+      const totalSteps = rows.length - 1;
 
-  // Ensure proper stackingend: `+=${rows.length * 100}%`,
-  gsap.set(rows, { position: "absolute", inset: 0 });
+      gsap.set(rows, { position: "absolute", inset: 0 });
+      gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
+      gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
 
-  // Initial state
-  gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
-  gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
+      let currentIndex = 0;
 
-  let currentIndex = 0;
+      const showIndex = (nextIndex) => {
+        if (nextIndex === currentIndex) return;
 
-  const showIndex = (nextIndex) => {
-    if (nextIndex === currentIndex) return;
+        gsap.to(rows[currentIndex], { autoAlpha: 0, yPercent: -12, duration: 0.35, ease: "power2.inOut" });
+        gsap.to(rows[nextIndex], { autoAlpha: 1, yPercent: 0, duration: 0.35, ease: "power2.inOut" });
 
-    gsap.to(rows[currentIndex], { autoAlpha: 0, yPercent: -12, duration: 0.35, ease: "power2.inOut" });
-    gsap.to(rows[nextIndex], { autoAlpha: 1, yPercent: 0, duration: 0.35, ease: "power2.inOut" });
+        currentIndex = nextIndex;
+      };
 
-    currentIndex = nextIndex;
-  };
-
-  ScrollTrigger.create({
-    trigger: showcaseRef.current,
-    start: "top top",
-    end: `+=${(rows.length + 1) * 100}%`, // 3 rows -> 400%
-    scrub: 0.6,
-    pin: pinPanelRef.current,
-    anticipatePin: 1,
-    snap: totalSteps > 0 ? 1 / totalSteps : 1,
-    onUpdate: (self) => {
-      // progress (0..1) -> index (0..totalSteps)
-      const idx = Math.round(self.progress * totalSteps);
-      showIndex(idx);
-    },
-  });
-});
-
-      mm.add("(max-width: 767px)", () => {
-        gsap.set(".users-showcase-row", { clearProps: "all" });
+      ScrollTrigger.create({
+        trigger: showcaseRef.current,
+        start: "top top",
+        end: `+=${(rows.length + 1) * 100}%`,
+        scrub: 0.6,
+        pin: pinPanelRef.current,
+        anticipatePin: 1,
+        snap: totalSteps > 0 ? 1 / totalSteps : 1,
+        onUpdate: (self) => {
+          const idx = Math.round(self.progress * totalSteps);
+          showIndex(idx);
+        },
       });
-
-      return () => mm.revert();
     });
   }, []);
 
@@ -354,15 +342,15 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-4 max-w-6xl bg-[#F4F4F8] px-6 md:mt-0 md:h-[400vh]"
+        className="relative mx-auto mt-4 h-[400vh] max-w-6xl bg-[#F4F4F8] px-6 md:mt-0"
       >
         <div
           ref={pinPanelRef}
-          className="relative grid gap-14 py-6 md:h-screen md:overflow-hidden md:py-0"
+          className="relative h-[100svh] overflow-hidden py-6 md:py-0"
         >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight 
@@ -405,7 +393,7 @@ export default function UsersPage() {
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -439,7 +427,7 @@ export default function UsersPage() {
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row grid items-center gap-12 rounded-[24px] bg-white/45 px-6 py-8 transition-all duration-500 md:absolute md:inset-0 md:grid-cols-2 md:bg-transparent md:px-0 md:py-0"
+            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">

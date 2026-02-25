@@ -96,6 +96,16 @@ export default function DoctorPortalPreview() {
             <div className="w-fit rounded-full border border-[#5946d2] bg-white px-4 py-1 text-xs font-semibold text-[#3d2b9e]">
               {currentSlide.badge}
             </div>
+            <div className="portal-preview-image-wrap relative mt-5 h-[210px] sm:h-[300px] md:hidden">
+              <Image
+                src={currentSlide.image}
+                alt={`${currentSlide.badge} portal preview`}
+                fill
+                sizes="100vw"
+                className="portal-preview-image object-contain object-center transition-all duration-500"
+                priority
+              />
+            </div>
             <h3 className="mt-4 text-2xl font-bold leading-tight text-[#6611a8] md:text-3xl">
               {currentSlide.title}
             </h3>
@@ -156,7 +166,7 @@ export default function DoctorPortalPreview() {
             </a>
           </div>
 
-          <div className="portal-preview-image-wrap relative h-[210px] sm:h-[300px] md:h-[620px]">
+          <div className="portal-preview-image-wrap relative hidden h-[210px] sm:h-[300px] md:block md:h-[620px]">
             <Image
               src={currentSlide.image}
               alt={`${currentSlide.badge} portal preview`}

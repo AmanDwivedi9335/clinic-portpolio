@@ -35,7 +35,7 @@ export default function DoctorPortalPreview() {
         {
           y: 0,
           opacity: 1,
-          duration: 0.85,
+          duration: 0.05,
           ease: "power3.out",
           stagger: 0.12,
           scrollTrigger: {

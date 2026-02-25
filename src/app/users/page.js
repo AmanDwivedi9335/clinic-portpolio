@@ -189,6 +189,8 @@ export default function UsersPage() {
         const rows = gsap.utils.toArray(".users-showcase-row");
         if (!rows.length) return;
 
+        const totalSteps = rows.length - 1;
+
         gsap.set(rows, {
           autoAlpha: 0,
           yPercent: 14,
@@ -196,22 +198,32 @@ export default function UsersPage() {
         gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
 
         const timeline = gsap.timeline({
-          defaults: { duration: 0.55, ease: "power2.out" },
+          defaults: { duration: 0.48, ease: "power2.inOut" },
           scrollTrigger: {
             trigger: showcaseRef.current,
             start: "top top",
-            end: "+=230%",
-            scrub: 0.75,
+            end: `+=${rows.length * 100}%`,
+            scrub: 0.5,
             pin: pinPanelRef.current,
             anticipatePin: 1,
+            snap: {
+              snapTo: totalSteps > 0 ? 1 / totalSteps : 1,
+              duration: { min: 0.2, max: 0.45 },
+              directional: true,
+              ease: "power1.inOut",
+            },
           },
         });
 
-        timeline
-          .to(rows[0], { autoAlpha: 0, yPercent: -12 }, 0.2)
-          .to(rows[1], { autoAlpha: 1, yPercent: 0 }, 0.2)
-          .to(rows[1], { autoAlpha: 0, yPercent: -12 }, 1.25)
-          .to(rows[2], { autoAlpha: 1, yPercent: 0 }, 1.25);
+        rows.slice(1).forEach((_, index) => {
+          const previousRow = rows[index];
+          const currentRow = rows[index + 1];
+          const step = index + 1;
+
+          timeline
+            .to(previousRow, { autoAlpha: 0, yPercent: -12 }, step)
+            .to(currentRow, { autoAlpha: 1, yPercent: 0 }, step);
+        });
       });
 
       mm.add("(max-width: 767px)", () => {

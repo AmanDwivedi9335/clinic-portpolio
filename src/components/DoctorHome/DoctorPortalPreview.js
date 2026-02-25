@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createGsapContext } from "@/lib/gsap";
 
 const previewSlides = [
   {
@@ -23,7 +24,44 @@ const previewSlides = [
 ];
 
 export default function DoctorPortalPreview() {
+  const sectionRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    return createGsapContext(sectionRef, (gsap) => {
+      gsap.fromTo(
+        ".portal-preview-animate",
+        { y: 28, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.85,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".portal-preview-image",
+        { scale: 0.94, opacity: 0, rotate: -1.2 },
+        {
+          scale: 1,
+          opacity: 1,
+          rotate: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".portal-preview-image-wrap",
+            start: "top 82%",
+          },
+        }
+      );
+    });
+  }, []);
 
   const goToNext = () => {
     setActiveSlide((prev) => (prev + 1) % previewSlides.length);
@@ -36,25 +74,25 @@ export default function DoctorPortalPreview() {
   const currentSlide = previewSlides[activeSlide];
 
   return (
-    <section className="pb-16 pt-8 md:pt-14">
+    <section ref={sectionRef} className="pb-16 pt-8 md:pt-14">
       <div className="mx-auto max-w-8xl px-4 md:px-6">
-        <div className="mx-auto w-fit rounded-full bg-[linear-gradient(98.79deg,#FACC15_0%,#F87171_33.33%,#A855F7_66.67%,#3B82F6_100%)] p-[1.5px] shadow-sm">
+        <div className="portal-preview-animate mx-auto w-fit rounded-full bg-[linear-gradient(98.79deg,#FACC15_0%,#F87171_33.33%,#A855F7_66.67%,#3B82F6_100%)] p-[1.5px] shadow-sm">
           <div className="rounded-full bg-white px-5 py-1 text-xs font-medium text-[#282672]">
             Doctor Portal Preview
           </div>
         </div>
 
-        <h2 className="mt-4 text-center text-3xl font-extrabold text-wave md:text-5xl">
+        <h2 className="portal-preview-animate mt-4 text-center text-3xl font-extrabold text-wave md:text-5xl">
           Built for Doctors. Designed for Clinical Clarity.
         </h2>
-        <p className="mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">
+        <p className="portal-preview-animate mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">
           MediBank isn&apos;t another software dashboard.
           <br className="hidden md:block" />
           It&apos;s a clinical decision-support system built around real consultation workflows.
         </p>
 
-        <div className="mt-4 grid items-center gap-8 p-6 md:grid-cols-[0.9fr_1.6fr] md:p-10">
-          <div>
+        <div className="mt-4 grid items-center gap-6 p-2 sm:p-4 md:grid-cols-[0.9fr_1.6fr] md:gap-8 md:p-10">
+          <div className="portal-preview-animate">
             <div className="w-fit rounded-full border border-[#5946d2] bg-white px-4 py-1 text-xs font-semibold text-[#3d2b9e]">
               {currentSlide.badge}
             </div>
@@ -118,13 +156,13 @@ export default function DoctorPortalPreview() {
             </a>
           </div>
 
-          <div className="relative  md:h-[620px]">
+          <div className="portal-preview-image-wrap relative h-[210px] sm:h-[300px] md:h-[620px]">
             <Image
               src={currentSlide.image}
               alt={`${currentSlide.badge} portal preview`}
               fill
               sizes="(max-width: 768px) 100vw, 60vw"
-              className="object-contain object-left transition-all duration-500"
+              className="portal-preview-image object-contain object-center md:object-left transition-all duration-500"
               priority
             />
           </div>

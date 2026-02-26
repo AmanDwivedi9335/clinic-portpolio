@@ -9,21 +9,23 @@ import Realconsequences from "@/components/Home/Realconsequences";
 import Subscription from "@/components/Home/Subscription";
 
 export default function Home() {
+  const stickyPanelClass = "sticky h-[100svh] md:h-screen z-0";
+
   return (
     <>
       {/* Sticky stack panels */}
       <div className="relative isolate overflow-x-clip">
-        <div className="sticky  top-[5px]  h-screen z-0">
+        <div className={`${stickyPanelClass} top-0 md:top-[5px]`}>
           <Hero />
         </div>
 
-        <div className="sticky top-[5px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className={`${stickyPanelClass} top-0 md:top-[5px] bg-white py-6 md:py-12 px-4 md:px-8`}>
           <ReportCarouselSection />
         </div>
-        <div className="sticky top-[45px] md:top-[5px] h-screen z-0 bg-white top-5">
+        <div className={`${stickyPanelClass} top-0 md:top-[5px] bg-white`}>
           <Realconsequences />
         </div>
-        <div className="sticky top-[55px]  md:top-[45px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className={`${stickyPanelClass} top-0 md:top-[45px] bg-white py-6 md:py-12 px-4 md:px-8`}>
           <HealthIdentitySection />
         </div>
 
@@ -32,7 +34,7 @@ export default function Home() {
           <Howitworks />
         </div> */}
 
-        <div className="sticky top-[5px] h-screen z-0 bg-white py-6 md:py-12 px-4 md:px-8">
+        <div className={`${stickyPanelClass} top-0 md:top-[5px] bg-white py-6 md:py-12 px-4 md:px-8`}>
           <LovedOnesSection />
         </div>
 
@@ -41,7 +43,7 @@ export default function Home() {
         </div> */}
 
          {/* Normal scrolling section after sticky stack ends */}
-      <div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky top-5 ">
+      <div className="bg-white py-6 md:py-12 px-4 md:px-8 sticky top-0 md:top-5 ">
         <DataControlSection />
       </div>
       </div>

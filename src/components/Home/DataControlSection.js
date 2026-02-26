@@ -237,17 +237,17 @@ export default function DataControlSection() {
 				>
 					Privacy & Security
 				</GradientBadge>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-extrabold text-[#5C4AFF] [perspective:800px]">
+				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-medium">
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
-							<span
-								key={`${word}-${index}`}
-								className={`data-head-word inline-block ${
-									word === "Absolutely." ? "font-bold text-[#3B1ED0]" : ""
-								}`}
-							>
-								{word}
-							</span>
+						<span
+							className={`inline-block bg-clip-text text-transparent
+								bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+								${word === "Absolutely." ? "font-extrabold" : "font-medium"}
+							`}
+						>
+							{word}
+						</span>
 						))}
 					</span>
 				</h2>

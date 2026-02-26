@@ -70,7 +70,7 @@ const Realconsequences = () => {
               text-transparent
             "
           >
-            These stories happen <span className="font-bold">every day</span> in hospitals across India
+            These stories happen <span className="font-aptos-black">every day</span> in hospitals across India
           </h2>
 
           <p className="mt-2 text-base md:mt-3 md:text-xl text-[#111D89]">How MediBank Fixes Them</p>

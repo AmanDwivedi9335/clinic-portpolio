@@ -136,7 +136,7 @@ export default function Hero() {
                   width={40}
                   height={40}
                   alt="Hero star"
-                  className="inline-block !top-[-2px] !h-[14px] object-contain mr-1.5 md:mr-2 md:!h-[18px]"
+                  className="inline-block font-semibold !top-[-2px] !h-[14px] object-contain mr-1.5 md:mr-2 md:!h-[18px]"
                 />
                 India&apos;s 1st Health Identity Infrastructure 
                 <Image
@@ -154,7 +154,7 @@ export default function Hero() {
                 for Life...
               </h1>
 
-              <p className="hero-animate mt-2.5 max-w-xl text-[12px] font-medium leading-[1.45] text-[#7B1FA2] md:mt-5 md:text-[15px]">
+              <p className="hero-animate mt-2.5 max-w-xl text-[12px] font-normal leading-[1.45] text-[#282672] md:mt-5 md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
                 <span className="font-semibold">{secondLineVisible}</span>

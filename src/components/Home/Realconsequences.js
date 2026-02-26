@@ -64,7 +64,7 @@ const Realconsequences = () => {
             className="
               mt-4 md:mt-6
               text-2xl md:text-4xl
-              font-extrabold
+              font-medium
               bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
               bg-clip-text
               text-transparent
@@ -73,10 +73,10 @@ const Realconsequences = () => {
             These stories happen <span className="font-aptos-black">every day</span> in hospitals across India
           </h2>
 
-          <p className="mt-2 text-base md:mt-3 md:text-xl text-[#111D89]">How MediBank Fixes Them</p>
+          <p className="mt-2 text-base md:mt-3 md:text-[28px] text-[#111D89]">How MediBank Fixes Them</p>
         </div>
 
-        <div className="mt-12 md:mt-12">
+        <div className="mt-12 md:mt-20">
           <Carousel
             opts={{ align: "center", loop: true }}
             setApi={setApi}

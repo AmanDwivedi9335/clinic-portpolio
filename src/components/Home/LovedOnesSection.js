@@ -127,11 +127,11 @@ export default function LovedOnesSection() {
           For Your Loved Ones
         </GradientBadge>
 
-        <h2 className="mt-5 text-2xl font-extrabold bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+        <h2 className="mt-5 text-2xl font-medium bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
               bg-clip-text
               text-transparent md:text-4xl">
-          Your Health Identity is Your 
-          <span className="font-aptos-extrabold">“Protection”</span>
+          Your Health Identity is Your&nbsp;
+          <span className="font-aptos-black">“Protection”</span>
         </h2>
 
         <p className="mt-4 max-w-3xl text-sm text-[#000339] md:text-base">

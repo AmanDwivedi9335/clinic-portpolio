@@ -90,13 +90,13 @@ const cards = Array.isArray(cardsRaw) ? cardsRaw : [cardsRaw];
             The Promise
           </GradientBadge>
 
-          <h2 className="mt-4 text-xl font-extrabold leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
-            With MediBank, your <span className="font-bold">&quot;what if&quot;</span>{" "}
+          <h2 className="mt-4 text-xl font-medium leading-snug text-white md:mt-6 md:text-[clamp(2rem,3.1vw,2.45rem)]">
+            With MediBank, your <span className="font-aptos-black">&quot;what if&quot;</span>{" "}
             becomes
-            <span className="font-bold"> &quot;we&apos;re ready&quot;</span>
+            <span className="font-aptos-black"> &quot;we&apos;re ready&quot;</span>
           </h2>
 
-          <p className="identity-subheading mt-3 text-[12px] leading-relaxed text-white/85 md:mt-6 md:text-[clamp(1rem,1.7vw,1.3rem)]">
+          <p className="identity-subheading mt-3 leading-relaxed text-white/85 md:mt-6 md:text-[clamp(1rem, 1.7vw, 1.9rem)]">
             No Missing Reports &nbsp; | &nbsp; No blind emergencies &nbsp; | &nbsp;
             No guesswork &nbsp; | &nbsp; No repeated tests
           </p>

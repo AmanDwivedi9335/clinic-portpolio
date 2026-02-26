@@ -123,9 +123,9 @@ export default function ReportCarouselSection() {
           The Moment No One Thinks About
         </GradientBadge>
 
-        <h2 className="mt-4 text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
+        <h2 className="mt-4 text-2xl font-medium leading-snug text-[#7B1FA2] md:text-4xl">
           <span className="font-aptos-black">&apos;What if&apos;</span> the one report that could save your life...
-          <span className="block font-normal text-[#5A2D82]">
+          <span className="block text-[28px] font-normal text-[#111D89]">
             wasn&apos;t there when you needed it?
           </span>
         </h2>
@@ -187,9 +187,9 @@ export default function ReportCarouselSection() {
                       activeIndex === index ? "lg:group-hover:translate-y-[1px]" : "",
                     ].join(" ")}
                   >
-                    <h3 className="text-[clamp(18px,1vw,25px)] font-bold leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
+                    <h3 className="text-[clamp(18px,1vw,25px)] font-aptos-black leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
                       What if &nbsp;
-                    <span className="text-[clamp(18px,1vw,25px)] font-normal leading-[1.2] tracking-[-0.02em] text-[#282672]">
+                    <span className="text-[clamp(18px,1vw,25px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#282672]">
                       {slide.title}
                     </span>
                     </h3>

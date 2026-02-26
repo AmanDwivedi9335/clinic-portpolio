@@ -132,8 +132,8 @@ export default function DoctorHero() {
                 
               </p>
 
-              <h1 className="hero-animate mt-4 text-[30px] font-extrabold leading-[1.05] text-wave md:text-[65px] md:leading-[0.8]">
-                Blind<br /> Consultations<br /> Are Dangerous<br /> Consultations
+              <h1 className="hero-animate mt-4 text-[30px] font-aptos-black leading-[1.05] text-wave md:text-[60px] md:leading-[0.8]">
+                Blind Consultations<br /> are Dangerous Consultations
               </h1>
 
               <p className="hero-animate mt-5 font-semibold max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">

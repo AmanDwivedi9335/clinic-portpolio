@@ -12,7 +12,7 @@ const stories = [
     description:
       "Her complete medical history was unavailable. A crucial report—showing that her symptoms were a medication side effect, not a heart condition—was missing because she did not carry it.",
     highlight: "MediBank prevents this.",
-    image: "/images/story1.png",
+    image: "/images/story1.webp",
   },
   {
     title: "Unconscious in ER",

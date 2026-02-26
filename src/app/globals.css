@@ -4,6 +4,20 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: "Aptos ExtraBold";
+	src: local("Aptos ExtraBold"), url("/fonts/Aptos.woff") format("woff");
+	font-weight: 800;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Aptos Black";
+	src: local("Aptos Black"), url("/fonts/Aptos.woff") format("woff");
+	font-weight: 900;
+	font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -142,6 +156,14 @@
 	background-size: 100% 100%;
 	-webkit-background-clip: text;
 	color: transparent;
+}
+
+.font-aptos-extrabold {
+	font-family: "Aptos ExtraBold", "Aptos", sans-serif !important;
+}
+
+.font-aptos-black {
+	font-family: "Aptos Black", "Aptos", sans-serif !important;
 }
 
 @keyframes wordColorWave {

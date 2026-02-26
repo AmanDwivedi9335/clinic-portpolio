@@ -8,43 +8,43 @@ import GradientBadge from "@/components/ui/GradientBadge";
 
 const slides = [
   {
-    image: "/images/img-carousel1.png",
+    image: "/images/img-carousel1.webp",
     alt: "Person checking old health messages on phone",
     title: "your prescription history exists only in WhatsApp forwards?",
     description: "Scattered across 47 chats. None backed up.",
   },
   {
-    image: "/images/img-carousel2.png",
+    image: "/images/img-carousel2.webp",
     alt: "Family and doctor discussing care",
     title: "the ER doctor doesn't know you're allergic to penicillin?",
     description: "And your family is too panicked to remember.",
   },
   {
-    image: "/images/img-carousel3.png",
+    image: "/images/img-carousel3.webp",
     alt: "Patient and physician in consultation room",
     title: "your latest scan stays in one clinic's local system?",
     description: "And treatment is delayed while records are requested.",
   },
   {
-    image: "/images/img-carousel4.png",
+    image: "/images/img-carousel4.webp",
     alt: "Clinician searching through scattered records",
     title: "your reports are scattered when every second matters?",
     description: "Critical decisions can't wait for file hunting.",
   },
   {
-    image: "/images/img-carousel5.png",
+    image: "/images/img-carousel5.webp",
     alt: "Clinician searching through scattered records",
     title: "your blood group report is buried in old emails?",
     description: "Emergency care needs immediate facts, not guesses.",
   },
   {
-    image: "/images/img-carousel6.png",
+    image: "/images/img-carousel6.webp",
     alt: "Clinician searching through scattered records",
     title: "your medical timeline is split across three hospitals?",
     description: "Fragmented records lead to repeated tests and delays.",
   },
   {
-    image: "/images/img-carousel7.png",
+    image: "/images/img-carousel7.webp",
     alt: "Clinician searching through scattered records",
     title: "the one report that could save your life isn't available?",
     description: "A missing document can change everything.",

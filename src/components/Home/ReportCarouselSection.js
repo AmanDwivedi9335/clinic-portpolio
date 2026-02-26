@@ -124,7 +124,7 @@ export default function ReportCarouselSection() {
         </GradientBadge>
 
         <h2 className="mt-4 text-2xl font-semibold leading-snug text-[#7B1FA2] md:text-4xl">
-          <span className="font-aptos-black">'What if'</span> the one report that could save your life...
+          <span className="font-aptos-black">&apos;What if&apos;</span> the one report that could save your life...
           <span className="block font-normal text-[#5A2D82]">
             wasn&apos;t there when you needed it?
           </span>

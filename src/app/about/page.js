@@ -249,7 +249,7 @@ export default function Page() {
 								key={`small-founder-${index}`}
 								className="group relative w-full overflow-hidden rounded-2xl bg-white shadow-sm"
 							>
-								<div className="relative h-[250px] sog_animation group-hover:rotate-y-180">
+								<div className="relative aspect-square w-full sog_animation group-hover:rotate-y-180">
 									<div className="absolute inset-0 backface_hidden overflow-hidden rounded-2xl">
 										<Image
 											src={item.imgurl}

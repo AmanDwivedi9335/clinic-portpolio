@@ -241,6 +241,7 @@ export default function DataControlSection() {
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
 						<span
+							key={`${word}-${index}`}
 							className={`inline-block bg-clip-text text-transparent
 								bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
 								${word === "Absolutely." ? "font-extrabold" : "font-medium"}

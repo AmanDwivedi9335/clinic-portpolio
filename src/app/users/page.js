@@ -201,27 +201,55 @@ export default function UsersPage() {
       let currentIndex = 0;
 
       const showIndex = (nextIndex) => {
-        if (nextIndex === currentIndex) return;
+  if (nextIndex === currentIndex) return;
 
-        gsap.to(rows[currentIndex], { autoAlpha: 0, yPercent: -12, duration: 0.35, ease: "power2.inOut" });
-        gsap.to(rows[nextIndex], { autoAlpha: 1, yPercent: 0, duration: 0.35, ease: "power2.inOut" });
+  // ✅ prevent overlap / stuck alpha
+  gsap.killTweensOf(rows);
 
-        currentIndex = nextIndex;
-      };
+  gsap.to(rows[currentIndex], {
+    autoAlpha: 0,
+    yPercent: -12,
+    duration: 0.35,
+    ease: "power2.inOut",
+  });
+
+  gsap.to(rows[nextIndex], {
+    autoAlpha: 1,
+    yPercent: 0,
+    duration: 0.35,
+    ease: "power2.inOut",
+  });
+
+  currentIndex = nextIndex;
+};
 
       ScrollTrigger.create({
-        trigger: showcaseRef.current,
-        start: "top top",
-        end: `+=${(rows.length + 1) * 100}%`,
-        scrub: 0.6,
-        pin: pinPanelRef.current,
-        anticipatePin: 1,
-        snap: totalSteps > 0 ? 1 / totalSteps : 1,
-        onUpdate: (self) => {
-          const idx = Math.round(self.progress * totalSteps);
-          showIndex(idx);
-        },
-      });
+  trigger: showcaseRef.current,
+  start: "top top",
+  
+
+  // ✅ deterministic scroll length: 1 screen per row
+  end: () => `+=${window.innerHeight * rows.length}`,
+
+  scrub: 0.6,
+  pin: pinPanelRef.current,
+  anticipatePin: 1,
+
+  // ✅ snap cleanly to 0 / 0.5 / 1 for 3 rows
+  snap: totalSteps > 0
+    ? { snapTo: 1 / totalSteps, duration: 0.25, ease: "power2.out" }
+    : false,
+
+  onUpdate: (self) => {
+    const idx = gsap.utils.clamp(0, totalSteps, Math.round(self.progress * totalSteps));
+    showIndex(idx);
+  },
+
+  // ✅ ensure last panel stays visible at the end (no blank state)
+  onLeave: () => showIndex(totalSteps),
+  onEnterBack: () => showIndex(currentIndex),
+});
+requestAnimationFrame(() => ScrollTrigger.refresh());
     });
   }, []);
 

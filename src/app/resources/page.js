@@ -86,15 +86,15 @@ export default function Page() {
 
 	return (
 		<div className="mt-[100px]">
-			<div id="abha-abdm" className="scroll-mt-28 bg-white py-2 md:px-16 px-8">
+			<div id="abha-abdm" className="scroll-mt-28 bg-white px-5 py-6 sm:px-8 md:px-16 md:py-8">
 				<span id="resources1" className="sr-only" aria-hidden="true" />
-				<h1 className="text-[34px] sm:text-[42px] font-semibold text-[#1B1570]">
+				<h1 className="text-[30px] font-semibold text-[#1B1570] sm:text-[38px] md:text-[42px]">
 					Resources
 				</h1>
 
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
-					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
-						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
+					<div className="text-left text-[14px] leading-[1.6] text-[#1D2A65] md:w-[58%] md:text-[16px] md:leading-[1.55] md:text-justify">
+						<div className="py-3 text-[22px] font-semibold text-[#1B1570]">
 							ABHA / ABDM
 						</div>
 						Ayushman Bharat Digital Mission (ABDM) aims to develop the backbone
@@ -122,7 +122,7 @@ export default function Page() {
 							</a>
 						</div>
 					</div>
-					<div className="md:w-[42%]">
+					<div className="mx-auto w-full max-w-[460px] md:mx-0 md:w-[42%] md:max-w-none">
 						<div className="overflow-hidden rounded-[16px] ">
 							<Image
 								src="/images/abha-pic.png"
@@ -135,10 +135,10 @@ export default function Page() {
 					</div>
 				</div>
 			</div>
-			<div id="health-guides" className="scroll-mt-28 bg-white text-black py-10 px-16">
+			<div id="health-guides" className="scroll-mt-28 bg-white px-5 py-10 text-black sm:px-8 md:px-16">
 				<span id="resources2" className="sr-only" aria-hidden="true" />
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
-					<div className="md:w-[42%] relative">
+					<div className="relative mx-auto w-full max-w-[460px] md:mx-0 md:w-[42%] md:max-w-none">
 						<div className="overflow-hidden rounded-[16px]">
 							<Image
 								src="/images/health-guides.png"
@@ -149,8 +149,8 @@ export default function Page() {
 							/>
 						</div>
 					</div>
-					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
-						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
+					<div className="text-left text-[14px] leading-[1.6] text-[#1D2A65] md:w-[58%] md:text-[16px] md:leading-[1.55] md:text-justify">
+						<div className="py-3 text-[22px] font-semibold text-[#1B1570]">
 							Health Guides
 						</div>
 						At Medibank we are not only working on improving healthcare
@@ -176,9 +176,9 @@ export default function Page() {
 					</div>
 				</div>
 			</div>
-			<div id="blogs" className="scroll-mt-28 bg-[#f3f2f4] px-6 py-10 md:px-16">
+			<div id="blogs" className="scroll-mt-28 bg-[#f3f2f4] px-5 py-10 sm:px-8 md:px-16">
 				<span id="resources3" className="sr-only" aria-hidden="true" />
-				<h2 className="text-[32px] font-semibold text-[#1f2677]">Blogs</h2>
+				<h2 className="text-[30px] font-semibold text-[#1f2677] sm:text-[32px]">Blogs</h2>
 				<div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
 					{blogs.map((blog) => (
 						<a
@@ -217,11 +217,11 @@ export default function Page() {
 					</a>
 				</div>
 			</div>
-			<div id="privacy-policy" className="scroll-mt-28 bg-white text-black py-10 px-16">
+			<div id="privacy-policy" className="scroll-mt-28 bg-white px-5 py-10 text-black sm:px-8 md:px-16">
 				<span id="resources4" className="sr-only" aria-hidden="true" />
 				<div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-10">
-					<div className="text-[13px] leading-[1.55] text-[#1D2A65] md:text-[16px] md:w-[58%] text-justify">
-						<div className="text-left text-[22px] font-semibold py-3 text-[#1B1570]">
+					<div className="text-left text-[14px] leading-[1.6] text-[#1D2A65] md:w-[58%] md:text-[16px] md:leading-[1.55] md:text-justify">
+						<div className="py-3 text-[22px] font-semibold text-[#1B1570]">
 							Privacy Policy
 						</div>
 						We understand the sensitive nature of health data and peoples
@@ -245,7 +245,7 @@ export default function Page() {
 							</a>
 						</div>
 					</div>
-					<div className="md:w-[42%]">
+					<div className="mx-auto w-full max-w-[460px] md:mx-0 md:w-[42%] md:max-w-none">
 						<div className="overflow-hidden rounded-[16px]">
 							<Image
 								src="/images/privacy-policy.png"

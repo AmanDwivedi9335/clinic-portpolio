@@ -19,22 +19,22 @@ export default function Page() {
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Vaishnavi Reddy",
-			Designation: "CTO & Co-Founder",
+			Name: "Joe",
+			Designation: "Employee",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Vaishnavi Reddy",
-			Designation: "CTO & Co-Founder",
+			Name: "Joe",
+			Designation: "Employee",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Vaishnavi Reddy",
-			Designation: "CTO & Co-Founder",
+			Name: "Joe",
+			Designation: "Employee",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
 			imgurl: "/images/founders/vaishnavi.jpg",

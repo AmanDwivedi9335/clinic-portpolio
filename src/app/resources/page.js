@@ -179,13 +179,14 @@ export default function Page() {
 			<div id="blogs" className="scroll-mt-28 bg-[#f3f2f4] px-5 py-10 sm:px-8 md:px-16">
 				<span id="resources3" className="sr-only" aria-hidden="true" />
 				<h2 className="text-[30px] font-semibold text-[#1f2677] sm:text-[32px]">Blogs</h2>
-				<div className="mt-5 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-					{blogs.map((blog) => (
-						<a
-							key={blog.title}
-							href={blog.path}
-							className="rounded-[18px] border border-[#a32fb6] bg-[#e8e0ea] p-3 shadow-[0_2px_8px_rgba(68,43,132,0.08)] transition-transform duration-200 hover:-translate-y-1"
-						>
+				<div className="-mx-5 mt-5 overflow-x-auto px-5 sm:-mx-8 sm:px-8 md:mx-0 md:overflow-visible md:px-0">
+					<div className="flex w-max gap-4 md:grid md:w-auto md:grid-cols-2 md:gap-6 xl:grid-cols-4">
+						{blogs.map((blog) => (
+							<a
+								key={blog.title}
+								href={blog.path}
+								className="w-[280px] shrink-0 rounded-[18px] border border-[#a32fb6] bg-[#e8e0ea] p-3 shadow-[0_2px_8px_rgba(68,43,132,0.08)] transition-transform duration-200 hover:-translate-y-1 md:w-auto md:shrink"
+							>
 							<Image
 								src={blog.imgurl}
 								alt={blog.title}
@@ -205,8 +206,9 @@ export default function Page() {
 									{/* <span>{blog.readTime}</span> */}
 								</div>
 							</div>
-						</a>
-					))}
+							</a>
+						))}
+					</div>
 				</div>
 				<div className="mt-10 text-center">
 					<a

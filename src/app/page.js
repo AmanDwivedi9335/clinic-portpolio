@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       {/* Sticky stack panels */}
-      <div className="relative isolate">
+      <div className="relative isolate overflow-x-clip">
         <div className="sticky  top-[5px]  h-screen z-0">
           <Hero />
         </div>

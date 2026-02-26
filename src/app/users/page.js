@@ -182,6 +182,10 @@ export default function UsersPage() {
   const pinPanelRef = useRef(null);
 
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      return undefined;
+    }
+
     return createGsapContext(showcaseRef, (gsap) => {
       const { ScrollTrigger } = window;
       const rows = gsap.utils.toArray(".users-showcase-row");
@@ -342,15 +346,15 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-20 md:mt-10 sm:mt-20 h-[400vh] max-w-6xl bg-[#F4F4F8] px-6 "
+        className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto md:h-[400vh] max-w-6xl bg-[#F4F4F8] px-6"
       >
         <div
           ref={pinPanelRef}
-          className="relative h-[100svh] overflow-hidden py-6 md:py-0"
+          className="relative h-auto md:h-[100svh] overflow-visible md:overflow-hidden py-6 md:py-0"
         >
           {/* ===== Row 1: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-3xl md:text-4xl sm:text-3xl font-extrabold leading-tight 
@@ -401,7 +405,7 @@ export default function UsersPage() {
 
           {/* ===== Row 2: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
@@ -443,7 +447,7 @@ export default function UsersPage() {
 
           {/* ===== Row 3: Text Left, Image Right ===== */}
           <div
-            className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
+            className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
               <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">

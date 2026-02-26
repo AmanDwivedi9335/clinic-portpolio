@@ -12,7 +12,7 @@ export default function Home() {
         <DoctorHero />
         <DoctorAdvantage />
         <DoctorPortalPreview />
-        <DoctorPricing />
+        {/* <DoctorPricing /> */}
       </div>
     </>
   );

@@ -6,22 +6,10 @@ import { createGsapContext } from "@/lib/gsap";
 import GradientBadge from "@/components/ui/GradientBadge";
 
 const lovedOnes = [
-  {
-    label: "Parents",
-    image: "/images/grandparents.png",
-  },
-  {
-    label: "Partner",
-    image: "/images/partner.png",
-  },
-  {
-    label: "Children",
-    image: "/images/children.png",
-  },
-  {
-    label: "Grandparents",
-    image: "/images/grandparents2.png",
-  },
+  { label: "Parents", image: "/images/grandparents.png" },
+  { label: "Partner", image: "/images/partner.png" },
+  { label: "Children", image: "/images/children.png" },
+  { label: "Grandparents", image: "/images/grandparents2.png" },
 ];
 
 export default function LovedOnesSection() {
@@ -29,6 +17,7 @@ export default function LovedOnesSection() {
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
+      // Intro
       gsap.fromTo(
         ".loved-intro",
         { y: 26, opacity: 0 },
@@ -44,6 +33,7 @@ export default function LovedOnesSection() {
         }
       );
 
+      // Diagram
       gsap.fromTo(
         ".loved-diagram",
         { scale: 0.92, opacity: 0 },
@@ -61,160 +51,200 @@ export default function LovedOnesSection() {
 
       const orbitItems = gsap.utils.toArray(".loved-orbit");
 
-      const orbitTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".loved-diagram",
-          start: "top 75%",
-        },
-      });
+      const mm = gsap.matchMedia();
 
-      orbitTimeline
-        .fromTo(
-          ".loved-center",
-          { scale: 0.9 },
-          { scale: 1, duration: 0.45, ease: "power3.out" }
-        )
-        .to(
-          ".loved-center",
-          {
-            keyframes: [
-              { rotation: 2 },
-              { rotation: -2 },
-              { rotation: 1 },
-              { rotation: -1 },
-              { rotation: 0 },
-            ],
-            duration: 0.6,
-            ease: "power1.inOut",
-          },
-          "<"
-        )
-        .fromTo(
-          orbitItems,
-          {
-            opacity: 0,
-            scale: 0.6,
-            x: (index, element) => Number(element.dataset.x || 0),
-            y: (index, element) => Number(element.dataset.y || 0),
-          },
-          {
-            opacity: 1,
-            scale: 1,
-            x: 0,
-            y: 0,
-            duration: 0.9,
-            ease: "back.out(1.6)",
-            stagger: 0.12,
-          },
-          "-=0.25"
-        );
+      mm.add(
+        {
+          isMobile: "(max-width: 767px)",
+          isDesktop: "(min-width: 768px)",
+        },
+        (context) => {
+          const { isMobile } = context.conditions;
+
+          const getNum = (el, attr) => Number(el.getAttribute(attr) || 0);
+
+          const orbitTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: ".loved-diagram",
+              start: "top 75%",
+            },
+          });
+
+          orbitTimeline
+            .fromTo(
+              ".loved-center",
+              { scale: 0.9 },
+              { scale: 1, duration: 0.45, ease: "power3.out" }
+            )
+            .to(
+              ".loved-center",
+              {
+                keyframes: [
+                  { rotation: 2 },
+                  { rotation: -2 },
+                  { rotation: 1 },
+                  { rotation: -1 },
+                  { rotation: 0 },
+                ],
+                duration: 0.6,
+                ease: "power1.inOut",
+              },
+              "<"
+            )
+            .fromTo(
+              orbitItems,
+              {
+                opacity: 0,
+                scale: 0.6,
+                x: (i, el) =>
+                  isMobile ? getNum(el, "data-xm") : getNum(el, "data-x"),
+                y: (i, el) =>
+                  isMobile ? getNum(el, "data-ym") : getNum(el, "data-y"),
+              },
+              {
+                opacity: 1,
+                scale: 1,
+                x: 0,
+                y: 0,
+                duration: 0.9,
+                ease: "back.out(1.6)",
+                stagger: 0.12,
+              },
+              "-=0.25"
+            );
+        }
+      );
+
+      return () => mm.revert();
     });
   }, []);
 
   return (
-    <section ref={sectionRef} className="overflow-x-hidden bg-white py-12 md:py-20">
+    <section ref={sectionRef} className="bg-white py-12 md:py-20 overflow-x-hidden">
       <div className="loved-intro mx-auto flex max-w-5xl flex-col items-center px-4 text-center md:px-8">
         <GradientBadge innerClassName="bg-white text-[#141E7A]">
           For Your Loved Ones
         </GradientBadge>
+
         <h2 className="mt-5 text-2xl font-extrabold text-[#3B1ED0] md:text-4xl">
           Your Health Identity is Your <b>“Protection”</b>
         </h2>
+
         <p className="mt-4 max-w-3xl text-sm text-[#000339] md:text-base">
           But your Family&apos;s Health Identity is you “Power”. Create linked health
           identities of your parents, your loved ones and your children so you are
           always prepared - even when they can&apos;t be
         </p>
-
       </div>
 
-      <div className="mx-auto mt-12 flex w-full max-w-4xl justify-center px-4 md:px-8">
-        <div className="loved-diagram relative h-[280px] w-full max-w-[320px] md:h-[340px] md:max-w-[420px]">
-          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 -translate-y-[calc(100%+30px)] bg-black" />
-          <div className="absolute left-1/2 top-1/2 h-[42px] w-px -translate-x-1/2 translate-y-[30px] bg-black" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 -translate-x-[calc(100%+36px)] bg-black" />
-          <div className="absolute left-1/2 top-1/2 h-px w-[58px] -translate-y-1/2 translate-x-[36px] bg-black" />
+      <div className="mx-auto mt-10 flex w-full max-w-4xl justify-center px-4 md:mt-12 md:px-8 min-w-0">
+        {/* Smaller + clipped on mobile to avoid any horizontal expansion */}
+        <div
+          className="
+            relative w-full max-w-[260px] md:max-w-[420px]
+            overflow-hidden
+            [clip-path:inset(0)]
+            [contain:layout_paint]
+            min-w-0
+          "
+        >
+          <div className="loved-diagram relative h-[230px] w-full md:h-[340px]">
+            {/* Lines (smaller on mobile) */}
+            <div className="absolute left-1/2 top-1/2 h-[30px] w-px -translate-x-1/2 -translate-y-[calc(100%+22px)] bg-black md:h-[42px] md:-translate-y-[calc(100%+30px)]" />
+            <div className="absolute left-1/2 top-1/2 h-[30px] w-px -translate-x-1/2 translate-y-[22px] bg-black md:h-[42px] md:translate-y-[30px]" />
+            <div className="absolute left-1/2 top-1/2 h-px w-[44px] -translate-y-1/2 -translate-x-[calc(100%+26px)] bg-black md:w-[58px] md:-translate-x-[calc(100%+36px)]" />
+            <div className="absolute left-1/2 top-1/2 h-px w-[44px] -translate-y-1/2 translate-x-[26px] bg-black md:w-[58px] md:translate-x-[36px]" />
 
-          <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-            <Image
-              src="/images/medibank-grd-logo.png"
-              alt="MediBank"
-              width={110}
-              height={110}
-              className="h-[110px] w-[110px] object-contain md:h-[140px] md:w-[140px]"
-            />
-          </div>
-
-          <div
-            className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2"
-            data-y="120"
-          >
-            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
+            {/* Center (added loved-center class for your GSAP) */}
+            <div className="loved-center absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center will-change-transform">
               <Image
-                src={lovedOnes[0].image}
-                alt={lovedOnes[0].label}
-                width={64}
-                height={64}
-                className="h-full w-full object-cover"
+                src="/images/medibank-grd-logo.png"
+                alt="MediBank"
+                width={96}
+                height={96}
+                className="h-[90px] w-[90px] object-contain md:h-[140px] md:w-[140px]"
               />
             </div>
-            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
-              {lovedOnes[0].label}
-            </span>
-          </div>
 
-          <div
-            className="loved-orbit absolute left-2 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:left-0 md:gap-2"
-            data-x="120"
-          >
-            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
-              <Image
-                src={lovedOnes[1].image}
-                alt={lovedOnes[1].label}
-                width={64}
-                height={64}
-                className="h-full w-full object-cover"
-              />
+            {/* Top */}
+            <div
+              className="loved-orbit absolute left-1/2 top-0 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2 will-change-transform"
+              data-ym="78"
+              data-y="120"
+            >
+              <div className="h-10 w-10 overflow-hidden md:h-16 md:w-16">
+                <Image
+                  src={lovedOnes[0].image}
+                  alt={lovedOnes[0].label}
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
+                {lovedOnes[0].label}
+              </span>
             </div>
-            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
-              {lovedOnes[1].label}
-            </span>
-          </div>
 
-          <div
-            className="loved-orbit absolute right-2 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:right-0 md:gap-2"
-            data-x="-120"
-          >
-            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
-              <Image
-                src={lovedOnes[2].image}
-                alt={lovedOnes[2].label}
-                width={64}
-                height={64}
-                className="h-full w-full object-cover"
-              />
+            {/* Left */}
+            <div
+              className="loved-orbit absolute left-1 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:left-0 md:gap-2 will-change-transform"
+              data-xm="78"
+              data-x="120"
+            >
+              <div className="h-10 w-10 overflow-hidden md:h-16 md:w-16">
+                <Image
+                  src={lovedOnes[1].image}
+                  alt={lovedOnes[1].label}
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
+                {lovedOnes[1].label}
+              </span>
             </div>
-            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
-              {lovedOnes[2].label}
-            </span>
-          </div>
 
-          <div
-            className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2"
-            data-y="-120"
-          >
-            <div className="h-12 w-12 overflow-hidden md:h-16 md:w-16">
-              <Image
-                src={lovedOnes[3].image}
-                alt={lovedOnes[3].label}
-                width={64}
-                height={64}
-                className="h-full w-full object-cover"
-              />
+            {/* Right */}
+            <div
+              className="loved-orbit absolute right-1 top-1/2 flex -translate-y-1/2 flex-col items-center gap-1 md:right-0 md:gap-2 will-change-transform"
+              data-xm="-78"
+              data-x="-120"
+            >
+              <div className="h-10 w-10 overflow-hidden md:h-16 md:w-16">
+                <Image
+                  src={lovedOnes[2].image}
+                  alt={lovedOnes[2].label}
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
+                {lovedOnes[2].label}
+              </span>
             </div>
-            <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
-              {lovedOnes[3].label}
-            </span>
+
+            {/* Bottom */}
+            <div
+              className="loved-orbit absolute bottom-0 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 md:gap-2 will-change-transform"
+              data-ym="-78"
+              data-y="-120"
+            >
+              <div className="h-10 w-10 overflow-hidden md:h-16 md:w-16">
+                <Image
+                  src={lovedOnes[3].image}
+                  alt={lovedOnes[3].label}
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-[10px] font-medium text-[#2D2261] md:text-xs">
+                {lovedOnes[3].label}
+              </span>
+            </div>
           </div>
         </div>
       </div>

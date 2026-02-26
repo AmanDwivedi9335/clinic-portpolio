@@ -224,32 +224,34 @@ export default function UsersPage() {
 };
 
       ScrollTrigger.create({
-  trigger: showcaseRef.current,
-  start: "top top",
-  
+        trigger: showcaseRef.current,
+        start: "top top",
+        
 
-  // ✅ deterministic scroll length: 1 screen per row
-  end: () => `+=${window.innerHeight * rows.length}`,
+        // ✅ deterministic scroll length: 1 screen per row
+        end: () => `+=${window.innerHeight * rows.length}`,
 
-  scrub: 0.6,
-  pin: pinPanelRef.current,
-  anticipatePin: 1,
+        scrub: 0.6,
+        pin: pinPanelRef.current,
+        anticipatePin: 1,
 
-  // ✅ snap cleanly to 0 / 0.5 / 1 for 3 rows
-  snap: totalSteps > 0
-    ? { snapTo: 1 / totalSteps, duration: 0.25, ease: "power2.out" }
-    : false,
+        // ✅ snap cleanly to 0 / 0.5 / 1 for 3 rows
+        snap: totalSteps > 0
+          ? { snapTo: 1 / totalSteps, duration: 0.25, ease: "power2.out" }
+          : false,
 
-  onUpdate: (self) => {
-    const idx = gsap.utils.clamp(0, totalSteps, Math.round(self.progress * totalSteps));
-    showIndex(idx);
-  },
+        onUpdate: (self) => {
+          const idx = gsap.utils.clamp(0, totalSteps, Math.round(self.progress * totalSteps));
+          showIndex(idx);
+        },
 
-  // ✅ ensure last panel stays visible at the end (no blank state)
-  onLeave: () => showIndex(totalSteps),
-  onEnterBack: () => showIndex(currentIndex),
-});
-requestAnimationFrame(() => ScrollTrigger.refresh());
+        // ✅ ensure last panel stays visible at the end (no blank state)
+        onLeave: () => showIndex(totalSteps),
+        onEnterBack: () => showIndex(currentIndex),
+      });
+      
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      
     });
   }, []);
 

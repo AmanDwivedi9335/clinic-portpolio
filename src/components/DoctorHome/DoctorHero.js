@@ -6,7 +6,7 @@ import { createGsapContext } from "@/lib/gsap";
 
 export default function DoctorHero() {
   const heroImages = [
-    "/images/doctorhero.png",
+    "/images/doctorhero.webp",
   ];
 
   const firstLineText =

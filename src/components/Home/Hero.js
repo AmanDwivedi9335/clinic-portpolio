@@ -6,11 +6,11 @@ import { createGsapContext } from "@/lib/gsap";
 
 export default function Hero() {
   const heroImages = [
-    "/images/1.png",
-    "/images/2.png",
-    "/images/3.png",
-    "/images/14.png",
-    "/images/5.png",
+    "/images/1.webp",
+    "/images/2.webp",
+    "/images/3.webp",
+    "/images/14.webp",
+    "/images/5.webp",
   ];
 
   const firstLineText =

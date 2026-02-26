@@ -130,7 +130,7 @@ export default function Hero() {
           >
             {/* Left content */}
             <div className="px-4 pb-4 pt-1.5 md:px-10 md:py-16">
-              <p className="hero-animate text-[10px] font-extrabold leading-snug text-[#282672] md:text-sm">
+              <p className="hero-animate font-aptos-extrabold text-[10px] leading-snug text-[#282672] md:text-sm">
                 <Image
                   src="/images/star.png"
                   width={40}
@@ -148,7 +148,7 @@ export default function Hero() {
                 />
               </p>
 
-              <h1 className="hero-animate mt-2.5 text-[clamp(28px,8.5vw,36px)] font-extrabold leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
+              <h1 className="hero-animate font-aptos-black mt-2.5 text-[clamp(28px,8.5vw,36px)] leading-[1.05] text-wave md:mt-4 md:text-[60px] md:leading-[1.02]">
                 Your Health Identity
                 <br />
                 for Life...

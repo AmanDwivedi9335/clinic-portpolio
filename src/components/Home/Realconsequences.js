@@ -19,14 +19,14 @@ const stories = [
     description:
       "The patient arrived with no accompanying files and no access to past diagnostics. Doctors lost precious minutes before understanding his blood group and pre-existing conditions.",
     highlight: "MediBank prevents this.",
-    image: "/images/story2.png",
+    image: "/images/story2.webp",
   },
   {
     title: "Critical allergy missed",
     description:
       "A life-threatening allergy was buried in old records at another facility. With no instant visibility, treatment decisions became risky in a critical moment.",
     highlight: "MediBank prevents this.",
-    image: "/images/story1.png",
+    image: "/images/story1.webp",
   },
 ];
 

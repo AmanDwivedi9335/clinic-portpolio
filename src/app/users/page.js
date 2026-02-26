@@ -157,7 +157,7 @@ function HeroWaveBackground() {
 
 function RowPillIndicators({ activeIndex = 0 }) {
   return (
-    <div className="mt-6 flex items-center gap-2" aria-hidden="true">
+    <div className="mt-6 hidden items-center gap-2 md:flex" aria-hidden="true">
       {[0, 1, 2].map((index) => {
         const isActive = index === activeIndex;
 
@@ -180,6 +180,11 @@ function RowPillIndicators({ activeIndex = 0 }) {
 export default function UsersPage() {
   const showcaseRef = useRef(null);
   const pinPanelRef = useRef(null);
+  const showcaseHeadingClassName =
+    "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
+  const showcaseSubheadingClassName =
+    "mt-2 text-lg md:text-lg font-normal leading-snug bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
+  const showcaseBodyClassName = "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]";
 
   useEffect(() => {
     if (window.innerWidth < 768) {
@@ -387,26 +392,17 @@ export default function UsersPage() {
             className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-3xl md:text-4xl sm:text-3xl font-extrabold leading-tight 
-                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-                bg-clip-text text-transparent">
+              <h2 className={showcaseHeadingClassName}>
                 Smart Health Overview
               </h2>
 
-              <p
-                className="
-                  mt-2 text-lg md:text-lg font-normal
-                  bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-                  bg-clip-text text-transparent
-                  leading-snug
-                "
-              >
+              <p className={showcaseSubheadingClassName}>
                 Track appointments, vitals, and daily health
                 <br />
                 insights in one place.
               </p>
 
-              <p className="mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]">
+              <p className={showcaseBodyClassName}>
                 A personalized multidimensional record of your ecosystem&apos;s daily
                 health journey, and your vital trends.
               </p>
@@ -438,17 +434,17 @@ export default function UsersPage() {
             className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+              <h2 className={showcaseHeadingClassName}>
                 Discover Nearby
                 <br />
                 Healthcare Providers
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#452169]">
+              <p className={showcaseSubheadingClassName}>
                 Search doctors, labs, and hospitals around your
                 <br />
                 location.
               </p>
-              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+              <p className={showcaseBodyClassName}>
                 An interactive map-based directory to explore, view availability,
                 and book appointments with nearby providers.
               </p>
@@ -480,17 +476,17 @@ export default function UsersPage() {
             className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight text-[#5b0aa3]">
+              <h2 className={showcaseHeadingClassName}>
                 Centralized Health
                 <br />
                 Records
               </h2>
-              <p className="mt-2 text-lg font-semibold text-[#452169]">
+              <p className={showcaseSubheadingClassName}>
                 Access appointments, lab reports, and hospital
                 <br />
                 documents anytime.
               </p>
-              <p className="mt-4 max-w-[430px] text-sm text-[#5f4c79]">
+              <p className={showcaseBodyClassName}>
                 A structured record management center for securely viewing and
                 managing essential reports with clarity.
               </p>

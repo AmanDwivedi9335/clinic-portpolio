@@ -84,6 +84,7 @@
 	body {
 		@apply bg-background text-foreground;
 		font-family: "Aptos" !important;
+		overflow-x: clip;
 	}
 }
 @keyframes bounceUpDown {

@@ -342,7 +342,7 @@ export default function UsersPage() {
       {/* REST */}
       <section
         ref={showcaseRef}
-        className="relative mx-auto mt-4 h-[400vh] max-w-6xl bg-[#F4F4F8] px-6 md:mt-0"
+        className="relative mx-auto mt-20 md:mt-10 sm:mt-20 h-[400vh] max-w-6xl bg-[#F4F4F8] px-6 "
       >
         <div
           ref={pinPanelRef}
@@ -353,7 +353,7 @@ export default function UsersPage() {
             className="users-showcase-row absolute inset-0 grid items-center gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
           >
             <div>
-              <h2 className="text-4xl font-extrabold leading-tight 
+              <h2 className="text-3xl md:text-4xl sm:text-3xl font-extrabold leading-tight 
                 bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
                 bg-clip-text text-transparent">
                 Smart Health Overview
@@ -361,7 +361,7 @@ export default function UsersPage() {
 
               <p
                 className="
-                  mt-2 text-lg font-normal
+                  mt-2 text-lg md:text-lg font-normal
                   bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
                   bg-clip-text text-transparent
                   leading-snug
@@ -372,7 +372,7 @@ export default function UsersPage() {
                 insights in one place.
               </p>
 
-              <p className="mt-4 max-w-[430px] text-sm text-[#0b137a]">
+              <p className="mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]">
                 A personalized multidimensional record of your ecosystem&apos;s daily
                 health journey, and your vital trends.
               </p>
@@ -421,7 +421,15 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={1} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div
+              className="
+                mx-auto
+                w-[160px]
+                sm:w-[180px]
+                md:w-[220px]
+                md:justify-self-center
+              "
+            >
               <Image
                 src="/images/users/discover-nearby.svg"
                 alt="Discover nearby mobile dashboard"
@@ -455,7 +463,15 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={2} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div
+              className="
+                mx-auto
+                w-[160px]
+                sm:w-[180px]
+                md:w-[220px]
+                md:justify-self-center
+              "
+            >
               <Image
                 src="/images/users/centralized.svg"
                 alt="Centralized Overview mobile dashboard"

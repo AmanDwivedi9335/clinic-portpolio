@@ -38,27 +38,29 @@ const Howitworks = () => {
   return (
     <section
       className="
-        relative overflow-hidden py-20
+        relative overflow-hidden py-16 md:py-20
         bg-[radial-gradient(circle_at_center,_#4E0663_0%,_#060B45_55%)]
       "
     >
       {/* Header */}
-      <div className="mx-auto max-w-7xl px-6 text-center">
+      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6">
         <GradientBadge innerClassName="bg-[#1A1D8A] px-5 text-white/95">
           How It Works
         </GradientBadge>
 
-        <h2 className="mt-4 text-4xl font-bold text-white md:text-5xl">
+        <h2 className="mt-4 text-3xl font-bold leading-tight text-white md:text-5xl">
           Simple, Safe, Control-Focused
         </h2>
 
-        <p className="mt-4 text-white text-3xl">Your health deserves that.</p>
+        <p className="mt-3 text-lg text-white/90 md:mt-4 md:text-3xl">
+          Your health deserves that.
+        </p>
       </div>
 
       {/* Cards */}
       <div
         className="
-          mx-auto mt-14 grid max-w-7xl gap-6  
+          mx-auto mt-10 grid max-w-7xl gap-5 px-4 sm:mt-14 sm:gap-6 sm:px-6
           grid-cols-1
           md:grid-cols-2
           lg:grid-cols-3
@@ -69,15 +71,15 @@ const Howitworks = () => {
           <div
             key={index}
             className="
-              relative rounded-2xl bg-white px-6 py-10
+              relative rounded-2xl bg-white px-5 pb-8 pt-10 text-left sm:px-6 sm:pb-10
               shadow-[0_25px_60px_rgba(0,0,0,0.15)]
             "
           >
             {/* Step pill */}
             <span
               className="
-                absolute -top-5 left-1/4 -translate-x-1/2
-                rounded-full px-4 py-2 text-md font-semibold text-white
+                absolute -top-5 left-1/2 -translate-x-1/2
+                whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold text-white
                 bg-[linear-gradient(180deg,#030B6F,#060B45)]
               "
             >
@@ -101,11 +103,13 @@ const Howitworks = () => {
             </div>
 
             {/* Content */}
-            <h3 className="mt-4 text-2xl font-semibold text-[#0B137A]">
+            <h3 className="mt-4 text-xl font-semibold leading-snug text-[#0B137A] sm:text-2xl">
               {step.title}
             </h3>
 
-            <p className="mt-2 text-lg text-[#0B137A]/80">{step.desc}</p>
+            <p className="mt-2 text-base leading-relaxed text-[#0B137A]/80 sm:text-lg">
+              {step.desc}
+            </p>
           </div>
         ))}
       </div>

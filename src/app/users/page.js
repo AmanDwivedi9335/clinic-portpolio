@@ -379,7 +379,15 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={0} />
             </div>
 
-            <div className="mx-auto w-full max-w-[220px] md:justify-self-end">
+            <div
+              className="
+                mx-auto
+                w-[160px]
+                sm:w-[180px]
+                md:w-[220px]
+                md:justify-self-center
+              "
+            >
               <Image
                 src="/images/users/smart-health-overview.svg"
                 alt="Smart Health Overview mobile dashboard"

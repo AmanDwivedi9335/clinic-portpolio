@@ -69,7 +69,7 @@ export default function Hero() {
   const isTypingComplete = typedCharacters >= secondLineText.length;
 
   return (
-    <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[82px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
+    <section id="home-hero-section" ref={sectionRef} className="min-h-[100dvh] bg-white pt-[82px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
       <div className="mx-auto px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[calc(100dvh-94px)] md:rounded-[28px] md:min-h-0">
@@ -157,7 +157,7 @@ export default function Hero() {
               <p className="hero-animate mt-2.5 max-w-xl text-[12px] font-normal leading-[1.45] text-[#282672] md:mt-5 md:text-[15px]">
                 <span>{firstLineText}</span>
                 <br />
-                <span className="font-semibold">{secondLineVisible}</span>
+                <span id="claim-button-anchor" className="font-semibold">{secondLineVisible}</span>
                 {!isTypingComplete && (
                   <span className="ml-0.5 inline-block animate-pulse">|</span>
                 )}

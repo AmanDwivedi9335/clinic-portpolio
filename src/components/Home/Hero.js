@@ -163,7 +163,7 @@ export default function Hero() {
                 )}
               </p>
 
-              <div className="hero-animate mt-4 md:mt-7">
+              {/* <div className="hero-animate mt-4 md:mt-7">
                 <a
                   href="/claim"
                   className="
@@ -181,7 +181,7 @@ export default function Hero() {
                 >
                   Claim Your Health Identity
                 </a>
-              </div>
+              </div> */}
             </div>
 
             {/* Right side kept mostly visual (optional) */}

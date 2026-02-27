@@ -12,12 +12,14 @@ const DEFAULT_STYLE = {
 
 export default function FloatingClaimButton() {
   const pathname = usePathname();
+  const [isHeroMode, setIsHeroMode] = useState(false);
   const [positionStyle, setPositionStyle] = useState(DEFAULT_STYLE);
 
   const isHomePage = useMemo(() => pathname === "/", [pathname]);
 
   useEffect(() => {
     if (!isHomePage) {
+      setIsHeroMode(false);
       setPositionStyle(DEFAULT_STYLE);
       return;
     }
@@ -26,25 +28,15 @@ export default function FloatingClaimButton() {
     const heroAnchor = document.getElementById("claim-button-anchor");
 
     if (!heroSection || !heroAnchor) {
+      setIsHeroMode(false);
       setPositionStyle(DEFAULT_STYLE);
       return;
     }
 
-    const updatePosition = () => {
-      const heroRect = heroSection.getBoundingClientRect();
-      const anchorRect = heroAnchor.getBoundingClientRect();
-      const heroScrollProgress = Math.max(0, -heroRect.top) / Math.max(heroRect.height, 1);
-      const hasScrolledPastHero = heroScrollProgress >= 0.55;
-      const isAnchorAboveViewport = anchorRect.bottom < 72;
-      const shouldUseHeroPosition = !hasScrolledPastHero && !isAnchorAboveViewport;
-
-      if (!shouldUseHeroPosition) {
-        setPositionStyle(DEFAULT_STYLE);
-        return;
-      }
-
-      const buttonTop = Math.min(anchorRect.bottom + 12, window.innerHeight - 72);
-      const buttonLeft = Math.max(anchorRect.left, 16);
+    const updateHeroPosition = () => {
+      const rect = heroAnchor.getBoundingClientRect();
+      const buttonTop = Math.min(rect.bottom + 12, window.innerHeight - 72);
+      const buttonLeft = Math.max(rect.left, 16);
 
       setPositionStyle({
         top: `${buttonTop}px`,
@@ -54,44 +46,38 @@ export default function FloatingClaimButton() {
       });
     };
 
-    let frameId = null;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const shouldUseHeroPosition = entry.isIntersecting && entry.intersectionRatio > 0.55;
+        setIsHeroMode(shouldUseHeroPosition);
 
-    const scheduleUpdate = () => {
-      if (frameId !== null) {
-        return;
+        if (shouldUseHeroPosition) {
+          updateHeroPosition();
+        } else {
+          setPositionStyle(DEFAULT_STYLE);
+        }
+      },
+      { threshold: [0.25, 0.55, 0.75] }
+    );
+
+    observer.observe(heroSection);
+
+    const onViewportChange = () => {
+      if (isHeroMode) {
+        updateHeroPosition();
       }
-
-      frameId = window.requestAnimationFrame(() => {
-        frameId = null;
-        updatePosition();
-      });
     };
 
-    const resizeObserver = new ResizeObserver(scheduleUpdate);
-    resizeObserver.observe(heroAnchor);
-    resizeObserver.observe(heroSection);
-
-    const mutationObserver = new MutationObserver(scheduleUpdate);
-    mutationObserver.observe(heroAnchor, {
-      characterData: true,
-      childList: true,
-      subtree: true,
-    });
-
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
-    window.addEventListener("resize", scheduleUpdate);
-    scheduleUpdate();
+    window.addEventListener("scroll", onViewportChange, { passive: true });
+    window.addEventListener("resize", onViewportChange);
+    updateHeroPosition();
 
     return () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-      resizeObserver.disconnect();
-      mutationObserver.disconnect();
-      window.removeEventListener("scroll", scheduleUpdate);
-      window.removeEventListener("resize", scheduleUpdate);
+      observer.disconnect();
+      window.removeEventListener("scroll", onViewportChange);
+      window.removeEventListener("resize", onViewportChange);
     };
-  }, [isHomePage]);
+  }, [isHomePage, isHeroMode]);
 
   return (
     <a

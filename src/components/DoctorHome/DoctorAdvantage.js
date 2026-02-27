@@ -84,10 +84,10 @@ export default function DoctorAdvantage() {
           </div>
         </div>
 
-        <h2 className="mt-4 text-center text-3xl font-extrabold text-wave md:text-5xl">
+        <h2 className="mt-4 text-center text-3xl font-aptos-extrabold text-wave md:text-5xl">
           MediBank Eliminates Uncertainty.
         </h2>
-        <p className="mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">
+        <p className="mt-2 text-center text-sm text-[#1E1B6A] md:text-3xl">
           You see the whole patient, not fragments.
         </p>
 

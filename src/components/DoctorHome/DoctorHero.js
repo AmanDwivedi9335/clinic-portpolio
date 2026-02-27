@@ -66,7 +66,7 @@ export default function DoctorHero() {
 
   return (
     <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[22px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
-      <div className="mx-auto px-3 md:px-6">
+      <div className="mx-auto w-full px-3 md:px-6">
         {/* Rounded hero frame */}
         <div className="relative overflow-hidden rounded-[24px] min-h-[calc(100dvh-94px)] md:rounded-[28px] md:min-h-0">
           {/* ===== Desktop background (UNCHANGED UI) ===== */}
@@ -117,7 +117,7 @@ export default function DoctorHero() {
           <div
             className="
               relative z-20
-              grid grid-cols-1 md:grid-cols-2
+              grid grid-cols-1 md:grid-cols-[1.25fr_0.75fr]
               items-center
               h-full
               gap-1
@@ -132,7 +132,7 @@ export default function DoctorHero() {
                 
               </p>
 
-              <h1 className="hero-animate mt-4 text-[30px] font-aptos-black leading-[1.05] text-wave md:text-[60px] md:leading-[0.8]">
+              <h1 className="hero-animate mt-4 text-[30px] font-aptos-black leading-[1.05] text-wave md:text-[60px]">
                 Blind Consultations<br /> are Dangerous Consultations
               </h1>
 

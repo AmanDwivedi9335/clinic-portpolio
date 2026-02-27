@@ -82,7 +82,7 @@ export default function DoctorPortalPreview() {
           </div>
         </div>
 
-        <h2 className="portal-preview-animate mt-4 text-center text-3xl font-extrabold text-wave md:text-5xl">
+        <h2 className="portal-preview-animate mt-4 text-center text-3xl font-aptos-extrabold text-wave md:text-4xl">
           Built for Doctors. Designed for Clinical Clarity.
         </h2>
         <p className="portal-preview-animate mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">

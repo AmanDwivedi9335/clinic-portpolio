@@ -1,48 +1,22 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { FiArrowUpRight } from "react-icons/fi";
+import { usePathname } from "next/navigation";
+import { FiArrowRight } from "react-icons/fi";
+
+const ACTIVE_TEXT_GRADIENT = "bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 bg-clip-text text-transparent";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    var element = document.getElementById("burger");
-    if (!isMobileMenuOpen) {
-      element && (element.innerHTML = "x");
-    } else {
-      element && (element.innerHTML = "☰");
-    }
-  };
+  const isActive = (url) => pathname === url;
 
-  const data = [
-    { url: "/", name: "Home" },
-    { url: "/doctors", name: "For Doctors" },
-    { url: "/users", name: "For Users" },
-    { url: "/partners", name: "Partners" },
-    { url: "/resources", name: "Resources" },
-    { url: "/about", name: "About Us" },
-    { url: "/blog", name: "Blog" },
-    { url: "/login", name: "Login" },
-  ];
+  const navLinkClass = (url) =>
+    `group flex items-center gap-1 ${isActive(url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672] hover:opacity-70"}`;
 
-  const menu = (
-    <>
-      {data.map((item, index) => {
-        return (
-          <a
-            key={index}
-            href={item.url}
-            className="underline-offset-2 hover:underline bg-gradient-to-r from-purple-500 via-red-500 to-blue-700 bg-clip-text text-transparent shadow-md p-1 pl-4 font-semibold rounded-[10px] border"
-          >
-            {item.name}
-          </a>
-        );
-      })}
-    </>
-  );
+  const arrowClass = (url) =>
+    `transition-transform duration-200 ${isActive(url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672] group-hover:translate-x-0.5"}`;
 
   return (
     <header
@@ -52,7 +26,6 @@ export default function Header() {
         md:fixed md:top-4 md:left-1/2 md:-translate-x-1/2
       "
     >
-      {/* pill conatainer */}
       <div
         className="
           bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/60 gap-2
@@ -60,7 +33,6 @@ export default function Header() {
           md:rounded-[50px]
         "
       >
-        {/* items container */}
         <div className="flex items-center px-4 md:px-10 h-[64px] md:h-[72px]">
           <a href="/" className="flex items-center gap-2">
             <Image
@@ -73,50 +45,31 @@ export default function Header() {
             />
           </a>
 
-          {/* desktop menu */}
-          <nav className="hidden text-[#282672] hover:text-[#0B137A] lg:flex items-center ml-auto gap-14 text-[15px] font-semibold text-[#0d0d0d]">
-            <a href="/" className="group flex items-center gap-1 hover:opacity-70">
-              Home{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
+          <nav className="hidden lg:flex items-center ml-auto gap-14 text-[15px] font-semibold">
+            <a href="/" className={navLinkClass("/")}>
+              Home
+              <FiArrowRight size={18} className={arrowClass("/")} />
             </a>
 
-            <a href="/doctors" className="group flex items-center gap-1 hover:opacity-70">
-              For Doctors{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
+            <a href="/doctors" className={navLinkClass("/doctors")}>
+              For Doctors
+              <FiArrowRight size={18} className={arrowClass("/doctors")} />
             </a>
 
-            <a href="/users" className="group flex items-center gap-1 hover:opacity-70">
-              For Users{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
+            <a href="/users" className={navLinkClass("/users")}>
+              For Users
+              <FiArrowRight size={18} className={arrowClass("/users")} />
             </a>
 
-            <a href="/partners" className="group flex items-center gap-1 hover:opacity-70">
-              Partners{" "}
-              <FiArrowUpRight
-                size={18}
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
+            <a href="/partners" className={navLinkClass("/partners")}>
+              Partners
+              <FiArrowRight size={18} className={arrowClass("/partners")} />
             </a>
 
             <div className="relative group">
-              <a href="/resources" className="group flex items-center gap-1 hover:opacity-70">
-                Resources{" "}
-                <FiArrowUpRight
-                  size={18}
-                  className="transition-transform duration-200 group-hover:rotate-45"
-                />
+              <a href="/resources" className={navLinkClass("/resources")}>
+                Resources
+                <FiArrowRight size={18} className={arrowClass("/resources")} />
               </a>
               <div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[145px] rounded-2xl bg-white shadow-xl border p-3">
                 <a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#abha-abdm">
@@ -135,12 +88,9 @@ export default function Header() {
             </div>
 
             <div className="relative group">
-              <a href="/about" className="group flex items-center gap-1 hover:opacity-70">
-                About Us{" "}
-                <FiArrowUpRight
-                  size={18}
-                  className="transition-transform duration-200 group-hover:rotate-45"
-                />
+              <a href="/about" className={navLinkClass("/about")}>
+                About Us
+                <FiArrowRight size={18} className={arrowClass("/about")} />
               </a>
               <div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[100px] rounded-2xl bg-white shadow-xl border p-3">
                 <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about1">
@@ -159,7 +109,6 @@ export default function Header() {
             </div>
           </nav>
 
-          {/* mobile menu button */}
           <button
             className="lg:hidden ml-auto text-[32px] text-[#1d4ed8] px-2"
             onClick={() => setIsMobileMenuOpen((s) => !s)}
@@ -169,7 +118,6 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Mobile menu */}
         <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
             isMobileMenuOpen ? "max-h-[420px] pb-2 md:pb-4" : "max-h-0"
@@ -188,9 +136,12 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.url}
-                className="rounded-2xl border bg-white px-4 py-3 font-semibold"
+                className={`rounded-2xl border bg-white px-4 py-3 font-semibold inline-flex items-center justify-between ${
+                  isActive(item.url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672]"
+                }`}
               >
                 {item.name}
+                <FiArrowRight size={18} className={isActive(item.url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672]"} />
               </a>
             ))}
           </div>

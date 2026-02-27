@@ -1,48 +1,44 @@
 "use client";
-import React from "react";
+
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    var element = document.getElementById("burger");
-    if (!isMobileMenuOpen) {
-      element && (element.innerHTML = "x");
-    } else {
-      element && (element.innerHTML = "☰");
-    }
-  };
+  const pathname = usePathname();
 
   const data = [
     { url: "/", name: "Home" },
-    { url: "/doctors", name: "For Doctors" },
-    { url: "/users", name: "For Users" },
-    { url: "/partners", name: "Partners" },
+    { url: "/doctors/", name: "For Doctors" },
+    { url: "/users/", name: "For Users" },
+    { url: "/partners/", name: "Partners" },
     { url: "/resources", name: "Resources" },
     { url: "/about", name: "About Us" },
     { url: "/blog", name: "Blog" },
     { url: "/login", name: "Login" },
   ];
 
-  const menu = (
-    <>
-      {data.map((item, index) => {
-        return (
-          <a
-            key={index}
-            href={item.url}
-            className="underline-offset-2 hover:underline bg-gradient-to-r from-purple-500 via-red-500 to-blue-700 bg-clip-text text-transparent shadow-md p-1 pl-4 font-semibold rounded-[10px] border"
-          >
-            {item.name}
-          </a>
-        );
-      })}
-    </>
-  );
+  // Exact match for main pages
+ const normalize = (p) => (p.endsWith("/") && p !== "/" ? p.slice(0, -1) : p);
+
+const isActive = (url) => {
+  const current = normalize(pathname);
+  const target = normalize(url);
+
+  // "/" should only be active on exact home
+  if (target === "/") return current === "/";
+
+  // For others: active if same page OR inside that section
+  return current === target || current.startsWith(target + "/");
+};
+
+  const activeText =
+    "bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(168,85,247,0.35)]";
+
+  const inactiveText = "text-[#282672] hover:opacity-70";
 
   return (
     <header
@@ -55,9 +51,9 @@ export default function Header() {
       {/* pill conatainer */}
       <div
         className="
-          bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/60 gap-2
-          rounded-[18px]
-          md:rounded-[50px]
+          bg-white/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.12)]
+          border border-white/60 gap-2
+          rounded-[18px] md:rounded-[50px]
         "
       >
         {/* items container */}
@@ -74,89 +70,176 @@ export default function Header() {
           </a>
 
           {/* desktop menu */}
-          <nav className="hidden text-[#282672] hover:text-[#0B137A] lg:flex items-center ml-auto gap-14 text-[15px] font-semibold text-[#0d0d0d]">
-            <a href="/" className="group flex items-center gap-1 hover:opacity-70">
-              Home{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
-            </a>
-
-            <a href="/doctors" className="group flex items-center gap-1 hover:opacity-70">
-              For Doctors{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
-            </a>
-
-            <a href="/users" className="group flex items-center gap-1 hover:opacity-70">
-              For Users{" "}
-              <FiArrowUpRight
-                size={18}
-                color="282672"
-                className="transition-transform duration-200 group-hover:rotate-45"
-              />
-            </a>
-
-            <a href="/partners" className="group flex items-center gap-1 hover:opacity-70">
-              Partners{" "}
+          <nav className="hidden lg:flex items-center ml-auto gap-14 text-[15px] font-semibold">
+            {/* Home */}
+            <a
+              href="/"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/") ? activeText : inactiveText
+              }`}
+            >
+              Home
               <FiArrowUpRight
                 size={18}
                 className="transition-transform duration-200 group-hover:rotate-45"
               />
             </a>
 
+            {/* For Doctors */}
+            <a
+              href="/doctors"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/doctors") ? activeText : inactiveText
+              }`}
+            >
+              For Doctors
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
+
+            {/* For Users */}
+            <a
+              href="/users"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/users") ? activeText : inactiveText
+              }`}
+            >
+              For Users
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
+
+            {/* Partners */}
+            <a
+              href="/partners"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/partners") ? activeText : inactiveText
+              }`}
+            >
+              Partners
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
+
+            {/* Resources dropdown */}
             <div className="relative group">
-              <a href="/resources" className="group flex items-center gap-1 hover:opacity-70">
-                Resources{" "}
+              <a
+                href="/resources"
+                className={`group flex items-center gap-1 transition-all ${
+                  isActive("/resources") ? activeText : inactiveText
+                }`}
+              >
+                Resources
                 <FiArrowUpRight
                   size={18}
                   className="transition-transform duration-200 group-hover:rotate-45"
                 />
               </a>
-              <div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[145px] rounded-2xl bg-white shadow-xl border p-3">
-                <a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#abha-abdm">
+
+              <div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[160px] rounded-2xl bg-white shadow-xl border p-3">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/resources#abha-abdm"
+                >
                   ABHA / ABDM
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#health-guides">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/resources#health-guides"
+                >
                   Health Guides
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#blogs">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/resources#blogs"
+                >
                   Blog
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/resources#privacy-policy">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/resources#privacy-policy"
+                >
                   Privacy policy
                 </a>
               </div>
             </div>
 
+            {/* About dropdown */}
             <div className="relative group">
-              <a href="/about" className="group flex items-center gap-1 hover:opacity-70">
-                About Us{" "}
+              <a
+                href="/about"
+                className={`group flex items-center gap-1 transition-all ${
+                  isActive("/about") ? activeText : inactiveText
+                }`}
+              >
+                About Us
                 <FiArrowUpRight
                   size={18}
                   className="transition-transform duration-200 group-hover:rotate-45"
                 />
               </a>
-              <div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[100px] rounded-2xl bg-white shadow-xl border p-3">
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about1">
+
+              <div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[130px] rounded-2xl bg-white shadow-xl border p-3">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/about#about1"
+                >
                   Our Story
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about2">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/about#about2"
+                >
                   Our Team
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about3">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/about#about3"
+                >
                   Careers
                 </a>
-                <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about4">
+                <a
+                  className="block rounded-xl px-2 py-2 hover:bg-gray-50 text-[#282672]"
+                  href="/about#about4"
+                >
                   Contact Us
                 </a>
               </div>
             </div>
+
+            {/* Blog */}
+            <a
+              href="/blog"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/blog") ? activeText : inactiveText
+              }`}
+            >
+              Blog
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
+
+            {/* Login */}
+            <a
+              href="/login"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/login") ? activeText : inactiveText
+              }`}
+            >
+              Login
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
           </nav>
 
           {/* mobile menu button */}
@@ -172,27 +255,26 @@ export default function Header() {
         {/* Mobile menu */}
         <div
           className={`lg:hidden overflow-hidden transition-all duration-300 ${
-            isMobileMenuOpen ? "max-h-[420px] pb-2 md:pb-4" : "max-h-0"
+            isMobileMenuOpen ? "max-h-[520px] pb-2 md:pb-4" : "max-h-0"
           }`}
         >
           <div className="px-2 md:px-4 flex flex-col gap-2">
-            {[
-              { url: "/", name: "Home" },
-              { url: "/doctors", name: "For Doctors" },
-              { url: "/users", name: "For Users" },
-              { url: "/partners", name: "Partners" },
-              { url: "/resources", name: "Resources" },
-              { url: "/about", name: "About Us" },
-              { url: "/blog", name: "Blog" },
-            ].map((item) => (
-              <a
-                key={item.name}
-                href={item.url}
-                className="rounded-2xl border bg-white px-4 py-3 font-semibold"
-              >
-                {item.name}
-              </a>
-            ))}
+            {data
+              .filter((i) => i.url !== "/login") // optional: keep login only on desktop; remove this line if you want login in mobile too
+              .map((item) => (
+                <a
+                  key={item.name}
+                  href={item.url}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`rounded-2xl border px-4 py-3 font-semibold transition-all ${
+                    isActive(item.url)
+                      ? `bg-white ${activeText} border-indigo-300`
+                      : "bg-white text-[#282672]"
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ))}
           </div>
         </div>
       </div>

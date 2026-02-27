@@ -140,7 +140,7 @@ function HeroWaveBackground() {
 }
 export default function UserRegistrationPage() {
 	return (
-		<main className="relative mt-[88px] overflow-hidden bg-gradient-to-b from-[#eef4ff] via-[#f8eefe] to-white px-4 py-12 md:py-16">
+		<main className="relative overflow-hidden bg-gradient-to-b from-[#eef4ff] via-[#f8eefe] to-white px-4 py-12 md:py-36">
 			<HeroWaveBackground />
 			<div className="pointer-events-none absolute inset-0">
 				<div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-[#d81b60]/20 blur-3xl" />

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 export default function FloatingClaimButton() {
   const pathname = usePathname();
 
-  if (pathname === "/userRegistration") {
+  if (pathname === "/userRegistration/") {
     return null;
   }
 

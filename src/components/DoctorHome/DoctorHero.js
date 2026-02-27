@@ -145,7 +145,7 @@ export default function DoctorHero() {
                 )}
               </p>
 
-              <div className="hero-animate mt-7 flex flex-wrap items-center gap-4">
+              {/* <div className="hero-animate mt-7 flex flex-wrap items-center gap-4">
                 <a
                   href="/claim"
                   className="h-[44px] md:h-[48px]
@@ -180,7 +180,7 @@ export default function DoctorHero() {
                 >
                   For Doctors
                 </a>
-              </div>
+              </div> */}
             </div>
 
             {/* Right side kept mostly visual (optional) */}

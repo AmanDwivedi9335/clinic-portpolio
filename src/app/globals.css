@@ -28,6 +28,14 @@
 }
 @layer base {
 	:root {
+		--brand-heading: #7b1fa2;
+		--brand-body: #111d89;
+		--font-size-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+		--font-size-heading: clamp(1.75rem, 1.2rem + 2.1vw, 3rem);
+		--font-size-subheading: clamp(1.2rem, 0.95rem + 1vw, 1.9rem);
+		--line-height-body: 1.6;
+		--line-height-heading: 1.25;
+
 		--background: 0 0% 100%;
 		--foreground: 222.2 84% 4.9%;
 		--card: 0 0% 100%;
@@ -98,7 +106,46 @@
 	body {
 		@apply bg-background text-foreground;
 		font-family: "Aptos" !important;
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-body);
+		color: var(--brand-body);
 		overflow-x: clip;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-family: "Aptos Black", "Aptos", sans-serif !important;
+		color: var(--brand-heading);
+		line-height: var(--line-height-heading);
+		letter-spacing: -0.02em;
+	}
+
+	h1,
+	h2 {
+		font-size: var(--font-size-heading);
+	}
+
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-size: var(--font-size-subheading);
+	}
+
+	p,
+	li,
+	a,
+	button,
+	input,
+	textarea,
+	label {
+		font-family: "Aptos", sans-serif !important;
+		font-size: var(--font-size-body);
+		line-height: var(--line-height-body);
 	}
 }
 @keyframes bounceUpDown {

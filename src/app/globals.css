@@ -108,7 +108,6 @@
 		font-family: "Aptos" !important;
 		font-size: var(--font-size-body);
 		line-height: var(--line-height-body);
-		color: var(--brand-body);
 		overflow-x: clip;
 	}
 

@@ -2,39 +2,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FiArrowRight, FiArrowUpRight } from "react-icons/fi";
+import { FiArrowRight } from "react-icons/fi";
 
-const ACTIVE_TEXT_GRADIENT =
-  "bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 bg-clip-text text-transparent";
-const ACTIVE_ARROW_COLOR = "text-[#C22ECC]";
+const ACTIVE_TEXT_GRADIENT = "bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500 bg-clip-text text-transparent";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (url) => {
-    if (url === "/") {
-      return pathname === "/";
-    }
-
-    return pathname === url || pathname.startsWith(`${url}/`);
-  };
+  const isActive = (url) => pathname === url;
 
   const navLinkClass = (url) =>
     `group flex items-center gap-1 ${isActive(url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672] hover:opacity-70"}`;
 
   const arrowClass = (url) =>
-    `transition-transform duration-200 ${
-      isActive(url) ? ACTIVE_ARROW_COLOR : "text-[#282672] group-hover:rotate-45"
-    }`;
-
-  const renderArrow = (url) => {
-    if (isActive(url)) {
-      return <FiArrowRight size={18} className={arrowClass(url)} />;
-    }
-
-    return <FiArrowUpRight size={18} className={arrowClass(url)} />;
-  };
+    `transition-transform duration-200 ${isActive(url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672] group-hover:translate-x-0.5"}`;
 
   return (
     <header
@@ -65,24 +47,29 @@ export default function Header() {
 
           <nav className="hidden lg:flex items-center ml-auto gap-14 text-[15px] font-semibold">
             <a href="/" className={navLinkClass("/")}>
-              Home {renderArrow("/")}
+              Home
+              <FiArrowRight size={18} className={arrowClass("/")} />
             </a>
 
             <a href="/doctors" className={navLinkClass("/doctors")}>
-              For Doctors {renderArrow("/doctors")}
+              For Doctors
+              <FiArrowRight size={18} className={arrowClass("/doctors")} />
             </a>
 
             <a href="/users" className={navLinkClass("/users")}>
-              For Users {renderArrow("/users")}
+              For Users
+              <FiArrowRight size={18} className={arrowClass("/users")} />
             </a>
 
             <a href="/partners" className={navLinkClass("/partners")}>
-              Partners {renderArrow("/partners")}
+              Partners
+              <FiArrowRight size={18} className={arrowClass("/partners")} />
             </a>
 
             <div className="relative group">
               <a href="/resources" className={navLinkClass("/resources")}>
-                Resources {renderArrow("/resources")}
+                Resources
+                <FiArrowRight size={18} className={arrowClass("/resources")} />
               </a>
               <div className="absolute left-0 top-full hidden group-hover:block group-focus-within:block w-[145px] rounded-2xl bg-white shadow-xl border p-3">
                 <a className="block rounded-xl py-1  hover:bg-gray-50" href="/resources#abha-abdm">
@@ -102,7 +89,8 @@ export default function Header() {
 
             <div className="relative group">
               <a href="/about" className={navLinkClass("/about")}>
-                About Us {renderArrow("/about")}
+                About Us
+                <FiArrowRight size={18} className={arrowClass("/about")} />
               </a>
               <div className="absolute right-0 top-full hidden group-hover:block group-focus-within:block w-[100px] rounded-2xl bg-white shadow-xl border p-3">
                 <a className="block rounded-xl py-1 hover:bg-gray-50" href="/about#about1">
@@ -157,11 +145,7 @@ export default function Header() {
                 }`}
               >
                 {item.name}
-                {isActive(item.url) ? (
-                  <FiArrowRight size={18} className={ACTIVE_ARROW_COLOR} />
-                ) : (
-                  <FiArrowUpRight size={18} className="text-[#282672]" />
-                )}
+                <FiArrowRight size={18} className={isActive(item.url) ? ACTIVE_TEXT_GRADIENT : "text-[#282672]"} />
               </a>
             ))}
           </div>

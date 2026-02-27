@@ -40,6 +40,9 @@ const isActive = (url) => {
 
   const inactiveText = "text-[#282672] hover:opacity-70";
 
+  const ActivePrefixIcon = ({ isActiveLink }) =>
+    isActiveLink ? <FiArrowRight size={16} aria-hidden="true" /> : null;
+
   return (
     <header
       className="
@@ -78,6 +81,7 @@ const isActive = (url) => {
                 isActive("/") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/")} />
               Home
               <FiArrowUpRight
                 size={18}
@@ -92,6 +96,7 @@ const isActive = (url) => {
                 isActive("/doctors") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/doctors")} />
               For Doctors
               <FiArrowUpRight
                 size={18}
@@ -106,6 +111,7 @@ const isActive = (url) => {
                 isActive("/users") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/users")} />
               For Users
               <FiArrowUpRight
                 size={18}
@@ -120,6 +126,7 @@ const isActive = (url) => {
                 isActive("/partners") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/partners")} />
               Partners
               <FiArrowUpRight
                 size={18}
@@ -135,6 +142,7 @@ const isActive = (url) => {
                   isActive("/resources") ? activeText : inactiveText
                 }`}
               >
+                <ActivePrefixIcon isActiveLink={isActive("/resources")} />
                 Resources
                 <FiArrowUpRight
                   size={18}
@@ -178,6 +186,7 @@ const isActive = (url) => {
                   isActive("/about") ? activeText : inactiveText
                 }`}
               >
+                <ActivePrefixIcon isActiveLink={isActive("/about")} />
                 About Us
                 <FiArrowUpRight
                   size={18}
@@ -220,6 +229,7 @@ const isActive = (url) => {
                 isActive("/blog") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/blog")} />
               Blog
               <FiArrowUpRight
                 size={18}
@@ -234,6 +244,7 @@ const isActive = (url) => {
                 isActive("/login") ? activeText : inactiveText
               }`}
             >
+              <ActivePrefixIcon isActiveLink={isActive("/login")} />
               Login
               <FiArrowUpRight
                 size={18}

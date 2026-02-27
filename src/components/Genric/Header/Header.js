@@ -107,6 +107,10 @@ export default function Header() {
                 </a>
               </div>
             </div>
+
+            <a href="/blog" className={navLinkClass("/blog")}>
+              Blog {renderArrow("/blog")}
+            </a>
           </nav>
 
           <button

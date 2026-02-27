@@ -82,10 +82,10 @@ export default function DoctorPortalPreview() {
           </div>
         </div>
 
-        <h2 className="portal-preview-animate mt-4 text-center text-3xl font-aptos-extrabold text-wave md:text-4xl">
+        <h2 className="portal-preview-animate mt-4 text-center text-3xl font-aptos-extrabold text-wave md:text-5xl">
           Built for Doctors. Designed for Clinical Clarity.
         </h2>
-        <p className="portal-preview-animate mt-2 text-center text-sm text-[#1E1B6A] md:text-lg">
+        <p className="portal-preview-animate mt-2 text-center text-sm text-[#1E1B6A] md:text-3xl">
           MediBank isn&apos;t another software dashboard.
           <br className="hidden md:block" />
           It&apos;s a clinical decision-support system built around real consultation workflows.

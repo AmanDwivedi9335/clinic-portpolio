@@ -237,7 +237,7 @@ export default function DataControlSection() {
 				>
 					Privacy & Security
 				</GradientBadge>
-				<h2 className="data-intro mt-4 text-[28px] md:text-[40px] font-medium">
+				<h2 className="data-intro mt-4 text-2xl md:text-4xl font-medium">
 					<span className="inline-flex flex-wrap justify-center gap-x-3 md:gap-x-4">
 						{["Your", "Data.", "Your", "Control.", "Absolutely."].map((word, index) => (
 						<span

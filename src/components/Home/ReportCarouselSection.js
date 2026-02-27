@@ -125,7 +125,7 @@ export default function ReportCarouselSection() {
 
         <h2 className="mt-4 text-2xl font-medium leading-snug text-[#7B1FA2] md:text-4xl">
           <span className="font-aptos-black">&apos;What if&apos;</span> the one report that could save your life...
-          <span className="block text-[28px] font-normal text-[#111D89]">
+          <span className="block text-xl md:text-3xl font-normal text-[#111D89]">
             wasn&apos;t there when you needed it?
           </span>
         </h2>
@@ -153,7 +153,6 @@ export default function ReportCarouselSection() {
                 <article
                   className={[
                     "group relative flex flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2",
-                    "shadow-[0_10px_26px_rgba(63,55,109,0.12)] transition duration-300",
                     // Responsive height without sm:
                     "h-[clamp(340px,62vh,400px)]",
                     activeIndex === index

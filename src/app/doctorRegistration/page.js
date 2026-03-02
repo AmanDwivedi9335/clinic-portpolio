@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { CalendarDays, ChevronDown, Plus, Trash2 } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { INDIA_STATE_CITY_MAP, INDIAN_STATES } from "@/lib/indiaLocations";
@@ -44,9 +43,27 @@ export default function DoctorRegistrationPage() {
 
   return (<main className="relative overflow-hidden bg-gradient-to-b from-[#eef4ff] via-[#f8eefe] to-white px-4 py-12 md:py-20"><HeroWaveBackground />
     <div className="pointer-events-none absolute inset-0"><div className="absolute -left-20 top-16 h-56 w-56 rounded-full bg-[#d81b60]/20 blur-3xl" /><div className="absolute -right-16 bottom-8 h-64 w-64 rounded-full bg-[#3b0aa3]/20 blur-3xl" /></div>
-    <section className="relative mx-auto w-full max-w-6xl rounded-3xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_60px_rgba(59,10,163,0.14)] backdrop-blur-sm sm:p-8 md:p-10"><div className={`grid gap-8 transition-all duration-700 ${showForm ? "lg:grid-cols-[1fr_1.45fr]" : "mx-auto max-w-xl"}`}>
-      <div className="rounded-2xl bg-gradient-to-br from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] p-6 text-white md:p-8"><p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs tracking-[0.14em] text-white/90">DOCTOR ONBOARDING</p><h1 className="font-aptos-black text-3xl leading-tight md:text-4xl">Doctor Registration</h1><p className="mt-4 text-sm text-white/85 md:text-base">Set up your professional profile to join the digital care network with secure identity and credentials verification.</p><div className="mt-8 rounded-2xl border border-white/20 bg-white/10 p-4"><button type="button" className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-aptos-extrabold text-[#5310a2] shadow-lg transition hover:brightness-105"><span>Powered by</span><Image src="/images/aadhar.png" alt="aadhar image" width={40} height={30} /></button><div className="my-4 flex items-center gap-3 text-sm text-white/75"><span className="h-px flex-1 bg-white/30" />or<span className="h-px flex-1 bg-white/30" /></div><p className="text-sm text-white/90">{showForm ? "Complete all mandatory doctor details below." : "Preparing secure form..."}</p></div></div>
-      <form onSubmit={handleSubmit(onSubmit)} className={`grid gap-4 overflow-hidden rounded-2xl bg-white p-2 transition-all duration-700 ease-out sm:grid-cols-2 ${showForm ? "max-h-[5000px] translate-y-0 opacity-100" : "pointer-events-none max-h-0 translate-y-6 opacity-0"}`}>
+    <section className="relative mx-auto w-full max-w-6xl space-y-6 rounded-3xl border border-white/60 bg-white/80 p-4 shadow-[0_20px_60px_rgba(59,10,163,0.14)] backdrop-blur-sm sm:p-8 md:p-10">
+      <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] p-6 text-white md:p-8">
+        <p className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs tracking-[0.14em] text-white/90">DOCTOR ONBOARDING</p>
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <h1 className="font-aptos-black text-3xl leading-tight md:text-4xl">Doctor Registration</h1>
+            <p className="mt-4 text-sm text-white/85 md:text-base">Set up your professional profile to join the digital care network with secure identity and credentials verification.</p>
+          </div>
+          <div className="grid w-full max-w-md gap-3 text-sm text-white/90 sm:grid-cols-2">
+            <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3">
+              <p className="text-xs uppercase tracking-[0.12em] text-white/70">Estimated Time</p>
+              <p className="mt-1 font-aptos-bold text-base">5–7 minutes</p>
+            </div>
+            <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3">
+              <p className="text-xs uppercase tracking-[0.12em] text-white/70">Verification</p>
+              <p className="mt-1 font-aptos-bold text-base">Secure & Encrypted</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className={`grid gap-4 overflow-hidden rounded-2xl border border-[#ece8fb] bg-white p-4 transition-all duration-700 ease-out sm:grid-cols-2 sm:p-6 ${showForm ? "max-h-[5000px] translate-y-0 opacity-100" : "pointer-events-none max-h-0 translate-y-6 opacity-0"}`}>
         <h2 className={sectionTitleClass}>1. Profile Information</h2>
         <div><label className="mb-1 block text-sm text-[#2b2b43]">Profile Photo</label><input className={inputClass} type="file" accept="image/*" {...register("profilePhoto")} /></div>
         <div><label className="mb-1 block text-sm text-[#2b2b43]">Full Legal Name</label><input className={inputClass} type="text" {...register("fullLegalName", { required: "Full legal name is required." })} />{errors.fullLegalName && <p className="mt-1 text-xs text-red-500">{errors.fullLegalName.message}</p>}</div>
@@ -75,6 +92,6 @@ export default function DoctorRegistrationPage() {
         <label className="sm:col-span-2 flex items-center gap-3 text-sm text-[#2b2b43]"><input type="checkbox" className="size-4 accent-[#7b1fa2]" {...register("verificationConsent")} /> Consent to share registration details for verification</label>
         <button type="submit" disabled={isSubmitting} className="sm:col-span-2 mt-3 rounded-xl bg-gradient-to-r from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-6 py-3 text-base font-aptos-extrabold text-white shadow-[0_12px_30px_rgba(123,31,162,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_rgba(216,27,96,0.4)] disabled:opacity-70">{isSubmitting ? "Validating..." : "Create Doctor Account"}</button>
         {submitMessage && <p className="sm:col-span-2 text-sm font-medium text-emerald-600">{submitMessage}</p>}
-      </form></div></section></main>
+      </form></section></main>
   );
 }

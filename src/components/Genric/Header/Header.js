@@ -238,7 +238,7 @@ const isActive = (url) => {
             </a>
 
             {/* Login */}
-            <a
+            {/* <a
               href="/login"
               className={`group flex items-center gap-1 transition-all ${
                 isActive("/login") ? activeText : inactiveText
@@ -250,7 +250,7 @@ const isActive = (url) => {
                 size={18}
                 className="transition-transform duration-200 group-hover:rotate-45"
               />
-            </a>
+            </a> */}
           </nav>
 
           {/* mobile menu button */}

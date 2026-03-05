@@ -28,7 +28,6 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-
         <g className="wave-track wave-track-top">
           <path
             d="M0,140 C240,90 520,90 720,135 C940,185 1180,185 1440,135 L1440,0 L0,0 Z"
@@ -49,7 +48,6 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 340"
         preserveAspectRatio="none"
       >
-
         <g className="wave-track wave-track-mid">
           <path
             d="M0,155 C260,215 520,215 740,165 C980,110 1210,115 1440,165 L1440,340 L0,340 Z"
@@ -70,7 +68,6 @@ function HeroWaveBackground() {
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
       >
-
         <g className="wave-track wave-track-bottom">
           <path
             d="M0,110 C250,35 520,40 720,105 C950,180 1180,185 1440,115 L1440,320 L0,320 Z"
@@ -168,7 +165,9 @@ function RowPillIndicators({ activeIndex = 0 }) {
               isActive ? "w-10 bg-[#8F129A]" : "w-5 bg-[#e9def5]"
             }`}
           >
-            {isActive ? <span className="users-pill-fill absolute inset-y-0 left-0 rounded-full" /> : null}
+            {isActive ? (
+              <span className="users-pill-fill absolute inset-y-0 left-0 rounded-full" />
+            ) : null}
           </span>
         );
       })}
@@ -176,10 +175,10 @@ function RowPillIndicators({ activeIndex = 0 }) {
   );
 }
 
-
 export default function UsersPage() {
   const showcaseRef = useRef(null);
   const pinPanelRef = useRef(null);
+
   const showcaseHeadingClassName =
     "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
   const showcaseSubheadingClassName =
@@ -187,18 +186,18 @@ export default function UsersPage() {
   const showcaseBodyClassName = "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]";
 
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      return undefined;
-    }
+    // Desktop-only pin interaction
+    if (typeof window === "undefined" || window.innerWidth < 768) return;
 
     return createGsapContext(showcaseRef, (gsap) => {
-      const { ScrollTrigger } = window;
+      const ScrollTrigger = window.ScrollTrigger;
       const rows = gsap.utils.toArray(".users-showcase-row");
 
-      if (!rows.length || !ScrollTrigger) return;
+      if (!ScrollTrigger || !rows.length || !pinPanelRef.current || !showcaseRef.current) return;
 
       const totalSteps = rows.length - 1;
 
+      // Stack rows for crossfade
       gsap.set(rows, { position: "absolute", inset: 0 });
       gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
       gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
@@ -206,57 +205,57 @@ export default function UsersPage() {
       let currentIndex = 0;
 
       const showIndex = (nextIndex) => {
-  if (nextIndex === currentIndex) return;
+        if (nextIndex === currentIndex) return;
 
-  // ✅ prevent overlap / stuck alpha
-  gsap.killTweensOf(rows);
+        // Prevent overlap / stuck alpha
+        gsap.killTweensOf(rows);
 
-  gsap.to(rows[currentIndex], {
-    autoAlpha: 0,
-    yPercent: -12,
-    duration: 0.35,
-    ease: "power2.inOut",
-  });
+        gsap.to(rows[currentIndex], {
+          autoAlpha: 0,
+          yPercent: -12,
+          duration: 0.55, // ✅ smoother swap
+          ease: "power2.out",
+          overwrite: "auto",
+        });
 
-  gsap.to(rows[nextIndex], {
-    autoAlpha: 1,
-    yPercent: 0,
-    duration: 0.35,
-    ease: "power2.inOut",
-  });
+        gsap.to(rows[nextIndex], {
+          autoAlpha: 1,
+          yPercent: 0,
+          duration: 0.55, // ✅ smoother swap
+          ease: "power2.out",
+          overwrite: "auto",
+        });
 
-  currentIndex = nextIndex;
-};
+        currentIndex = nextIndex;
+      };
 
       ScrollTrigger.create({
         trigger: showcaseRef.current,
         start: "top top",
-        
-
-        // ✅ deterministic scroll length: 1 screen per row
+        // 1 viewport per row => continuous scrollbar movement
         end: () => `+=${window.innerHeight * rows.length}`,
-
-        scrub: 0.6,
         pin: pinPanelRef.current,
+        pinSpacing: true,
+        scrub: 1, // ✅ smoother follow
         anticipatePin: 1,
+        invalidateOnRefresh: true,
 
-        // ✅ snap cleanly to 0 / 0.5 / 1 for 3 rows
-        snap: totalSteps > 0
-          ? { snapTo: 1 / totalSteps, duration: 0.25, ease: "power2.out" }
-          : false,
+        // ✅ No snap => no jumping
+        // snap: false,
 
         onUpdate: (self) => {
-          const idx = gsap.utils.clamp(0, totalSteps, Math.round(self.progress * totalSteps));
+          // ✅ floor avoids early flipping (round can feel jumpy)
+          const idx = gsap.utils.clamp(
+            0,
+            totalSteps,
+            Math.floor(self.progress * (totalSteps + 1))
+          );
           showIndex(idx);
         },
 
-        // ✅ ensure last panel stays visible at the end (no blank state)
         onLeave: () => showIndex(totalSteps),
         onEnterBack: () => showIndex(currentIndex),
       });
-      
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-      
     });
   }, []);
 
@@ -265,8 +264,7 @@ export default function UsersPage() {
       <HeroWaveBackground />
 
       {/* HERO */}
-      <section className="relative isolate overflow-hidden h-[100vh] pt-12 md:pt-16">
-        {/* Content ALWAYS above waves */}
+      <section className="relative isolate h-[100vh] overflow-hidden pt-12 md:pt-16">
         <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
             INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
@@ -288,13 +286,11 @@ export default function UsersPage() {
             What You Get
           </h1>
 
-
           <p className="mt-4 text-sm font-medium text-[#282672] md:text-base">
             See how the app works in just a few scrolls.
           </p>
 
           <div className="mt-7 flex items-center justify-center gap-4">
-            {/* Subscribe Now */}
             <button
               className="
                 rounded-xl
@@ -310,7 +306,6 @@ export default function UsersPage() {
               Subscribe Now
             </button>
 
-            {/* Watch Demo with gradient border */}
             <button
               className="
                 relative
@@ -378,7 +373,7 @@ export default function UsersPage() {
         </div>
       </section>
 
-      {/* REST */}
+      {/* SHOWCASE */}
       <section
         ref={showcaseRef}
         className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto md:h-[400vh] max-w-6xl bg-[#F4F4F8] px-6"
@@ -387,14 +382,10 @@ export default function UsersPage() {
           ref={pinPanelRef}
           className="relative h-auto md:h-[100svh] overflow-visible md:overflow-hidden py-6 md:py-0"
         >
-          {/* ===== Row 1: Text Left, Image Right ===== */}
-          <div
-            className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
-          >
+          {/* Row 1 */}
+          <div className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
             <div>
-              <h2 className={showcaseHeadingClassName}>
-                Smart Health Overview
-              </h2>
+              <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
 
               <p className={showcaseSubheadingClassName}>
                 Track appointments, vitals, and daily health
@@ -406,18 +397,11 @@ export default function UsersPage() {
                 A personalized multidimensional record of your ecosystem&apos;s daily
                 health journey, and your vital trends.
               </p>
+
               <RowPillIndicators activeIndex={0} />
             </div>
 
-            <div
-              className="
-                mx-auto
-                w-[160px]
-                sm:w-[180px]
-                md:w-[220px]
-                md:justify-self-center
-              "
-            >
+            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
               <Image
                 src="/images/users/smart-health-overview.svg"
                 alt="Smart Health Overview mobile dashboard"
@@ -429,37 +413,30 @@ export default function UsersPage() {
             </div>
           </div>
 
-          {/* ===== Row 2: Text Left, Image Right ===== */}
-          <div
-            className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
-          >
+          {/* Row 2 */}
+          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
             <div>
               <h2 className={showcaseHeadingClassName}>
                 Discover Nearby
                 <br />
                 Healthcare Providers
               </h2>
+
               <p className={showcaseSubheadingClassName}>
                 Search doctors, labs, and hospitals around your
                 <br />
                 location.
               </p>
+
               <p className={showcaseBodyClassName}>
                 An interactive map-based directory to explore, view availability,
                 and book appointments with nearby providers.
               </p>
+
               <RowPillIndicators activeIndex={1} />
             </div>
 
-            <div
-              className="
-                mx-auto
-                w-[160px]
-                sm:w-[180px]
-                md:w-[220px]
-                md:justify-self-center
-              "
-            >
+            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
               <Image
                 src="/images/users/discover-nearby.svg"
                 alt="Discover nearby mobile dashboard"
@@ -471,37 +448,30 @@ export default function UsersPage() {
             </div>
           </div>
 
-          {/* ===== Row 3: Text Left, Image Right ===== */}
-          <div
-            className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 transition-all duration-500 md:grid-cols-2"
-          >
+          {/* Row 3 */}
+          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
             <div>
               <h2 className={showcaseHeadingClassName}>
                 Centralized Health
                 <br />
                 Records
               </h2>
+
               <p className={showcaseSubheadingClassName}>
                 Access appointments, lab reports, and hospital
                 <br />
                 documents anytime.
               </p>
+
               <p className={showcaseBodyClassName}>
                 A structured record management center for securely viewing and
                 managing essential reports with clarity.
               </p>
+
               <RowPillIndicators activeIndex={2} />
             </div>
 
-            <div
-              className="
-                mx-auto
-                w-[160px]
-                sm:w-[180px]
-                md:w-[220px]
-                md:justify-self-center
-              "
-            >
+            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
               <Image
                 src="/images/users/centralized.svg"
                 alt="Centralized Overview mobile dashboard"
@@ -516,11 +486,11 @@ export default function UsersPage() {
       </section>
 
       <section>
-        <Howitworks/>
+        <Howitworks />
       </section>
 
       <section>
-        <Subscription/>
+        <Subscription />
       </section>
 
       <style jsx>{`
@@ -545,7 +515,6 @@ export default function UsersPage() {
           }
         }
       `}</style>
-
     </main>
   );
 }

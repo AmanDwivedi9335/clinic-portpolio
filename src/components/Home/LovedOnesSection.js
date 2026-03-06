@@ -135,9 +135,9 @@ export default function LovedOnesSection() {
         </h2>
 
         <p className="mt-4 max-w-3xl text-sm text-[#000339] md:text-base">
-          But your Family&apos;s Health Identity is you “Power”. Create linked health
-          identities of your parents, your loved ones and your children so you are
-          always prepared - even when they can&apos;t be
+          But your family&apos;s Health Identity is your “power.” Create linked health
+          identities for your parents, loved ones, and children so you are
+          always prepared—even when they can&apos;t be.
         </p>
       </div>
 

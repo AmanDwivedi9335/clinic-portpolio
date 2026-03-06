@@ -22,11 +22,11 @@ export default function WhyUs() {
 			source: "II",
 			path: "/blog/article2",
 			content:
-				"Whether it’s your first visit or a follow up appointment, have the convenience and option of visiting a doctor either in person or online",
+				"Whether it&apos;s your first visit or a follow-up appointment, enjoy the convenience of visiting a doctor either in person or online.",
 		},
 		{
 			imgurl: "/images/blogs/blog3.webp",
-			title: "AI health Analysis",
+			title: "AI Health Analysis",
 			source: "III",
 			path: "/blog/article3",
 			content:
@@ -99,7 +99,7 @@ export default function WhyUs() {
 	return (
 		<div ref={sectionRef} className="text-center">
 			<h2 className="why-heading w-[90%] text-left md:text-[35px] m-auto py-6 md:leading-[52px] font-semibold text-[#000339] text-3xl leading-[25px]">
-				Why <span style={{ color: "#6D4AFF" }}>Choose</span> Us ?
+				Why <span style={{ color: "#6D4AFF" }}>Choose</span> Us?
 			</h2>
 			<h3 className="why-heading w-[90%] text-left m-auto text-[#000339] text-[17px] leading-[25px]">
 				Transforming India&apos;s healthcare one step at a time with EHR

@@ -14,7 +14,7 @@ export default function Hero() {
   ];
 
   const firstLineText =
-    "We ensures your complete medical history is always with you, in emergencies, in hospitals, across cities, across time.";
+    "We ensure your complete medical history is always with you—in emergencies, in hospitals, across cities, and across time.";
   const secondLineText = "Because one missing detail can change everything...";
   const typingSpeed = 60;
 

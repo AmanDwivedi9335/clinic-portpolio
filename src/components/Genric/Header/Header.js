@@ -120,7 +120,7 @@ const isActive = (url) => {
             </a>
 
             {/* Partners */}
-            <a
+            {/* <a
               href="/partners"
               className={`group flex items-center gap-1 transition-all ${
                 isActive("/partners") ? activeText : inactiveText
@@ -132,7 +132,7 @@ const isActive = (url) => {
                 size={18}
                 className="transition-transform duration-200 group-hover:rotate-45"
               />
-            </a>
+            </a> */}
 
             {/* Resources dropdown */}
             <div className="relative group">
@@ -223,7 +223,7 @@ const isActive = (url) => {
             </div>
 
             {/* Blog */}
-            <a
+            {/* <a
               href="/blog"
               className={`group flex items-center gap-1 transition-all ${
                 isActive("/blog") ? activeText : inactiveText
@@ -235,7 +235,7 @@ const isActive = (url) => {
                 size={18}
                 className="transition-transform duration-200 group-hover:rotate-45"
               />
-            </a>
+            </a> */}
 
             {/* Login */}
             {/* <a

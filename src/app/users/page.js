@@ -9,10 +9,10 @@ import Subscription from "@/components/Home/Subscription";
 function PhoneMockup({ children, className = "" }) {
   return (
     <div
-      className={`relative mx-auto h-[430px] w-[220px] rounded-[32px] border-[6px] border-[#2A2332] bg-[#F9F9FF] shadow-[0_20px_45px_rgba(48,16,96,0.2)] ${className}`}
+      className={`relative mx-auto aspect-[9/19.5] w-full max-w-[220px] rounded-[46px] border-[7px] border-[#221640] bg-[#0D0A1A] p-[5px] shadow-[0_26px_48px_rgba(33,16,72,0.32)] ${className}`}
     >
-      <div className="absolute left-1/2 top-2 h-5 w-24 -translate-x-1/2 rounded-full bg-[#2A2332]" />
-      <div className="h-full overflow-hidden rounded-[26px]">{children}</div>
+      <div className="pointer-events-none absolute left-1/2 top-[10px] h-6 w-[108px] -translate-x-1/2 rounded-b-[18px] bg-[#07050f]" />
+      <div className="relative h-full overflow-hidden rounded-[38px] bg-[#F5F2FF]">{children}</div>
     </div>
   );
 }
@@ -401,15 +401,16 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={0} />
             </div>
 
-            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
-              <Image
-                src="/images/users/phonemock1.svg"
-                alt="Smart Health Overview mobile dashboard"
-                width={354}
-                height={695}
-                className="h-auto w-full"
-                priority
-              />
+            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              <PhoneMockup>
+                <Image
+                  src="/images/users/phone-mock-1.svg"
+                  alt="Smart Health Overview mobile dashboard"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </PhoneMockup>
             </div>
           </div>
 

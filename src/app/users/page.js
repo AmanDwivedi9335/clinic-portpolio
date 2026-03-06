@@ -260,7 +260,7 @@ export default function UsersPage() {
   }, []);
 
   return (
-    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pb-24 pt-20 text-[#220A56] md:pt-24">
+    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pt-20 text-[#220A56] md:pt-24">
       <HeroWaveBackground />
 
       {/* HERO */}
@@ -403,7 +403,7 @@ export default function UsersPage() {
 
             <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
               <Image
-                src="/images/users/smart-health-overview.svg"
+                src="/images/users/phonemock1.svg"
                 alt="Smart Health Overview mobile dashboard"
                 width={354}
                 height={695}
@@ -489,9 +489,9 @@ export default function UsersPage() {
         <Howitworks />
       </section>
 
-      <section>
+      {/* <section>
         <Subscription />
-      </section>
+      </section> */}
 
       <style jsx>{`
         .users-pill-fill {

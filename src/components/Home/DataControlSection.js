@@ -260,7 +260,7 @@ export default function DataControlSection() {
 							key={`${word}-${index}`}
 							className={`inline-block bg-clip-text text-transparent
 								bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-								${word === "Absolutely." ? "font-extrabold" : "font-medium"}
+								${word === "Absolutely." ? "font-aptos-black" : "font-medium"}
 							`}
 						>
 							{word}
@@ -332,7 +332,7 @@ export default function DataControlSection() {
 						The best time to claim your Health Identity is before you need it.
 						</p>
 
-						<button
+						{/* <button
 						type="button"
 						className="
 							mt-6 inline-flex w-full items-center justify-center sm:w-auto
@@ -347,7 +347,7 @@ export default function DataControlSection() {
 						"
 						>
 						Claim Your Health Identity
-						</button>
+						</button> */}
 					</div>
 					</div>
 				</div>

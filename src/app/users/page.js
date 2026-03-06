@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { createGsapContext } from "@/lib/gsap";
 import Howitworks from "@/components/Home/Howitworks";
-import Subscription from "@/components/Home/Subscription";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -437,15 +436,16 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={1} />
             </div>
 
-            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
-              <Image
-                src="/images/users/discover-nearby.svg"
-                alt="Discover nearby mobile dashboard"
-                width={354}
-                height={695}
-                className="h-auto w-full"
-                priority
-              />
+            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              <PhoneMockup>
+                <Image
+                  src="/images/users/phonemock2.svg"
+                  alt="Discover nearby mobile dashboard"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </PhoneMockup>
             </div>
           </div>
 
@@ -472,15 +472,16 @@ export default function UsersPage() {
               <RowPillIndicators activeIndex={2} />
             </div>
 
-            <div className="mx-auto w-[160px] sm:w-[180px] md:w-[220px] md:justify-self-center">
-              <Image
-                src="/images/users/centralized.svg"
-                alt="Centralized Overview mobile dashboard"
-                width={354}
-                height={695}
-                className="h-auto w-full"
-                priority
-              />
+            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              <PhoneMockup>
+                <Image
+                  src="/images/users/phonemock3.svg"
+                  alt="Centralized Overview mobile dashboard"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </PhoneMockup>
             </div>
           </div>
         </div>

@@ -349,7 +349,7 @@ export default function Page() {
 							return (
 								<div
 									key={index}
-									className="group w-full md:w-1/6 md:mx-1 mb-2 md:my-4 bg-white rounded-[10px]"
+									className="group w-full md:w-1/5 md:mx-1 mb-2 md:my-4 bg-white rounded-[10px]"
 								>
 									<div className="relative  h-56 sog_animation group-hover:rotate-y-180">
 										<div className="absolute top-0 bottom-0 w-full h-full backface_hidden overflow-hidden rounded-[10px]">
@@ -392,7 +392,7 @@ export default function Page() {
 						If you&apos;re passionate about joining our team and believe
 						you&apos;d be a great fit, we&apos;d love to hear from you! Please
 						send your resume to{" "}
-						<a href="mailto:careers@medibank.in" className="text-white-600 bold italic">
+						<a href="mailto:careers@medibank.in" className="text-white-600 bold italic underline">
 							careers@medibank.in
 						</a>
 						, and let&apos;s explore the exciting opportunities together.

@@ -109,7 +109,7 @@ export default function DataControlSection() {
 					xPercent: 0,
 					scale: 1,
 					opacity: 0.9,
-					duration: 1.2,
+					duration: 6.2,
 					ease: "power3.out",
 					scrollTrigger: {
 						trigger: ".data-cta",

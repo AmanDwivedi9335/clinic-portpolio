@@ -1,14 +1,67 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-import { createGsapContext } from "@/lib/gsap";
+import { useEffect, useRef, useState } from "react";
 import Howitworks from "@/components/Home/Howitworks";
+
+const SHOWCASE_STEPS = [
+  {
+    heading: "Smart Health Overview",
+    subheading: (
+      <>
+        Track appointments, vitals, and daily health
+        <br />
+        insights in one place.
+      </>
+    ),
+    body: "A personalized multidimensional record of your ecosystem's daily health journey, and your vital trends.",
+    image: "/images/users/phone-mock-1.svg",
+    alt: "Smart Health Overview mobile dashboard",
+  },
+  {
+    heading: (
+      <>
+        Discover Nearby
+        <br />
+        Healthcare Providers
+      </>
+    ),
+    subheading: (
+      <>
+        Search doctors, labs, and hospitals around your
+        <br />
+        location.
+      </>
+    ),
+    body: "An interactive map-based directory to explore, view availability, and book appointments with nearby providers.",
+    image: "/images/users/phonemock2.svg",
+    alt: "Discover nearby mobile dashboard",
+  },
+  {
+    heading: (
+      <>
+        Centralized Health
+        <br />
+        Records
+      </>
+    ),
+    subheading: (
+      <>
+        Access appointments, lab reports, and hospital
+        <br />
+        documents anytime.
+      </>
+    ),
+    body: "A structured record management center for securely viewing and managing essential reports with clarity.",
+    image: "/images/users/phonemock3.svg",
+    alt: "Centralized Overview mobile dashboard",
+  },
+];
 
 function PhoneMockup({ children, className = "" }) {
   return (
     <div
-      className={`relative mx-auto aspect-[9/19.5] w-full max-w-[220px] rounded-[46px] border-[7px] border-[#221640] bg-[#0D0A1A] p-[5px] shadow-[0_26px_48px_rgba(33,16,72,0.32)] ${className}`}
+      className={`sticky top-24 relative mx-auto aspect-[9/19.5] w-full max-w-[220px] rounded-[46px] border-[7px] border-[#221640] bg-[#0D0A1A] p-[5px] shadow-[0_26px_48px_rgba(33,16,72,0.32)] ${className}`}
     >
       <div className="pointer-events-none absolute left-1/2 top-[10px] h-6 w-[108px] -translate-x-1/2 rounded-b-[18px] bg-[#07050f]" />
       <div className="relative h-full overflow-hidden rounded-[38px] bg-[#F5F2FF]">{children}</div>
@@ -175,8 +228,8 @@ function RowPillIndicators({ activeIndex = 0 }) {
 }
 
 export default function UsersPage() {
-  const showcaseRef = useRef(null);
-  const pinPanelRef = useRef(null);
+  const stepRefs = useRef([]);
+  const [activeStep, setActiveStep] = useState(0);
 
   const showcaseHeadingClassName =
     "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
@@ -185,77 +238,32 @@ export default function UsersPage() {
   const showcaseBodyClassName = "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]";
 
   useEffect(() => {
-    // Desktop-only pin interaction
-    if (typeof window === "undefined" || window.innerWidth < 768) return;
+    if (typeof window === "undefined") return undefined;
 
-    return createGsapContext(showcaseRef, (gsap) => {
-      const ScrollTrigger = window.ScrollTrigger;
-      const rows = gsap.utils.toArray(".users-showcase-row");
+    const observer = new window.IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-      if (!ScrollTrigger || !rows.length || !pinPanelRef.current || !showcaseRef.current) return;
+        if (visibleEntries.length > 0) {
+          const nextIndex = Number(visibleEntries[0].target.getAttribute("data-step-index"));
+          if (!Number.isNaN(nextIndex)) {
+            setActiveStep(nextIndex);
+          }
+        }
+      },
+      {
+        threshold: [0.35, 0.6, 0.8],
+        rootMargin: "-20% 0px -20% 0px",
+      }
+    );
 
-      const totalSteps = rows.length - 1;
-
-      // Stack rows for crossfade
-      gsap.set(rows, { position: "absolute", inset: 0 });
-      gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
-      gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
-
-      let currentIndex = 0;
-
-      const showIndex = (nextIndex) => {
-        if (nextIndex === currentIndex) return;
-
-        // Prevent overlap / stuck alpha
-        gsap.killTweensOf(rows);
-
-        gsap.to(rows[currentIndex], {
-          autoAlpha: 0,
-          yPercent: -12,
-          duration: 0.55, // ✅ smoother swap
-          ease: "power2.out",
-          overwrite: "auto",
-        });
-
-        gsap.to(rows[nextIndex], {
-          autoAlpha: 1,
-          yPercent: 0,
-          duration: 0.55, // ✅ smoother swap
-          ease: "power2.out",
-          overwrite: "auto",
-        });
-
-        currentIndex = nextIndex;
-      };
-
-      ScrollTrigger.create({
-        trigger: showcaseRef.current,
-        start: "top top",
-        // 1 viewport per row => continuous scrollbar movement
-        end: () => `+=${window.innerHeight * rows.length}`,
-        pin: pinPanelRef.current,
-        pinSpacing: true,
-        scrub: 1, // ✅ smoother follow
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-
-        // ✅ No snap => no jumping
-        // snap: false,
-
-        onUpdate: (self) => {
-          // ✅ floor avoids early flipping (round can feel jumpy)
-          const idx = gsap.utils.clamp(
-            0,
-            totalSteps,
-            Math.floor(self.progress * (totalSteps + 1))
-          );
-          showIndex(idx);
-        },
-
-        onLeave: () => showIndex(totalSteps),
-        onEnterBack: () => showIndex(currentIndex),
-      });
+    stepRefs.current.forEach((step) => {
+      if (step) observer.observe(step);
     });
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -373,116 +381,41 @@ export default function UsersPage() {
       </section>
 
       {/* SHOWCASE */}
-      <section
-        ref={showcaseRef}
-        className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto md:h-[400vh] max-w-6xl bg-[#F4F4F8] px-6"
-      >
-        <div
-          ref={pinPanelRef}
-          className="relative h-auto md:h-[100svh] overflow-visible md:overflow-hidden py-6 md:py-0"
-        >
-          {/* Row 1 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
+      <section className="relative mx-auto mt-20 sm:mt-20 md:mt-10 max-w-6xl bg-[#F4F4F8] px-6">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_220px] md:gap-12">
+          <div className="order-2 md:order-1">
+            {SHOWCASE_STEPS.map((step, index) => (
+              <div
+                key={index}
+                ref={(node) => {
+                  stepRefs.current[index] = node;
+                }}
+                data-step-index={index}
+                className="min-h-[75vh] md:min-h-[100vh] flex items-center"
+              >
+                <div>
+                  <h2 className={showcaseHeadingClassName}>{step.heading}</h2>
 
-              <p className={showcaseSubheadingClassName}>
-                Track appointments, vitals, and daily health
-                <br />
-                insights in one place.
-              </p>
+                  <p className={showcaseSubheadingClassName}>{step.subheading}</p>
 
-              <p className={showcaseBodyClassName}>
-                A personalized multidimensional record of your ecosystem&apos;s daily
-                health journey, and your vital trends.
-              </p>
+                  <p className={showcaseBodyClassName}>{step.body}</p>
 
-              <RowPillIndicators activeIndex={0} />
-            </div>
-
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phone-mock-1.svg"
-                  alt="Smart Health Overview mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
-            </div>
+                  <RowPillIndicators activeIndex={index} />
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Row 2 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>
-                Discover Nearby
-                <br />
-                Healthcare Providers
-              </h2>
-
-              <p className={showcaseSubheadingClassName}>
-                Search doctors, labs, and hospitals around your
-                <br />
-                location.
-              </p>
-
-              <p className={showcaseBodyClassName}>
-                An interactive map-based directory to explore, view availability,
-                and book appointments with nearby providers.
-              </p>
-
-              <RowPillIndicators activeIndex={1} />
-            </div>
-
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phonemock2.svg"
-                  alt="Discover nearby mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
-            </div>
-          </div>
-
-          {/* Row 3 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>
-                Centralized Health
-                <br />
-                Records
-              </h2>
-
-              <p className={showcaseSubheadingClassName}>
-                Access appointments, lab reports, and hospital
-                <br />
-                documents anytime.
-              </p>
-
-              <p className={showcaseBodyClassName}>
-                A structured record management center for securely viewing and
-                managing essential reports with clarity.
-              </p>
-
-              <RowPillIndicators activeIndex={2} />
-            </div>
-
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phonemock3.svg"
-                  alt="Centralized Overview mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
-            </div>
+          <div className="order-1 md:order-2 md:pt-10">
+            <PhoneMockup>
+              <Image
+                src={SHOWCASE_STEPS[activeStep].image}
+                alt={SHOWCASE_STEPS[activeStep].alt}
+                fill
+                className="object-cover"
+                priority
+              />
+            </PhoneMockup>
           </div>
         </div>
       </section>
@@ -490,10 +423,6 @@ export default function UsersPage() {
       <section>
         <Howitworks />
       </section>
-
-      {/* <section>
-        <Subscription />
-      </section> */}
 
       <style jsx>{`
         .users-pill-fill {

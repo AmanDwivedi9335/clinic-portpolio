@@ -158,7 +158,7 @@ export default function Page() {
 						<br />
 						We are working towards a healthcare system in India, where citizens
 						have the option to visit any healthcare provider or institution in
-						any part of the country without the need of carrying physical
+						any part of the country without the need to carry physical
 						medical records. <br />
 					</div>
 				</div>

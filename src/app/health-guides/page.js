@@ -9,7 +9,7 @@ const guidesData = [
 		id: 1,
 		imgurl: "/images/healthguides/Heart-health.png",
 		title: "Heart Health",
-		desc: "Heart disease is a leading cause of death now a days for both men and women. Heart-healthy living involves understanding your risk, making healthy choices, and taking steps to reduce your chances of getting heart disease. Triglycerides, a type of blood fat, are crucial for heart health, with their levels indicating potential risks for heart disease. A triglyceride blood test measures these levels to guide health decisions. High triglyceride levels can result from excess calorie intake and are influenced by factors like obesity, genetics, and diabetes. Regular monitoring and a balanced lifestyle, including a low-carb diet, exercise, and weight control, are key to managing triglyceride levels and maintaining heart health.",
+		desc: "Heart disease is a leading cause of death nowadays for both men and women. Heart-healthy living involves understanding your risk, making healthy choices, and taking steps to reduce your chances of getting heart disease. Triglycerides, a type of blood fat, are crucial for heart health, with their levels indicating potential risks for heart disease. A triglyceride blood test measures these levels to guide health decisions. High triglyceride levels can result from excess calorie intake and are influenced by factors like obesity, genetics, and diabetes. Regular monitoring and a balanced lifestyle, including a low-carb diet, exercise, and weight control, are key to managing triglyceride levels and maintaining heart health.",
 	},
 	{
 		id: 2,
@@ -32,7 +32,7 @@ const guidesData = [
 	{
 		id: 5,
 		imgurl: "/images/healthguides/Women-health.png",
-		title: "Women Health",
+		title: "Women&apos;s Health",
 		desc: "Women's health encompasses a broad range of issues, reflecting the complexity of their physiological and psychological needs throughout different stages of life. From reproductive health and maternal care to managing chronic diseases and maintaining mental well-being, women's health is a vital aspect of public health policy and personal healthcare. It's essential to promote awareness and education on topics such as the importance of regular check-ups, balanced nutrition, and physical activity, as well as understanding the unique symptoms and risks associated with conditions like heart disease and breast cancer. Empowering women with knowledge and access to healthcare services can lead to better health outcomes and a higher quality of life.",
 	},
 	{

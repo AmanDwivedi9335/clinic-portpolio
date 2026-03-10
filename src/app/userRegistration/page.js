@@ -112,6 +112,7 @@ export default function UserRegistrationPage() {
       gender: "",
       mobile: "",
       email: "",
+      referralCode: "",
       state: "",
       city: "",
     },
@@ -269,6 +270,19 @@ export default function UserRegistrationPage() {
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[#7b1fa2] transition group-focus-within:rotate-180" />
               </div>
               {errors.state && <p className="mt-1 text-xs text-red-500">{errors.state.message}</p>}
+            </div>
+
+            <div>
+              <label className="mb-1 block text-sm text-[#2b2b43]">Referral Code (Optional)</label>
+              <input
+                className={`${inputClass} ${errors.referralCode ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
+                type="text"
+                placeholder="Enter referral code"
+                {...register("referralCode", {
+                  pattern: { value: /^[a-zA-Z0-9]{4,20}$/, message: "Use 4-20 letters or numbers only." },
+                })}
+              />
+              {errors.referralCode && <p className="mt-1 text-xs text-red-500">{errors.referralCode.message}</p>}
             </div>
 
             <div>

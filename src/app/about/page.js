@@ -33,11 +33,11 @@ export default function Page() {
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Joe",
+			Name: "Deepthi Murikipudi",
 			Designation: "Employee",
 			Details:
-				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/vaishnavi.jpg",
+				"With 4+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/deepthi.png",
 		},
 		{
 			Name: "Meet Mathukiya",

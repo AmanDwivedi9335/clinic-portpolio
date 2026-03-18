@@ -164,7 +164,7 @@ export default function Page() {
 				</div>
 				<div className="md:container flex justify-center w-full md:w-1/2">
 					<Image
-						src="/images/ourstorynew.png"
+						src="/images/ourstorynew.webp"
 						width={500}
 						height={200}
 						alt="Our Story"

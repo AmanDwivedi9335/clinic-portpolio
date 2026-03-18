@@ -34,7 +34,7 @@ export default function Page() {
 		},
 		{
 			Name: "Deepthi Murikipudi",
-			Designation: "Employee",
+			Designation: "AI/ML Intern",
 			Details:
 				"With 4+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
 			imgurl: "/images/founders/deepthi.png",

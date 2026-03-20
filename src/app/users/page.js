@@ -1,9 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
 import Howitworks from "@/components/Home/Howitworks";
+
+const DEMO_VIDEO_URL =
+  "https://www.youtube.com/embed/N5_dq0VgBYQ?si=OuzzsAPhXUtaYySh&autoplay=1&rel=0";
 
 function PhoneMockup({ children, className = "" }) {
   return (
@@ -174,9 +178,122 @@ function RowPillIndicators({ activeIndex = 0 }) {
   );
 }
 
+function DemoVideoModal({ isOpen, onClose }) {
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen ? (
+        <motion.div
+          className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-8 md:px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+        >
+          <motion.button
+            type="button"
+            aria-label="Close video popup"
+            className="absolute inset-0 cursor-default bg-[#090314]/70 backdrop-blur-md"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Watch demo video"
+            className="relative z-10 w-full max-w-5xl overflow-hidden rounded-[32px] border border-white/25 bg-[linear-gradient(145deg,rgba(255,255,255,0.88),rgba(245,236,255,0.92))] shadow-[0_40px_120px_rgba(31,9,81,0.35)]"
+            initial={{ opacity: 0, y: 36, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 24, scale: 0.96 }}
+            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(167,76,255,0.2),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(14,24,150,0.2),transparent_30%)]" />
+
+            <div className="relative flex flex-col gap-5 p-4 sm:p-5 md:p-7">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#8F129A]">
+                    Watch Demo
+                  </p>
+                  <h2 className="mt-2 text-2xl font-extrabold leading-tight text-[#1F1350] md:text-3xl">
+                    Experience the user journey in motion
+                  </h2>
+                  <p className="mt-2 max-w-2xl text-sm text-[#4D4671] md:text-base">
+                    Explore the product walkthrough in a polished full-screen popup designed to keep the focus on the video.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="group relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#E5D8F8] bg-white/80 text-[#4D267F] shadow-[0_14px_30px_rgba(119,75,166,0.18)] transition duration-300 hover:scale-105 hover:bg-white"
+                  aria-label="Close demo video"
+                >
+                  <span className="absolute inset-0 rounded-full bg-[linear-gradient(180deg,rgba(159,2,141,0.12),rgba(14,24,150,0.12))] opacity-0 transition duration-300 group-hover:opacity-100" />
+                  <svg
+                    className="relative h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 5L15 15M15 5L5 15"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="relative overflow-hidden rounded-[24px] border border-white/60 bg-[#140B2F] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_25px_60px_rgba(17,7,42,0.35)] md:p-3">
+                <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(196,136,255,0.22),transparent_68%)]" />
+                <div className="relative aspect-video overflow-hidden rounded-[18px] bg-black">
+                  <iframe
+                    src={DEMO_VIDEO_URL}
+                    title="Medi Log user app demo"
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
 export default function UsersPage() {
   const showcaseRef = useRef(null);
   const pinPanelRef = useRef(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const showcaseHeadingClassName =
     "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
@@ -185,7 +302,6 @@ export default function UsersPage() {
   const showcaseBodyClassName = "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]";
 
   useEffect(() => {
-    // Desktop-only pin interaction
     if (typeof window === "undefined" || window.innerWidth < 768) return;
 
     return createGsapContext(showcaseRef, (gsap) => {
@@ -196,7 +312,6 @@ export default function UsersPage() {
 
       const totalSteps = rows.length - 1;
 
-      // Stack rows for crossfade
       gsap.set(rows, { position: "absolute", inset: 0 });
       gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
       gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
@@ -206,13 +321,12 @@ export default function UsersPage() {
       const showIndex = (nextIndex) => {
         if (nextIndex === currentIndex) return;
 
-        // Prevent overlap / stuck alpha
         gsap.killTweensOf(rows);
 
         gsap.to(rows[currentIndex], {
           autoAlpha: 0,
           yPercent: -12,
-          duration: 0.55, // ✅ smoother swap
+          duration: 0.55,
           ease: "power2.out",
           overwrite: "auto",
         });
@@ -220,7 +334,7 @@ export default function UsersPage() {
         gsap.to(rows[nextIndex], {
           autoAlpha: 1,
           yPercent: 0,
-          duration: 0.55, // ✅ smoother swap
+          duration: 0.55,
           ease: "power2.out",
           overwrite: "auto",
         });
@@ -231,19 +345,13 @@ export default function UsersPage() {
       ScrollTrigger.create({
         trigger: showcaseRef.current,
         start: "top top",
-        // 1 viewport per row => continuous scrollbar movement
         end: () => `+=${window.innerHeight * rows.length}`,
         pin: pinPanelRef.current,
         pinSpacing: true,
-        scrub: 1, // ✅ smoother follow
+        scrub: 1,
         anticipatePin: 1,
         invalidateOnRefresh: true,
-
-        // ✅ No snap => no jumping
-        // snap: false,
-
         onUpdate: (self) => {
-          // ✅ floor avoids early flipping (round can feel jumpy)
           const idx = gsap.utils.clamp(
             0,
             totalSteps,
@@ -251,7 +359,6 @@ export default function UsersPage() {
           );
           showIndex(idx);
         },
-
         onLeave: () => showIndex(totalSteps),
         onEnterBack: () => showIndex(currentIndex),
       });
@@ -259,36 +366,52 @@ export default function UsersPage() {
   }, []);
 
   return (
-    <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pt-20 text-[#220A56] md:pt-24">
-      <HeroWaveBackground />
+    <>
+      <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pt-20 text-[#220A56] md:pt-24">
+        <HeroWaveBackground />
 
-      {/* HERO */}
-      <section className="relative isolate h-[100vh] overflow-hidden pt-12 md:pt-16">
-        <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
-            INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
-          </p>
+        {/* HERO */}
+        <section className="relative isolate h-[100vh] overflow-hidden pt-12 md:pt-16">
+          <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
+              INDIA&apos;S FIRST HEALTH IDENTITY INFRASTRUCTURE™
+            </p>
 
-          <h1
-            className="
-              mx-auto mt-4 max-w-4xl
-              text-5xl md:text-7xl
-              font-extrabold
-              leading-[1.05]
-              tracking-[-0.02em]
-              bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-              bg-clip-text text-transparent
-            "
-          >
-            Sneak Peek of
-            <br />
-            What You Get
-          </h1>
+            <h1
+              className="
+                mx-auto mt-4 max-w-4xl
+                text-5xl md:text-7xl
+                font-extrabold
+                leading-[1.05]
+                tracking-[-0.02em]
+                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                bg-clip-text text-transparent
+              "
+            >
+              Sneak Peek of
+              <br />
+              What You Get
+            </h1>
 
-          <p className="mt-4 text-sm font-medium text-[#282672] md:text-base">
-            See how the app works in just a few scrolls.
-          </p>
+            <p className="mt-4 text-sm font-medium text-[#282672] md:text-base">
+              See how the app works in just a few scrolls.
+            </p>
 
+            <div className="mt-7 flex items-center justify-center gap-4">
+              <button
+                className="
+                  rounded-xl
+                  px-8 py-3
+                  text-sm font-semibold text-white
+                  bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                  shadow-[0_18px_40px_rgba(159,2,141,0.35)]
+                  transition
+                  hover:brightness-110
+                  active:scale-[0.98]
+                "
+              >
+                Subscribe Now
+              </button>
           <div className="mt-7 flex items-center justify-center gap-4">
             {/* <button
               className="
@@ -305,218 +428,241 @@ export default function UsersPage() {
               Subscribe Now
             </button> */}
 
-            <button
-              className="
-                relative
-                rounded-xl
-                p-[1.5px]
-                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-                transition
-                hover:brightness-110
-              "
-            >
-              <span
+              <button
+                type="button"
+                onClick={() => setIsVideoModalOpen(true)}
                 className="
-                  flex h-full w-full items-center justify-center
-                  rounded-[10px]
-                  bg-white/90
-                  px-8 py-3
-                  text-sm font-semibold
-                  text-[#4D267F]
-                  shadow-sm
+                  group relative overflow-hidden rounded-xl p-[1.5px]
+                  bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+                  shadow-[0_16px_38px_rgba(87,35,148,0.18)]
+                  transition duration-300
+                  hover:-translate-y-0.5 hover:brightness-110
                 "
               >
-                Watch Demo
-              </span>
-            </button>
-          </div>
+                <span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.3),transparent,rgba(255,255,255,0.28))] opacity-0 transition duration-500 group-hover:opacity-100 group-hover:animate-[shimmer_1.4s_ease-in-out]" />
+                <span
+                  className="
+                    relative flex h-full w-full items-center justify-center gap-2
+                    rounded-[10px]
+                    bg-white/90
+                    px-8 py-3
+                    text-sm font-semibold
+                    text-[#4D267F]
+                    shadow-sm
+                  "
+                >
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] text-white shadow-[0_10px_24px_rgba(110,33,158,0.3)]">
+                    <svg
+                      className="ml-0.5 h-3.5 w-3.5"
+                      viewBox="0 0 16 16"
+                      fill="currentColor"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M4.5 3.8C4.5 2.97 5.4 2.45 6.12 2.87L12.18 6.57C12.88 6.99 12.88 8.01 12.18 8.43L6.12 12.13C5.4 12.55 4.5 12.03 4.5 11.2V3.8Z" />
+                    </svg>
+                  </span>
+                  Watch Demo
+                </span>
+              </button>
+            </div>
 
-          <div className="mt-10" aria-hidden="true">
-            <svg
-              className="scroll-indicator"
-              width="30"
-              height="36"
-              viewBox="0 0 50 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                className="scroll-indicator-chevron"
-                d="M12 8L25 21L38 8"
-                stroke="#8F129A"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ "--chevron-delay": "0s" }}
-              />
-              <path
-                className="scroll-indicator-chevron"
-                d="M12 24L25 37L38 24"
-                stroke="#BB79C7"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ "--chevron-delay": "0.2s" }}
-              />
-              <path
-                className="scroll-indicator-chevron"
-                d="M12 40L25 53L38 40"
-                stroke="#D9B8DD"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                style={{ "--chevron-delay": "0.4s" }}
-              />
-            </svg>
+            <div className="mt-10" aria-hidden="true">
+              <svg
+                className="scroll-indicator"
+                width="30"
+                height="36"
+                viewBox="0 0 50 56"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  className="scroll-indicator-chevron"
+                  d="M12 8L25 21L38 8"
+                  stroke="#8F129A"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ "--chevron-delay": "0s" }}
+                />
+                <path
+                  className="scroll-indicator-chevron"
+                  d="M12 24L25 37L38 24"
+                  stroke="#BB79C7"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ "--chevron-delay": "0.2s" }}
+                />
+                <path
+                  className="scroll-indicator-chevron"
+                  d="M12 40L25 53L38 40"
+                  stroke="#D9B8DD"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ "--chevron-delay": "0.4s" }}
+                />
+              </svg>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* SHOWCASE */}
-      <section
-        ref={showcaseRef}
-        className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto md:h-[400vh] max-w-6xl bg-[#F4F4F8] px-6"
-      >
-        <div
-          ref={pinPanelRef}
-          className="relative h-auto md:h-[100svh] overflow-visible md:overflow-hidden py-6 md:py-0"
+        {/* SHOWCASE */}
+        <section
+          ref={showcaseRef}
+          className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto max-w-6xl bg-[#F4F4F8] px-6 md:h-[400vh]"
         >
-          {/* Row 1 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
+          <div
+            ref={pinPanelRef}
+            className="relative h-auto overflow-visible py-6 md:h-[100svh] md:overflow-hidden md:py-0"
+          >
+            {/* Row 1 */}
+            <div className="users-showcase-row relative grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:grid-cols-2 md:items-center md:gap-12">
+              <div>
+                <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
 
-              <p className={showcaseSubheadingClassName}>
-                Track appointments, vitals, and daily health
-                <br />
-                insights in one place.
-              </p>
+                <p className={showcaseSubheadingClassName}>
+                  Track appointments, vitals, and daily health
+                  <br />
+                  insights in one place.
+                </p>
 
-              <p className={showcaseBodyClassName}>
-                A personalized multidimensional record of your ecosystem&apos;s daily
-                health journey, and your vital trends.
-              </p>
+                <p className={showcaseBodyClassName}>
+                  A personalized multidimensional record of your ecosystem&apos;s daily
+                  health journey, and your vital trends.
+                </p>
 
-              <RowPillIndicators activeIndex={0} />
+                <RowPillIndicators activeIndex={0} />
+              </div>
+
+              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+                <PhoneMockup>
+                  <Image
+                    src="/images/users/phone-mock-1.svg"
+                    alt="Smart Health Overview mobile dashboard"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </PhoneMockup>
+              </div>
             </div>
 
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phone-mock-1.svg"
-                  alt="Smart Health Overview mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
+            {/* Row 2 */}
+            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
+              <div>
+                <h2 className={showcaseHeadingClassName}>
+                  Discover Nearby
+                  <br />
+                  Healthcare Providers
+                </h2>
+
+                <p className={showcaseSubheadingClassName}>
+                  Search doctors, labs, and hospitals around your
+                  <br />
+                  location.
+                </p>
+
+                <p className={showcaseBodyClassName}>
+                  An interactive map-based directory to explore, view availability,
+                  and book appointments with nearby providers.
+                </p>
+
+                <RowPillIndicators activeIndex={1} />
+              </div>
+
+              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+                <PhoneMockup>
+                  <Image
+                    src="/images/users/phonemock2.svg"
+                    alt="Discover nearby mobile dashboard"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </PhoneMockup>
+              </div>
+            </div>
+
+            {/* Row 3 */}
+            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
+              <div>
+                <h2 className={showcaseHeadingClassName}>
+                  Centralized Health
+                  <br />
+                  Records
+                </h2>
+
+                <p className={showcaseSubheadingClassName}>
+                  Access appointments, lab reports, and hospital
+                  <br />
+                  documents anytime.
+                </p>
+
+                <p className={showcaseBodyClassName}>
+                  A structured record management center for securely viewing and
+                  managing essential reports with clarity.
+                </p>
+
+                <RowPillIndicators activeIndex={2} />
+              </div>
+
+              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+                <PhoneMockup>
+                  <Image
+                    src="/images/users/phonemock3.svg"
+                    alt="Centralized Overview mobile dashboard"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </PhoneMockup>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Row 2 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>
-                Discover Nearby
-                <br />
-                Healthcare Providers
-              </h2>
+        <section>
+          <Howitworks />
+        </section>
 
-              <p className={showcaseSubheadingClassName}>
-                Search doctors, labs, and hospitals around your
-                <br />
-                location.
-              </p>
-
-              <p className={showcaseBodyClassName}>
-                An interactive map-based directory to explore, view availability,
-                and book appointments with nearby providers.
-              </p>
-
-              <RowPillIndicators activeIndex={1} />
-            </div>
-
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phonemock2.svg"
-                  alt="Discover nearby mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
-            </div>
-          </div>
-
-          {/* Row 3 */}
-          <div className="users-showcase-row relative md:absolute md:inset-0 mt-12 md:mt-0 grid items-start md:items-center gap-8 md:gap-12 px-0 py-0 md:grid-cols-2">
-            <div>
-              <h2 className={showcaseHeadingClassName}>
-                Centralized Health
-                <br />
-                Records
-              </h2>
-
-              <p className={showcaseSubheadingClassName}>
-                Access appointments, lab reports, and hospital
-                <br />
-                documents anytime.
-              </p>
-
-              <p className={showcaseBodyClassName}>
-                A structured record management center for securely viewing and
-                managing essential reports with clarity.
-              </p>
-
-              <RowPillIndicators activeIndex={2} />
-            </div>
-
-            <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-              <PhoneMockup>
-                <Image
-                  src="/images/users/phonemock3.svg"
-                  alt="Centralized Overview mobile dashboard"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </PhoneMockup>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <Howitworks />
-      </section>
-
-      {/* <section>
-        <Subscription />
-      </section> */}
-
-      <style jsx>{`
-        .users-pill-fill {
-          background: linear-gradient(90deg, #9f028d 0%, #0e1896 100%);
-          animation: pillFill 2.4s ease-in-out infinite;
-          transform-origin: left;
-        }
-
-        @keyframes pillFill {
-          0% {
-            transform: scaleX(0.1);
-            opacity: 0.7;
+        <style jsx>{`
+          .users-pill-fill {
+            background: linear-gradient(90deg, #9f028d 0%, #0e1896 100%);
+            animation: pillFill 2.4s ease-in-out infinite;
+            transform-origin: left;
           }
-          65% {
-            transform: scaleX(1);
-            opacity: 1;
+
+          @keyframes pillFill {
+            0% {
+              transform: scaleX(0.1);
+              opacity: 0.7;
+            }
+            65% {
+              transform: scaleX(1);
+              opacity: 1;
+            }
+            100% {
+              transform: scaleX(1);
+              opacity: 1;
+            }
           }
-          100% {
-            transform: scaleX(1);
-            opacity: 1;
+
+          @keyframes shimmer {
+            0% {
+              transform: translateX(-100%);
+            }
+            100% {
+              transform: translateX(100%);
+            }
           }
-        }
-      `}</style>
-    </main>
+        `}</style>
+      </main>
+
+      <DemoVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+      />
+    </>
   );
 }

@@ -131,11 +131,11 @@ export default function ReportCarouselSection() {
         </h2>
       </div>
 
-      <div className="report-carousel mx-auto mt-7 max-w-5xl px-3 md:px-8">
+      <div className="report-carousel mx-auto mt-7 max-w-6xl px-4 md:mt-10 md:px-6 lg:px-8">
         <Carousel
           opts={{ align: "center", loop: true }}
           setApi={setApi}
-          className="relative"
+          className="relative overflow-visible [&>div]:overflow-visible [&>div>div]:overflow-visible"
           onMouseEnter={() => {
             isHoveredRef.current = true;
           }}
@@ -143,18 +143,18 @@ export default function ReportCarouselSection() {
             isHoveredRef.current = false;
           }}
         >
-          <CarouselContent className="py-3">
+          <CarouselContent className="-ml-3 py-3 md:-ml-5 lg:-ml-6">
             {slides.map((slide, index) => (
               <CarouselItem
                 key={`${slide.title}-${index}`}
-                // No sm: — only base, md, lg, xl. Desktop stays 1/3 (lg+).
-                className="basis-[86%] md:basis-[52%] lg:basis-1/3 xl:basis-1/3"
+                // Full-width on phones, two-up on tablets, three-up on larger screens.
+                className="pl-3 basis-[100%] md:pl-5 md:basis-[58%] lg:pl-6 lg:basis-[34%]"
               >
                 <article
                   className={[
-                    "group relative flex flex-col rounded-[32px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2",
-                    // Responsive height without sm:
-                    "h-[clamp(340px,62vh,400px)]",
+                    "group relative flex h-full flex-col rounded-[28px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-2 md:rounded-[32px]",
+                    // Responsive card height across breakpoints.
+                    "min-h-[360px] md:min-h-[390px] lg:min-h-[410px]",
                     activeIndex === index
                       ? "scale-[1.01] opacity-100 hover:border-[#C22ECC] hover:cursor-move hover:shadow-[0_14px_30px_rgba(194,46,204,0.2)]"
                       : "scale-[0.97] opacity-85",
@@ -162,9 +162,9 @@ export default function ReportCarouselSection() {
                 >
                   <div
                     className={[
-                      "relative overflow-hidden rounded-[32px] transition-[height] duration-300 ease-out",
-                      // image block scales on small screens:
-                      "h-[clamp(200px,36vh,250px)]",
+                      "relative overflow-hidden rounded-[24px] transition-[height] duration-300 ease-out md:rounded-[32px]",
+                      // Image area scales with viewport size.
+                      "h-[210px] sm:h-[230px] md:h-[240px] lg:h-[250px]",
                       activeIndex === index ? "lg:group-hover:h-[245px]" : "",
                     ].join(" ")}
                   >
@@ -173,26 +173,25 @@ export default function ReportCarouselSection() {
                       alt={slide.alt}
                       fill
                       className="object-cover"
-                      // no sm in sizes either
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 52vw, 86vw"
+                      sizes="(min-width: 1024px) 34vw, (min-width: 768px) 58vw, 100vw"
                       priority={index === 0}
                     />
                   </div>
 
                   <div
                     className={[
-                      "flex flex-1 flex-col px-5 pb-5 pt-4",
+                      "flex flex-1 flex-col px-4 pb-5 pt-4 md:px-5",
                       "transition-[padding,transform] duration-300 ease-out",
                       activeIndex === index ? "lg:group-hover:translate-y-[1px]" : "",
                     ].join(" ")}
                   >
-                    <h3 className="text-[clamp(18px,1vw,25px)] font-aptos-black leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
+                    <h3 className="text-[clamp(18px,4.8vw,25px)] font-aptos-black leading-[1.2] tracking-[-0.02em] text-[#252B7F]">
                       What if &nbsp;
-                    <span className="text-[clamp(18px,1vw,25px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#282672]">
-                      {slide.title}
-                    </span>
+                      <span className="text-[clamp(18px,4.8vw,25px)] font-medium leading-[1.2] tracking-[-0.02em] text-[#282672]">
+                        {slide.title}
+                      </span>
                     </h3>
-                    <p className="mt-1 text-[clamp(14px,0.7vw,18px)] font-semibold text-[#282672]">
+                    <p className="mt-2 text-[clamp(14px,3.8vw,18px)] font-semibold text-[#282672] md:mt-3">
                       {slide.description}
                     </p>
                   </div>

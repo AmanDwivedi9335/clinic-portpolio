@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, Clock3 } from "lucide-react";
 import { MdAlternateEmail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 
@@ -75,6 +74,11 @@ export default function Footer() {
 							<li>
 								<Link href="/resources/#resources4" className="hover:text-[#5C4AFF]">
 									Privacy Policy
+								</Link>
+							</li>
+							<li>
+								<Link href="/terms-and-conditions" className="hover:text-[#5C4AFF]">
+									Terms &amp; Conditions
 								</Link>
 							</li>
 							<li>

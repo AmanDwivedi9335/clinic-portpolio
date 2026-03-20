@@ -290,7 +290,7 @@ export default function UsersPage() {
           </p>
 
           <div className="mt-7 flex items-center justify-center gap-4">
-            <button
+            {/* <button
               className="
                 rounded-xl
                 px-8 py-3
@@ -303,7 +303,7 @@ export default function UsersPage() {
               "
             >
               Subscribe Now
-            </button>
+            </button> */}
 
             <button
               className="

@@ -236,14 +236,11 @@ function DemoVideoModal({ isOpen, onClose }) {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#8F129A]">
-                    Watch Demo
+                    Android Application Demo
                   </p>
                   <h2 className="mt-2 text-2xl font-extrabold leading-tight text-[#1F1350] md:text-3xl">
-                    Experience the user journey in motion
+                    Experience the user journey
                   </h2>
-                  <p className="mt-2 max-w-2xl text-sm text-[#4D4671] md:text-base">
-                    Explore the product walkthrough in a polished full-screen popup designed to keep the focus on the video.
-                  </p>
                 </div>
 
                 <button
@@ -398,21 +395,6 @@ export default function UsersPage() {
             </p>
 
             <div className="mt-7 flex items-center justify-center gap-4">
-              <button
-                className="
-                  rounded-xl
-                  px-8 py-3
-                  text-sm font-semibold text-white
-                  bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-                  shadow-[0_18px_40px_rgba(159,2,141,0.35)]
-                  transition
-                  hover:brightness-110
-                  active:scale-[0.98]
-                "
-              >
-                Subscribe Now
-              </button>
-          <div className="mt-7 flex items-center justify-center gap-4">
             {/* <button
               className="
                 rounded-xl

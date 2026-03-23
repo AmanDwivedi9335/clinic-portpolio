@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { createGsapContext } from "@/lib/gsap";
 import GradientBadge from "@/components/ui/GradientBadge";
@@ -203,6 +204,37 @@ export default function ReportCarouselSection() {
             ))}
           </CarouselContent>
         </Carousel>
+
+        <div className="mt-5 flex items-center justify-center gap-4 text-[#2230B4] md:mt-8 md:gap-6">
+          <button
+            type="button"
+            onClick={() => api?.scrollPrev()}
+            className="transition hover:opacity-70"
+            aria-label="Previous report"
+          >
+            <ArrowLeft size={24} />
+          </button>
+
+          <div className="flex items-center gap-2">
+            {slides.map((_, index) => (
+              <span
+                key={`report-indicator-${index}`}
+                className={`h-2 rounded-full transition-all ${
+                  activeIndex === index ? "w-6 bg-[#2230B4]" : "w-2 bg-[#8E95DC]"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => api?.scrollNext()}
+            className="transition hover:opacity-70"
+            aria-label="Next report"
+          >
+            <ArrowRight size={24} />
+          </button>
+        </div>
       </div>
     </section>
   );

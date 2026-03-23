@@ -245,15 +245,37 @@ export default function ReportCarouselSection() {
             </CarouselContent>
           </Carousel>
 
-          <div className="mt-6 flex w-full items-center justify-center gap-3 text-[#2230B4] md:mt-8 md:gap-5">
-            <button
-              type="button"
-              onClick={() => api?.scrollPrev()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C9D0FF] bg-white transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
-              aria-label="Previous card"
-            >
-              <ArrowLeft size={20} />
-            </button>
+          <div className="mt-6 flex w-full flex-col items-center gap-4 text-[#2230B4] md:mt-8">
+            <div className="flex items-center justify-center gap-4 md:gap-6">
+              <button
+                type="button"
+                onClick={() => api?.scrollPrev()}
+                className="transition hover:opacity-70"
+                aria-label="Previous card"
+              >
+                <ArrowLeft size={24} />
+              </button>
+
+              <div className="flex items-center gap-2" aria-label="Carousel position indicators">
+                {slides.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`h-2 rounded-full transition-all ${
+                      activeIndex === index ? "w-6 bg-[#2230B4]" : "w-2 bg-[#8E95DC]"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => api?.scrollNext()}
+                className="transition hover:opacity-70"
+                aria-label="Next card"
+              >
+                <ArrowRight size={24} />
+              </button>
+            </div>
 
             <button
               type="button"
@@ -263,15 +285,6 @@ export default function ReportCarouselSection() {
             >
               {isPaused ? <Play size={18} /> : <Pause size={18} />}
               <span>{isPaused ? "Play" : "Pause"}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => api?.scrollNext()}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C9D0FF] bg-white transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
-              aria-label="Next card"
-            >
-              <ArrowRight size={20} />
             </button>
           </div>
         </div>

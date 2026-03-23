@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createGsapContext } from "@/lib/gsap";
 import Howitworks from "@/components/Home/Howitworks";
 
@@ -291,6 +291,42 @@ export default function UsersPage() {
   const showcaseRef = useRef(null);
   const pinPanelRef = useRef(null);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [activeShowcaseIndex, setActiveShowcaseIndex] = useState(0);
+
+  const showcaseItems = useMemo(
+    () => [
+      {
+        title: "Smart Health Overview",
+        subtitle: "Track appointments, vitals, and daily health",
+        subtitleSecondLine: "insights in one place.",
+        body:
+          "A personalized multidimensional record of your ecosystem's daily health journey, and your vital trends.",
+        image: "/images/users/phone-mock-1.svg",
+        imageAlt: "Smart Health Overview mobile dashboard",
+      },
+      {
+        title: "Discover Nearby Healthcare Providers",
+        titleSecondLine: null,
+        subtitle: "Search doctors, labs, and hospitals around your",
+        subtitleSecondLine: "location.",
+        body:
+          "An interactive map-based directory to explore, view availability, and book appointments with nearby providers.",
+        image: "/images/users/phonemock2.svg",
+        imageAlt: "Discover nearby mobile dashboard",
+      },
+      {
+        title: "Centralized Health Records",
+        titleSecondLine: null,
+        subtitle: "Access appointments, lab reports, and hospital",
+        subtitleSecondLine: "documents anytime.",
+        body:
+          "A structured record management center for securely viewing and managing essential reports with clarity.",
+        image: "/images/users/phonemock3.svg",
+        imageAlt: "Centralized Overview mobile dashboard",
+      },
+    ],
+    []
+  );
 
   const showcaseHeadingClassName =
     "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
@@ -303,7 +339,7 @@ export default function UsersPage() {
 
     return createGsapContext(showcaseRef, (gsap) => {
       const ScrollTrigger = window.ScrollTrigger;
-      const rows = gsap.utils.toArray(".users-showcase-row");
+      const rows = gsap.utils.toArray(".users-showcase-content-row");
 
       if (!ScrollTrigger || !rows.length || !pinPanelRef.current || !showcaseRef.current) return;
 
@@ -314,6 +350,7 @@ export default function UsersPage() {
       gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
 
       let currentIndex = 0;
+      setActiveShowcaseIndex(0);
 
       const showIndex = (nextIndex) => {
         if (nextIndex === currentIndex) return;
@@ -337,6 +374,7 @@ export default function UsersPage() {
         });
 
         currentIndex = nextIndex;
+        setActiveShowcaseIndex(nextIndex);
       };
 
       ScrollTrigger.create({
@@ -361,6 +399,8 @@ export default function UsersPage() {
       });
     });
   }, []);
+
+  const activeShowcaseItem = showcaseItems[activeShowcaseIndex] ?? showcaseItems[0];
 
   return (
     <>
@@ -493,108 +533,91 @@ export default function UsersPage() {
         {/* SHOWCASE */}
         <section
           ref={showcaseRef}
-          className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto max-w-6xl bg-[#F4F4F8] px-6 md:h-[400vh]"
+          className="relative mx-auto mt-20 h-auto max-w-6xl bg-[#F4F4F8] px-6 sm:mt-20 md:mt-10 md:h-[400vh]"
         >
           <div
             ref={pinPanelRef}
             className="relative h-auto overflow-visible py-6 md:h-[100svh] md:overflow-hidden md:py-0"
           >
-            {/* Row 1 */}
-            <div className="users-showcase-row relative grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:grid-cols-2 md:items-center md:gap-12">
-              <div>
-                <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
+            <div className="space-y-12 md:hidden">
+              {showcaseItems.map((item, index) => (
+                <div key={item.title} className="grid items-start gap-8 px-0 py-0">
+                  <div>
+                    <h2 className={showcaseHeadingClassName}>
+                      {item.title}
+                      {item.titleSecondLine ? (
+                        <>
+                          <br />
+                          {item.titleSecondLine}
+                        </>
+                      ) : null}
+                    </h2>
 
-                <p className={showcaseSubheadingClassName}>
-                  Track appointments, vitals, and daily health
-                  <br />
-                  insights in one place.
-                </p>
+                    <p className={showcaseSubheadingClassName}>
+                      {item.subtitle}
+                      <br />
+                      {item.subtitleSecondLine}
+                    </p>
 
-                <p className={showcaseBodyClassName}>
-                  A personalized multidimensional record of your ecosystem&apos;s daily
-                  health journey, and your vital trends.
-                </p>
+                    <p className={showcaseBodyClassName}>{item.body}</p>
 
-                <RowPillIndicators activeIndex={0} />
-              </div>
+                    <div className="md:hidden">
+                      <RowPillIndicators activeIndex={index} />
+                    </div>
+                  </div>
 
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-                <PhoneMockup>
-                  <Image
-                    src="/images/users/phone-mock-1.svg"
-                    alt="Smart Health Overview mobile dashboard"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </PhoneMockup>
-              </div>
+                  <div className="mx-auto w-[170px] sm:w-[190px]">
+                    <PhoneMockup>
+                      <Image
+                        src={item.image}
+                        alt={item.imageAlt}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                      />
+                    </PhoneMockup>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Row 2 */}
-            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
-              <div>
-                <h2 className={showcaseHeadingClassName}>
-                  Discover Nearby
-                  <br />
-                  Healthcare Providers
-                </h2>
+            <div className="hidden h-full md:grid md:grid-cols-[minmax(0,1fr)_220px] md:items-center md:gap-12">
+              <div className="relative h-[360px] lg:h-[400px]">
+                {showcaseItems.map((item, index) => (
+                  <div
+                    key={item.title}
+                    className="users-showcase-content-row absolute inset-0 flex items-center"
+                  >
+                    <div>
+                      <h2 className={showcaseHeadingClassName}>
+                        {item.title}
+                        {item.titleSecondLine ? (
+                          <>
+                            <br />
+                            {item.titleSecondLine}
+                          </>
+                        ) : null}
+                      </h2>
 
-                <p className={showcaseSubheadingClassName}>
-                  Search doctors, labs, and hospitals around your
-                  <br />
-                  location.
-                </p>
+                      <p className={showcaseSubheadingClassName}>
+                        {item.subtitle}
+                        <br />
+                        {item.subtitleSecondLine}
+                      </p>
 
-                <p className={showcaseBodyClassName}>
-                  An interactive map-based directory to explore, view availability,
-                  and book appointments with nearby providers.
-                </p>
+                      <p className={showcaseBodyClassName}>{item.body}</p>
 
-                <RowPillIndicators activeIndex={1} />
+                      <RowPillIndicators activeIndex={index} />
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              <div className="mx-auto w-[220px] justify-self-center">
                 <PhoneMockup>
                   <Image
-                    src="/images/users/phonemock2.svg"
-                    alt="Discover nearby mobile dashboard"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </PhoneMockup>
-              </div>
-            </div>
-
-            {/* Row 3 */}
-            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
-              <div>
-                <h2 className={showcaseHeadingClassName}>
-                  Centralized Health
-                  <br />
-                  Records
-                </h2>
-
-                <p className={showcaseSubheadingClassName}>
-                  Access appointments, lab reports, and hospital
-                  <br />
-                  documents anytime.
-                </p>
-
-                <p className={showcaseBodyClassName}>
-                  A structured record management center for securely viewing and
-                  managing essential reports with clarity.
-                </p>
-
-                <RowPillIndicators activeIndex={2} />
-              </div>
-
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
-                <PhoneMockup>
-                  <Image
-                    src="/images/users/phonemock3.svg"
-                    alt="Centralized Overview mobile dashboard"
+                    src={activeShowcaseItem.image}
+                    alt={activeShowcaseItem.imageAlt}
                     fill
                     className="object-cover"
                     priority

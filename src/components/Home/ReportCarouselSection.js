@@ -179,7 +179,7 @@ export default function ReportCarouselSection() {
                   key={`${slide.title}-${index}`}
                   className="pl-4 basis-[92%] sm:basis-[75%] md:basis-[58%] lg:basis-1/3"
                 >
-                  <article className="group relative mx-auto flex h-[50svh] w-full max-w-[330px] min-h-[360px] max-h-[540px] flex-col overflow-hidden rounded-[28px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-3">
+                  <article className="group relative mx-auto flex h-[50svh] w-full min-h-[360px] max-h-[540px] flex-col overflow-hidden rounded-[28px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-3">
                     <div className="relative h-[66%] w-full overflow-hidden rounded-[24px]">
                       <Image
                         src={slide.image}

@@ -147,8 +147,8 @@ export default function ReportCarouselSection() {
             {slides.map((slide, index) => (
               <CarouselItem
                 key={`${slide.title}-${index}`}
-                // Account for the carousel gutter so laptop/desktop widths show a maximum of 3 full cards.
-                className="basis-[86%] md:basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-2rem)/3)]"
+                // No sm: — only base, md, lg, xl. Desktop stays 1/3 (lg+).
+                className="basis-[86%] md:basis-[52%] lg:basis-1/3 xl:basis-1/3 2xl:basis-[31%]"
               >
                 <article
                   className={[
@@ -174,7 +174,7 @@ export default function ReportCarouselSection() {
                       fill
                       className="object-cover"
                        // no sm in sizes either
-                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 86vw"
+                      sizes="(min-width: 1536px) 29vw, (min-width: 1280px) 31vw, (min-width: 1024px) 33vw, (min-width: 768px) 52vw, 86vw"
                       priority={index === 0}
                     />
                   </div>

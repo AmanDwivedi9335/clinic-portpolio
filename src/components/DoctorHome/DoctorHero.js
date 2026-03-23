@@ -9,15 +9,17 @@ export default function DoctorHero() {
     "/images/doctorhero2.webp",
   ];
 
-  const firstLineText =
-    "When doctors don't have complete patient history, they are forced to guess";
-  const secondLineText = "Was this condition chronic?";
-  const typingSpeed = 60;
+  const heroMessages = [
+    "When doctors don't have complete patient history, they are forced to guess.",
+    "Was this condition chronic?",
+    "Was there a serious allergy or prior complication?",
+  ];
+  const messageChangeDelay = 2500;
 
   const sectionRef = useRef(null);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [typedCharacters, setTypedCharacters] = useState(0);
+  const [activeMessageIndex, setActiveMessageIndex] = useState(0);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
@@ -48,21 +50,12 @@ export default function DoctorHero() {
   }, [heroImages.length]);
 
   useEffect(() => {
-    const typingInterval = setInterval(() => {
-      setTypedCharacters((c) => {
-        if (c >= secondLineText.length) {
-          clearInterval(typingInterval);
-          return c;
-        }
-        return c + 1;
-      });
-    }, typingSpeed);
+    const messageInterval = setInterval(() => {
+      setActiveMessageIndex((index) => (index + 1) % heroMessages.length);
+    }, messageChangeDelay);
 
-    return () => clearInterval(typingInterval);
-  }, [secondLineText.length]);
-
-  const secondLineVisible = secondLineText.slice(0, typedCharacters);
-  const isTypingComplete = typedCharacters >= secondLineText.length;
+    return () => clearInterval(messageInterval);
+  }, [heroMessages.length]);
 
   return (
     <section ref={sectionRef} className="min-h-[100dvh] bg-white pt-[22px] pb-2 md:min-h-screen md:pt-[104px] md:pb-5">
@@ -136,14 +129,21 @@ export default function DoctorHero() {
                 Blind Consultations<br /> are Dangerous Consultations
               </h1>
 
-              <p className="hero-animate mt-5 font-semibold max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">
-                <span>{firstLineText}</span>
-                <br />
-                <span className="font-extrabold">{secondLineVisible}</span>
-                {!isTypingComplete && (
-                  <span className="ml-0.5 inline-block animate-pulse">|</span>
-                )}
-              </p>
+              <div className="hero-animate mt-5 max-w-xl text-[14px] leading-relaxed text-[#7B1FA2] md:text-[15px]">
+                {heroMessages.map((message, index) => (
+                  <p
+                    key={message}
+                    className={`font-semibold transition-all duration-500 ${
+                      index === activeMessageIndex
+                        ? "max-h-24 translate-y-0 opacity-100"
+                        : "max-h-0 -translate-y-2 opacity-0"
+                    } ${index === 1 ? "font-extrabold" : ""}`}
+                    aria-hidden={index !== activeMessageIndex}
+                  >
+                    {message}
+                  </p>
+                ))}
+              </div>
 
               {/* <div className="hero-animate mt-7 flex flex-wrap items-center gap-4">
                 <a

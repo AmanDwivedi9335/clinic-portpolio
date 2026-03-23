@@ -319,33 +319,27 @@ export default function DoctorRegistrationPage() {
             showForm ? "max-h-[5000px] translate-y-0 opacity-100" : "pointer-events-none max-h-0 translate-y-6 opacity-0"
           }`}
         >
-          <h2 className={sectionTitleClass}>1. Profile Information</h2>
+          <h2 className={sectionTitleClass}>1. Personal Details</h2>
 
           <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Full Legal Name</label>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Name</label>
             <input className={inputClass} type="text" placeholder="Enter Full Legal Name" {...register("fullLegalName", { required: "Full legal name is required." })} />
             {errors.fullLegalName && <p className="mt-1 text-xs text-red-500">{errors.fullLegalName.message}</p>}
           </div>
 
           <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Date of Birth</label>
-            <input className={inputClass} type="date" max={new Date().toISOString().split("T")[0]} {...register("dob", { required: "Date of birth is required." })} />
-            {errors.dob && <p className="mt-1 text-xs text-red-500">{errors.dob.message}</p>}
-          </div>
-
-          <div className="sm:col-span-2">
             <label className="mb-1 block text-sm text-[#2b2b43]">Preferred Name</label>
             <input className={inputClass} type="text" placeholder="Enter Preferred Name" {...register("preferredName", { required: "Preferred name is required." })} />
             {errors.preferredName && <p className="mt-1 text-xs text-red-500">{errors.preferredName.message}</p>}
           </div>
 
-          <div className="sm:col-span-2">
+          <div>
             <label className="mb-1 block text-sm text-[#2b2b43]">Email</label>
             <input className={inputClass} type="email" placeholder="Enter Email (Optional)" {...register("email")} />
             {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
             <div className="mt-3 flex flex-wrap gap-2">
               <button type="button" onClick={sendEmailOtp} disabled={isSendingEmailOtp} className="rounded-lg border border-[#cabaf8] px-3 py-2 text-xs font-semibold text-[#5f2bb3] hover:bg-[#f3edff] disabled:opacity-60">
-                {isSendingEmailOtp ? "Sending..." : emailOtpSent ? "Resend Email OTP" : "Send Email OTP"}
+                {isSendingEmailOtp ? "Sending..." : emailOtpSent ? "Resend Email OTP" : "Send OTP"}
               </button>
               {emailOtpVerified === String(emailValue || "").trim().toLowerCase() && String(emailValue || "").trim() && (
                 <span className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">Email verified</span>
@@ -363,13 +357,57 @@ export default function DoctorRegistrationPage() {
                   onChange={(event) => setEmailOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
                 />
                 <button type="button" onClick={verifyEmailOtp} disabled={isVerifyingEmailOtp} className="rounded-lg bg-[#5f2bb3] px-3 py-2 text-xs font-semibold text-white hover:opacity-90 disabled:opacity-60">
-                  {isVerifyingEmailOtp ? "Verifying..." : "Verify Email OTP"}
+                  {isVerifyingEmailOtp ? "Verifying..." : "Verify OTP"}
                 </button>
               </div>
             )}
             {emailOtpMessage && <p className="mt-2 text-xs text-emerald-600">{emailOtpMessage}</p>}
             {emailOtpError && <p className="mt-2 text-xs text-red-500">{emailOtpError}</p>}
             <p className="mt-1 text-xs text-[#6e648f]">Email OTP verification is optional.</p>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Mobile Number</label>
+            <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("mobile", { required: "Mobile number is required." })} />
+            {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile.message}</p>}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button type="button" onClick={sendMobileOtp} disabled={isSendingMobileOtp} className="rounded-lg border border-[#cabaf8] px-3 py-2 text-xs font-semibold text-[#5f2bb3] hover:bg-[#f3edff] disabled:opacity-60">
+                {isSendingMobileOtp ? "Sending..." : mobileOtpSent ? "Resend OTP" : "Send OTP"}
+              </button>
+              {mobileOtpVerified === String(mobileValue || "").replace(/\D/g, "").slice(-10) && (
+                <span className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">Mobile verified</span>
+              )}
+            </div>
+            {mobileOtpSent && (
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <input
+                  className="max-w-[220px] rounded-lg border border-[#ddd9f5] bg-[#faf9ff] px-3 py-2 text-xs outline-none focus:border-[#7b1fa2]"
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  placeholder="Enter Mobile OTP"
+                  value={mobileOtp}
+                  onChange={(event) => setMobileOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
+                />
+                <button type="button" onClick={verifyMobileOtp} disabled={isVerifyingMobileOtp} className="rounded-lg bg-[#5f2bb3] px-3 py-2 text-xs font-semibold text-white hover:opacity-90 disabled:opacity-60">
+                  {isVerifyingMobileOtp ? "Verifying..." : "Verify OTP"}
+                </button>
+              </div>
+            )}
+            {mobileOtpMessage && <p className="mt-2 text-xs text-emerald-600">{mobileOtpMessage}</p>}
+            {mobileOtpError && <p className="mt-2 text-xs text-red-500">{mobileOtpError}</p>}
+            <p className="mt-1 text-xs text-[#6e648f]">Mobile OTP verification is mandatory.</p>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Emergency Mob. No. (Optional)</label>
+            <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("emergencyMobile")} />
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Date of Birth</label>
+            <input className={inputClass} type="date" max={new Date().toISOString().split("T")[0]} {...register("dob", { required: "Date of birth is required." })} />
+            {errors.dob && <p className="mt-1 text-xs text-red-500">{errors.dob.message}</p>}
           </div>
 
           <h2 className={sectionTitleClass}>2. Registration Details</h2>
@@ -405,45 +443,7 @@ export default function DoctorRegistrationPage() {
             <Plus size={15} /> Add more Registration Id
           </button>
 
-          <h2 className={sectionTitleClass}>3. Contact Details</h2>
-          <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Mobile Number</label>
-            <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("mobile", { required: "Mobile number is required." })} />
-            {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile.message}</p>}
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button type="button" onClick={sendMobileOtp} disabled={isSendingMobileOtp} className="rounded-lg border border-[#cabaf8] px-3 py-2 text-xs font-semibold text-[#5f2bb3] hover:bg-[#f3edff] disabled:opacity-60">
-                {isSendingMobileOtp ? "Sending..." : mobileOtpSent ? "Resend Mobile OTP" : "Send Mobile OTP"}
-              </button>
-              {mobileOtpVerified === String(mobileValue || "").replace(/\D/g, "").slice(-10) && (
-                <span className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">Mobile verified</span>
-              )}
-            </div>
-            {mobileOtpSent && (
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <input
-                  className="max-w-[220px] rounded-lg border border-[#ddd9f5] bg-[#faf9ff] px-3 py-2 text-xs outline-none focus:border-[#7b1fa2]"
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={6}
-                  placeholder="Enter Mobile OTP"
-                  value={mobileOtp}
-                  onChange={(event) => setMobileOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
-                />
-                <button type="button" onClick={verifyMobileOtp} disabled={isVerifyingMobileOtp} className="rounded-lg bg-[#5f2bb3] px-3 py-2 text-xs font-semibold text-white hover:opacity-90 disabled:opacity-60">
-                  {isVerifyingMobileOtp ? "Verifying..." : "Verify Mobile OTP"}
-                </button>
-              </div>
-            )}
-            {mobileOtpMessage && <p className="mt-2 text-xs text-emerald-600">{mobileOtpMessage}</p>}
-            {mobileOtpError && <p className="mt-2 text-xs text-red-500">{mobileOtpError}</p>}
-            <p className="mt-1 text-xs text-[#6e648f]">Mobile OTP verification is mandatory.</p>
-          </div>
-          <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Emergency Mob No (Optional)</label>
-            <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("emergencyMobile")} />
-          </div>
-
-          <h2 className={sectionTitleClass}>4. Qualifications</h2>
+          <h2 className={sectionTitleClass}>3. Qualifications</h2>
           {qualificationFields.map((field, index) => {
             const selectedState = watch(`qualifications.${index}.state`);
             const cityOptions = index === 0 ? primaryCityOptions : INDIA_STATE_CITY_MAP[selectedState] || [];

@@ -12,10 +12,70 @@ const DEMO_VIDEO_URL =
 function PhoneMockup({ children, className = "" }) {
   return (
     <div
-      className={`relative mx-auto aspect-[9/19.5] w-full max-w-[220px] rounded-[46px] border-[7px] border-[#221640] bg-[#0D0A1A] p-[5px] shadow-[0_26px_48px_rgba(33,16,72,0.32)] ${className}`}
+      className={`
+        relative mx-auto aspect-[0.515/1] w-full max-w-[290px]
+        rounded-[48px]
+        bg-[#6f566f]
+        p-[3px]
+        shadow-[0_0_0_1px_rgba(60,35,60,0.55),0_12px_30px_rgba(0,0,0,0.18)]
+        ${className}
+      `}
     >
-      <div className="pointer-events-none absolute left-1/2 top-[10px] h-6 w-[108px] -translate-x-1/2 rounded-b-[18px] bg-[#07050f]" />
-      <div className="relative h-full overflow-hidden rounded-[38px] bg-[#F5F2FF]">{children}</div>
+      {/* metallic outer rim */}
+      <div className="absolute inset-0 rounded-[48px] bg-[linear-gradient(180deg,#9b7b99_0%,#6b4f69_18%,#3f2d42_52%,#7d627b_82%,#a1839f_100%)]" />
+
+      {/* outer highlight */}
+      <div className="pointer-events-none absolute inset-[2px] rounded-[46px] border border-white/20" />
+
+      {/* left side buttons */}
+      <div className="absolute left-[-2px] top-[150px] h-[42px] w-[4px] rounded-l-full rounded-r-sm bg-[#4b364b] shadow-[inset_1px_0_0_rgba(255,255,255,0.18)]" />
+      <div className="absolute left-[-2px] top-[225px] h-[74px] w-[4px] rounded-l-full rounded-r-sm bg-[#4b364b] shadow-[inset_1px_0_0_rgba(255,255,255,0.18)]" />
+      <div className="absolute left-[-2px] top-[308px] h-[74px] w-[4px] rounded-l-full rounded-r-sm bg-[#4b364b] shadow-[inset_1px_0_0_rgba(255,255,255,0.18)]" />
+
+      {/* right side button */}
+      <div className="absolute right-[-2px] top-[222px] h-[96px] w-[4px] rounded-r-full rounded-l-sm bg-[#4b364b] shadow-[inset_-1px_0_0_rgba(255,255,255,0.18)]" />
+
+      {/* black bezel */}
+      <div className="relative z-10 h-full w-full rounded-[45px] bg-[#1a1a1a] p-[11px]">
+        {/* screen */}
+        <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-[#f2f2f2]">
+          {/* dynamic island */}
+          <div className="pointer-events-none absolute left-1/2 top-[12px] z-20 -translate-x-1/2">
+            <div className="relative h-[18px] w-[78px] rounded-full bg-[#151515]">
+              <div className="absolute right-[9px] top-1/2 h-[6px] w-[6px] -translate-y-1/2 rounded-full bg-[#0c1b2e] shadow-[0_0_0_1px_rgba(45,88,150,0.6)]" />
+            </div>
+          </div>
+
+          {/* optional content area */}
+          <div className="relative h-full w-full rounded-[36px]">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function PhoneScreen({ src, alt }) {
+  return (
+    <div className="relative h-full w-full bg-white">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover object-top"
+      />
+    </div>
+  );
+}
+function PhoneScreenImage({ src, alt }) {
+  return (
+    <div className="relative h-full w-full bg-white">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover object-top"
+      />
     </div>
   );
 }
@@ -25,7 +85,6 @@ function HeroWaveBackground() {
     <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[100vh] overflow-hidden">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,#C9C6EA_0%,#E8C9DF_55%,#F3E6F2_100%)]" />
 
-      {/* TOP BAND */}
       <svg
         className="hero-band hero-band-top absolute inset-x-0 h-[40%] w-full"
         viewBox="0 0 1440 320"
@@ -45,7 +104,6 @@ function HeroWaveBackground() {
         </g>
       </svg>
 
-      {/* MIDDLE BAND */}
       <svg
         className="hero-band hero-band-mid absolute inset-x-0 top-[24%] h-[50%] w-full"
         viewBox="0 0 1440 340"
@@ -65,7 +123,6 @@ function HeroWaveBackground() {
         </g>
       </svg>
 
-      {/* BOTTOM BAND */}
       <svg
         className="hero-band hero-band-bottom absolute inset-x-0 bottom-0 h-[48%] w-full"
         viewBox="0 0 1440 320"
@@ -165,7 +222,7 @@ function RowPillIndicators({ activeIndex = 0 }) {
           <span
             key={index}
             className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
-              isActive ? "w-10 bg-[#8F129A]" : "w-5 bg-[#e9def5]"
+              isActive ? "w-10 bg-[#8F129A]" : "w-5 bg-[#E9DEF5]"
             }`}
           >
             {isActive ? (
@@ -183,7 +240,6 @@ function DemoVideoModal({ isOpen, onClose }) {
     if (!isOpen) return undefined;
 
     const previousOverflow = document.body.style.overflow;
-
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event) => {
@@ -290,13 +346,18 @@ function DemoVideoModal({ isOpen, onClose }) {
 export default function UsersPage() {
   const showcaseRef = useRef(null);
   const pinPanelRef = useRef(null);
+  const phoneScreensRef = useRef(null);
+
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const showcaseHeadingClassName =
     "text-3xl sm:text-3xl md:text-4xl font-extrabold leading-tight bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
+
   const showcaseSubheadingClassName =
     "mt-2 text-lg md:text-lg font-normal leading-snug bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)] bg-clip-text text-transparent";
-  const showcaseBodyClassName = "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0b137a]";
+
+  const showcaseBodyClassName =
+    "mt-1 md:mt-4 max-w-[430px] text-sm text-[#0B137A]";
 
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 768) return;
@@ -305,13 +366,22 @@ export default function UsersPage() {
       const ScrollTrigger = window.ScrollTrigger;
       const rows = gsap.utils.toArray(".users-showcase-row");
 
-      if (!ScrollTrigger || !rows.length || !pinPanelRef.current || !showcaseRef.current) return;
+      if (
+        !ScrollTrigger ||
+        !rows.length ||
+        !pinPanelRef.current ||
+        !showcaseRef.current ||
+        !phoneScreensRef.current
+      ) {
+        return;
+      }
 
       const totalSteps = rows.length - 1;
 
       gsap.set(rows, { position: "absolute", inset: 0 });
       gsap.set(rows, { autoAlpha: 0, yPercent: 14 });
       gsap.set(rows[0], { autoAlpha: 1, yPercent: 0 });
+      gsap.set(phoneScreensRef.current, { yPercent: 0 });
 
       let currentIndex = 0;
 
@@ -319,6 +389,7 @@ export default function UsersPage() {
         if (nextIndex === currentIndex) return;
 
         gsap.killTweensOf(rows);
+        gsap.killTweensOf(phoneScreensRef.current);
 
         gsap.to(rows[currentIndex], {
           autoAlpha: 0,
@@ -333,6 +404,13 @@ export default function UsersPage() {
           yPercent: 0,
           duration: 0.55,
           ease: "power2.out",
+          overwrite: "auto",
+        });
+
+        gsap.to(phoneScreensRef.current, {
+          yPercent: -(nextIndex * 100),
+          duration: 0.7,
+          ease: "power2.inOut",
           overwrite: "auto",
         });
 
@@ -367,7 +445,6 @@ export default function UsersPage() {
       <main className="relative isolate overflow-x-hidden overflow-y-clip bg-[#F4F4F8] pt-20 text-[#220A56] md:pt-24">
         <HeroWaveBackground />
 
-        {/* HERO */}
         <section className="relative isolate h-[100vh] overflow-hidden pt-12 md:pt-16">
           <div className="relative z-10 mx-auto flex min-h-[65vh] max-w-6xl flex-col items-center justify-center px-6 text-center md:min-h-[70vh]">
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#282672]">
@@ -390,24 +467,7 @@ export default function UsersPage() {
               What You Get
             </h1>
 
-            
-
             <div className="mt-7 flex items-center justify-center gap-4">
-            {/* <button
-              className="
-                rounded-xl
-                px-8 py-3
-                text-sm font-semibold text-white
-                bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
-                shadow-[0_18px_40px_rgba(159,2,141,0.35)]
-                transition
-                hover:brightness-110
-                active:scale-[0.98]
-              "
-            >
-              Subscribe Now
-            </button> */}
-
               <button
                 type="button"
                 onClick={() => setIsVideoModalOpen(true)}
@@ -449,6 +509,7 @@ export default function UsersPage() {
             <p className="mt-14 text-sm font-medium text-[#282672] md:text-base">
               See how the app works in just a few scrolls.
             </p>
+
             <div className="mt-10" aria-hidden="true">
               <svg
                 className="scroll-indicator"
@@ -490,17 +551,50 @@ export default function UsersPage() {
           </div>
         </section>
 
-        {/* SHOWCASE */}
         <section
           ref={showcaseRef}
-          className="relative mx-auto mt-20 sm:mt-20 md:mt-10 h-auto max-w-6xl bg-[#F4F4F8] px-6 md:h-[400vh]"
+          className="relative mx-auto mt-20 h-auto max-w-6xl bg-[#F4F4F8] px-6 sm:mt-20 md:mt-10 md:h-[400vh]"
         >
           <div
             ref={pinPanelRef}
             className="relative h-auto overflow-visible py-6 md:h-[100svh] md:overflow-hidden md:py-0"
           >
+            {/* Shared desktop phone */}
+            <div className="pointer-events-none hidden md:absolute md:right-0 md:top-1/2 md:z-20 md:block md:w-[240px] md:-translate-y-1/2">
+              <PhoneMockup className="md:mx-0">
+                <div
+                  ref={phoneScreensRef}
+                  className="absolute inset-0 flex flex-col will-change-transform"
+                >
+                  <div className="relative h-full min-h-full w-full shrink-0">
+                    <PhoneScreenImage
+                      src="/images/users/phone-mock-1.svg"
+                      alt="Smart Health Overview mobile dashboard"
+                      priority
+                    />
+                  </div>
+
+                  <div className="relative h-full min-h-full w-full shrink-0">
+                    <PhoneScreenImage
+                      src="/images/users/phonemock2.svg"
+                      alt="Discover nearby mobile dashboard"
+                      priority
+                    />
+                  </div>
+
+                  <div className="relative h-full min-h-full w-full shrink-0">
+                    <PhoneScreenImage
+                      src="/images/users/phonemock3.svg"
+                      alt="Centralized Overview mobile dashboard"
+                      priority
+                    />
+                  </div>
+                </div>
+              </PhoneMockup>
+            </div>
+
             {/* Row 1 */}
-            <div className="users-showcase-row relative grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:grid-cols-2 md:items-center md:gap-12">
+            <div className="users-showcase-row relative grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:grid-cols-[minmax(0,1fr)_280px] md:items-center md:gap-12">
               <div>
                 <h2 className={showcaseHeadingClassName}>Smart Health Overview</h2>
 
@@ -511,20 +605,19 @@ export default function UsersPage() {
                 </p>
 
                 <p className={showcaseBodyClassName}>
-                  A personalized multidimensional record of your ecosystem&apos;s daily
-                  health journey, and your vital trends.
+                  A personalized multidimensional record of your ecosystem&apos;s
+                  daily health journey, and your vital trends.
                 </p>
 
                 <RowPillIndicators activeIndex={0} />
               </div>
 
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              {/* Mobile only */}
+              <div className="mx-auto w-[185px] sm:w-[205px] md:hidden">
                 <PhoneMockup>
-                  <Image
+                  <PhoneScreenImage
                     src="/images/users/phone-mock-1.svg"
                     alt="Smart Health Overview mobile dashboard"
-                    fill
-                    className="object-cover"
                     priority
                   />
                 </PhoneMockup>
@@ -532,7 +625,7 @@ export default function UsersPage() {
             </div>
 
             {/* Row 2 */}
-            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
+            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-[minmax(0,1fr)_280px] md:items-center md:gap-12">
               <div>
                 <h2 className={showcaseHeadingClassName}>
                   Discover Nearby
@@ -547,20 +640,19 @@ export default function UsersPage() {
                 </p>
 
                 <p className={showcaseBodyClassName}>
-                  An interactive map-based directory to explore, view availability,
-                  and book appointments with nearby providers.
+                  An interactive map-based directory to explore, view
+                  availability, and book appointments with nearby providers.
                 </p>
 
                 <RowPillIndicators activeIndex={1} />
               </div>
 
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              {/* Mobile only */}
+              <div className="mx-auto w-[185px] sm:w-[205px] md:hidden">
                 <PhoneMockup>
-                  <Image
+                  <PhoneScreenImage
                     src="/images/users/phonemock2.svg"
                     alt="Discover nearby mobile dashboard"
-                    fill
-                    className="object-cover"
                     priority
                   />
                 </PhoneMockup>
@@ -568,7 +660,7 @@ export default function UsersPage() {
             </div>
 
             {/* Row 3 */}
-            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-2 md:items-center md:gap-12">
+            <div className="users-showcase-row relative mt-12 grid items-start gap-8 px-0 py-0 md:absolute md:inset-0 md:mt-0 md:grid-cols-[minmax(0,1fr)_280px] md:items-center md:gap-12">
               <div>
                 <h2 className={showcaseHeadingClassName}>
                   Centralized Health
@@ -590,13 +682,12 @@ export default function UsersPage() {
                 <RowPillIndicators activeIndex={2} />
               </div>
 
-              <div className="mx-auto w-[170px] sm:w-[190px] md:w-[220px] md:justify-self-center">
+              {/* Mobile only */}
+              <div className="mx-auto w-[185px] sm:w-[205px] md:hidden">
                 <PhoneMockup>
-                  <Image
+                  <PhoneScreenImage
                     src="/images/users/phonemock3.svg"
                     alt="Centralized Overview mobile dashboard"
-                    fill
-                    className="object-cover"
                     priority
                   />
                 </PhoneMockup>

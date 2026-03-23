@@ -35,7 +35,7 @@ const slides = [
   {
     image: "/images/img-carousel5.webp",
     alt: "Clinician searching through scattered records",
-    title: "your blood group report is buried in old emails?",
+    title: "your Allergy report is buried in old emails?",
     description: "Emergency care needs immediate facts, not guesses.",
   },
   {

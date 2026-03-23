@@ -298,7 +298,7 @@ export default function DataControlSection() {
 				</div>
 
 				<p className="data-intro mt-8 text-[#000339] text-base md:text-lg">
-					No hospital, clinic, insurer, or doctor owns your data. Only you do.
+					No hospital, clinic, insurer, or doctor owns your data. <b>Only you do</b>.
 				</p>
 			</div>
 

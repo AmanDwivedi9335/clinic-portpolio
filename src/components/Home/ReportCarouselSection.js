@@ -143,7 +143,7 @@ export default function ReportCarouselSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-white pt-[70px] md:pt-[70px]"
+      className="relative overflow-hidden bg-white pt-[70px] md:pt-[60px]"
     >
       <div className="mx-auto flex min-h-[calc(100svh-88px)] w-full max-w-[1440px] flex-col px-4 pb-6 md:px-6 lg:px-8">
         <div className="report-intro flex shrink-0 flex-col items-center text-center">

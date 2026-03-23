@@ -79,8 +79,8 @@ const Howitworks = () => {
             <span
               className="
                 absolute -top-5 left-1/2 -translate-x-1/2
-                whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold text-white
-                bg-[linear-gradient(180deg,#030B6F,#060B45)]
+                whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold text-[#0B137A]
+                bg-gradient-to-r from-amber-400 via-pink-400 to-indigo-500
               "
             >
               Step {index + 1}

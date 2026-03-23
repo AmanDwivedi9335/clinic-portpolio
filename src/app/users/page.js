@@ -390,9 +390,7 @@ export default function UsersPage() {
               What You Get
             </h1>
 
-            <p className="mt-4 text-sm font-medium text-[#282672] md:text-base">
-              See how the app works in just a few scrolls.
-            </p>
+            
 
             <div className="mt-7 flex items-center justify-center gap-4">
             {/* <button
@@ -448,6 +446,9 @@ export default function UsersPage() {
               </button>
             </div>
 
+            <p className="mt-14 text-sm font-medium text-[#282672] md:text-base">
+              See how the app works in just a few scrolls.
+            </p>
             <div className="mt-10" aria-hidden="true">
               <svg
                 className="scroll-indicator"

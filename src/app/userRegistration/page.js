@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { CalendarDays, ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronDown } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { INDIA_STATE_CITY_MAP, INDIAN_STATES } from "@/lib/indiaLocations";
+import { INDIAN_STATES } from "@/lib/indiaLocations";
 
 function HeroWaveBackground() {
   return (
@@ -96,14 +96,21 @@ const inputClass =
   "w-full rounded-xl border border-[#ddd9f5] bg-[#faf9ff] px-4 py-3 text-sm outline-none transition duration-300 placeholder:text-[#79778f] focus:border-[#7b1fa2] focus:ring-2 focus:ring-[#7b1fa2]/20";
 
 export default function UserRegistrationPage() {
+  const router = useRouter();
   const [showForm, setShowForm] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerifiedMobile, setOtpVerifiedMobile] = useState("");
+  const [otpMessage, setOtpMessage] = useState("");
+  const [otpError, setOtpError] = useState("");
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
   const {
     register,
-    watch,
     handleSubmit,
-    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -118,17 +125,135 @@ export default function UserRegistrationPage() {
     },
   });
 
-  const selectedState = watch("state");
-  const cityOptions = useMemo(() => INDIA_STATE_CITY_MAP[selectedState] || [], [selectedState]);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowForm(true), 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const onSubmit = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setSubmitMessage("Registration details validated successfully.");
+  const mobileValue = watch("mobile");
+
+  useEffect(() => {
+    const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
+    if (otpVerifiedMobile && normalizedMobile !== otpVerifiedMobile) {
+      setOtpVerifiedMobile("");
+      setOtpSent(false);
+      setOtp("");
+      setOtpMessage("");
+      setOtpError("Mobile number changed. Please verify the new number.");
+    }
+  }, [mobileValue, otpVerifiedMobile]);
+
+  const sendOtp = async () => {
+    setOtpMessage("");
+    setOtpError("");
+
+    const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
+    if (!/^[6-9]\d{9}$/.test(normalizedMobile)) {
+      setOtpError("Enter a valid 10-digit Indian mobile number before requesting OTP.");
+      return;
+    }
+
+    try {
+      setIsSendingOtp(true);
+      const response = await fetch("/api/user/sendOtp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mobile: normalizedMobile }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setOtpError(result.message || "Unable to send OTP.");
+        return;
+      }
+
+      setOtpSent(true);
+      setOtpVerifiedMobile("");
+      setOtp("");
+      setOtpMessage("OTP sent to your mobile number.");
+    } catch (_error) {
+      setOtpError("Unable to send OTP right now. Please try again.");
+    } finally {
+      setIsSendingOtp(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    setOtpMessage("");
+    setOtpError("");
+
+    const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
+    if (!otpSent) {
+      setOtpError("Request OTP before verification.");
+      return;
+    }
+
+    if (!/^\d{6}$/.test(String(otp || "").trim())) {
+      setOtpError("Enter a valid 6-digit OTP.");
+      return;
+    }
+
+    try {
+      setIsVerifyingOtp(true);
+      const response = await fetch("/api/user/verifyOtp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mobile: normalizedMobile, otp: String(otp).trim() }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setOtpError(result.message || "OTP verification failed.");
+        return;
+      }
+
+      setOtpVerifiedMobile(normalizedMobile);
+      setOtpMessage("Mobile number verified successfully.");
+    } catch (_error) {
+      setOtpError("Unable to verify OTP right now. Please try again.");
+    } finally {
+      setIsVerifyingOtp(false);
+    }
+  };
+
+  const onSubmit = async (formValues) => {
+    setSubmitMessage("");
+
+    const normalizedMobile = String(formValues.mobile || "").replace(/\D/g, "").slice(-10);
+    if (otpVerifiedMobile !== normalizedMobile) {
+      setSubmitMessage("Please complete mobile OTP verification before proceeding to payment.");
+      return;
+    }
+
+    const response = await fetch("/api/user/addUserdataToSheet", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      setSubmitMessage(result.message || "Registration failed. Please try again.");
+      return;
+    }
+
+    const query = new URLSearchParams({
+      registrationId: result.data.registrationId,
+      fullName: result.data.fullName,
+      email: result.data.email,
+    });
+
+    router.push(`/payment?${query.toString()}`);
   };
 
   return (
@@ -149,7 +274,7 @@ export default function UserRegistrationPage() {
             </p>
 
             <div className="mt-8 rounded-2xl border border-white/20 bg-white/10 p-4">
-              <button
+              {/* <button
                 type="button"
                 className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 font-aptos-extrabold text-[#5310a2] shadow-lg transition hover:brightness-105"
               >
@@ -158,14 +283,14 @@ export default function UserRegistrationPage() {
               </button>
               <div className="my-4 flex items-center gap-3 text-sm text-white/75">
                 <span className="h-px flex-1 bg-white/30" />or<span className="h-px flex-1 bg-white/30" />
-              </div>
-              <p className="text-sm text-white/90">{showForm ? "Fill your details below." : "Preparing secure form..."}</p>
+              </div> */}
+              <p className="text-sm text-white/90">{showForm ? "Fill your details here." : "Preparing secure form..."}</p>
             </div>
           </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className={`grid overflow-hidden rounded-2xl bg-white p-2 transition-all duration-700 ease-out sm:grid-cols-2 ${
+            className={`grid gap-x-4 gap-y-3 overflow-hidden rounded-2xl bg-white p-2 transition-all duration-700 ease-out sm:grid-cols-2 ${
               showForm ? "max-h-[1200px] translate-y-0 opacity-100" : "pointer-events-none max-h-0 translate-y-6 opacity-0"
             }`}
           >
@@ -186,10 +311,9 @@ export default function UserRegistrationPage() {
 
             <div>
               <label className="mb-1 block text-sm text-[#2b2b43]">DOB</label>
-              <div className="relative">
-                <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[#7b1fa2]" />
+              <div>
                 <input
-                  className={`${inputClass} pr-9 ${errors.dob ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
+                  className={`${inputClass} ${errors.dob ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
                   type="date"
                   max={new Date().toISOString().split("T")[0]}
                   {...register("dob", {
@@ -205,7 +329,7 @@ export default function UserRegistrationPage() {
               {errors.dob && <p className="mt-1 text-xs text-red-500">{errors.dob.message}</p>}
             </div>
 
-            <div>
+            <div className="mt-2 sm:mt-0">
               <label className="mb-1 block text-sm text-[#2b2b43]">Sex / Gender</label>
               <div className="group relative">
                 <select
@@ -215,28 +339,63 @@ export default function UserRegistrationPage() {
                   <option value="">Select</option>
                   <option value="female">Female</option>
                   <option value="male">Male</option>
-                  <option value="other">Other</option>
+                  <option value="Third Gender">Third Gender</option>
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[#7b1fa2] transition group-focus-within:rotate-180" />
               </div>
               {errors.gender && <p className="mt-1 text-xs text-red-500">{errors.gender.message}</p>}
             </div>
 
-            <div>
+            <div className="sm:col-span-2">
               <label className="mb-1 block text-sm text-[#2b2b43]">Mobile Number</label>
-              <input
-                className={`${inputClass} ${errors.mobile ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
-                type="tel"
-                placeholder="10-digit mobile number"
-                {...register("mobile", {
-                  required: "Mobile number is required.",
-                  pattern: { value: /^[6-9]\d{9}$/, message: "Enter a valid 10-digit Indian mobile number." },
-                })}
-              />
+              <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+                <input
+                  className={`${inputClass} ${errors.mobile ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
+                  type="tel"
+                  placeholder="10-digit mobile number"
+                  {...register("mobile", {
+                    required: "Mobile number is required.",
+                    pattern: { value: /^[6-9]\d{9}$/, message: "Enter a valid 10-digit Indian mobile number." },
+                  })}
+                />
+                <button
+                  type="button"
+                  onClick={sendOtp}
+                  disabled={isSendingOtp}
+                  className="rounded-xl border border-[#cabaf8] px-4 py-3 text-sm font-semibold text-[#5f2bb3] transition hover:bg-[#f3edff] disabled:opacity-60"
+                >
+                  {isSendingOtp ? "Sending..." : otpSent ? "Resend OTP" : "Send OTP"}
+                </button>
+              </div>
               {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile.message}</p>}
+
+              {otpSent && (
+                <div className="mt-2 grid gap-2 sm:grid-cols-[1fr_auto]">
+                  <input
+                    className={inputClass}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    value={otp}
+                    onChange={(event) => setOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
+                    placeholder="Enter 6-digit OTP"
+                  />
+                  <button
+                    type="button"
+                    onClick={verifyOtp}
+                    disabled={isVerifyingOtp}
+                    className="rounded-xl border border-[#cabaf8] px-4 py-3 text-sm font-semibold text-[#5f2bb3] transition hover:bg-[#f3edff] disabled:opacity-60"
+                  >
+                    {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
+                  </button>
+                </div>
+              )}
+
+              {otpError && <p className="mt-1 text-xs text-red-500">{otpError}</p>}
+              {otpMessage && <p className="mt-1 text-xs text-[#2e7d32]">{otpMessage}</p>}
             </div>
 
-            <div>
+            <div className="sm:col-span-2">
               <label className="mb-1 block text-sm text-[#2b2b43]">Email</label>
               <input
                 className={`${inputClass} ${errors.email ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
@@ -251,13 +410,23 @@ export default function UserRegistrationPage() {
             </div>
 
             <div>
+              <label className="mb-1 block text-sm text-[#2b2b43]">City / Town</label>
+              <input
+                className={`${inputClass} ${errors.city ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
+                type="text"
+                placeholder="Enter city or town"
+                {...register("city", { required: "Please enter your city." })}
+              />
+              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city.message}</p>}
+            </div>
+
+            <div>
               <label className="mb-1 block text-sm text-[#2b2b43]">State</label>
               <div className="group relative">
                 <select
                   className={`${inputClass} appearance-none pr-10 ${errors.state ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""}`}
                   {...register("state", {
                     required: "Please select your state.",
-                    onChange: () => setValue("city", ""),
                   })}
                 >
                   <option value="">Select state</option>
@@ -285,28 +454,6 @@ export default function UserRegistrationPage() {
               {errors.referralCode && <p className="mt-1 text-xs text-red-500">{errors.referralCode.message}</p>}
             </div>
 
-            <div>
-              <label className="mb-1 block text-sm text-[#2b2b43]">City / Town</label>
-              <div className="group relative">
-                <select
-                  disabled={!selectedState}
-                  className={`${inputClass} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-70 ${
-                    errors.city ? "border-red-400 focus:border-red-500 focus:ring-red-200" : ""
-                  }`}
-                  {...register("city", { required: "Please select your city." })}
-                >
-                  <option value="">{selectedState ? "Select city" : "Select state first"}</option>
-                  {cityOptions.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-[#7b1fa2] transition group-focus-within:rotate-180" />
-              </div>
-              {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city.message}</p>}
-            </div>
-
             <button
               type="submit"
               disabled={isSubmitting}
@@ -315,7 +462,7 @@ export default function UserRegistrationPage() {
               {isSubmitting ? "Validating..." : "Register"}
             </button>
 
-            {submitMessage && <p className="sm:col-span-2 text-sm font-medium text-emerald-600">{submitMessage}</p>}
+            {submitMessage && <p className="sm:col-span-2 text-sm font-medium text-red-600">{submitMessage}</p>}
           </form>
         </div>
       </section>

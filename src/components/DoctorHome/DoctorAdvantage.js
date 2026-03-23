@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 const advantageCards = [
   {
-    title: "Fewer Repeated Tests",
+    title: "Access Existing Test History",
     icon: "/images/doctors/fordoctor1.svg",
   },
   {

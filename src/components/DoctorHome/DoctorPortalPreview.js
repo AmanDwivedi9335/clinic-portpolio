@@ -148,7 +148,7 @@ export default function DoctorPortalPreview() {
             </div>
 
             <a
-              href="/doctors"
+              href="/doctorRegistration"
               className="
                 mt-8 inline-flex items-center justify-center !cursor-pointer
                 rounded-2xl px-8 py-3
@@ -162,7 +162,7 @@ export default function DoctorPortalPreview() {
                 active:scale-[0.97]
               "
             >
-              Explore Doctor Portal
+              Register Now
             </a>
           </div>
 

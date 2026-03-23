@@ -367,6 +367,12 @@ export default function DoctorRegistrationPage() {
           </div>
 
           <div>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Date of Birth</label>
+            <input className={inputClass} type="date" max={new Date().toISOString().split("T")[0]} {...register("dob", { required: "Date of birth is required." })} />
+            {errors.dob && <p className="mt-1 text-xs text-red-500">{errors.dob.message}</p>}
+          </div>
+
+          <div>
             <label className="mb-1 block text-sm text-[#2b2b43]">Mobile Number</label>
             <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("mobile", { required: "Mobile number is required." })} />
             {errors.mobile && <p className="mt-1 text-xs text-red-500">{errors.mobile.message}</p>}
@@ -404,11 +410,7 @@ export default function DoctorRegistrationPage() {
             <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("emergencyMobile")} />
           </div>
 
-          <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Date of Birth</label>
-            <input className={inputClass} type="date" max={new Date().toISOString().split("T")[0]} {...register("dob", { required: "Date of birth is required." })} />
-            {errors.dob && <p className="mt-1 text-xs text-red-500">{errors.dob.message}</p>}
-          </div>
+          
 
           <h2 className={sectionTitleClass}>2. Registration Details</h2>
           {registrationFields.map((field, index) => (

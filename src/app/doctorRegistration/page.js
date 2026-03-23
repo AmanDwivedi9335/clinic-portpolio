@@ -335,7 +335,7 @@ export default function DoctorRegistrationPage() {
 
           <div>
             <label className="mb-1 block text-sm text-[#2b2b43]">Email</label>
-            <input className={inputClass} type="email" placeholder="Enter Email (Optional)" {...register("email")} />
+            <input className={inputClass} type="email" placeholder="Enter Email" {...register("email")} />
             {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
             <div className="mt-3 flex flex-wrap gap-2">
               <button type="button" onClick={sendEmailOtp} disabled={isSendingEmailOtp} className="rounded-lg border border-[#cabaf8] px-3 py-2 text-xs font-semibold text-[#5f2bb3] hover:bg-[#f3edff] disabled:opacity-60">
@@ -406,7 +406,7 @@ export default function DoctorRegistrationPage() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm text-[#2b2b43]">Emergency Mob. No. (Optional)</label>
+            <label className="mb-1 block text-sm text-[#2b2b43]">Emergency / Alternate mobile (Optional)</label>
             <input className={inputClass} type="tel" placeholder="Enter 10 digit number" {...register("emergencyMobile")} />
           </div>
 

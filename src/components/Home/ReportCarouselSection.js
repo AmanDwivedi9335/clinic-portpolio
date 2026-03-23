@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { createGsapContext } from "@/lib/gsap";
 import GradientBadge from "@/components/ui/GradientBadge";
@@ -52,9 +52,17 @@ const slides = [
   },
 ];
 
+const getCircularDistance = (from, to, total) => {
+  const forward = (to - from + total) % total;
+  const backward = (from - to + total) % total;
+  return Math.min(forward, backward);
+};
+
 export default function ReportCarouselSection() {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const autoplayRef = useRef(null);
   const isHoveredRef = useRef(false);
@@ -76,30 +84,27 @@ export default function ReportCarouselSection() {
   }, [api]);
 
   useEffect(() => {
-    if (!api) return;
+    if (!api || isPaused) {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
+      return;
+    }
 
-    const startAutoplay = () => {
-      if (autoplayRef.current) return;
-
-      autoplayRef.current = setInterval(() => {
-        if (!isHoveredRef.current) {
-          api.scrollNext();
-        }
-      }, 3500);
-    };
-
-    const stopAutoplay = () => {
-      if (!autoplayRef.current) return;
-      clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
-    };
-
-    startAutoplay();
+    autoplayRef.current = setInterval(() => {
+      if (!isHoveredRef.current) {
+        api.scrollNext();
+      }
+    }, 3500);
 
     return () => {
-      stopAutoplay();
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
     };
-  }, [api]);
+  }, [api, isPaused]);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
@@ -161,9 +166,9 @@ export default function ReportCarouselSection() {
           </p>
         </div>
 
-        <div className="report-carousel mt-8 flex min-h-0 flex-1 items-start">
+        <div className="report-carousel mt-8 flex min-h-0 flex-1 flex-col items-start">
           <Carousel
-            opts={{ align: "start", loop: true }}
+            opts={{ align: "center", loop: true }}
             setApi={setApi}
             className="w-full"
             onMouseEnter={() => {
@@ -171,42 +176,104 @@ export default function ReportCarouselSection() {
             }}
             onMouseLeave={() => {
               isHoveredRef.current = false;
+              setHoveredIndex(null);
             }}
           >
-            <CarouselContent className="-ml-4">
-              {slides.map((slide, index) => (
-                <CarouselItem
-                  key={`${slide.title}-${index}`}
-                  className="pl-4 basis-[92%] sm:basis-[75%] md:basis-[58%] lg:basis-1/3"
-                >
-                  <article className="group relative mx-auto flex h-[50svh] w-full max-w-[330px] min-h-[360px] max-h-[540px] flex-col overflow-hidden rounded-[28px] border-2 border-[#BFC0E4] bg-[#D9C6E3] p-3">
-                    <div className="relative h-[66%] w-full overflow-hidden rounded-[24px]">
-                      <Image
-                        src={slide.image}
-                        alt={slide.alt}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 58vw, 92vw"
-                      />
-                    </div>
+            <CarouselContent className="-ml-4 items-stretch">
+              {slides.map((slide, index) => {
+                const distanceFromActive = getCircularDistance(activeIndex, index, slides.length);
+                const isActive = distanceFromActive === 0;
+                const isAdjacent = distanceFromActive === 1;
+                const showMagentaBorder = isActive && hoveredIndex === index;
 
-                    <div className="flex flex-1 flex-col px-2 pb-2 pt-4">
-                      <h3 className="text-[clamp(1.1rem,1.2vw,1.6rem)] font-aptos-black leading-[1.14] text-[#252B7F]">
-                        What if{" "}
-                        <span className="font-medium text-[#282672]">
-                          {slide.title}
-                        </span>
-                      </h3>
+                return (
+                  <CarouselItem
+                    key={`${slide.title}-${index}`}
+                    className="pl-4 basis-[90%] sm:basis-[72%] md:basis-[52%] lg:basis-1/3"
+                  >
+                    <article
+                      className={[
+                        "group relative mx-auto flex h-[50svh] w-full max-w-[330px] min-h-[360px] max-h-[540px] flex-col overflow-hidden rounded-[28px] border-2 bg-[#D9C6E3] p-3 transition-all duration-500 ease-out",
+                        isActive
+                          ? showMagentaBorder
+                            ? "border-[#C2188F] shadow-[0_25px_50px_rgba(123,31,162,0.2)]"
+                            : "border-[#BFC0E4] shadow-[0_20px_45px_rgba(17,29,137,0.12)]"
+                          : "border-white/60 shadow-none",
+                        isActive ? "scale-100 opacity-100" : isAdjacent ? "scale-[0.94] opacity-100" : "scale-[0.9] opacity-0 md:opacity-70",
+                      ].join(" ")}
+                      onMouseEnter={() => {
+                        if (isActive) {
+                          setHoveredIndex(index);
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        if (hoveredIndex === index) {
+                          setHoveredIndex(null);
+                        }
+                      }}
+                    >
+                      <div className="relative h-[66%] w-full overflow-hidden rounded-[24px]">
+                        <Image
+                          src={slide.image}
+                          alt={slide.alt}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 52vw, 90vw"
+                        />
+                      </div>
 
-                      <p className="mt-3 text-[clamp(0.95rem,0.95vw,1.08rem)] font-semibold leading-[1.35] text-[#282672]">
-                        {slide.description}
-                      </p>
-                    </div>
-                  </article>
-                </CarouselItem>
-              ))}
+                      {!isActive && isAdjacent ? (
+                        <div className="pointer-events-none absolute inset-0 z-10 rounded-[28px] bg-white/55 backdrop-blur-[1px]" />
+                      ) : null}
+
+                      <div className="relative z-20 flex flex-1 flex-col px-2 pb-2 pt-4">
+                        <h3 className="text-[clamp(1.1rem,1.2vw,1.6rem)] font-aptos-black leading-[1.14] text-[#252B7F]">
+                          What if{" "}
+                          <span className="font-medium text-[#282672]">
+                            {slide.title}
+                          </span>
+                        </h3>
+
+                        <p className="mt-3 text-[clamp(0.95rem,0.95vw,1.08rem)] font-semibold leading-[1.35] text-[#282672]">
+                          {slide.description}
+                        </p>
+                      </div>
+                    </article>
+                  </CarouselItem>
+                );
+              })}
             </CarouselContent>
           </Carousel>
+
+          <div className="mt-6 flex w-full items-center justify-center gap-3 text-[#2230B4] md:mt-8 md:gap-5">
+            <button
+              type="button"
+              onClick={() => api?.scrollPrev()}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C9D0FF] bg-white transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
+              aria-label="Previous card"
+            >
+              <ArrowLeft size={20} />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsPaused((current) => !current)}
+              className="flex h-11 min-w-[110px] items-center justify-center gap-2 rounded-full border border-[#C9D0FF] bg-white px-4 text-sm font-semibold transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
+              aria-label={isPaused ? "Resume carousel autoplay" : "Pause carousel autoplay"}
+            >
+              {isPaused ? <Play size={18} /> : <Pause size={18} />}
+              <span>{isPaused ? "Play" : "Pause"}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => api?.scrollNext()}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C9D0FF] bg-white transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
+              aria-label="Next card"
+            >
+              <ArrowRight size={20} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

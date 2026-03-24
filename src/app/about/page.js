@@ -19,18 +19,25 @@ export default function Page() {
 			imgurl: "/images/founders/vaishnavi.jpg",
 		},
 		{
-			Name: "Joe",
-			Designation: "Employee",
+			Name: "Dr. Srinivas K",
+			Designation: "Chief Consultant",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/vaishnavi.jpg",
+			imgurl: "/images/founders/drsri.png",
+		},
+		{
+			Name: "Khali",
+			Designation: "Product Consultant",
+			Details:
+				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
+			imgurl: "/images/founders/khali.png",
 		},
 		{
 			Name: "Joe",
-			Designation: "Employee",
+			Designation: "NA",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/vaishnavi.jpg",
+			imgurl: "/images/founders/khali.png",
 		},
 		{
 			Name: "Deepthi Murikipudi",
@@ -56,8 +63,8 @@ export default function Page() {
 		
 	];
 
-	const largeFounders = founderData.slice(0, 2);
-	const smallFounders = founderData.slice(2);
+	const largeFounders = founderData.slice(0, 3);
+	const smallFounders = founderData.slice(3);
 
 	const advisoryData = [
 		{

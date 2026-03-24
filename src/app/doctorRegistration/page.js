@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Plus, Trash2 } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { INDIA_STATE_CITY_MAP, INDIAN_STATES } from "@/lib/indiaLocations";
+import { INDIAN_STATES } from "@/lib/indiaLocations";
 
 function HeroWaveBackground() {
   return (
@@ -19,6 +19,28 @@ function HeroWaveBackground() {
 
 const inputClass = "w-full rounded-xl border border-[#ddd9f5] bg-[#faf9ff] px-4 py-3 text-sm outline-none transition duration-300 placeholder:text-[#79778f] focus:border-[#7b1fa2] focus:ring-2 focus:ring-[#7b1fa2]/20";
 const sectionTitleClass = "sm:col-span-2 mt-6 border-b border-[#ece8fb] pb-2 text-lg font-aptos-extrabold text-[#3b0aa3]";
+const allCountryNames = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+  "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+  "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+  "Côte d’Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+  "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland",
+  "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea",
+  "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+  "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
+  "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+  "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
+  "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru",
+  "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman",
+  "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+  "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
+  "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
+  "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+  "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
+  "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
+  "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe",
+];
 
 export default function DoctorRegistrationPage() {
   const [showForm, setShowForm] = useState(false);
@@ -68,13 +90,8 @@ export default function DoctorRegistrationPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const primaryQualificationState = watch("qualifications.0.state");
   const mobileValue = watch("mobile");
   const emailValue = watch("email");
-  const primaryCityOptions = useMemo(
-    () => INDIA_STATE_CITY_MAP[primaryQualificationState] || [],
-    [primaryQualificationState],
-  );
 
   useEffect(() => {
     const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
@@ -447,9 +464,6 @@ export default function DoctorRegistrationPage() {
 
           <h2 className={sectionTitleClass}>3. Qualifications</h2>
           {qualificationFields.map((field, index) => {
-            const selectedState = watch(`qualifications.${index}.state`);
-            const cityOptions = index === 0 ? primaryCityOptions : INDIA_STATE_CITY_MAP[selectedState] || [];
-
             return (
               <div key={field.id} className="sm:col-span-2 rounded-2xl border border-[#ece8fb] p-4">
                 <div className="mb-3 flex items-center justify-between">
@@ -473,8 +487,8 @@ export default function DoctorRegistrationPage() {
                   </div>
 
                   <div>
-                    <label className="mb-1 block text-sm text-[#2b2b43]">Country</label>
-                    <input className={inputClass} placeholder="Type or select country" {...register(`qualifications.${index}.country`)} />
+                    <label className="mb-1 block text-sm text-[#2b2b43]">City</label>
+                    <input className={inputClass} placeholder="Enter city" {...register(`qualifications.${index}.city`)} />
                   </div>
 
                   <div className="group relative">
@@ -489,11 +503,11 @@ export default function DoctorRegistrationPage() {
                   </div>
 
                   <div className="group relative">
-                    <label className="mb-1 block text-sm text-[#2b2b43]">City</label>
-                    <select className={`${inputClass} appearance-none pr-10`} disabled={!selectedState} {...register(`qualifications.${index}.city`)}>
-                      <option value="">{selectedState ? "Type or select city" : "Select state first"}</option>
-                      {cityOptions.map((city) => (
-                        <option key={city} value={city}>{city}</option>
+                    <label className="mb-1 block text-sm text-[#2b2b43]">Country</label>
+                    <select className={`${inputClass} appearance-none pr-10`} {...register(`qualifications.${index}.country`)}>
+                      <option value="">Select country</option>
+                      {allCountryNames.map((country) => (
+                        <option key={country} value={country}>{country}</option>
                       ))}
                     </select>
                     <ChevronDown className="pointer-events-none absolute right-3 top-[70%] size-4 -translate-y-1/2 text-[#7b1fa2]" />

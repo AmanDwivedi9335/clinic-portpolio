@@ -22,16 +22,31 @@ const sectionTitleClass = "sm:col-span-2 mt-6 border-b border-[#ece8fb] pb-2 tex
 const excludedRegionCodes = new Set(["EU", "UN", "XA", "XB", "ZZ"]);
 
 const allCountryNames = (() => {
-  if (typeof Intl === "undefined" || typeof Intl.DisplayNames === "undefined" || typeof Intl.supportedValuesOf !== "function") {
+  if (typeof Intl === "undefined" || typeof Intl.DisplayNames === "undefined") {
     return ["India"];
   }
 
   const displayNames = new Intl.DisplayNames(["en"], { type: "region" });
-  return Intl.supportedValuesOf("region")
-    .filter((code) => code.length === 2 && !excludedRegionCodes.has(code))
-    .map((code) => displayNames.of(code))
-    .filter(Boolean)
-    .sort((a, b) => a.localeCompare(b));
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const countryNames = new Set();
+
+  for (const firstChar of alphabet) {
+    for (const secondChar of alphabet) {
+      const code = `${firstChar}${secondChar}`;
+      if (excludedRegionCodes.has(code)) {
+        continue;
+      }
+
+      const countryName = displayNames.of(code);
+      if (!countryName || countryName === code) {
+        continue;
+      }
+
+      countryNames.add(countryName);
+    }
+  }
+
+  return Array.from(countryNames).sort((a, b) => a.localeCompare(b));
 })();
 
 export default function DoctorRegistrationPage() {

@@ -404,7 +404,7 @@ export default function DoctorRegistrationPage() {
               <button type="button" onClick={sendMobileOtp} disabled={isSendingMobileOtp} className="rounded-lg border border-[#cabaf8] px-3 py-2 text-xs font-semibold text-[#5f2bb3] hover:bg-[#f3edff] disabled:opacity-60">
                 {isSendingMobileOtp ? "Sending..." : mobileOtpSent ? "Resend OTP" : "Send OTP"}
               </button>
-              {mobileOtpVerified === String(mobileValue || "").replace(/\D/g, "").slice(-10) && (
+              {mobileOtpVerified === String(mobileValue || "").replace(/\D/g, "").slice(-10) && String(mobileValue || "").replace(/\D/g, "").slice(-10) && (
                 <span className="rounded-lg bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700">Mobile verified</span>
               )}
             </div>

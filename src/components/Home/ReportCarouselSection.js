@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { createGsapContext } from "@/lib/gsap";
 import GradientBadge from "@/components/ui/GradientBadge";
@@ -61,7 +61,6 @@ const getCircularDistance = (from, to, total) => {
 export default function ReportCarouselSection() {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const autoplayRef = useRef(null);
@@ -84,7 +83,7 @@ export default function ReportCarouselSection() {
   }, [api]);
 
   useEffect(() => {
-    if (!api || isPaused) {
+    if (!api) {
       if (autoplayRef.current) {
         clearInterval(autoplayRef.current);
         autoplayRef.current = null;
@@ -104,7 +103,7 @@ export default function ReportCarouselSection() {
         autoplayRef.current = null;
       }
     };
-  }, [api, isPaused]);
+  }, [api]);
 
   useEffect(() => {
     return createGsapContext(sectionRef, (gsap) => {
@@ -279,15 +278,6 @@ export default function ReportCarouselSection() {
               </button>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setIsPaused((current) => !current)}
-              className="flex h-11 min-w-[110px] items-center justify-center gap-2 rounded-full border border-[#C9D0FF] bg-white px-4 text-sm font-semibold transition hover:border-[#7B1FA2] hover:text-[#7B1FA2]"
-              aria-label={isPaused ? "Resume carousel autoplay" : "Pause carousel autoplay"}
-            >
-              {isPaused ? <Play size={18} /> : <Pause size={18} />}
-              <span>{isPaused ? "Play" : "Pause"}</span>
-            </button>
           </div>
         </div>
       </div>

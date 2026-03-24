@@ -152,15 +152,17 @@ export default function ReportCarouselSection() {
           </GradientBadge>
 
           <h2
-            className="mt-4 max-w-[1100px] text-center font-medium leading-[1.06] tracking-[-0.03em] text-[#7B1FA2]"
-            style={{ fontSize: "clamp(2.2rem, 3.2vw, 4.4rem)" }}
+            className="mt-4 max-w-[1100px] text-center font-medium leading-[1.06] tracking-[-0.03em] 
+              bg-[linear-gradient(180deg,#9F028D_0%,#0E1896_105%)]
+              bg-clip-text 
+              text-transparent
+              text-2xl md:text-4xl"
           >
             <span className="font-aptos-black">&apos;What if&apos;</span> the one report that could save your life...
           </h2>
 
           <p
-            className="mt-3 max-w-[900px] text-center font-normal leading-[1.08] text-[#111D89]"
-            style={{ fontSize: "clamp(1.6rem, 2.1vw, 2.8rem)" }}
+            className="mt-3 max-w-[900px] text-center font-normal leading-[1.08] text-[#111D89] md:text-3xl"
           >
             wasn&apos;t there when you needed it?
           </p>

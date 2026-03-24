@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Plus, Trash2 } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { INDIA_STATE_CITY_MAP, INDIAN_STATES } from "@/lib/indiaLocations";
+import { INDIAN_STATES } from "@/lib/indiaLocations";
 
 function HeroWaveBackground() {
   return (
@@ -19,6 +19,20 @@ function HeroWaveBackground() {
 
 const inputClass = "w-full rounded-xl border border-[#ddd9f5] bg-[#faf9ff] px-4 py-3 text-sm outline-none transition duration-300 placeholder:text-[#79778f] focus:border-[#7b1fa2] focus:ring-2 focus:ring-[#7b1fa2]/20";
 const sectionTitleClass = "sm:col-span-2 mt-6 border-b border-[#ece8fb] pb-2 text-lg font-aptos-extrabold text-[#3b0aa3]";
+const excludedRegionCodes = new Set(["EU", "UN", "XA", "XB", "ZZ"]);
+
+const allCountryNames = (() => {
+  if (typeof Intl === "undefined" || typeof Intl.DisplayNames === "undefined" || typeof Intl.supportedValuesOf !== "function") {
+    return ["India"];
+  }
+
+  const displayNames = new Intl.DisplayNames(["en"], { type: "region" });
+  return Intl.supportedValuesOf("region")
+    .filter((code) => code.length === 2 && !excludedRegionCodes.has(code))
+    .map((code) => displayNames.of(code))
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b));
+})();
 
 export default function DoctorRegistrationPage() {
   const [showForm, setShowForm] = useState(false);
@@ -68,13 +82,8 @@ export default function DoctorRegistrationPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const primaryQualificationState = watch("qualifications.0.state");
   const mobileValue = watch("mobile");
   const emailValue = watch("email");
-  const primaryCityOptions = useMemo(
-    () => INDIA_STATE_CITY_MAP[primaryQualificationState] || [],
-    [primaryQualificationState],
-  );
 
   useEffect(() => {
     const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
@@ -447,9 +456,6 @@ export default function DoctorRegistrationPage() {
 
           <h2 className={sectionTitleClass}>3. Qualifications</h2>
           {qualificationFields.map((field, index) => {
-            const selectedState = watch(`qualifications.${index}.state`);
-            const cityOptions = index === 0 ? primaryCityOptions : INDIA_STATE_CITY_MAP[selectedState] || [];
-
             return (
               <div key={field.id} className="sm:col-span-2 rounded-2xl border border-[#ece8fb] p-4">
                 <div className="mb-3 flex items-center justify-between">
@@ -473,8 +479,8 @@ export default function DoctorRegistrationPage() {
                   </div>
 
                   <div>
-                    <label className="mb-1 block text-sm text-[#2b2b43]">Country</label>
-                    <input className={inputClass} placeholder="Type or select country" {...register(`qualifications.${index}.country`)} />
+                    <label className="mb-1 block text-sm text-[#2b2b43]">City</label>
+                    <input className={inputClass} placeholder="Enter city" {...register(`qualifications.${index}.city`)} />
                   </div>
 
                   <div className="group relative">
@@ -489,11 +495,11 @@ export default function DoctorRegistrationPage() {
                   </div>
 
                   <div className="group relative">
-                    <label className="mb-1 block text-sm text-[#2b2b43]">City</label>
-                    <select className={`${inputClass} appearance-none pr-10`} disabled={!selectedState} {...register(`qualifications.${index}.city`)}>
-                      <option value="">{selectedState ? "Type or select city" : "Select state first"}</option>
-                      {cityOptions.map((city) => (
-                        <option key={city} value={city}>{city}</option>
+                    <label className="mb-1 block text-sm text-[#2b2b43]">Country</label>
+                    <select className={`${inputClass} appearance-none pr-10`} {...register(`qualifications.${index}.country`)}>
+                      <option value="">Select country</option>
+                      {allCountryNames.map((country) => (
+                        <option key={country} value={country}>{country}</option>
                       ))}
                     </select>
                     <ChevronDown className="pointer-events-none absolute right-3 top-[70%] size-4 -translate-y-1/2 text-[#7b1fa2]" />

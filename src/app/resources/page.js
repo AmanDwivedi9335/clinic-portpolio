@@ -116,7 +116,7 @@ export default function Page() {
 							<a
 								href="https://abha.abdm.gov.in/abha/v3/register"
 								target="__blank"
-								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(123,31,162,0.35)] transition-transform duration-200 hover:scale-[1.02]"
 							>
 								Register Now
 							</a>
@@ -168,7 +168,7 @@ export default function Page() {
 						<div className="mt-7 md:mt-8 text-left">
 							<a
 								href="/health-guides"
-								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(123,31,162,0.35)] transition-transform duration-200 hover:scale-[1.02]"
 							>
 								View Guides
 							</a>
@@ -213,7 +213,7 @@ export default function Page() {
 				<div className="mt-10 text-center">
 					<a
 						href="/blog"
-						className="inline-flex items-center rounded-[12px] bg-gradient-to-r from-[#7f00b2] to-[#1f2ca2] px-10 py-3 text-[16px] font-medium text-white shadow-[0_10px_18px_rgba(47,33,150,0.35)]"
+						className="inline-flex items-center rounded-[12px] bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-10 py-3 text-[16px] font-medium text-white shadow-[0_10px_18px_rgba(123,31,162,0.35)]"
 					>
 						View All
 					</a>
@@ -241,7 +241,7 @@ export default function Page() {
 						<div className="mt-7 md:mt-8 text-left">
 							<a
 								href="/privacy-policy"
-								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-r from-[#1D17AE] to-[#8E2DE2] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(59,36,184,0.35)] transition-transform duration-200 hover:scale-[1.02]"
+								className="inline-flex items-center justify-center rounded-[10px] bg-gradient-to-b from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-6 py-3 text-[14px] font-medium text-white shadow-[0_8px_20px_rgba(123,31,162,0.35)] transition-transform duration-200 hover:scale-[1.02]"
 							>
 								Read More
 							</a>

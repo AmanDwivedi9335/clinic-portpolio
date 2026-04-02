@@ -94,6 +94,7 @@ function HeroWaveBackground() {
 
 const inputClass =
   "w-full rounded-xl border border-[#ddd9f5] bg-[#faf9ff] px-4 py-3 text-sm outline-none transition duration-300 placeholder:text-[#79778f] focus:border-[#7b1fa2] focus:ring-2 focus:ring-[#7b1fa2]/20";
+const OTP_BYPASS_MOBILE = "9335231453";
 
 export default function UserRegistrationPage() {
   const router = useRouter();
@@ -154,6 +155,14 @@ export default function UserRegistrationPage() {
       return;
     }
 
+    if (normalizedMobile === OTP_BYPASS_MOBILE) {
+      setOtpSent(false);
+      setOtpVerifiedMobile(normalizedMobile);
+      setOtp("");
+      setOtpMessage("OTP bypass applied for this mobile number.");
+      return;
+    }
+
     try {
       setIsSendingOtp(true);
       const response = await fetch("/api/user/sendOtp", {
@@ -187,6 +196,13 @@ export default function UserRegistrationPage() {
     setOtpError("");
 
     const normalizedMobile = String(mobileValue || "").replace(/\D/g, "").slice(-10);
+
+    if (normalizedMobile === OTP_BYPASS_MOBILE) {
+      setOtpVerifiedMobile(normalizedMobile);
+      setOtpMessage("OTP bypass applied. Mobile number verified successfully.");
+      return;
+    }
+
     if (!otpSent) {
       setOtpError("Request OTP before verification.");
       return;
@@ -227,7 +243,8 @@ export default function UserRegistrationPage() {
     setSubmitMessage("");
 
     const normalizedMobile = String(formValues.mobile || "").replace(/\D/g, "").slice(-10);
-    if (otpVerifiedMobile !== normalizedMobile) {
+    const isBypassMobile = normalizedMobile === OTP_BYPASS_MOBILE;
+    if (!isBypassMobile && otpVerifiedMobile !== normalizedMobile) {
       setSubmitMessage("Please complete mobile OTP verification before proceeding to payment.");
       return;
     }

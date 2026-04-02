@@ -232,7 +232,7 @@ export default function UserRegistrationPage() {
       return;
     }
 
-    const response = await fetch("/api/user/addUserdataToSheet", {
+    const response = await fetch("/api/user/registrationDraft", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -460,7 +460,7 @@ export default function UserRegistrationPage() {
               disabled={isSubmitting}
               className="sm:col-span-2 mt-3 rounded-xl bg-gradient-to-r from-[#d81b60] via-[#7b1fa2] to-[#3b0aa3] px-6 py-3 text-base font-aptos-extrabold text-white shadow-[0_12px_30px_rgba(123,31,162,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_44px_rgba(216,27,96,0.4)] disabled:opacity-70"
             >
-              {isSubmitting ? "Validating..." : "Register"}
+              {isSubmitting ? "Saving..." : "Continue to Plan Selection"}
             </button>
 
             {submitMessage && <p className="sm:col-span-2 text-sm font-medium text-red-600">{submitMessage}</p>}

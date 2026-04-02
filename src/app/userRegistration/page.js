@@ -251,9 +251,10 @@ export default function UserRegistrationPage() {
       registrationId: result.data.registrationId,
       fullName: result.data.fullName,
       email: result.data.email,
+      mobile: result.data.mobile,
     });
 
-    router.push(`/payment?${query.toString()}`);
+    router.push(`/payment/checkout?${query.toString()}`);
   };
 
   return (

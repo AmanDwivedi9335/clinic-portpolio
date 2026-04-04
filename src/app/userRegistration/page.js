@@ -249,29 +249,33 @@ export default function UserRegistrationPage() {
       return;
     }
 
-    const response = await fetch("/api/user/registrationDraft", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
-    });
+    try {
+      const response = await fetch("/api/user/registrationDraft", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!response.ok || !result.success) {
-      setSubmitMessage(result.message || "Registration failed. Please try again.");
-      return;
+      if (!response.ok || !result.success) {
+        setSubmitMessage(result.message || "Registration failed. Please try again.");
+        return;
+      }
+
+      const query = new URLSearchParams({
+        registrationId: result.data.registrationId,
+        fullName: result.data.fullName,
+        email: result.data.email,
+        mobile: result.data.mobile,
+      });
+
+      router.push(`/payment/checkout?${query.toString()}`);
+    } catch (_error) {
+      setSubmitMessage("Could not submit registration right now. Please try again in a moment.");
     }
-
-    const query = new URLSearchParams({
-      registrationId: result.data.registrationId,
-      fullName: result.data.fullName,
-      email: result.data.email,
-      mobile: result.data.mobile,
-    });
-
-    router.push(`/payment/checkout?${query.toString()}`);
   };
 
   return (

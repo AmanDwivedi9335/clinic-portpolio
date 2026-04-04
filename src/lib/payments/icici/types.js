@@ -20,6 +20,7 @@ export function validateInitiatePaymentInput(input) {
 export function validateIciciInitiateRequest(input) {
   const required = [
     "merchantId",
+    "aggregatorId",
     "merchantTxnNo",
     "amount",
     "currencyCode",

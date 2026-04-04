@@ -37,6 +37,10 @@ async function callRedisRest(pathname, body) {
   return response.json();
 }
 
+function logRedisFallback(error) {
+  console.warn("[registration-draft-store] Falling back to in-memory store.", error);
+}
+
 export async function saveRegistrationDraft(registrationId, data, ttlSeconds = DEFAULT_TTL_SECONDS) {
   const payload = {
     ...data,
@@ -45,8 +49,12 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   };
 
   const key = buildDraftKey(registrationId);
-  const redisResult = await callRedisRest("/set", [key, JSON.stringify(payload), { ex: ttlSeconds }]);
-  if (redisResult) return payload;
+  try {
+    const redisResult = await callRedisRest("/set", [key, JSON.stringify(payload), { ex: ttlSeconds }]);
+    if (redisResult) return payload;
+  } catch (error) {
+    logRedisFallback(error);
+  }
 
   inMemoryStore.set(key, { value: payload, expiresAt: Date.now() + ttlSeconds * 1000 });
   return payload;
@@ -54,11 +62,15 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
 
 export async function getRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  const redisResult = await callRedisRest("/get", [key]);
-  if (redisResult) {
-    const raw = redisResult.result;
-    if (!raw) return null;
-    return JSON.parse(raw);
+  try {
+    const redisResult = await callRedisRest("/get", [key]);
+    if (redisResult) {
+      const raw = redisResult.result;
+      if (!raw) return null;
+      return JSON.parse(raw);
+    }
+  } catch (error) {
+    logRedisFallback(error);
   }
 
   const stored = inMemoryStore.get(key);
@@ -72,7 +84,11 @@ export async function getRegistrationDraft(registrationId) {
 
 export async function deleteRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  const redisResult = await callRedisRest("/del", [key]);
-  if (redisResult) return true;
+  try {
+    const redisResult = await callRedisRest("/del", [key]);
+    if (redisResult) return true;
+  } catch (error) {
+    logRedisFallback(error);
+  }
   return inMemoryStore.delete(key);
 }

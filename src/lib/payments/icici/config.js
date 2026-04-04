@@ -20,7 +20,7 @@ export function getIciciConfig() {
   };
 
   if (!config.mode || !["UAT", "PROD"].includes(config.mode)) throw new Error("ICICI_ENV_MODE must be UAT or PROD");
-  for (const key of ["baseUrl", "merchantId", "merchantKey", "returnUrl", "frontendStatusUrl"]) {
+  for (const key of ["baseUrl", "merchantId", "aggregatorId", "merchantKey", "returnUrl", "frontendStatusUrl"]) {
     if (!config[key]) throw new Error(`Missing ICICI config: ${key}`);
   }
 

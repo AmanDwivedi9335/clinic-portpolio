@@ -67,7 +67,7 @@ export class PaymentService {
     const response = await this.client.initiateSale(reqBody);
     await this.repository.appendAuditLog(merchantTxnNo, "gateway.initiate.response", sanitizeForLogs(response));
 
-    if (!["0", "00", "SUCCESS"].includes(String(response.responseCode).toUpperCase())) {
+    if (!["0", "00", "SUCCESS"].includes(String(response.responseCode || "").trim().toUpperCase())) {
       await this.repository.updateAttempt(merchantTxnNo, {
         state: "FAILED",
         gatewayResponseCode: response.responseCode,
@@ -75,7 +75,7 @@ export class PaymentService {
         rawInitiateRequest: sanitizeForLogs(reqBody),
         rawInitiateResponse: sanitizeForLogs(response),
       });
-      throw new Error(`Gateway initiate failed: ${response.responseCode}`);
+      throw new Error(`Gateway initiate failed: ${response.responseCode}${response.responseMessage ? ` (${response.responseMessage})` : ""}`);
     }
 
     if (!response.redirectURI || !response.tranCtx) throw new Error("Gateway initiate succeeded but redirectURI/tranCtx missing");

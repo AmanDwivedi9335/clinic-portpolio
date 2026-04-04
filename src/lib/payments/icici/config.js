@@ -24,6 +24,39 @@ export function getIciciConfig() {
     if (!config[key]) throw new Error(`Missing ICICI config: ${key}`);
   }
 
+  assertIciciConfigLooksReal(config);
+
   cache = config;
   return cache;
+}
+
+function assertIciciConfigLooksReal(config) {
+  const placeholderPrefixes = ["YOUR_", "your_"];
+  const fields = [
+    ["merchantId", config.merchantId],
+    ["aggregatorId", config.aggregatorId],
+    ["merchantKey", config.merchantKey],
+  ];
+
+  for (const [field, value] of fields) {
+    const text = String(value || "").trim();
+    if (!text || placeholderPrefixes.some((prefix) => text.startsWith(prefix))) {
+      throw new Error(`ICICI config ${field} looks like a placeholder. Update .env.local with real ICICI credentials.`);
+    }
+  }
+
+  for (const [field, value] of [["returnUrl", config.returnUrl], ["frontendStatusUrl", config.frontendStatusUrl]]) {
+    const text = String(value || "").trim();
+    if (!text || text.includes("your-domain.com")) {
+      throw new Error(`ICICI config ${field} uses example domain. Update .env.local with a real URL.`);
+    }
+    try {
+      const parsed = new URL(text);
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        throw new Error();
+      }
+    } catch {
+      throw new Error(`ICICI config ${field} must be a valid http/https URL.`);
+    }
+  }
 }

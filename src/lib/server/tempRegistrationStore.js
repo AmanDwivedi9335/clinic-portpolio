@@ -15,17 +15,22 @@ function buildDraftKey(registrationId) {
   return `registration:draft:${registrationId}`;
 }
 
-async function callRedisRest(pathname, body) {
+function isRedisConfigured() {
+  const { baseUrl, token } = getRedisConfig();
+  return Boolean(baseUrl && token);
+}
+
+async function callRedisRestCommand(command, args) {
   const { baseUrl, token } = getRedisConfig();
   if (!baseUrl || !token) return null;
 
-  const response = await fetch(`${baseUrl}${pathname}`, {
+  const response = await fetch(`${baseUrl}/${command}`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(args),
     cache: "no-store",
   });
 
@@ -37,10 +42,6 @@ async function callRedisRest(pathname, body) {
   return response.json();
 }
 
-function logRedisFallback(error) {
-  console.warn("[registration-draft-store] Falling back to in-memory store.", error);
-}
-
 export async function saveRegistrationDraft(registrationId, data, ttlSeconds = DEFAULT_TTL_SECONDS) {
   const payload = {
     ...data,
@@ -49,11 +50,12 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   };
 
   const key = buildDraftKey(registrationId);
-  try {
-    const redisResult = await callRedisRest("/set", [key, JSON.stringify(payload), { ex: ttlSeconds }]);
-    if (redisResult) return payload;
-  } catch (error) {
-    logRedisFallback(error);
+  if (isRedisConfigured()) {
+    const redisResult = await callRedisRestCommand("set", [key, JSON.stringify(payload), "EX", String(ttlSeconds)]);
+    if (!redisResult) {
+      throw new Error("Redis is configured but set command did not return a response.");
+    }
+    return payload;
   }
 
   inMemoryStore.set(key, { value: payload, expiresAt: Date.now() + ttlSeconds * 1000 });
@@ -62,15 +64,15 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
 
 export async function getRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  try {
-    const redisResult = await callRedisRest("/get", [key]);
-    if (redisResult) {
-      const raw = redisResult.result;
-      if (!raw) return null;
-      return JSON.parse(raw);
+  if (isRedisConfigured()) {
+    const redisResult = await callRedisRestCommand("get", [key]);
+    if (!redisResult) {
+      throw new Error("Redis is configured but get command did not return a response.");
     }
-  } catch (error) {
-    logRedisFallback(error);
+
+    const raw = redisResult.result;
+    if (!raw) return null;
+    return JSON.parse(raw);
   }
 
   const stored = inMemoryStore.get(key);
@@ -84,11 +86,12 @@ export async function getRegistrationDraft(registrationId) {
 
 export async function deleteRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  try {
-    const redisResult = await callRedisRest("/del", [key]);
-    if (redisResult) return true;
-  } catch (error) {
-    logRedisFallback(error);
+  if (isRedisConfigured()) {
+    const redisResult = await callRedisRestCommand("del", [key]);
+    if (!redisResult) {
+      throw new Error("Redis is configured but del command did not return a response.");
+    }
+    return true;
   }
   return inMemoryStore.delete(key);
 }

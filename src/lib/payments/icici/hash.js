@@ -25,7 +25,10 @@ export function constantTimeCompare(a, b) {
 }
 
 export function buildInitiateHashFields(input) {
-  return [input.merchantId, input.merchantTxnNo, input.amount, input.currencyCode, input.returnURL, input.customerEmailID];
+  if (!input || typeof input !== "object") return [];
+  const filteredEntries = Object.entries(input).filter(([key, value]) => key !== "secureHash" && value != null);
+  const sortedKeys = filteredEntries.map(([key]) => key).sort((a, b) => a.localeCompare(b));
+  return sortedKeys.map((key) => String(input[key]));
 }
 
 export function buildInboundHashFields(payload) {

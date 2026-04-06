@@ -47,27 +47,19 @@ export class PaymentService {
       customerEmailID: trusted.customerEmail,
       transactionType: "SALE",
       returnURL: this.config.returnUrl,
-      txnDate: new Date().toISOString(),
+      txnDate: formatTxnDate(new Date()),
       customerMobileNo: trusted.customerMobile,
       customerName: trusted.customerName,
       addlParam1: trusted.registrationId,
       addlParam2: trusted.planId,
-      secureHash: this.hashAdapter.sign(
-        buildInitiateHashFields({
-          merchantId: this.config.merchantId,
-          merchantTxnNo,
-          amount,
-          currencyCode: "356",
-          returnURL: this.config.returnUrl,
-          customerEmailID: trusted.customerEmail,
-        }),
-      ),
+      secureHash: "",
     };
+    reqBody.secureHash = this.hashAdapter.sign(buildInitiateHashFields(reqBody));
 
     const response = await this.client.initiateSale(reqBody);
     await this.repository.appendAuditLog(merchantTxnNo, "gateway.initiate.response", sanitizeForLogs(response));
 
-    if (!["0", "00", "SUCCESS"].includes(String(response.responseCode || "").trim().toUpperCase())) {
+    if (!["0", "00", "SUCCESS", "R1000"].includes(String(response.responseCode || "").trim().toUpperCase())) {
       await this.repository.updateAttempt(merchantTxnNo, {
         state: "FAILED",
         gatewayResponseCode: response.responseCode,
@@ -170,6 +162,16 @@ export function generateMerchantTxnNo(orderId) {
 
 function formatPaise(amountPaise) {
   return (amountPaise / 100).toFixed(2);
+}
+
+function formatTxnDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}${month}${day}${hours}${minutes}${seconds}`;
 }
 
 function verifyInboundHash(hashAdapter, payload) {

@@ -14,6 +14,7 @@ export default function Header() {
     { url: "/", name: "Home" },
     { url: "/doctors/", name: "For Doctors" },
     { url: "/users/", name: "For Users" },
+    { url: "/settings", name: "Settings" },
     { url: "/partners/", name: "Partners" },
     { url: "/resources", name: "Resources" },
     { url: "/about", name: "About Us" },
@@ -177,6 +178,21 @@ const isActive = (url) => {
                 </a>
               </div>
             </div>
+
+            {/* Settings */}
+            <a
+              href="/settings"
+              className={`group flex items-center gap-1 transition-all ${
+                isActive("/settings") ? activeText : inactiveText
+              }`}
+            >
+              <ActivePrefixIcon isActiveLink={isActive("/settings")} />
+              Settings
+              <FiArrowUpRight
+                size={18}
+                className="transition-transform duration-200 group-hover:rotate-45"
+              />
+            </a>
 
             {/* About dropdown */}
             <div className="relative group">

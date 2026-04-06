@@ -1,15 +1,4 @@
-import {
-  FiActivity,
-  FiCheckCircle,
-  FiCpu,
-  FiGrid,
-  FiSettings,
-  FiTrendingUp,
-  FiUserPlus,
-  FiUsers,
-} from "react-icons/fi";
-
-const settingsSections = [
+const sections = [
   {
     id: "integrations",
     title: "Integrations",
@@ -48,97 +37,44 @@ const settingsSections = [
   },
 ];
 
-const sidebarItems = [
-  { id: "pending-tasks", title: "Pending Tasks", icon: FiGrid },
-  { id: "raw-leads", title: "Raw Leads", icon: FiTrendingUp },
-  { id: "leads", title: "Leads", icon: FiUsers },
-  { id: "auto-followups", title: "Auto Follow-ups", icon: FiActivity },
-  { id: "ai-setup", title: "AI Setup", icon: FiCpu },
-];
-
 export default function SettingsPage() {
   return (
     <main className="pt-[96px] md:pt-[110px] pb-16 bg-[#f5f7ff] min-h-screen">
-      <div className="mx-auto w-[95%] max-w-[1200px] grid gap-6 lg:grid-cols-[280px_1fr]">
-        <aside className="lg:sticky lg:top-[120px] h-fit rounded-2xl border border-indigo-100 bg-white p-4 shadow-sm">
-          <div className="flex items-center gap-3 border-b border-indigo-100 px-2 pb-4">
-            <div className="h-11 w-11 rounded-full bg-[#2f5bd8] text-white font-bold grid place-items-center text-xl">
-              K
-            </div>
-            <div>
-              <p className="text-2xl leading-7 font-bold text-[#171717]">TynkWink</p>
-              <p className="text-[#6b7280]">Flow with the Lead!</p>
-            </div>
-          </div>
+      <div className="mx-auto w-[95%] max-w-[1200px]">
+        <div className="rounded-3xl border border-indigo-100 bg-white p-6 md:p-10 shadow-[0_16px_40px_rgba(40,38,114,0.08)]">
+          <p className="text-xs tracking-[0.2em] uppercase text-indigo-500 font-semibold">
+            Workspace Settings
+          </p>
+          <h1 className="mt-3 text-3xl md:text-4xl font-bold text-[#282672]">
+            Settings
+          </h1>
+          <p className="mt-4 max-w-3xl text-[#4e4a8f] leading-7">
+            Manage your clinic workspace from one place. Integrations, Approval
+            Settings, and Staff &amp; Permissions are available through the
+            sidebar menu on this page.
+          </p>
+        </div>
 
-          <nav className="pt-4 space-y-1">
-            {sidebarItems.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={item.id}
-                  className="flex items-center gap-3 rounded-lg px-2 py-3 text-[#111827]"
+        <div className="mt-6 grid gap-6 lg:grid-cols-[280px_1fr]">
+          <aside className="lg:sticky lg:top-[120px] h-fit rounded-2xl border border-indigo-100 bg-white p-4 shadow-sm">
+            <h2 className="px-2 pb-3 text-sm font-semibold uppercase tracking-wider text-indigo-500">
+              Menu
+            </h2>
+            <nav className="space-y-2">
+              {sections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="block rounded-xl border border-transparent bg-indigo-50 px-4 py-3 text-sm font-medium text-[#282672] transition hover:border-indigo-200 hover:bg-indigo-100"
                 >
-                  <Icon size={22} />
-                  <span className="text-[22px]">{item.title}</span>
-                </div>
-              );
-            })}
+                  {section.title}
+                </a>
+              ))}
+            </nav>
+          </aside>
 
-            <button
-              type="button"
-              className="mt-1 flex w-full items-center gap-3 rounded-lg bg-indigo-50 border border-indigo-100 px-2 py-3 text-[#282672]"
-            >
-              <FiSettings size={22} />
-              <span className="text-xl font-semibold">Settings</span>
-            </button>
-
-            <div className="pl-2 pt-1 space-y-1">
-              <a
-                href="#integrations"
-                className="flex items-center gap-3 rounded-lg px-2 py-3 text-[#111827]"
-              >
-                <FiSettings size={22} />
-                <span className="text-[22px]">Integrations</span>
-              </a>
-              <a
-                href="#approval-settings"
-                className="flex items-center gap-3 rounded-lg px-2 py-3 text-[#111827]"
-              >
-                <FiCheckCircle size={22} />
-                <span className="text-[22px]">Approval Settings</span>
-              </a>
-              <a
-                href="#staff-permissions"
-                className="flex items-center gap-3 rounded-lg px-2 py-3 text-[#111827]"
-              >
-                <FiUserPlus size={22} />
-                <span className="text-[22px]">Staff &amp; Permissions</span>
-              </a>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-lg px-2 py-3 text-[#111827]">
-              <FiTrendingUp size={22} />
-              <span className="text-[22px]">Analytics</span>
-            </div>
-          </nav>
-        </aside>
-
-        <section className="space-y-5">
-          <div className="rounded-3xl border border-indigo-100 bg-white p-6 md:p-10 shadow-[0_16px_40px_rgba(40,38,114,0.08)]">
-            <p className="text-xs tracking-[0.2em] uppercase text-indigo-500 font-semibold">
-              Settings
-            </p>
-            <h1 className="mt-3 text-3xl md:text-4xl font-bold text-[#282672]">
-              Workspace Settings
-            </h1>
-            <p className="mt-4 max-w-3xl text-[#4e4a8f] leading-7">
-              Integrations, Approval Settings, and Staff &amp; Permissions are
-              grouped under the Settings button in the sidebar.
-            </p>
-          </div>
-
-          {settingsSections.map((section) => (
+          <section className="space-y-5">
+            {sections.map((section) => (
               <article
                 key={section.id}
                 id={section.id}
@@ -162,7 +98,8 @@ export default function SettingsPage() {
                 </ul>
               </article>
             ))}
-        </section>
+          </section>
+        </div>
       </div>
     </main>
   );

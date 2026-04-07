@@ -1,6 +1,7 @@
 const inMemoryStore = new Map();
 
 const DEFAULT_TTL_SECONDS = Number(process.env.REGISTRATION_DRAFT_TTL_SECONDS || 60 * 60 * 6);
+const MEMORY_FALLBACK_ENABLED = process.env.REGISTRATION_DRAFT_ALLOW_MEMORY_FALLBACK === "true" || process.env.NODE_ENV !== "production";
 
 function getRedisConfig() {
   const baseUrl =
@@ -26,6 +27,14 @@ function buildDraftKey(registrationId) {
 function isRedisConfigured() {
   const { baseUrl, token } = getRedisConfig();
   return Boolean(baseUrl && token);
+}
+
+function resolveStorageBackend() {
+  if (isRedisConfigured()) return "redis";
+  if (MEMORY_FALLBACK_ENABLED) return "memory";
+  throw new Error(
+    "Redis draft storage is not configured. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN (or enable REGISTRATION_DRAFT_ALLOW_MEMORY_FALLBACK=true).",
+  );
 }
 
 async function callRedisRestCommand(command, args) {
@@ -73,13 +82,13 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   };
 
   const key = buildDraftKey(registrationId);
-  if (isRedisConfigured()) {
+  if (resolveStorageBackend() === "redis") {
     try {
       const redisResult = await callRedisRestCommand("set", [key, JSON.stringify(payload), "EX", String(ttlSeconds)]);
       assertRedisResponse("set", redisResult);
       return payload;
     } catch (error) {
-      if (!shouldFallbackToMemory(error)) throw error;
+      if (!MEMORY_FALLBACK_ENABLED || !shouldFallbackToMemory(error)) throw error;
       console.warn("Redis unavailable while saving registration draft, using in-memory fallback.", error);
     }
   }
@@ -90,7 +99,7 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
 
 export async function getRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  if (isRedisConfigured()) {
+  if (resolveStorageBackend() === "redis") {
     try {
       const redisResult = await callRedisRestCommand("get", [key]);
       assertRedisResponse("get", redisResult);
@@ -99,7 +108,7 @@ export async function getRegistrationDraft(registrationId) {
       if (!raw) return null;
       return JSON.parse(raw);
     } catch (error) {
-      if (!shouldFallbackToMemory(error)) throw error;
+      if (!MEMORY_FALLBACK_ENABLED || !shouldFallbackToMemory(error)) throw error;
       console.warn("Redis unavailable while reading registration draft, using in-memory fallback.", error);
     }
   }
@@ -115,15 +124,19 @@ export async function getRegistrationDraft(registrationId) {
 
 export async function deleteRegistrationDraft(registrationId) {
   const key = buildDraftKey(registrationId);
-  if (isRedisConfigured()) {
+  if (resolveStorageBackend() === "redis") {
     try {
       const redisResult = await callRedisRestCommand("del", [key]);
       assertRedisResponse("del", redisResult);
       return true;
     } catch (error) {
-      if (!shouldFallbackToMemory(error)) throw error;
+      if (!MEMORY_FALLBACK_ENABLED || !shouldFallbackToMemory(error)) throw error;
       console.warn("Redis unavailable while deleting registration draft, using in-memory fallback.", error);
     }
   }
   return inMemoryStore.delete(key);
+}
+
+export function getRegistrationDraftStorageBackend() {
+  return resolveStorageBackend();
 }

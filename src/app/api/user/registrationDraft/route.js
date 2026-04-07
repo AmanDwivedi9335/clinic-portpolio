@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
-import { saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
+import { getRegistrationDraftStorageBackend, saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
 
 export const runtime = "nodejs";
 
@@ -61,6 +61,7 @@ export async function POST(request) {
         fullName: draft.fullName,
         email: draft.email,
         mobile: draft.mobile,
+        storage: getRegistrationDraftStorageBackend(),
       },
     });
   } catch (error) {

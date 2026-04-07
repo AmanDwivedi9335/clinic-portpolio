@@ -270,6 +270,7 @@ export default function UserRegistrationPage() {
         fullName: result.data.fullName,
         email: result.data.email,
         mobile: result.data.mobile,
+        storage: result.data.storage || "memory",
       });
 
       router.push(`/payment/checkout?${query.toString()}`);

@@ -30,7 +30,8 @@
     "react-spring": "^9.7.4",
     "react-tooltip": "^5.28.0",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "eslint": "^8",

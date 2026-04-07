@@ -74,7 +74,8 @@ function shouldFallbackToMemory(error) {
   return message.includes("fetch failed") || message.includes("network") || message.includes("econn") || message.includes("enotfound") || message.includes("timed out");
 }
 
-export async function saveRegistrationDraft(registrationId, data, ttlSeconds = DEFAULT_TTL_SECONDS) {
+export async function saveRegistrationDraft(registrationId, data, ttlSeconds = DEFAULT_TTL_SECONDS, options = {}) {
+  const { requireRedis = false } = options;
   const payload = {
     ...data,
     registrationId,
@@ -82,13 +83,18 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   };
 
   const key = buildDraftKey(registrationId);
-  if (resolveStorageBackend() === "redis") {
+  const storageBackend = resolveStorageBackend();
+
+  if (requireRedis && storageBackend !== "redis") {
+    throw new Error("Registration draft storage must use Redis. Please configure Redis and try again.");
+  }
+  if (storageBackend === "redis") {
     try {
       const redisResult = await callRedisRestCommand("set", [key, JSON.stringify(payload), "EX", String(ttlSeconds)]);
       assertRedisResponse("set", redisResult);
       return payload;
     } catch (error) {
-      if (!MEMORY_FALLBACK_ENABLED || !shouldFallbackToMemory(error)) throw error;
+      if (requireRedis || !MEMORY_FALLBACK_ENABLED || !shouldFallbackToMemory(error)) throw error;
       console.warn("Redis unavailable while saving registration draft, using in-memory fallback.", error);
     }
   }

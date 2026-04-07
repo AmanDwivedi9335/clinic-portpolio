@@ -32,13 +32,13 @@ async function callRedisRestCommand(command, args) {
   const { baseUrl, token } = getRedisConfig();
   if (!baseUrl || !token) return null;
 
-  const response = await fetch(`${baseUrl}/${command}`, {
+  const response = await fetch(baseUrl, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(args),
+    body: JSON.stringify([String(command || "").toUpperCase(), ...args]),
     cache: "no-store",
   });
 

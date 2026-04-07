@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
-import { getRegistrationDraftStorageBackend, saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
+import { saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
 
 export const runtime = "nodejs";
 
@@ -37,21 +37,26 @@ export async function POST(request) {
     const registrationId = buildRegistrationId();
     const { firstName, lastName } = splitName(payload.fullName);
 
-    const draft = await saveRegistrationDraft(registrationId, {
+    const draft = await saveRegistrationDraft(
       registrationId,
-      fullName: String(payload.fullName || "").trim(),
-      firstName,
-      lastName,
-      dob: String(payload.dob || ""),
-      gender: String(payload.gender || ""),
-      mobile: normalizedMobile,
-      email: String(payload.email || "").trim(),
-      referralCode: String(payload.referralCode || "").trim(),
-      state: String(payload.state || "").trim(),
-      city: String(payload.city || "").trim(),
-      createdAt: new Date().toISOString(),
-      flowStatus: "PROFILE_CAPTURED",
-    });
+      {
+        registrationId,
+        fullName: String(payload.fullName || "").trim(),
+        firstName,
+        lastName,
+        dob: String(payload.dob || ""),
+        gender: String(payload.gender || ""),
+        mobile: normalizedMobile,
+        email: String(payload.email || "").trim(),
+        referralCode: String(payload.referralCode || "").trim(),
+        state: String(payload.state || "").trim(),
+        city: String(payload.city || "").trim(),
+        createdAt: new Date().toISOString(),
+        flowStatus: "PROFILE_CAPTURED",
+      },
+      undefined,
+      { requireRedis: true },
+    );
 
     return NextResponse.json({
       success: true,
@@ -61,7 +66,7 @@ export async function POST(request) {
         fullName: draft.fullName,
         email: draft.email,
         mobile: draft.mobile,
-        storage: getRegistrationDraftStorageBackend(),
+        storage: "redis",
       },
     });
   } catch (error) {

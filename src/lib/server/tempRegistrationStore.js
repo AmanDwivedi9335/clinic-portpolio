@@ -19,8 +19,16 @@ function getRedisConfig() {
     process.env.REDIS_CLOUD_API_KEY ||
     "";
 
+  const sanitizedBaseUrl = baseUrl
+    .trim()
+    .replace(/\\n/g, "")
+    .replace(/\/+$/, "");
+
+  const normalizedBaseUrl =
+    sanitizedBaseUrl && !/^https?:\/\//i.test(sanitizedBaseUrl) ? `https://${sanitizedBaseUrl}` : sanitizedBaseUrl;
+
   return {
-    baseUrl: baseUrl.trim().replace(/\/+$/, ""),
+    baseUrl: normalizedBaseUrl,
     token: token.trim(),
   };
 }

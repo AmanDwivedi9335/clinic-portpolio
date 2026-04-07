@@ -3,10 +3,18 @@ const inMemoryStore = new Map();
 const DEFAULT_TTL_SECONDS = Number(process.env.REGISTRATION_DRAFT_TTL_SECONDS || 60 * 60 * 6);
 
 function getRedisConfig() {
-  const baseUrl = process.env.UPSTASH_REDIS_REST_URL || process.env.REDIS_REST_URL || "";
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.REDIS_REST_TOKEN || "";
+  const baseUrl =
+    process.env.UPSTASH_REDIS_REST_URL ||
+    process.env.KV_REST_API_URL ||
+    process.env.REDIS_REST_URL ||
+    "";
+  const token =
+    process.env.UPSTASH_REDIS_REST_TOKEN ||
+    process.env.KV_REST_API_TOKEN ||
+    process.env.REDIS_REST_TOKEN ||
+    "";
   return {
-    baseUrl: baseUrl.trim(),
+    baseUrl: baseUrl.trim().replace(/\/+$/, ""),
     token: token.trim(),
   };
 }
@@ -42,6 +50,16 @@ async function callRedisRestCommand(command, args) {
   return response.json();
 }
 
+function assertRedisResponse(command, redisResult) {
+  if (!redisResult || typeof redisResult !== "object") {
+    throw new Error(`Redis is configured but ${command} did not return a valid response.`);
+  }
+
+  if ("error" in redisResult && redisResult.error) {
+    throw new Error(`Redis ${command} failed: ${redisResult.error}`);
+  }
+}
+
 function shouldFallbackToMemory(error) {
   const message = String(error?.message || "").toLowerCase();
   return message.includes("fetch failed") || message.includes("network") || message.includes("econn") || message.includes("enotfound") || message.includes("timed out");
@@ -58,9 +76,7 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   if (isRedisConfigured()) {
     try {
       const redisResult = await callRedisRestCommand("set", [key, JSON.stringify(payload), "EX", String(ttlSeconds)]);
-      if (!redisResult) {
-        throw new Error("Redis is configured but set command did not return a response.");
-      }
+      assertRedisResponse("set", redisResult);
       return payload;
     } catch (error) {
       if (!shouldFallbackToMemory(error)) throw error;
@@ -77,9 +93,7 @@ export async function getRegistrationDraft(registrationId) {
   if (isRedisConfigured()) {
     try {
       const redisResult = await callRedisRestCommand("get", [key]);
-      if (!redisResult) {
-        throw new Error("Redis is configured but get command did not return a response.");
-      }
+      assertRedisResponse("get", redisResult);
 
       const raw = redisResult.result;
       if (!raw) return null;
@@ -104,9 +118,7 @@ export async function deleteRegistrationDraft(registrationId) {
   if (isRedisConfigured()) {
     try {
       const redisResult = await callRedisRestCommand("del", [key]);
-      if (!redisResult) {
-        throw new Error("Redis is configured but del command did not return a response.");
-      }
+      assertRedisResponse("del", redisResult);
       return true;
     } catch (error) {
       if (!shouldFallbackToMemory(error)) throw error;

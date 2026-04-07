@@ -41,15 +41,35 @@ async function callRedisRestCommand(command, args) {
   const { baseUrl, token } = getRedisConfig();
   if (!baseUrl || !token) return null;
 
-  const response = await fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify([String(command || "").toUpperCase(), ...args]),
-    cache: "no-store",
-  });
+  let response;
+  try {
+    response = await fetch(baseUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([String(command || "").toUpperCase(), ...args]),
+      cache: "no-store",
+    });
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error || "Unknown fetch error");
+    const causeCode =
+      typeof error === "object" && error !== null && "cause" in error && typeof error.cause === "object" && error.cause !== null && "code" in error.cause
+        ? String(error.cause.code)
+        : "";
+
+    const actionableHints = [
+      "Verify UPSTASH_REDIS_REST_URL/REDIS_REST_URL is correct and publicly reachable from this server.",
+      "Verify UPSTASH_REDIS_REST_TOKEN/REDIS_REST_TOKEN is valid and not expired.",
+      "Check DNS/firewall/network egress rules for Redis REST host.",
+    ];
+    if (causeCode) {
+      actionableHints.unshift(`Network error code: ${causeCode}.`);
+    }
+
+    throw new Error(`Redis REST ${String(command || "").toUpperCase()} request could not reach Redis endpoint (${baseUrl}). ${actionableHints.join(" ")} Original error: ${errorMessage}`);
+  }
 
   if (!response.ok) {
     const text = await response.text();

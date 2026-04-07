@@ -5,15 +5,20 @@ const MEMORY_FALLBACK_ENABLED = process.env.REGISTRATION_DRAFT_ALLOW_MEMORY_FALL
 
 function getRedisConfig() {
   const baseUrl =
-    process.env.UPSTASH_REDIS_REST_URL ||
-    process.env.KV_REST_API_URL ||
+    process.env.REDIS_CLOUD_REST_URL ||
     process.env.REDIS_REST_URL ||
+    process.env.REDIS_API_URL ||
+    process.env.KV_REST_API_URL ||
     "";
+
   const token =
-    process.env.UPSTASH_REDIS_REST_TOKEN ||
-    process.env.KV_REST_API_TOKEN ||
+    process.env.REDIS_CLOUD_REST_TOKEN ||
     process.env.REDIS_REST_TOKEN ||
+    process.env.REDIS_API_TOKEN ||
+    process.env.KV_REST_API_TOKEN ||
+    process.env.REDIS_CLOUD_API_KEY ||
     "";
+
   return {
     baseUrl: baseUrl.trim().replace(/\/+$/, ""),
     token: token.trim(),
@@ -33,50 +38,65 @@ function resolveStorageBackend() {
   if (isRedisConfigured()) return "redis";
   if (MEMORY_FALLBACK_ENABLED) return "memory";
   throw new Error(
-    "Redis draft storage is not configured. Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN (or enable REGISTRATION_DRAFT_ALLOW_MEMORY_FALLBACK=true).",
+    "Redis draft storage is not configured. Set REDIS_CLOUD_REST_URL and REDIS_CLOUD_REST_TOKEN (or enable REGISTRATION_DRAFT_ALLOW_MEMORY_FALLBACK=true).",
   );
+}
+
+async function postRedisRequest(url, token, body) {
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
 }
 
 async function callRedisRestCommand(command, args) {
   const { baseUrl, token } = getRedisConfig();
   if (!baseUrl || !token) return null;
 
-  let response;
-  try {
-    response = await fetch(baseUrl, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify([String(command || "").toUpperCase(), ...args]),
-      cache: "no-store",
-    });
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error || "Unknown fetch error");
-    const causeCode =
-      typeof error === "object" && error !== null && "cause" in error && typeof error.cause === "object" && error.cause !== null && "code" in error.cause
-        ? String(error.cause.code)
-        : "";
+  const normalizedCommand = String(command || "").toUpperCase();
+  const candidates = [
+    {
+      label: "array-command",
+      url: baseUrl,
+      body: [normalizedCommand, ...args],
+    },
+    {
+      label: "object-command",
+      url: `${baseUrl}/command`,
+      body: { command: normalizedCommand, args },
+    },
+  ];
 
-    const actionableHints = [
-      "Verify UPSTASH_REDIS_REST_URL/REDIS_REST_URL is correct and publicly reachable from this server.",
-      "Verify UPSTASH_REDIS_REST_TOKEN/REDIS_REST_TOKEN is valid and not expired.",
-      "Check DNS/firewall/network egress rules for Redis REST host.",
-    ];
-    if (causeCode) {
-      actionableHints.unshift(`Network error code: ${causeCode}.`);
+  const errors = [];
+
+  for (const candidate of candidates) {
+    try {
+      const response = await postRedisRequest(candidate.url, token, candidate.body);
+      if (!response.ok) {
+        const text = await response.text();
+        errors.push(`${candidate.label} -> HTTP ${response.status}: ${text}`);
+        continue;
+      }
+
+      const result = await response.json();
+      if (result && typeof result === "object") {
+        return result;
+      }
+      errors.push(`${candidate.label} -> invalid JSON payload from Redis Cloud REST API.`);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error || "Unknown fetch error");
+      errors.push(`${candidate.label} -> ${errorMessage}`);
     }
-
-    throw new Error(`Redis REST ${String(command || "").toUpperCase()} request could not reach Redis endpoint (${baseUrl}). ${actionableHints.join(" ")} Original error: ${errorMessage}`);
   }
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Redis REST request failed (${response.status}): ${text}`);
-  }
-
-  return response.json();
+  throw new Error(
+    `Redis Cloud REST ${normalizedCommand} failed for ${baseUrl}. Tried ${candidates.length} request format(s). ${errors.join(" | ")}`,
+  );
 }
 
 function assertRedisResponse(command, redisResult) {
@@ -106,7 +126,7 @@ export async function saveRegistrationDraft(registrationId, data, ttlSeconds = D
   const storageBackend = resolveStorageBackend();
 
   if (requireRedis && storageBackend !== "redis") {
-    throw new Error("Registration draft storage must use Redis. Please configure Redis and try again.");
+    throw new Error("Registration draft storage must use Redis. Please configure REDIS_CLOUD_REST_URL and REDIS_CLOUD_REST_TOKEN and try again.");
   }
   if (storageBackend === "redis") {
     try {

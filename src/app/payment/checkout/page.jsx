@@ -21,6 +21,7 @@ function CheckoutInner() {
   const fullName = params.get("fullName") || "";
   const email = params.get("email") || "";
   const mobile = params.get("mobile") || "";
+  const storage = params.get("storage") || "memory";
 
   const selectedPlan = useMemo(() => PLANS.find((plan) => plan.id === selectedPlanId) || PLANS[0], [selectedPlanId]);
 
@@ -59,7 +60,10 @@ function CheckoutInner() {
   return (
     <main className="mx-auto max-w-xl p-8">
       <h1 className="text-2xl font-semibold">Step 2: Choose your plan</h1>
-      <p className="mt-2 text-sm text-gray-600">Registration ID: {registrationId || "-"} (stored temporarily in Redis until payment completes)</p>
+      <p className="mt-2 text-sm text-gray-600">
+        Registration ID: {registrationId || "-"} (stored temporarily in {storage === "redis" ? "Redis" : "in-memory fallback"} until payment
+        completes)
+      </p>
       <div className="mt-6 space-y-3">
         {PLANS.map((plan) => (
           <label key={plan.id} className="flex cursor-pointer items-center justify-between rounded-lg border p-4">

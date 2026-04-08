@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { PaymentService } from "@/lib/payments/payment-service";
+import { InitiatePaymentError, PaymentService } from "@/lib/payments/payment-service";
 import { getRegistrationDraft, saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
 
 export const runtime = "nodejs";
@@ -51,6 +51,24 @@ export async function POST(request) {
 
     return NextResponse.json({ success: true, data: result });
   } catch (error) {
+    if (error instanceof InitiatePaymentError) {
+      const reasonCode = error.details?.reasonCode || "INITIATE_FAILED";
+      const reasons = Array.isArray(error.details?.reasons) ? error.details.reasons : [error.message];
+      const status = reasonCode === "INPUT_VALIDATION_FAILED" ? 400 : 502;
+      return NextResponse.json(
+        {
+          success: false,
+          message: error.message,
+          error: {
+            code: reasonCode,
+            reasons,
+            gateway: error.details?.gateway,
+          },
+        },
+        { status },
+      );
+    }
+
     return NextResponse.json({ success: false, message: error instanceof Error ? error.message : "initiate failed" }, { status: 400 });
   }
 }

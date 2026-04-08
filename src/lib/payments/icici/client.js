@@ -1,6 +1,14 @@
 import { getIciciConfig } from "./config";
 import { validateIciciInitiateRequest } from "./types";
 
+export class IciciApiError extends Error {
+  constructor(message, details = {}) {
+    super(message);
+    this.name = "IciciApiError";
+    this.details = details;
+  }
+}
+
 export class IciciClient {
   constructor() {
     this.config = getIciciConfig();
@@ -29,12 +37,29 @@ export class IciciClient {
         signal: controller.signal,
       });
       const raw = await response.json().catch(() => {
-        throw new Error(`ICICI API non-JSON response: ${response.status}`);
+        throw new IciciApiError(`ICICI API non-JSON response: ${response.status}`, {
+          type: "non_json_response",
+          httpStatus: response.status,
+          path,
+        });
       });
-      if (!response.ok) throw new Error(`ICICI API error ${response.status}: ${JSON.stringify(raw)}`);
+      if (!response.ok) {
+        throw new IciciApiError(`ICICI API error ${response.status}`, {
+          type: "http_error",
+          httpStatus: response.status,
+          path,
+          raw,
+        });
+      }
       return raw;
     } catch (error) {
-      if (error instanceof Error && error.name === "AbortError") throw new Error(`ICICI API timeout after ${this.config.requestTimeoutMs}ms`);
+      if (error instanceof Error && error.name === "AbortError") {
+        throw new IciciApiError(`ICICI API timeout after ${this.config.requestTimeoutMs}ms`, {
+          type: "timeout",
+          timeoutMs: this.config.requestTimeoutMs,
+          path,
+        });
+      }
       throw error;
     } finally {
       clearTimeout(timeout);

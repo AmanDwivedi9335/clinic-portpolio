@@ -18,9 +18,10 @@ export async function GET(request) {
 async function handleCallback(request) {
   const service = new PaymentService();
   const config = getIciciConfig();
+  let payload = {};
 
   try {
-    const payload = normalizeKeyValues(await parseInboundPayload(request));
+    payload = normalizeKeyValues(await parseInboundPayload(request));
     verifyInboundSecureHash(payload, config.merchantKey);
 
     const attempt = await service.processCallback(payload);
@@ -29,11 +30,57 @@ async function handleCallback(request) {
     redirect.searchParams.set("paymentState", attempt.state);
     redirect.searchParams.set("paymentStatus", attempt.state === "SUCCESS" ? "success" : "failed");
     return NextResponse.redirect(redirect, { status: 303 });
-  } catch (_error) {
+  } catch (error) {
     const redirect = new URL(config.frontendStatusUrl);
-    redirect.searchParams.set("error", "callback_processing_failed");
+    const callbackError = classifyCallbackError(error);
+    redirect.searchParams.set("error", callbackError.code);
+    redirect.searchParams.set("errorStage", callbackError.stage);
+    if (callbackError.detail) redirect.searchParams.set("errorDetail", callbackError.detail);
+    if (payload?.merchantTxnNo) redirect.searchParams.set("merchantTxnNo", payload.merchantTxnNo);
     return NextResponse.redirect(redirect, { status: 303 });
   }
+}
+
+function classifyCallbackError(error) {
+  const message = error instanceof Error ? error.message : "Unknown callback failure";
+
+  if (message.includes("Inbound secure hash mismatch")) {
+    return {
+      code: "callback_hash_mismatch",
+      stage: "verify_hash",
+      detail: "Secure hash validation failed for callback payload.",
+    };
+  }
+
+  if (message.includes("Unknown merchantTxnNo")) {
+    return {
+      code: "callback_unknown_transaction",
+      stage: "lookup_attempt",
+      detail: "merchantTxnNo from callback was not found in payment repository.",
+    };
+  }
+
+  if (message.includes("Invalid payment state transition")) {
+    return {
+      code: "callback_invalid_state_transition",
+      stage: "state_transition",
+      detail: "Gateway status could not be applied from current payment state.",
+    };
+  }
+
+  if (message.includes("Missing ICICI config") || message.includes("ICICI_ENV_MODE must be UAT or PROD")) {
+    return {
+      code: "callback_config_error",
+      stage: "config_load",
+      detail: "ICICI callback configuration is incomplete or invalid.",
+    };
+  }
+
+  return {
+    code: "callback_processing_failed",
+    stage: "unknown",
+    detail: message.slice(0, 140),
+  };
 }
 
 function verifyInboundSecureHash(payload, merchantKey) {

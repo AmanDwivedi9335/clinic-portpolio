@@ -53,3 +53,37 @@ export function buildInitiateHashFields(input) {
 export function buildInboundHashFields(payload) {
   return [payload.merchantTxnNo || "", payload.responseCode || payload.status || "", payload.amount || "", payload.bankTxnNo || ""];
 }
+
+export function buildStatusRequestHashFields(input) {
+  return [
+    input.aggregatorID,
+    input.merchantId,
+    input.merchantTxnNo,
+    input.originalTxnNo,
+    input.transactionType,
+  ];
+}
+
+export function buildInboundHashCandidates(payload) {
+  const sanitizedEntries = Object.entries(payload || {}).filter(([key, value]) => {
+    if (!key) return false;
+    if (key.toLowerCase() === "securehash") return false;
+    if (value == null) return false;
+    return true;
+  });
+
+  const dynamicFieldsInReceivedOrder = sanitizedEntries.map(([, value]) => String(value));
+  const dynamicFieldsInSortedOrder = [...sanitizedEntries]
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([, value]) => String(value));
+
+  const legacyFixedFields = buildInboundHashFields(payload);
+
+  const uniqueCandidates = new Map();
+  for (const fields of [dynamicFieldsInReceivedOrder, dynamicFieldsInSortedOrder, legacyFixedFields]) {
+    const signature = fields.join("\u0001");
+    if (!uniqueCandidates.has(signature)) uniqueCandidates.set(signature, fields);
+  }
+
+  return [...uniqueCandidates.values()];
+}

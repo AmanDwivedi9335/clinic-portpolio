@@ -47,6 +47,10 @@ export function normalizeKeyValues(input) {
     TxnId: "txnID",
     paymentDateTiime: "paymentDateTime",
     RespDescription: "respDescription",
+    txnRespDescription: "responseMessage",
+    txnResponseCode: "responseCode",
+    txnStatus: "status",
+    txnAuthID: "bankTxnNo",
   };
 
   for (const [from, to] of Object.entries(aliases)) {

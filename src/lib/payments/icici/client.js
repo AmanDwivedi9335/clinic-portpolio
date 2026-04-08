@@ -20,7 +20,7 @@ export class IciciClient {
   }
 
   async transactionStatus(input) {
-    if (!input?.merchantId || !input?.merchantTxnNo || !input?.secureHash) {
+    if (!input?.merchantId || !input?.aggregatorID || !input?.merchantTxnNo || !input?.originalTxnNo || !input?.transactionType || !input?.secureHash) {
       throw new Error("Invalid transaction status request");
     }
     return this.postJson(this.config.transactionStatusPath, input);

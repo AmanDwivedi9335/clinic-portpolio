@@ -7,6 +7,8 @@ function StatusInner() {
   const searchParams = useSearchParams();
   const merchantTxnNo = searchParams.get("merchantTxnNo") || "";
   const callbackError = searchParams.get("error") || "";
+  const callbackErrorStage = searchParams.get("errorStage") || "";
+  const callbackErrorDetail = searchParams.get("errorDetail") || "";
   const callbackState = searchParams.get("paymentState") || "";
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -35,10 +37,21 @@ function StatusInner() {
 
   useEffect(() => {
     if (callbackError) {
+      const callbackErrorMessages = {
+        callback_hash_mismatch: "Gateway callback failed secure hash validation. Please verify hash field order and merchant key.",
+        callback_unknown_transaction:
+          "Gateway callback arrived with an unknown transaction reference. This can happen after app restart or missing persistence.",
+        callback_invalid_state_transition:
+          "Gateway callback status could not be applied from the current payment state. Check duplicate/out-of-order callbacks.",
+        callback_config_error: "Payment callback configuration is invalid. Verify ICICI environment variables for callback flow.",
+      };
+
       setPopup({
         open: true,
         kind: "error",
-        message: "We could not process payment callback. If amount was debited, please wait while advice updates are received.",
+        message:
+          callbackErrorMessages[callbackError] ||
+          "We could not process payment callback. If amount was debited, please wait while advice updates are received.",
       });
     }
   }, [callbackError]);
@@ -118,6 +131,9 @@ function StatusInner() {
       <h1 className="text-2xl font-semibold">Payment Status</h1>
       <p className="mt-2 text-sm text-gray-600">Transaction: {merchantTxnNo || "Not available"}</p>
       {callbackState ? <p className="mt-2 text-sm text-gray-600">Gateway callback state: {callbackState}</p> : null}
+      {callbackError ? <p className="mt-2 text-sm text-gray-600">Callback error code: {callbackError}</p> : null}
+      {callbackErrorStage ? <p className="mt-2 text-sm text-gray-600">Callback error stage: {callbackErrorStage}</p> : null}
+      {callbackErrorDetail ? <p className="mt-2 text-sm text-gray-600">Callback error detail: {callbackErrorDetail}</p> : null}
       {loading ? <p className="mt-6">Payment is processing...</p> : null}
       {error ? <p className="mt-6 text-red-600">{error}</p> : null}
       {status ? (

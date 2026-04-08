@@ -73,6 +73,10 @@ export function buildInboundHashCandidates(payload) {
     return true;
   });
 
+  const dynamicFieldsWithCapitalizedKeysFirst = [...sanitizedEntries]
+    .sort(([leftKey], [rightKey]) => compareIciciInboundKeys(leftKey, rightKey))
+    .map(([, value]) => String(value));
+
   const dynamicFieldsInReceivedOrder = sanitizedEntries.map(([, value]) => String(value));
   const dynamicFieldsInSortedOrder = [...sanitizedEntries]
     .sort((a, b) => a[0].localeCompare(b[0]))
@@ -81,10 +85,26 @@ export function buildInboundHashCandidates(payload) {
   const legacyFixedFields = buildInboundHashFields(payload);
 
   const uniqueCandidates = new Map();
-  for (const fields of [dynamicFieldsInReceivedOrder, dynamicFieldsInSortedOrder, legacyFixedFields]) {
+  for (const fields of [
+    dynamicFieldsWithCapitalizedKeysFirst,
+    dynamicFieldsInReceivedOrder,
+    dynamicFieldsInSortedOrder,
+    legacyFixedFields,
+  ]) {
     const signature = fields.join("\u0001");
     if (!uniqueCandidates.has(signature)) uniqueCandidates.set(signature, fields);
   }
 
   return [...uniqueCandidates.values()];
+}
+
+function compareIciciInboundKeys(leftKey, rightKey) {
+  const leftStartsWithUppercase = /^[A-Z]/.test(leftKey);
+  const rightStartsWithUppercase = /^[A-Z]/.test(rightKey);
+
+  if (leftStartsWithUppercase !== rightStartsWithUppercase) {
+    return leftStartsWithUppercase ? -1 : 1;
+  }
+
+  return leftKey.localeCompare(rightKey);
 }

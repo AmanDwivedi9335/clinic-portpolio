@@ -12,9 +12,16 @@ export class HmacSha256HashAdapter {
 
   verify(fields, receivedHash) {
     if (!receivedHash) return false;
-    const expected = this.sign(fields);
-    return constantTimeCompare(expected, receivedHash);
+    const expected = normalizeHashValue(this.sign(fields));
+    const received = normalizeHashValue(receivedHash);
+    return constantTimeCompare(expected, received);
   }
+}
+
+function normalizeHashValue(hash) {
+  return String(hash || "")
+    .trim()
+    .toLowerCase();
 }
 
 export function constantTimeCompare(a, b) {

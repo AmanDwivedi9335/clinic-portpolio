@@ -56,6 +56,7 @@ export class PaymentService {
       customerEmailID: trusted.customerEmail,
       transactionType: "SALE",
       returnURL: this.config.returnUrl,
+      paymentAdviceURL: this.config.paymentAdviceUrl,
       txnDate,
       customerMobileNo: trusted.customerMobile,
       customerName: trusted.customerName,

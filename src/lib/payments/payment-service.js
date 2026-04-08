@@ -4,7 +4,7 @@ import { assertValidTransition } from "@/lib/payments/payment-state-machine";
 import { getPaymentRepository } from "@/lib/payments/payment-repository";
 import { getIciciConfig } from "@/lib/payments/icici/config";
 import { IciciApiError, IciciClient } from "@/lib/payments/icici/client";
-import { buildInitiateHashFields, buildInboundHashFields, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
+import { buildInboundHashCandidates, buildInitiateHashFields, buildStatusRequestHashFields, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
 import { buildRedirectUrl, mapStatusToState, sanitizeForLogs } from "@/lib/payments/icici/mapper";
 import { normalizeKeyValues, validateInitiatePaymentInput } from "@/lib/payments/icici/types";
 
@@ -174,14 +174,21 @@ export class PaymentService {
 
     for (const item of pending) {
       await this.transition(item, "RECONCILING", "reconcile.started", {});
-      const secureHash = this.hashAdapter.sign([this.config.merchantId, item.merchantTxnNo]);
-      const status = await this.client.transactionStatus({ merchantId: this.config.merchantId, merchantTxnNo: item.merchantTxnNo, secureHash });
+      const statusRequest = {
+        merchantId: this.config.merchantId,
+        aggregatorID: this.config.aggregatorId,
+        merchantTxnNo: item.merchantTxnNo,
+        originalTxnNo: item.merchantTxnNo,
+        transactionType: "STATUS",
+      };
+      const secureHash = this.hashAdapter.sign(buildStatusRequestHashFields(statusRequest));
+      const status = await this.client.transactionStatus({ ...statusRequest, secureHash });
       const nextState = mapStatusToState(status);
       const updated = await this.transition(item, nextState, "reconcile.updated", sanitizeForLogs(status), {
         reconciledAt: new Date().toISOString(),
-        gatewayTxnRef: status.bankTxnNo,
-        gatewayResponseCode: status.responseCode,
-        gatewayResponseMessage: status.responseMessage,
+        gatewayTxnRef: status.bankTxnNo || status.txnID || status.txnAuthID,
+        gatewayResponseCode: status.responseCode || status.txnResponseCode,
+        gatewayResponseMessage: status.responseMessage || status.respDescription || status.txnRespDescription,
       });
       results.push({ merchantTxnNo: updated.merchantTxnNo, state: updated.state });
     }
@@ -245,8 +252,10 @@ function formatPaise(amountPaise) {
 }
 
 function verifyInboundHash(hashAdapter, payload) {
-  const fields = buildInboundHashFields(payload);
-  if (!hashAdapter.verify(fields, payload.secureHash)) throw new Error("Inbound secure hash mismatch");
+  const secureHash = payload.secureHash || payload.SecureHash;
+  const candidates = buildInboundHashCandidates(payload);
+  const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
+  if (!isValid) throw new Error("Inbound secure hash mismatch");
 }
 
 function extractGatewayFailureReasons(payload) {

@@ -7,7 +7,9 @@ export function buildRedirectUrl({ redirectURI, tranCtx }) {
 }
 
 export function mapStatusToState(response) {
-  return mapIciciToInternalState(response.status || response.responseCode || response.responseMessage);
+  return mapIciciToInternalState(
+    response.txnStatus || response.status || response.txnResponseCode || response.responseCode || response.txnRespDescription || response.responseMessage,
+  );
 }
 
 export function sanitizeForLogs(payload) {

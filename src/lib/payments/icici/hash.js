@@ -51,7 +51,8 @@ export function buildInitiateHashFields(input) {
 }
 
 export function buildInboundHashFields(payload) {
-  return [payload.merchantTxnNo || "", payload.responseCode || payload.status || "", payload.amount || "", payload.bankTxnNo || ""];
+  const responseOrStatus = payload.responseCode ?? payload.status ?? "";
+  return [payload.merchantTxnNo ?? "", responseOrStatus, payload.amount ?? "", payload.bankTxnNo ?? ""];
 }
 
 export function buildStatusRequestHashFields(input) {

@@ -54,6 +54,7 @@ function classifyCallbackError(error) {
     if (debugDetail?.candidateHashes?.length) {
       detailParts.push(`candidateHashes=${debugDetail.candidateHashes.join(" || ")}`);
     }
+    if (debugDetail?.payloadJson) detailParts.push(`payload=${debugDetail.payloadJson}`);
 
     return {
       code: "callback_hash_mismatch",
@@ -102,11 +103,12 @@ function verifyInboundSecureHash(payload, merchantKey) {
   if (!isValid) {
     const candidatePayloads = candidates.map((fields) => fields.join(""));
     const candidateHashes = candidates.map((fields) => hashAdapter.sign(fields));
+    const payloadJson = JSON.stringify(payload);
     console.error("ICICI callback secure hash mismatch", {
       receivedSecureHash: secureHash || null,
       candidatePayloads,
       candidateHashes,
-      payload,
+      payloadJson,
     });
 
     const error = new Error("Inbound secure hash mismatch");
@@ -114,6 +116,7 @@ function verifyInboundSecureHash(payload, merchantKey) {
       receivedSecureHash: secureHash || "",
       candidatePayloads,
       candidateHashes,
+      payloadJson,
     };
     throw error;
   }

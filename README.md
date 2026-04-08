@@ -44,7 +44,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - User browser is redirected to `redirectURI + tranCtx` from ICICI.
 - ICICI browser callback hits `/api/payments/icici/callback`.
 - ICICI payment advice (S2S) hits `/api/payments/icici/advice`.
-- Final state is read from backend via `/api/payments/status/:merchantTxnNo` on `/payment/status` page.
+- Final state is read from backend via `/api/txn/status/:merchantTxnNo` (alias of payment status endpoint to avoid browser blocker false positives) on `/payment/status` page.
 - Reconciliation service (`src/lib/payments/icici/reconciliation.js`) handles missed callbacks and uncertain states.
 
 ### Important assumptions to confirm with ICICI onboarding

@@ -17,7 +17,7 @@ function StatusInner() {
     const loadStatus = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`/api/payments/status/${merchantTxnNo}`);
+        const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error(result.message || "Unable to fetch payment status");
         setStatus(result.data);

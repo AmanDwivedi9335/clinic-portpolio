@@ -37,9 +37,10 @@ export class PaymentService {
     await this.transition(attempt, "INITIATED", "attempt.initiated", trusted);
 
     const amount = formatPaise(trusted.amountPaise);
+    const txnDate = new Date().toISOString();
     const reqBody = {
       merchantId: this.config.merchantId,
-      aggregatorId: this.config.aggregatorId,
+      aggregatorID: this.config.aggregatorId,
       merchantTxnNo,
       amount,
       currencyCode: "356",
@@ -47,20 +48,30 @@ export class PaymentService {
       customerEmailID: trusted.customerEmail,
       transactionType: "SALE",
       returnURL: this.config.returnUrl,
-      txnDate: new Date().toISOString(),
+      txnDate,
       customerMobileNo: trusted.customerMobile,
       customerName: trusted.customerName,
       addlParam1: trusted.registrationId,
       addlParam2: trusted.planId,
       secureHash: this.hashAdapter.sign(
-        buildInitiateHashFields({
-          merchantId: this.config.merchantId,
-          merchantTxnNo,
-          amount,
-          currencyCode: "356",
-          returnURL: this.config.returnUrl,
-          customerEmailID: trusted.customerEmail,
-        }),
+        [
+          buildInitiateHashFields({
+            addlParam1: trusted.registrationId,
+            addlParam2: trusted.planId,
+            aggregatorID: this.config.aggregatorId,
+            amount,
+            currencyCode: "356",
+            customerEmailID: trusted.customerEmail,
+            customerMobileNo: trusted.customerMobile,
+            customerName: trusted.customerName,
+            merchantId: this.config.merchantId,
+            merchantTxnNo,
+            payType: "0",
+            returnURL: this.config.returnUrl,
+            transactionType: "SALE",
+            txnDate,
+          }).join(""),
+        ],
       ),
     };
 

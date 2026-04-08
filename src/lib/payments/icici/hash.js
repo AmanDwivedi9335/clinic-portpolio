@@ -25,7 +25,22 @@ export function constantTimeCompare(a, b) {
 }
 
 export function buildInitiateHashFields(input) {
-  return [input.merchantId, input.merchantTxnNo, input.amount, input.currencyCode, input.returnURL, input.customerEmailID];
+  return [
+    input.addlParam1,
+    input.addlParam2,
+    input.aggregatorID,
+    input.amount,
+    input.currencyCode,
+    input.customerEmailID,
+    input.customerMobileNo,
+    input.customerName,
+    input.merchantId,
+    input.merchantTxnNo,
+    input.payType,
+    input.returnURL,
+    input.transactionType,
+    input.txnDate,
+  ];
 }
 
 export function buildInboundHashFields(payload) {

@@ -6,7 +6,7 @@ export class HmacSha256HashAdapter {
   }
 
   sign(fields) {
-    const payload = fields.join("|");
+    const payload = fields.join("");
     return crypto.createHmac("sha256", this.secret).update(payload, "utf8").digest("hex");
   }
 

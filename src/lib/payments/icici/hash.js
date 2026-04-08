@@ -75,7 +75,7 @@ export function buildInboundHashCandidates(payload) {
 
   const dynamicFieldsInReceivedOrder = sanitizedEntries.map(([, value]) => String(value));
   const dynamicFieldsInSortedOrder = [...sanitizedEntries]
-    .sort((a, b) => a[0].localeCompare(b[0]))
+    .sort(([leftKey], [rightKey]) => compareInboundHashKeys(leftKey, rightKey))
     .map(([, value]) => String(value));
 
   const legacyFixedFields = buildInboundHashFields(payload);
@@ -87,4 +87,20 @@ export function buildInboundHashCandidates(payload) {
   }
 
   return [...uniqueCandidates.values()];
+}
+
+function compareInboundHashKeys(leftKey, rightKey) {
+  const leftStartsUppercase = startsWithUppercase(leftKey);
+  const rightStartsUppercase = startsWithUppercase(rightKey);
+  if (leftStartsUppercase !== rightStartsUppercase) return leftStartsUppercase ? -1 : 1;
+
+  const alphaCompare = leftKey.localeCompare(rightKey, "en", { sensitivity: "base" });
+  if (alphaCompare !== 0) return alphaCompare;
+
+  return leftKey.localeCompare(rightKey);
+}
+
+function startsWithUppercase(key) {
+  const firstChar = String(key || "").charAt(0);
+  return firstChar >= "A" && firstChar <= "Z";
 }

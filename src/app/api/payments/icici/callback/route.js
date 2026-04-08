@@ -45,10 +45,20 @@ function classifyCallbackError(error) {
   const message = error instanceof Error ? error.message : "Unknown callback failure";
 
   if (message.includes("Inbound secure hash mismatch")) {
+    const debugDetail = error && typeof error === "object" ? error.debugDetail : null;
+    const detailParts = ["Secure hash validation failed for callback payload."];
+    if (debugDetail?.receivedSecureHash) detailParts.push(`receivedSecureHash=${debugDetail.receivedSecureHash}`);
+    if (debugDetail?.candidatePayloads?.length) {
+      detailParts.push(`candidatePayloads=${debugDetail.candidatePayloads.join(" || ")}`);
+    }
+    if (debugDetail?.candidateHashes?.length) {
+      detailParts.push(`candidateHashes=${debugDetail.candidateHashes.join(" || ")}`);
+    }
+
     return {
       code: "callback_hash_mismatch",
       stage: "verify_hash",
-      detail: "Secure hash validation failed for callback payload.",
+      detail: detailParts.join(" "),
     };
   }
 
@@ -90,7 +100,22 @@ function verifyInboundSecureHash(payload, merchantKey) {
   const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
 
   if (!isValid) {
-    throw new Error("Inbound secure hash mismatch");
+    const candidatePayloads = candidates.map((fields) => fields.join("|"));
+    const candidateHashes = candidates.map((fields) => hashAdapter.sign(fields));
+    console.error("ICICI callback secure hash mismatch", {
+      receivedSecureHash: secureHash || null,
+      candidatePayloads,
+      candidateHashes,
+      payload,
+    });
+
+    const error = new Error("Inbound secure hash mismatch");
+    error.debugDetail = {
+      receivedSecureHash: secureHash || "",
+      candidatePayloads,
+      candidateHashes,
+    };
+    throw error;
   }
 }
 

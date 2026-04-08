@@ -8,6 +8,14 @@ import { PaymentService } from "@/lib/payments/payment-service";
 export const runtime = "nodejs";
 
 export async function POST(request) {
+  return handleCallback(request);
+}
+
+export async function GET(request) {
+  return handleCallback(request);
+}
+
+async function handleCallback(request) {
   const service = new PaymentService();
   const config = getIciciConfig();
 
@@ -39,11 +47,35 @@ function verifyInboundSecureHash(payload, merchantKey) {
 }
 
 async function parseInboundPayload(request) {
+  const queryParams = Object.fromEntries(new URL(request.url).searchParams.entries());
+  if (request.method === "GET") return queryParams;
+
   const ct = request.headers.get("content-type") || "";
   if (ct.includes("application/x-www-form-urlencoded")) {
     const form = await request.formData();
-    return Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)]));
+    return {
+      ...queryParams,
+      ...Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)])),
+    };
   }
-  const json = await request.json();
-  return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+
+  if (ct.includes("application/json")) {
+    const json = await request.json();
+    return { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) };
+  }
+
+  const text = await request.text();
+  if (!text.trim()) return queryParams;
+
+  try {
+    const json = JSON.parse(text);
+    if (json && typeof json === "object") {
+      return { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) };
+    }
+  } catch (_error) {
+    // fallback to URL encoded parsing below
+  }
+
+  const fromEncodedBody = Object.fromEntries(new URLSearchParams(text).entries());
+  return { ...queryParams, ...fromEncodedBody };
 }

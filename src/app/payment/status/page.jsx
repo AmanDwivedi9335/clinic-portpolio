@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 function StatusInner() {
@@ -10,6 +10,14 @@ function StatusInner() {
   const callbackErrorStage = searchParams.get("errorStage") || "";
   const callbackErrorDetail = searchParams.get("errorDetail") || "";
   const callbackState = searchParams.get("paymentState") || "";
+  const callbackPayload = useMemo(() => {
+    const payload = {};
+    for (const [key, value] of searchParams.entries()) {
+      payload[key] = value;
+    }
+    return payload;
+  }, [searchParams]);
+
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -134,6 +142,12 @@ function StatusInner() {
       {callbackError ? <p className="mt-2 text-sm text-gray-600">Callback error code: {callbackError}</p> : null}
       {callbackErrorStage ? <p className="mt-2 text-sm text-gray-600">Callback error stage: {callbackErrorStage}</p> : null}
       {callbackErrorDetail ? <p className="mt-2 text-sm text-gray-600">Callback error detail: {callbackErrorDetail}</p> : null}
+      {Object.keys(callbackPayload).length ? (
+        <div className="mt-4 rounded-lg border bg-gray-50 p-4">
+          <p className="text-sm font-medium text-gray-700">Callback URL response payload</p>
+          <pre className="mt-2 overflow-x-auto text-xs text-gray-700">{JSON.stringify(callbackPayload, null, 2)}</pre>
+        </div>
+      ) : null}
       {loading ? <p className="mt-6">Payment is processing...</p> : null}
       {error ? <p className="mt-6 text-red-600">{error}</p> : null}
       {status ? (

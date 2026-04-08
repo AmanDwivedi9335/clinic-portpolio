@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 function StatusInner() {
   const searchParams = useSearchParams();
   const merchantTxnNo = searchParams.get("merchantTxnNo") || "";
+  const callbackError = searchParams.get("error") || "";
+  const callbackState = searchParams.get("paymentState") || "";
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,6 +23,7 @@ function StatusInner() {
         const result = await response.json();
         if (!response.ok || !result.success) throw new Error(result.message || "Unable to fetch payment status");
         setStatus(result.data);
+        setError("");
       } catch (e) {
         setError(e instanceof Error ? e.message : "Unable to fetch payment status");
       } finally {
@@ -29,6 +32,16 @@ function StatusInner() {
     };
     loadStatus();
   }, [merchantTxnNo]);
+
+  useEffect(() => {
+    if (callbackError) {
+      setPopup({
+        open: true,
+        kind: "error",
+        message: "We could not process payment callback. If amount was debited, please wait while advice updates are received.",
+      });
+    }
+  }, [callbackError]);
 
   useEffect(() => {
     if (!status || completionTriggeredRef.current) return;
@@ -73,13 +86,38 @@ function StatusInner() {
         kind: "error",
         message: "Payment was not successful. Please retry from checkout.",
       });
+      return;
     }
+
+    if (status.state === "PENDING" || status.state === "RECONCILING") {
+      setPopup({
+        open: true,
+        kind: "info",
+        message: "Payment is still being processed by gateway. We will keep checking automatically.",
+      });
+    }
+  }, [merchantTxnNo, status]);
+
+  useEffect(() => {
+    if (!merchantTxnNo || !status || !["PENDING", "RECONCILING", "INITIATED", "REDIRECTED"].includes(status.state)) return;
+    const timer = setInterval(async () => {
+      try {
+        const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
+        const result = await response.json();
+        if (!response.ok || !result.success) return;
+        setStatus(result.data);
+      } catch (_error) {
+        // non-blocking polling errors
+      }
+    }, 4000);
+    return () => clearInterval(timer);
   }, [merchantTxnNo, status]);
 
   return (
     <main className="mx-auto max-w-xl p-8">
       <h1 className="text-2xl font-semibold">Payment Status</h1>
       <p className="mt-2 text-sm text-gray-600">Transaction: {merchantTxnNo || "Not available"}</p>
+      {callbackState ? <p className="mt-2 text-sm text-gray-600">Gateway callback state: {callbackState}</p> : null}
       {loading ? <p className="mt-6">Payment is processing...</p> : null}
       {error ? <p className="mt-6 text-red-600">{error}</p> : null}
       {status ? (
@@ -101,8 +139,12 @@ function StatusInner() {
       {popup.open ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
           <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl">
-            <h2 className={`text-xl font-semibold ${popup.kind === "success" ? "text-green-700" : "text-red-700"}`}>
-              {popup.kind === "success" ? "Registration Complete" : "Action Required"}
+            <h2
+              className={`text-xl font-semibold ${
+                popup.kind === "success" ? "text-green-700" : popup.kind === "info" ? "text-amber-700" : "text-red-700"
+              }`}
+            >
+              {popup.kind === "success" ? "Registration Complete" : popup.kind === "info" ? "Payment In Progress" : "Action Required"}
             </h2>
             <p className="mt-3 text-sm text-gray-700">{popup.message}</p>
             <button

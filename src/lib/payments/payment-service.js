@@ -285,9 +285,13 @@ function shouldRedirectToGateway(response) {
   const responseCode = String(response?.responseCode || "")
     .trim()
     .toUpperCase();
-  const isKnownSuccessCode = ["0", "00", "SUCCESS"].includes(responseCode);
+  const showOTPCapturePage = String(response?.showOTPCapturePage || "")
+    .trim()
+    .toUpperCase();
+  const isKnownSuccessCode = ["0", "00", "000", "0000", "SUCCESS"].includes(responseCode);
   const hasRedirectContext = Boolean(response?.redirectURI && response?.tranCtx);
 
+  if (showOTPCapturePage === "N" && hasRedirectContext) return true;
   // ICICI can return R1000 while still providing redirect details for auth flow.
   if (hasRedirectContext && responseCode === "R1000") return true;
   if (hasRedirectContext && isKnownSuccessCode) return true;

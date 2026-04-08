@@ -20,17 +20,11 @@ export async function POST(request) {
       success: true,
       merchantTxnNo: result.merchantTxnNo,
       paymentState: result.state,
-      paymentStatus: toPaymentStatus(result.state),
+      paymentStatus: result.state === "SUCCESS" ? "success" : "failed",
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error instanceof Error ? error.message : "advice failed" }, { status: 400 });
   }
-}
-
-function toPaymentStatus(state) {
-  if (state === "SUCCESS") return "success";
-  if (state === "FAILED" || state === "CANCELLED") return "failed";
-  return "pending";
 }
 
 function verifyInboundSecureHash(payload, merchantKey) {

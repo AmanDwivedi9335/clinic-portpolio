@@ -100,7 +100,7 @@ function verifyInboundSecureHash(payload, merchantKey) {
   const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
 
   if (!isValid) {
-    const candidatePayloads = candidates.map((fields) => fields.join("|"));
+    const candidatePayloads = candidates.map((fields) => fields.join(""));
     const candidateHashes = candidates.map((fields) => hashAdapter.sign(fields));
     console.error("ICICI callback secure hash mismatch", {
       receivedSecureHash: secureHash || null,

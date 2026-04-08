@@ -45,7 +45,7 @@ export class PaymentService {
     await this.transition(attempt, "INITIATED", "attempt.initiated", trusted);
 
     const amount = formatPaise(trusted.amountPaise);
-    const txnDate = new Date().toISOString();
+    const txnDate = formatTxnDateForIcici(new Date());
     const reqBody = {
       merchantId: this.config.merchantId,
       aggregatorID: this.config.aggregatorId,
@@ -218,6 +218,25 @@ export function generateMerchantTxnNo(orderId) {
   const prefix = String(orderId || "ORD").replace(/[^a-zA-Z0-9]/g, "").slice(0, 10).toUpperCase() || "ORD";
   const random = crypto.randomBytes(6).toString("hex").toUpperCase();
   return `${prefix}${Date.now().toString().slice(-8)}${random}`.slice(0, 30);
+}
+
+function formatTxnDateForIcici(date = new Date()) {
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+  const parts = formatter.formatToParts(date).reduce((acc, part) => {
+    if (part.type !== "literal") acc[part.type] = part.value;
+    return acc;
+  }, {});
+
+  return `${parts.year}${parts.month}${parts.day}${parts.hour}${parts.minute}${parts.second}`;
 }
 
 function formatPaise(amountPaise) {

@@ -48,8 +48,20 @@ function CheckoutInner() {
       });
 
       const result = await response.json();
-      if (!response.ok || !result.success) throw new Error(result.message || "Unable to start payment");
-      window.location.assign(result.data.redirectUrl);
+      const redirectUrl =
+        result?.data?.redirectUrl ||
+        (result?.error?.gateway?.redirectURI && result?.error?.gateway?.tranCtx
+          ? `${result.error.gateway.redirectURI}?tranCtx=${encodeURIComponent(result.error.gateway.tranCtx)}`
+          : "");
+
+      if (!redirectUrl) {
+        throw new Error(result.message || "Unable to start payment");
+      }
+
+      const paymentWindow = window.open(redirectUrl, "iciciPayment", "popup=yes,width=520,height=760,noopener,noreferrer");
+      if (!paymentWindow) {
+        window.location.assign(redirectUrl);
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Payment initiation failed");
     } finally {

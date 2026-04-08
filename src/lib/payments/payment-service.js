@@ -101,7 +101,7 @@ export class PaymentService {
     }
     await this.repository.appendAuditLog(merchantTxnNo, "gateway.initiate.response", sanitizeForLogs(response));
 
-    if (!["0", "00", "SUCCESS"].includes(String(response.responseCode || "").trim().toUpperCase())) {
+    if (!shouldRedirectToGateway(response)) {
       await this.repository.updateAttempt(merchantTxnNo, {
         state: "FAILED",
         gatewayResponseCode: response.responseCode,
@@ -278,4 +278,17 @@ function extractGatewayFailureReasons(payload) {
 
 function uniqueStrings(values) {
   return [...new Set((values || []).filter((item) => typeof item === "string" && item.trim()))];
+}
+
+function shouldRedirectToGateway(response) {
+  const responseCode = String(response?.responseCode || "")
+    .trim()
+    .toUpperCase();
+  const isKnownSuccessCode = ["0", "00", "SUCCESS"].includes(responseCode);
+  const hasRedirectContext = Boolean(response?.redirectURI && response?.tranCtx);
+
+  // ICICI can return R1000 while still providing redirect details for auth flow.
+  if (hasRedirectContext && responseCode === "R1000") return true;
+  if (hasRedirectContext && isKnownSuccessCode) return true;
+  return false;
 }

@@ -6,7 +6,7 @@ export class HmacSha256HashAdapter {
   }
 
   sign(fields) {
-    const payload = fields.join("|");
+    const payload = fields.join("");
     return crypto.createHmac("sha256", this.secret).update(payload, "utf8").digest("hex");
   }
 
@@ -51,7 +51,8 @@ export function buildInitiateHashFields(input) {
 }
 
 export function buildInboundHashFields(payload) {
-  return [payload.merchantTxnNo || "", payload.responseCode || payload.status || "", payload.amount || "", payload.bankTxnNo || ""];
+  const responseOrStatus = payload.responseCode ?? payload.status ?? "";
+  return [payload.merchantTxnNo ?? "", responseOrStatus, payload.amount ?? "", payload.bankTxnNo ?? ""];
 }
 
 export function buildStatusRequestHashFields(input) {

@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { assertValidTransition } from "@/lib/payments/payment-state-machine";
 import { getPaymentRepository } from "@/lib/payments/payment-repository";
 import { getIciciConfig } from "@/lib/payments/icici/config";
-import { IciciClient } from "@/lib/payments/icici/client";
+import { IciciApiError, IciciClient } from "@/lib/payments/icici/client";
 import { buildInitiateHashFields, buildInboundHashFields, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
 import { buildRedirectUrl, mapStatusToState, sanitizeForLogs } from "@/lib/payments/icici/mapper";
 import { normalizeKeyValues, validateInitiatePaymentInput } from "@/lib/payments/icici/types";
@@ -17,7 +17,15 @@ export class PaymentService {
   }
 
   async initiatePayment(input) {
-    const trusted = validateInitiatePaymentInput(input);
+    let trusted;
+    try {
+      trusted = validateInitiatePaymentInput(input);
+    } catch (error) {
+      throw new InitiatePaymentError("InitiateSale validation failed", {
+        reasonCode: "INPUT_VALIDATION_FAILED",
+        reasons: [error instanceof Error ? error.message : "Invalid initiate payment input"],
+      });
+    }
     const merchantTxnNo = generateMerchantTxnNo(trusted.orderId);
 
     const attempt = await this.repository.createAttempt({
@@ -75,7 +83,22 @@ export class PaymentService {
       ),
     };
 
-    const response = await this.client.initiateSale(reqBody);
+    let response;
+    try {
+      response = await this.client.initiateSale(reqBody);
+    } catch (error) {
+      if (error instanceof IciciApiError) {
+        const reasons = extractGatewayFailureReasons(error.details?.raw);
+        reasons.push(error.message);
+        throw new InitiatePaymentError("InitiateSale request to ICICI failed", {
+          reasonCode: "GATEWAY_REQUEST_FAILED",
+          reasons: uniqueStrings(reasons),
+          gateway: sanitizeForLogs(error.details?.raw),
+          httpStatus: error.details?.httpStatus,
+        });
+      }
+      throw error;
+    }
     await this.repository.appendAuditLog(merchantTxnNo, "gateway.initiate.response", sanitizeForLogs(response));
 
     if (!["0", "00", "SUCCESS"].includes(String(response.responseCode || "").trim().toUpperCase())) {
@@ -86,10 +109,20 @@ export class PaymentService {
         rawInitiateRequest: sanitizeForLogs(reqBody),
         rawInitiateResponse: sanitizeForLogs(response),
       });
-      throw new Error(`Gateway initiate failed: ${response.responseCode}${response.responseMessage ? ` (${response.responseMessage})` : ""}`);
+      throw new InitiatePaymentError("InitiateSale rejected by gateway", {
+        reasonCode: "GATEWAY_REJECTED",
+        reasons: uniqueStrings(extractGatewayFailureReasons(response)),
+        gateway: sanitizeForLogs(response),
+      });
     }
 
-    if (!response.redirectURI || !response.tranCtx) throw new Error("Gateway initiate succeeded but redirectURI/tranCtx missing");
+    if (!response.redirectURI || !response.tranCtx) {
+      throw new InitiatePaymentError("InitiateSale response missing redirect details", {
+        reasonCode: "INCOMPLETE_GATEWAY_RESPONSE",
+        reasons: ["ICICI response did not include redirectURI or tranCtx"],
+        gateway: sanitizeForLogs(response),
+      });
+    }
 
     const redirectUrl = buildRedirectUrl({ redirectURI: response.redirectURI, tranCtx: response.tranCtx });
     const updated = await this.repository.updateAttempt(merchantTxnNo, {
@@ -173,6 +206,14 @@ export class PaymentService {
   }
 }
 
+export class InitiatePaymentError extends Error {
+  constructor(message, details = {}) {
+    super(message);
+    this.name = "InitiatePaymentError";
+    this.details = details;
+  }
+}
+
 export function generateMerchantTxnNo(orderId) {
   const prefix = String(orderId || "ORD").replace(/[^a-zA-Z0-9]/g, "").slice(0, 10).toUpperCase() || "ORD";
   const random = crypto.randomBytes(6).toString("hex").toUpperCase();
@@ -186,4 +227,36 @@ function formatPaise(amountPaise) {
 function verifyInboundHash(hashAdapter, payload) {
   const fields = buildInboundHashFields(payload);
   if (!hashAdapter.verify(fields, payload.secureHash)) throw new Error("Inbound secure hash mismatch");
+}
+
+function extractGatewayFailureReasons(payload) {
+  if (!payload || typeof payload !== "object") return ["No structured response received from ICICI gateway"];
+  const reasons = [];
+  const possibleKeys = [
+    "responseMessage",
+    "responseCode",
+    "status",
+    "error",
+    "errorMessage",
+    "errorDescription",
+    "message",
+    "reason",
+    "reasonCode",
+    "reasonMessage",
+  ];
+  for (const key of possibleKeys) {
+    const value = payload[key];
+    if (value != null && String(value).trim()) reasons.push(`${key}: ${String(value).trim()}`);
+  }
+  if (Array.isArray(payload.errors)) {
+    for (const item of payload.errors) {
+      if (typeof item === "string" && item.trim()) reasons.push(item.trim());
+      else if (item && typeof item === "object") reasons.push(JSON.stringify(item));
+    }
+  }
+  return reasons.length ? reasons : ["ICICI gateway did not provide an explicit failure reason"];
+}
+
+function uniqueStrings(values) {
+  return [...new Set((values || []).filter((item) => typeof item === "string" && item.trim()))];
 }

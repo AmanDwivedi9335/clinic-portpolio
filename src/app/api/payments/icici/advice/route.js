@@ -43,6 +43,21 @@ async function parseInboundPayload(request) {
     const form = await request.formData();
     return Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)]));
   }
-  const json = await request.json();
-  return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+  if (ct.includes("application/json")) {
+    const json = await request.json();
+    return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+  }
+
+  const raw = await request.text();
+  if (!raw.trim()) return {};
+  try {
+    const json = JSON.parse(raw);
+    if (json && typeof json === "object") {
+      return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+    }
+  } catch (_error) {
+    // fallback to parsing url encoded payload
+  }
+
+  return Object.fromEntries(new URLSearchParams(raw).entries());
 }

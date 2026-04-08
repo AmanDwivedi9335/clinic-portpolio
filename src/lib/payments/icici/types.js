@@ -39,5 +39,23 @@ export function validateIciciInitiateRequest(input) {
 
 export function normalizeKeyValues(input) {
   if (!input || typeof input !== "object") return {};
-  return Object.fromEntries(Object.entries(input).map(([k, v]) => [k, v == null ? "" : String(v)]));
+  const normalized = Object.fromEntries(Object.entries(input).map(([k, v]) => [k, v == null ? "" : String(v)]));
+
+  const aliases = {
+    SecureHash: "secureHash",
+    MerchantTxnNo: "merchantTxnNo",
+    TxnId: "txnID",
+    paymentDateTiime: "paymentDateTime",
+    RespDescription: "respDescription",
+  };
+
+  for (const [from, to] of Object.entries(aliases)) {
+    if (!normalized[to] && normalized[from]) normalized[to] = normalized[from];
+  }
+
+  if (!normalized.merchantTxnNo && normalized.merchanttxNo) normalized.merchantTxnNo = normalized.merchanttxNo;
+  if (!normalized.responseMessage && normalized.respDescription) normalized.responseMessage = normalized.respDescription;
+  if (!normalized.bankTxnNo && normalized.txnID) normalized.bankTxnNo = normalized.txnID;
+
+  return normalized;
 }

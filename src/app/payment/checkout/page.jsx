@@ -58,10 +58,7 @@ function CheckoutInner() {
         throw new Error(result.message || "Unable to start payment");
       }
 
-      const paymentWindow = window.open(redirectUrl, "iciciPayment", "popup=yes,width=520,height=760,noopener,noreferrer");
-      if (!paymentWindow) {
-        window.location.assign(redirectUrl);
-      }
+      window.location.assign(redirectUrl);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Payment initiation failed");
     } finally {

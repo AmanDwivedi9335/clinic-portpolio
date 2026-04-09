@@ -96,6 +96,10 @@ export function buildInboundHashPayloadString(payload) {
   return buildInboundHashFieldsFromPayload(payload).join("");
 }
 
+export function buildInboundHashCandidates(payload) {
+  return [buildInboundHashFieldsFromPayload(payload)];
+}
+
 /**
  * KEY SORT RULE
  * 1. Capital letter keys first

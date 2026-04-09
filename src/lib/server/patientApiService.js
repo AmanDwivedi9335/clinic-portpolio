@@ -59,16 +59,11 @@ export async function registerPatient(payload) {
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const debugDetail = {
-      requestUrl,
-      payload,
-      responseStatus: response.status,
-      responseBody: result,
-    };
-
-    console.error(
-      "Patient register API failed.",
-      JSON.stringify(debugDetail, null, 2)
+    const detail = `requestUrl=${requestUrl}; payload=${JSON.stringify(payload)}`;
+    throw new Error(
+      result.message
+        ? `${result.message}. ${detail}`
+        : `Patient register API failed with status ${response.status}. ${detail}`
     );
 
     const errorMessage = result.message

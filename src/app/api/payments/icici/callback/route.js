@@ -256,10 +256,29 @@ function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
     error instanceof Error
       ? error.message
       : "Unknown callback failure";
+  const debug = error?.debugDetail || {};
+
+  if (error?.code === "patient_register_api_failed") {
+    return {
+      code: "patient_register_api_failed",
+      stage: error?.stage || "register_patient",
+      detail: JSON.stringify(
+        {
+          message,
+          requestUrl: debug.requestUrl || "",
+          registerPayload: debug.payload || {},
+          responseStatus: debug.responseStatus || "",
+          responseBody: debug.responseBody || {},
+          callbackPayload: rawCallbackPayload,
+          rawInboundPayload,
+        },
+        null,
+        2
+      ),
+    };
+  }
 
   if (message.includes("Inbound secure hash mismatch")) {
-    const debug = error?.debugDetail || {};
-
     return {
       code: "callback_hash_mismatch",
       stage: "verify_hash",

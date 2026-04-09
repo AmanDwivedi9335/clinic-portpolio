@@ -19,10 +19,13 @@ async function handleCallback(request) {
   const service = new PaymentService();
   const config = getIciciConfig();
   let payload = {};
+  let rawInboundPayload = null;
 
   try {
-    payload = normalizeKeyValues(await parseInboundPayload(request));
-    verifyInboundSecureHash(payload, config.merchantKey);
+    const inbound = await parseInboundPayload(request);
+    payload = normalizeKeyValues(inbound.parsedPayload);
+    rawInboundPayload = inbound.rawInboundPayload;
+    verifyInboundSecureHash(payload, config.merchantKey, rawInboundPayload);
 
     const attempt = await service.processCallback(payload);
     const redirect = new URL(config.frontendStatusUrl);
@@ -52,6 +55,7 @@ function classifyCallbackError(error) {
           receivedSecureHash: debugDetail.receivedSecureHash,
           hashInputCandidates: debugDetail.hashInputCandidates,
           payloadReceivedFromIcici: debugDetail.payload,
+          rawInboundPayload: debugDetail.rawInboundPayload || null,
         })
       : "Secure hash validation failed for callback payload.";
 
@@ -93,7 +97,7 @@ function classifyCallbackError(error) {
   };
 }
 
-function verifyInboundSecureHash(payload, merchantKey) {
+function verifyInboundSecureHash(payload, merchantKey, rawInboundPayload) {
   const secureHash = payload.secureHash || payload.SecureHash;
   const hashAdapter = new HmacSha256HashAdapter(merchantKey);
   const candidateDetails = buildInboundHashCandidateDetails(payload);
@@ -114,6 +118,7 @@ function verifyInboundSecureHash(payload, merchantKey) {
       receivedSecureHash: secureHash || null,
       hashInputCandidates,
       payload: debugPayload,
+      rawInboundPayload,
     });
 
     const error = new Error("Inbound secure hash mismatch");
@@ -121,41 +126,114 @@ function verifyInboundSecureHash(payload, merchantKey) {
       receivedSecureHash: secureHash || "",
       hashInputCandidates,
       payload: debugPayload,
+      rawInboundPayload,
     };
     throw error;
   }
 }
 
 async function parseInboundPayload(request) {
-  const queryParams = Object.fromEntries(new URL(request.url).searchParams.entries());
-  if (request.method === "GET") return queryParams;
+  const requestUrl = new URL(request.url);
+  const queryParams = Object.fromEntries(requestUrl.searchParams.entries());
+  const queryString = requestUrl.searchParams.toString();
+  if (request.method === "GET") {
+    return {
+      parsedPayload: queryParams,
+      rawInboundPayload: {
+        method: "GET",
+        contentType: request.headers.get("content-type") || "",
+        queryString,
+      },
+    };
+  }
 
   const ct = request.headers.get("content-type") || "";
   if (ct.includes("application/x-www-form-urlencoded")) {
-    const form = await request.formData();
+    const rawBody = await request.text();
+    const form = new URLSearchParams(rawBody);
     return {
-      ...queryParams,
-      ...Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)])),
+      parsedPayload: {
+        ...queryParams,
+        ...Object.fromEntries(form.entries()),
+      },
+      rawInboundPayload: {
+        method: request.method,
+        contentType: ct,
+        queryString,
+        body: rawBody,
+      },
+    };
+  }
+
+  if (ct.includes("multipart/form-data")) {
+    const form = await request.formData();
+    const parsedForm = Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)]));
+    return {
+      parsedPayload: {
+        ...queryParams,
+        ...parsedForm,
+      },
+      rawInboundPayload: {
+        method: request.method,
+        contentType: ct,
+        queryString,
+        body: "[multipart/form-data body is not available as raw text via Request.formData()]",
+      },
     };
   }
 
   if (ct.includes("application/json")) {
-    const json = await request.json();
-    return { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) };
+    const rawBody = await request.text();
+    const json = rawBody ? JSON.parse(rawBody) : {};
+    return {
+      parsedPayload: { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) },
+      rawInboundPayload: {
+        method: request.method,
+        contentType: ct,
+        queryString,
+        body: rawBody,
+      },
+    };
   }
 
   const text = await request.text();
-  if (!text.trim()) return queryParams;
+  if (!text.trim()) {
+    return {
+      parsedPayload: queryParams,
+      rawInboundPayload: {
+        method: request.method,
+        contentType: ct,
+        queryString,
+        body: "",
+      },
+    };
+  }
 
   try {
     const json = JSON.parse(text);
     if (json && typeof json === "object") {
-      return { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) };
+      return {
+        parsedPayload: { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) },
+        rawInboundPayload: {
+          method: request.method,
+          contentType: ct,
+          queryString,
+          body: text,
+        },
+      };
     }
   } catch (_error) {
     // fallback to URL encoded parsing below
   }
 
   const fromEncodedBody = Object.fromEntries(new URLSearchParams(text).entries());
-  return { ...queryParams, ...fromEncodedBody };
+  return {
+    parsedPayload: { ...queryParams, ...fromEncodedBody },
+    rawInboundPayload: {
+      method: request.method,
+      contentType: ct,
+      queryString,
+      body: text,
+    },
+  };
 }

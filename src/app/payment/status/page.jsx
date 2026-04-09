@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 function StatusInner() {
@@ -35,24 +35,37 @@ function StatusInner() {
 
   const completionTriggeredRef = useRef(false);
   const failedRetryTimerRef = useRef(null);
+  const statusCheckCountRef = useRef(0);
 
   const MAX_FAILED_RETRIES = 2;
+  const MAX_STATUS_CHECKS = 3;
+
+  const fetchLatestStatus = useCallback(async () => {
+    if (!merchantTxnNo || statusCheckCountRef.current >= MAX_STATUS_CHECKS) {
+      return null;
+    }
+
+    statusCheckCountRef.current += 1;
+
+    const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Unable to fetch payment status");
+    }
+
+    return result.data;
+  }, [merchantTxnNo]);
 
   useEffect(() => {
-    if (!merchantTxnNo) return;
+    if (!merchantTxnNo || isFailedFromGateway) return;
 
     const loadStatus = async () => {
       setLoading(true);
 
       try {
-        const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-          throw new Error(result.message || "Unable to fetch payment status");
-        }
-
-        setStatus(result.data);
+        const latestStatus = await fetchLatestStatus();
+        if (latestStatus) setStatus(latestStatus);
         setError("");
       } catch (e) {
         setError(
@@ -64,7 +77,7 @@ function StatusInner() {
     };
 
     loadStatus();
-  }, [merchantTxnNo]);
+  }, [fetchLatestStatus, isFailedFromGateway, merchantTxnNo]);
 
 
   useEffect(() => {
@@ -180,12 +193,9 @@ function StatusInner() {
           setFailedRetryCount((count) => count + 1);
 
           try {
-            const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
-            const result = await response.json();
-
-            if (!response.ok || !result.success) return;
-
-            setStatus(result.data);
+            const latestStatus = await fetchLatestStatus();
+            if (!latestStatus) return;
+            setStatus(latestStatus);
           } catch (_error) {
             // non-blocking retry error
           }
@@ -219,7 +229,7 @@ function StatusInner() {
           "Payment is still being processed by the gateway. We will keep checking automatically.",
       });
     }
-  }, [failedRetryCount, isFailedFromGateway, merchantTxnNo, status]);
+  }, [failedRetryCount, fetchLatestStatus, isFailedFromGateway, merchantTxnNo, status]);
 
   useEffect(() => {
     if (
@@ -232,21 +242,22 @@ function StatusInner() {
       return;
     }
 
-    const timer = setInterval(async () => {
+    if (statusCheckCountRef.current >= MAX_STATUS_CHECKS) {
+      return;
+    }
+
+    const timer = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
-        const result = await response.json();
-
-        if (!response.ok || !result.success) return;
-
-        setStatus(result.data);
+        const latestStatus = await fetchLatestStatus();
+        if (!latestStatus) return;
+        setStatus(latestStatus);
       } catch (_error) {
         // non-blocking polling error
       }
     }, 4000);
 
-    return () => clearInterval(timer);
-  }, [merchantTxnNo, status]);
+    return () => clearTimeout(timer);
+  }, [fetchLatestStatus, merchantTxnNo, status]);
 
   const statusLabel = useMemo(() => {
     if (!status?.state) return "Awaiting update";

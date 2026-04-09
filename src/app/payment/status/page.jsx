@@ -25,7 +25,6 @@ function StatusInner() {
 
   const completionTriggeredRef = useRef(false);
   const failedRetryTimerRef = useRef(null);
-  const pendingPopupShownRef = useRef(false);
 
   const MAX_FAILED_RETRIES = 2;
 
@@ -105,7 +104,6 @@ function StatusInner() {
     if (status.state === "SUCCESS") {
       completionTriggeredRef.current = true;
       setIsRetryingAfterFailure(false);
-      pendingPopupShownRef.current = false;
 
       const finalize = async () => {
         try {
@@ -166,15 +164,7 @@ function StatusInner() {
 
             if (!response.ok || !result.success) return;
 
-            if (result.data?.state === "SUCCESS") {
-              setStatus(result.data);
-              return;
-            }
-
-            setStatus({
-              ...result.data,
-              state: "FAILED",
-            });
+            setStatus(result.data);
           } catch (_error) {
             // non-blocking retry error
           }
@@ -185,7 +175,6 @@ function StatusInner() {
 
       completionTriggeredRef.current = true;
       setIsRetryingAfterFailure(false);
-      pendingPopupShownRef.current = false;
 
       setPopup({
         open: true,
@@ -202,8 +191,6 @@ function StatusInner() {
       )
     ) {
       setIsRetryingAfterFailure(false);
-      if (pendingPopupShownRef.current) return;
-      pendingPopupShownRef.current = true;
       setPopup({
         open: true,
         kind: "info",

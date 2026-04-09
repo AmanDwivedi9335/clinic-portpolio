@@ -8,22 +8,9 @@ function StatusInner() {
 
   const merchantTxnNo = searchParams.get("merchantTxnNo") || "";
   const callbackError = searchParams.get("error") || "";
-  const callbackErrorStage = searchParams.get("errorStage") || "";
-  const callbackErrorDetail = searchParams.get("errorDetail") || "";
   const callbackState = searchParams.get("paymentState") || "";
-  const callbackHashStatus = searchParams.get("callbackHashStatus") || "";
-  const callbackHashPayload = searchParams.get("callbackHashPayload") || "";
-  const generatedSecureHash = searchParams.get("generatedSecureHash") || "";
-  const receivedSecureHash = searchParams.get("receivedSecureHash") || "";
   const paymentStatus = searchParams.get("paymentStatus") || "";
-
-  const callbackPayload = useMemo(() => {
-    const payload = {};
-    for (const [key, value] of searchParams.entries()) {
-      payload[key] = value;
-    }
-    return payload;
-  }, [searchParams]);
+  const callbackHashStatus = searchParams.get("callbackHashStatus") || "";
 
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -69,8 +56,7 @@ function StatusInner() {
       setPopup({
         open: true,
         kind: "success",
-        message:
-          "ICICI callback secure hash matched successfully after concatenating all callback values except secureHash.",
+        message: "Payment confirmation was validated successfully.",
       });
       return;
     }
@@ -78,17 +64,17 @@ function StatusInner() {
     if (callbackError) {
       const callbackErrorMessages = {
         callback_hash_mismatch:
-          "Gateway callback secure hash validation failed. Please check callback payload, concatenated string, generated hash, and received hash below.",
+          "We could not verify the payment confirmation from the bank. Please contact support if amount was debited.",
         callback_unknown_transaction:
-          "Gateway callback arrived with an unknown merchant transaction number.",
+          "We could not find this transaction. Please try again or contact support.",
         callback_invalid_state_transition:
-          "Gateway callback status could not be applied from the current payment state.",
+          "Payment update could not be completed right now. Please refresh after a few minutes.",
         callback_processing_failed:
-          "We could not process the payment callback. Please review the callback details below.",
+          "We were unable to process the payment update. Please try again shortly.",
         callback_config_error:
-          "ICICI payment callback configuration is invalid or incomplete.",
+          "The payment service is temporarily unavailable. Please try again later.",
         patient_register_api_failed:
-          "Payment is successful, but patient registration API failed. Please review the register API details below.",
+          "Your payment was received, but we could not finish registration. Our team has been notified.",
       };
 
       setPopup({
@@ -121,7 +107,7 @@ function StatusInner() {
 
           if (!response.ok || !result.success) {
             throw new Error(
-              result.message || "Unable to save registration after payment."
+              result.message || "Unable to complete registration after payment."
             );
           }
 
@@ -137,7 +123,7 @@ function StatusInner() {
             message:
               e instanceof Error
                 ? e.message
-                : "Payment succeeded but registration save failed.",
+                : "Payment succeeded, but registration could not be completed right now.",
           });
         }
       };
@@ -199,6 +185,31 @@ function StatusInner() {
     return () => clearInterval(timer);
   }, [merchantTxnNo, status]);
 
+  const statusLabel = useMemo(() => {
+    if (!status?.state) return "Awaiting update";
+
+    const labels = {
+      SUCCESS: "Payment successful",
+      FAILED: "Payment failed",
+      CANCELLED: "Payment cancelled",
+      PENDING: "Payment in progress",
+      RECONCILING: "Payment in progress",
+      INITIATED: "Payment initiated",
+      REDIRECTED: "Payment in progress",
+    };
+
+    return labels[status.state] || status.state;
+  }, [status]);
+
+  const statusTone = useMemo(() => {
+    if (!status?.state) return "text-gray-700 bg-gray-50 border-gray-200";
+    if (status.state === "SUCCESS")
+      return "text-green-700 bg-green-50 border-green-200";
+    if (["FAILED", "CANCELLED"].includes(status.state))
+      return "text-red-700 bg-red-50 border-red-200";
+    return "text-amber-700 bg-amber-50 border-amber-200";
+  }, [status]);
+
   return (
     <main className="mx-auto max-w-3xl p-8">
       <h1 className="text-2xl font-semibold">Payment Status</h1>
@@ -207,83 +218,21 @@ function StatusInner() {
         Transaction: {merchantTxnNo || "Not available"}
       </p>
 
-      {paymentStatus ? (
-        <p className="mt-2 text-sm text-gray-600">
-          Payment status: {paymentStatus}
+      <div className={`mt-5 rounded-lg border px-4 py-3 ${statusTone}`}>
+        <p className="text-sm font-semibold">{statusLabel}</p>
+        <p className="mt-1 text-xs opacity-90">
+          {status?.state === "SUCCESS"
+            ? "Your payment was received. You can continue using your account."
+            : ["FAILED", "CANCELLED"].includes(status?.state)
+            ? "No amount will be charged for this attempt. Please try again if needed."
+            : "We are waiting for confirmation from the payment gateway. This page updates automatically."}
         </p>
-      ) : null}
+      </div>
 
-      {callbackState ? (
-        <p className="mt-2 text-sm text-gray-600">
-          Gateway callback state: {callbackState}
+      {(paymentStatus || callbackState) && !status ? (
+        <p className="mt-3 text-sm text-gray-600">
+          Latest update from gateway: {paymentStatus || callbackState}
         </p>
-      ) : null}
-
-      {callbackHashStatus ? (
-        <p className="mt-2 text-sm text-gray-600">
-          Callback hash status: {callbackHashStatus}
-        </p>
-      ) : null}
-
-      {callbackError ? (
-        <p className="mt-2 text-sm text-red-600">
-          Callback error code: {callbackError}
-        </p>
-      ) : null}
-
-      {callbackErrorStage ? (
-        <p className="mt-2 text-sm text-red-600">
-          Callback error stage: {callbackErrorStage}
-        </p>
-      ) : null}
-
-      {generatedSecureHash ? (
-        <p className="mt-2 break-all text-sm text-gray-600">
-          Generated secure hash: {generatedSecureHash}
-        </p>
-      ) : null}
-
-      {receivedSecureHash ? (
-        <p className="mt-2 break-all text-sm text-gray-600">
-          Received secure hash: {receivedSecureHash}
-        </p>
-      ) : null}
-
-      {callbackHashPayload ? (
-        <div className="mt-4 rounded-lg border bg-gray-50 p-4">
-          <p className="text-sm font-medium text-gray-700">
-            Concatenated callback hash payload
-          </p>
-          <p className="mt-1 text-xs text-gray-500">
-            All callback values except secureHash, ordered with capital-letter
-            keys first and then alphabetical, without any separator.
-          </p>
-          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-all text-xs text-gray-700">
-            {callbackHashPayload}
-          </pre>
-        </div>
-      ) : null}
-
-      {callbackErrorDetail ? (
-        <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-4">
-          <p className="text-sm font-medium text-red-700">
-            Callback error detail
-          </p>
-          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-all text-xs text-red-700">
-            {callbackErrorDetail}
-          </pre>
-        </div>
-      ) : null}
-
-      {Object.keys(callbackPayload).length ? (
-        <div className="mt-4 rounded-lg border bg-gray-50 p-4">
-          <p className="text-sm font-medium text-gray-700">
-            Callback URL response payload
-          </p>
-          <pre className="mt-2 overflow-x-auto whitespace-pre-wrap break-all text-xs text-gray-700">
-            {JSON.stringify(callbackPayload, null, 2)}
-          </pre>
-        </div>
       ) : null}
 
       {loading ? <p className="mt-6">Payment is processing...</p> : null}
@@ -293,11 +242,11 @@ function StatusInner() {
       {status ? (
         <div className="mt-6 rounded-lg border p-4">
           <p>
-            <strong>State:</strong> {status.state}
+            <strong>Status:</strong> {statusLabel}
           </p>
 
           <p>
-            <strong>Updated:</strong>{" "}
+            <strong>Last updated:</strong>{" "}
             {status.updatedAt
               ? new Date(status.updatedAt).toLocaleString()
               : "Not available"}
@@ -305,7 +254,7 @@ function StatusInner() {
 
           {status.responseMessage ? (
             <p>
-              <strong>Gateway message:</strong> {status.responseMessage}
+              <strong>Bank update:</strong> {status.responseMessage}
             </p>
           ) : null}
         </div>

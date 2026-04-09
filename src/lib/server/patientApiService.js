@@ -61,21 +61,24 @@ export async function registerPatient(payload) {
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    const detail = `requestUrl=${requestUrl}; payload=${JSON.stringify(payload)}`;
-    throw new Error(
-      result.message
-        ? `${result.message}. ${detail}`
-        : `Patient register API failed with status ${response.status}. ${detail}`
-    );
-
-    const errorMessage = result.message
-      ? `${result.message} (status ${response.status})`
+    const externalMessage =
+      result?.message ||
+      result?.error?.message ||
+      result?.detail ||
+      "";
+    const errorMessage = externalMessage
+      ? `${externalMessage} (status ${response.status})`
       : `Patient register API failed with status ${response.status}`;
 
     const error = new Error(errorMessage);
     error.code = "patient_register_api_failed";
     error.stage = "register_patient";
-    error.debugDetail = debugDetail;
+    error.debugDetail = {
+      requestUrl,
+      payload,
+      responseStatus: response.status,
+      responseBody: result,
+    };
     throw error;
   }
 

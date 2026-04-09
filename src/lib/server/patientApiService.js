@@ -48,7 +48,9 @@ export function toPatientRegisterPayload(draft = {}) {
 export async function registerPatient(payload) {
   const path =
     process.env.PATIENT_API_REGISTER_PATH || "/api/v1/patients/register";
-  const response = await fetch(`${getPatientApiBaseUrl()}${path}`, {
+  const requestUrl = `${getPatientApiBaseUrl()}${path}`;
+
+  const response = await fetch(requestUrl, {
     method: "POST",
     headers: buildHeaders(),
     body: JSON.stringify(payload),
@@ -57,8 +59,11 @@ export async function registerPatient(payload) {
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
+    const detail = `requestUrl=${requestUrl}; payload=${JSON.stringify(payload)}`;
     throw new Error(
-      result.message || `Patient register API failed with status ${response.status}`
+      result.message
+        ? `${result.message}. ${detail}`
+        : `Patient register API failed with status ${response.status}. ${detail}`
     );
   }
 

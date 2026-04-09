@@ -22,27 +22,32 @@ async function handleCallback(request) {
   const service = new PaymentService();
   const config = getIciciConfig();
 
-  let payload = {};
+  let rawCallbackPayload = {};
+  let normalizedPayload = {};
   let rawInboundPayload = null;
 
   try {
     const inbound = await parseInboundPayload(request);
 
-    payload = normalizeKeyValues(inbound.parsedPayload);
+    rawCallbackPayload = { ...(inbound.parsedPayload || {}) };
+    normalizedPayload = normalizeKeyValues(rawCallbackPayload);
     rawInboundPayload = inbound.rawInboundPayload;
 
     const hashDebug = verifyInboundSecureHash(
-      payload,
+      rawCallbackPayload,
       config.merchantKey
     );
 
-    const attempt = await service.processCallback(payload);
+    const attempt = await service.processCallback(normalizedPayload);
 
     const redirect = new URL(config.frontendStatusUrl);
 
     redirect.searchParams.set(
       "merchantTxnNo",
-      attempt.merchantTxnNo || payload.merchantTxnNo || ""
+      attempt.merchantTxnNo ||
+        normalizedPayload.merchantTxnNo ||
+        rawCallbackPayload.merchantTxnNo ||
+        ""
     );
 
     redirect.searchParams.set("paymentState", attempt.state || "");
@@ -56,12 +61,10 @@ async function handleCallback(request) {
       "callbackHashPayload",
       hashDebug.concatenatedPayloadString
     );
-
     redirect.searchParams.set(
       "generatedSecureHash",
       hashDebug.generatedSecureHash
     );
-
     redirect.searchParams.set(
       "receivedSecureHash",
       hashDebug.receivedSecureHash
@@ -73,48 +76,41 @@ async function handleCallback(request) {
 
     const callbackError = classifyCallbackError(
       error,
-      payload,
+      rawCallbackPayload,
       rawInboundPayload
     );
 
     redirect.searchParams.set("error", callbackError.code);
     redirect.searchParams.set("errorStage", callbackError.stage);
 
-    if (payload?.merchantTxnNo) {
-      redirect.searchParams.set(
-        "merchantTxnNo",
-        payload.merchantTxnNo
-      );
+    const merchantTxnNo =
+      rawCallbackPayload?.merchantTxnNo ||
+      normalizedPayload?.merchantTxnNo ||
+      "";
+
+    if (merchantTxnNo) {
+      redirect.searchParams.set("merchantTxnNo", merchantTxnNo);
     }
 
     if (callbackError.detail) {
-      redirect.searchParams.set(
-        "errorDetail",
-        callbackError.detail
-      );
+      redirect.searchParams.set("errorDetail", callbackError.detail);
     }
 
     return NextResponse.redirect(redirect, { status: 303 });
   }
 }
 
-/**
- * HASH VERIFICATION (SIMPLE + STRICT)
- */
-function verifyInboundSecureHash(payload, merchantKey) {
+function verifyInboundSecureHash(rawCallbackPayload, merchantKey) {
   const receivedSecureHash =
-    payload.secureHash || payload.SecureHash || "";
+    rawCallbackPayload.secureHash || rawCallbackPayload.SecureHash || "";
 
   const hashAdapter = new HmacSha256HashAdapter(merchantKey);
 
   const orderedFieldValues =
-    buildInboundHashFieldsFromPayload(payload);
+    buildInboundHashFieldsFromPayload(rawCallbackPayload);
 
-  const concatenatedPayloadString =
-    orderedFieldValues.join("");
-
-  const generatedSecureHash =
-    hashAdapter.sign(orderedFieldValues);
+  const concatenatedPayloadString = orderedFieldValues.join("");
+  const generatedSecureHash = hashAdapter.sign(orderedFieldValues);
 
   const matched = hashAdapter.verify(
     orderedFieldValues,
@@ -122,19 +118,17 @@ function verifyInboundSecureHash(payload, merchantKey) {
   );
 
   if (!matched) {
-    const debugPayload = { ...payload };
+    const debugPayload = { ...rawCallbackPayload };
     delete debugPayload.secureHash;
     delete debugPayload.SecureHash;
 
     const error = new Error("Inbound secure hash mismatch");
-
     error.debugDetail = {
       payload: debugPayload,
       concatenatedPayloadString,
       generatedSecureHash,
       receivedSecureHash,
     };
-
     throw error;
   }
 
@@ -146,10 +140,7 @@ function verifyInboundSecureHash(payload, merchantKey) {
   };
 }
 
-/**
- * ERROR HANDLING WITH FULL DEBUG
- */
-function classifyCallbackError(error, payload, rawInboundPayload) {
+function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
   const message =
     error instanceof Error
       ? error.message
@@ -164,7 +155,7 @@ function classifyCallbackError(error, payload, rawInboundPayload) {
       detail: JSON.stringify(
         {
           message: "Secure hash validation failed",
-          payload: debug.payload || payload,
+          payload: debug.payload || rawCallbackPayload,
           concatenatedPayloadString:
             debug.concatenatedPayloadString || "",
           generatedSecureHash:
@@ -183,7 +174,14 @@ function classifyCallbackError(error, payload, rawInboundPayload) {
     return {
       code: "callback_unknown_transaction",
       stage: "lookup_attempt",
-      detail: JSON.stringify({ payload, rawInboundPayload }),
+      detail: JSON.stringify(
+        {
+          payload: rawCallbackPayload,
+          rawInboundPayload,
+        },
+        null,
+        2
+      ),
     };
   }
 
@@ -191,31 +189,36 @@ function classifyCallbackError(error, payload, rawInboundPayload) {
     return {
       code: "callback_invalid_state_transition",
       stage: "state_transition",
-      detail: JSON.stringify({ payload, rawInboundPayload }),
+      detail: JSON.stringify(
+        {
+          payload: rawCallbackPayload,
+          rawInboundPayload,
+        },
+        null,
+        2
+      ),
     };
   }
 
   return {
     code: "callback_processing_failed",
     stage: "unknown",
-    detail: JSON.stringify({
-      message,
-      payload,
-      rawInboundPayload,
-    }),
+    detail: JSON.stringify(
+      {
+        message,
+        payload: rawCallbackPayload,
+        rawInboundPayload,
+      },
+      null,
+      2
+    ),
   };
 }
 
-/**
- * PAYLOAD PARSER (UNCHANGED CORE)
- */
 async function parseInboundPayload(request) {
   const requestUrl = new URL(request.url);
 
-  const queryEntries = Array.from(
-    requestUrl.searchParams.entries()
-  );
-
+  const queryEntries = Array.from(requestUrl.searchParams.entries());
   const queryParams = Object.fromEntries(queryEntries);
   const queryString = requestUrl.searchParams.toString();
 
@@ -231,7 +234,6 @@ async function parseInboundPayload(request) {
   }
 
   const ct = request.headers.get("content-type") || "";
-
   const rawBody = await request.text();
 
   let parsed = {};
@@ -239,9 +241,7 @@ async function parseInboundPayload(request) {
   try {
     parsed = JSON.parse(rawBody);
   } catch {
-    parsed = Object.fromEntries(
-      new URLSearchParams(rawBody).entries()
-    );
+    parsed = Object.fromEntries(new URLSearchParams(rawBody).entries());
   }
 
   return {

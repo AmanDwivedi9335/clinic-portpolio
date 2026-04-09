@@ -176,31 +176,56 @@ export class PaymentService {
   }
 
   async processCallback(rawPayload) {
-    verifyInboundHash(this.hashAdapter, rawPayload);
+  const payload = normalizeKeyValues(rawPayload);
 
-    const payload = normalizeKeyValues(rawPayload);
-    const attempt = await this.requireAttempt(payload.merchantTxnNo);
+  const attempt = await this.requireAttempt(payload.merchantTxnNo);
 
-    const nextState = mapStatusToState({
-      responseCode: payload.responseCode,
-      status: payload.status,
-      responseMessage: payload.responseMessage,
-    });
+  const nextState = mapStatusToState({
+    responseCode: payload.responseCode,
+    status: payload.status,
+    responseMessage: payload.responseMessage,
+  });
 
-    return this.transition(
-      attempt,
-      nextState,
-      "callback.received",
-      sanitizeForLogs(payload),
-      {
-        rawCallbackPayload: sanitizeForLogs(rawPayload),
-        gatewayTxnRef: payload.bankTxnNo || payload.txnID || payload.txnAuthID,
-        gatewayResponseCode: payload.responseCode,
-        gatewayResponseMessage:
-          payload.responseMessage || payload.respDescription,
-      }
-    );
-  }
+  return this.transition(
+    attempt,
+    nextState,
+    "callback.received",
+    sanitizeForLogs(payload),
+    {
+      rawCallbackPayload: sanitizeForLogs(rawPayload),
+      gatewayTxnRef: payload.bankTxnNo || payload.txnID || payload.txnAuthID,
+      gatewayResponseCode: payload.responseCode,
+      gatewayResponseMessage:
+        payload.responseMessage || payload.respDescription,
+    }
+  );
+}
+
+async processAdvice(rawPayload) {
+  const payload = normalizeKeyValues(rawPayload);
+
+  const attempt = await this.requireAttempt(payload.merchantTxnNo);
+
+  const nextState = mapStatusToState({
+    responseCode: payload.responseCode,
+    status: payload.status,
+    responseMessage: payload.responseMessage,
+  });
+
+  return this.transition(
+    attempt,
+    nextState,
+    "advice.received",
+    sanitizeForLogs(payload),
+    {
+      rawAdvicePayload: sanitizeForLogs(rawPayload),
+      gatewayTxnRef: payload.bankTxnNo || payload.txnID || payload.txnAuthID,
+      gatewayResponseCode: payload.responseCode,
+      gatewayResponseMessage:
+        payload.responseMessage || payload.respDescription,
+    }
+  );
+}
 
   async processAdvice(rawPayload) {
     verifyInboundHash(this.hashAdapter, rawPayload);

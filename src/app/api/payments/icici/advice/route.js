@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 
 import { getIciciConfig } from "@/lib/payments/icici/config";
-import { buildInboundHashCandidates, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
-import { normalizeKeyValues } from "@/lib/payments/icici/types";
+import {
+  buildInboundHashFieldsFromPayload,
+  HmacSha256HashAdapter,
+} from "@/lib/payments/icici/hash";
 import { PaymentService } from "@/lib/payments/payment-service";
 
 export const runtime = "nodejs";
@@ -12,10 +14,12 @@ export async function POST(request) {
   const config = getIciciConfig();
 
   try {
-    const payload = normalizeKeyValues(await parseInboundPayload(request));
-    verifyInboundSecureHash(payload, config.merchantKey);
+    const rawPayload = await parseInboundPayload(request);
 
-    const result = await service.processAdvice(payload);
+    verifyInboundSecureHash(rawPayload, config.merchantKey);
+
+    const result = await service.processAdvice(rawPayload);
+
     return NextResponse.json({
       success: true,
       merchantTxnNo: result.merchantTxnNo,
@@ -23,15 +27,22 @@ export async function POST(request) {
       paymentStatus: result.state === "SUCCESS" ? "success" : "failed",
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error instanceof Error ? error.message : "advice failed" }, { status: 400 });
+    return NextResponse.json(
+      {
+        success: false,
+        message: error instanceof Error ? error.message : "advice failed",
+      },
+      { status: 400 }
+    );
   }
 }
 
-function verifyInboundSecureHash(payload, merchantKey) {
-  const secureHash = payload.secureHash || payload.SecureHash;
+function verifyInboundSecureHash(rawPayload, merchantKey) {
+  const secureHash = rawPayload.secureHash || rawPayload.SecureHash || "";
   const hashAdapter = new HmacSha256HashAdapter(merchantKey);
-  const candidates = buildInboundHashCandidates(payload);
-  const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
+
+  const orderedFieldValues = buildInboundHashFieldsFromPayload(rawPayload);
+  const isValid = hashAdapter.verify(orderedFieldValues, secureHash);
 
   if (!isValid) {
     throw new Error("Inbound secure hash mismatch");
@@ -40,24 +51,34 @@ function verifyInboundSecureHash(payload, merchantKey) {
 
 async function parseInboundPayload(request) {
   const ct = request.headers.get("content-type") || "";
+
   if (ct.includes("application/x-www-form-urlencoded")) {
     const form = await request.formData();
-    return Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)]));
+    return Object.fromEntries(
+      Array.from(form.entries()).map(([k, v]) => [k, String(v)])
+    );
   }
+
   if (ct.includes("application/json")) {
     const json = await request.json();
-    return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+    return Object.fromEntries(
+      Object.entries(json).map(([k, v]) => [k, String(v)])
+    );
   }
 
   const raw = await request.text();
+
   if (!raw.trim()) return {};
+
   try {
     const json = JSON.parse(raw);
     if (json && typeof json === "object") {
-      return Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)]));
+      return Object.fromEntries(
+        Object.entries(json).map(([k, v]) => [k, String(v)])
+      );
     }
   } catch (_error) {
-    // fallback to parsing url encoded payload
+    // fallback to parsing urlencoded payload
   }
 
   return Object.fromEntries(new URLSearchParams(raw).entries());

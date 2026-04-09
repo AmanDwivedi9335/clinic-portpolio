@@ -4,9 +4,21 @@ import { assertValidTransition } from "@/lib/payments/payment-state-machine";
 import { getPaymentRepository } from "@/lib/payments/payment-repository";
 import { getIciciConfig } from "@/lib/payments/icici/config";
 import { IciciApiError, IciciClient } from "@/lib/payments/icici/client";
-import { buildInboundHashCandidates, buildInitiateHashFields, buildStatusRequestHashFields, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
-import { buildRedirectUrl, mapStatusToState, sanitizeForLogs } from "@/lib/payments/icici/mapper";
-import { normalizeKeyValues, validateInitiatePaymentInput } from "@/lib/payments/icici/types";
+import {
+  buildInboundHashFieldsFromPayload,
+  buildInitiateHashFields,
+  buildStatusRequestHashFields,
+  HmacSha256HashAdapter,
+} from "@/lib/payments/icici/hash";
+import {
+  buildRedirectUrl,
+  mapStatusToState,
+  sanitizeForLogs,
+} from "@/lib/payments/icici/mapper";
+import {
+  normalizeKeyValues,
+  validateInitiatePaymentInput,
+} from "@/lib/payments/icici/types";
 
 export class PaymentService {
   constructor() {
@@ -18,14 +30,20 @@ export class PaymentService {
 
   async initiatePayment(input) {
     let trusted;
+
     try {
       trusted = validateInitiatePaymentInput(input);
     } catch (error) {
       throw new InitiatePaymentError("InitiateSale validation failed", {
         reasonCode: "INPUT_VALIDATION_FAILED",
-        reasons: [error instanceof Error ? error.message : "Invalid initiate payment input"],
+        reasons: [
+          error instanceof Error
+            ? error.message
+            : "Invalid initiate payment input",
+        ],
       });
     }
+
     const merchantTxnNo = generateMerchantTxnNo(trusted.orderId);
 
     const attempt = await this.repository.createAttempt({
@@ -46,6 +64,7 @@ export class PaymentService {
 
     const amount = formatPaise(trusted.amountPaise);
     const txnDate = formatTxnDateForIcici(new Date());
+
     const reqBody = {
       merchantId: this.config.merchantId,
       aggregatorID: this.config.aggregatorId,
@@ -63,34 +82,34 @@ export class PaymentService {
       addlParam1: trusted.registrationId,
       addlParam2: trusted.planId,
       secureHash: this.hashAdapter.sign(
-        [
-          buildInitiateHashFields({
-            addlParam1: trusted.registrationId,
-            addlParam2: trusted.planId,
-            aggregatorID: this.config.aggregatorId,
-            amount,
-            currencyCode: "356",
-            customerEmailID: trusted.customerEmail,
-            customerMobileNo: trusted.customerMobile,
-            customerName: trusted.customerName,
-            merchantId: this.config.merchantId,
-            merchantTxnNo,
-            payType: "0",
-            returnURL: this.config.returnUrl,
-            transactionType: "SALE",
-            txnDate,
-          }).join(""),
-        ],
+        buildInitiateHashFields({
+          addlParam1: trusted.registrationId,
+          addlParam2: trusted.planId,
+          aggregatorID: this.config.aggregatorId,
+          amount,
+          currencyCode: "356",
+          customerEmailID: trusted.customerEmail,
+          customerMobileNo: trusted.customerMobile,
+          customerName: trusted.customerName,
+          merchantId: this.config.merchantId,
+          merchantTxnNo,
+          payType: "0",
+          returnURL: this.config.returnUrl,
+          transactionType: "SALE",
+          txnDate,
+        })
       ),
     };
 
     let response;
+
     try {
       response = await this.client.initiateSale(reqBody);
     } catch (error) {
       if (error instanceof IciciApiError) {
         const reasons = extractGatewayFailureReasons(error.details?.raw);
         reasons.push(error.message);
+
         throw new InitiatePaymentError("InitiateSale request to ICICI failed", {
           reasonCode: "GATEWAY_REQUEST_FAILED",
           reasons: uniqueStrings(reasons),
@@ -98,9 +117,15 @@ export class PaymentService {
           httpStatus: error.details?.httpStatus,
         });
       }
+
       throw error;
     }
-    await this.repository.appendAuditLog(merchantTxnNo, "gateway.initiate.response", sanitizeForLogs(response));
+
+    await this.repository.appendAuditLog(
+      merchantTxnNo,
+      "gateway.initiate.response",
+      sanitizeForLogs(response)
+    );
 
     if (!shouldRedirectToGateway(response)) {
       await this.repository.updateAttempt(merchantTxnNo, {
@@ -110,6 +135,7 @@ export class PaymentService {
         rawInitiateRequest: sanitizeForLogs(reqBody),
         rawInitiateResponse: sanitizeForLogs(response),
       });
+
       throw new InitiatePaymentError("InitiateSale rejected by gateway", {
         reasonCode: "GATEWAY_REJECTED",
         reasons: uniqueStrings(extractGatewayFailureReasons(response)),
@@ -118,14 +144,21 @@ export class PaymentService {
     }
 
     if (!response.redirectURI || !response.tranCtx) {
-      throw new InitiatePaymentError("InitiateSale response missing redirect details", {
-        reasonCode: "INCOMPLETE_GATEWAY_RESPONSE",
-        reasons: ["ICICI response did not include redirectURI or tranCtx"],
-        gateway: sanitizeForLogs(response),
-      });
+      throw new InitiatePaymentError(
+        "InitiateSale response missing redirect details",
+        {
+          reasonCode: "INCOMPLETE_GATEWAY_RESPONSE",
+          reasons: ["ICICI response did not include redirectURI or tranCtx"],
+          gateway: sanitizeForLogs(response),
+        }
+      );
     }
 
-    const redirectUrl = buildRedirectUrl({ redirectURI: response.redirectURI, tranCtx: response.tranCtx });
+    const redirectUrl = buildRedirectUrl({
+      redirectURI: response.redirectURI,
+      tranCtx: response.tranCtx,
+    });
+
     const updated = await this.repository.updateAttempt(merchantTxnNo, {
       state: "REDIRECTED",
       redirectUrl,
@@ -135,37 +168,65 @@ export class PaymentService {
       gatewayResponseMessage: response.responseMessage,
     });
 
-    return { merchantTxnNo: updated.merchantTxnNo, redirectUrl, state: updated.state };
+    return {
+      merchantTxnNo: updated.merchantTxnNo,
+      redirectUrl,
+      state: updated.state,
+    };
   }
 
   async processCallback(rawPayload) {
+    verifyInboundHash(this.hashAdapter, rawPayload);
+
     const payload = normalizeKeyValues(rawPayload);
-    verifyInboundHash(this.hashAdapter, payload);
-
     const attempt = await this.requireAttempt(payload.merchantTxnNo);
-    const nextState = mapStatusToState({ responseCode: payload.responseCode, status: payload.status, responseMessage: payload.responseMessage });
 
-    return this.transition(attempt, nextState, "callback.received", sanitizeForLogs(payload), {
-      rawCallbackPayload: sanitizeForLogs(payload),
-      gatewayTxnRef: payload.bankTxnNo,
-      gatewayResponseCode: payload.responseCode,
-      gatewayResponseMessage: payload.responseMessage,
+    const nextState = mapStatusToState({
+      responseCode: payload.responseCode,
+      status: payload.status,
+      responseMessage: payload.responseMessage,
     });
+
+    return this.transition(
+      attempt,
+      nextState,
+      "callback.received",
+      sanitizeForLogs(payload),
+      {
+        rawCallbackPayload: sanitizeForLogs(rawPayload),
+        gatewayTxnRef: payload.bankTxnNo || payload.txnID || payload.txnAuthID,
+        gatewayResponseCode: payload.responseCode,
+        gatewayResponseMessage:
+          payload.responseMessage || payload.respDescription,
+      }
+    );
   }
 
   async processAdvice(rawPayload) {
+    verifyInboundHash(this.hashAdapter, rawPayload);
+
     const payload = normalizeKeyValues(rawPayload);
-    verifyInboundHash(this.hashAdapter, payload);
-
     const attempt = await this.requireAttempt(payload.merchantTxnNo);
-    const nextState = mapStatusToState({ responseCode: payload.responseCode, status: payload.status, responseMessage: payload.responseMessage });
 
-    return this.transition(attempt, nextState, "advice.received", sanitizeForLogs(payload), {
-      rawAdvicePayload: sanitizeForLogs(payload),
-      gatewayTxnRef: payload.bankTxnNo,
-      gatewayResponseCode: payload.responseCode,
-      gatewayResponseMessage: payload.responseMessage,
+    const nextState = mapStatusToState({
+      responseCode: payload.responseCode,
+      status: payload.status,
+      responseMessage: payload.responseMessage,
     });
+
+    return this.transition(
+      attempt,
+      nextState,
+      "advice.received",
+      sanitizeForLogs(payload),
+      {
+        rawAdvicePayload: sanitizeForLogs(rawPayload),
+        gatewayTxnRef: payload.bankTxnNo || payload.txnID || payload.txnAuthID,
+        gatewayResponseCode: payload.responseCode,
+        gatewayResponseMessage:
+          payload.responseMessage || payload.respDescription,
+      }
+    );
   }
 
   async reconcilePending(limit = 50) {
@@ -174,6 +235,7 @@ export class PaymentService {
 
     for (const item of pending) {
       await this.transition(item, "RECONCILING", "reconcile.started", {});
+
       const statusRequest = {
         merchantId: this.config.merchantId,
         aggregatorID: this.config.aggregatorId,
@@ -181,16 +243,39 @@ export class PaymentService {
         originalTxnNo: item.merchantTxnNo,
         transactionType: "STATUS",
       };
-      const secureHash = this.hashAdapter.sign(buildStatusRequestHashFields(statusRequest));
-      const status = await this.client.transactionStatus({ ...statusRequest, secureHash });
-      const nextState = mapStatusToState(status);
-      const updated = await this.transition(item, nextState, "reconcile.updated", sanitizeForLogs(status), {
-        reconciledAt: new Date().toISOString(),
-        gatewayTxnRef: status.bankTxnNo || status.txnID || status.txnAuthID,
-        gatewayResponseCode: status.responseCode || status.txnResponseCode,
-        gatewayResponseMessage: status.responseMessage || status.respDescription || status.txnRespDescription,
+
+      const secureHash = this.hashAdapter.sign(
+        buildStatusRequestHashFields(statusRequest)
+      );
+
+      const status = await this.client.transactionStatus({
+        ...statusRequest,
+        secureHash,
       });
-      results.push({ merchantTxnNo: updated.merchantTxnNo, state: updated.state });
+
+      const nextState = mapStatusToState(status);
+
+      const updated = await this.transition(
+        item,
+        nextState,
+        "reconcile.updated",
+        sanitizeForLogs(status),
+        {
+          reconciledAt: new Date().toISOString(),
+          gatewayTxnRef: status.bankTxnNo || status.txnID || status.txnAuthID,
+          gatewayResponseCode:
+            status.responseCode || status.txnResponseCode,
+          gatewayResponseMessage:
+            status.responseMessage ||
+            status.respDescription ||
+            status.txnRespDescription,
+        }
+      );
+
+      results.push({
+        merchantTxnNo: updated.merchantTxnNo,
+        state: updated.state,
+      });
     }
 
     return results;
@@ -208,8 +293,18 @@ export class PaymentService {
 
   async transition(current, nextState, event, eventPayload, update = {}) {
     assertValidTransition(current.state, nextState);
-    const updated = await this.repository.updateAttempt(current.merchantTxnNo, { ...update, state: nextState });
-    await this.repository.appendAuditLog(current.merchantTxnNo, event, eventPayload);
+
+    const updated = await this.repository.updateAttempt(current.merchantTxnNo, {
+      ...update,
+      state: nextState,
+    });
+
+    await this.repository.appendAuditLog(
+      current.merchantTxnNo,
+      event,
+      eventPayload
+    );
+
     return updated;
   }
 }
@@ -223,8 +318,14 @@ export class InitiatePaymentError extends Error {
 }
 
 export function generateMerchantTxnNo(orderId) {
-  const prefix = String(orderId || "ORD").replace(/[^a-zA-Z0-9]/g, "").slice(0, 10).toUpperCase() || "ORD";
+  const prefix =
+    String(orderId || "ORD")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .slice(0, 10)
+      .toUpperCase() || "ORD";
+
   const random = crypto.randomBytes(6).toString("hex").toUpperCase();
+
   return `${prefix}${Date.now().toString().slice(-8)}${random}`.slice(0, 30);
 }
 
@@ -239,6 +340,7 @@ function formatTxnDateForIcici(date = new Date()) {
     second: "2-digit",
     hour12: false,
   });
+
   const parts = formatter.formatToParts(date).reduce((acc, part) => {
     if (part.type !== "literal") acc[part.type] = part.value;
     return acc;
@@ -251,15 +353,21 @@ function formatPaise(amountPaise) {
   return (amountPaise / 100).toFixed(2);
 }
 
-function verifyInboundHash(hashAdapter, payload) {
-  const secureHash = payload.secureHash || payload.SecureHash;
-  const candidates = buildInboundHashCandidates(payload);
-  const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
-  if (!isValid) throw new Error("Inbound secure hash mismatch");
+function verifyInboundHash(hashAdapter, rawPayload) {
+  const secureHash = rawPayload.secureHash || rawPayload.SecureHash || "";
+  const orderedFieldValues = buildInboundHashFieldsFromPayload(rawPayload);
+  const isValid = hashAdapter.verify(orderedFieldValues, secureHash);
+
+  if (!isValid) {
+    throw new Error("Inbound secure hash mismatch");
+  }
 }
 
 function extractGatewayFailureReasons(payload) {
-  if (!payload || typeof payload !== "object") return ["No structured response received from ICICI gateway"];
+  if (!payload || typeof payload !== "object") {
+    return ["No structured response received from ICICI gateway"];
+  }
+
   const reasons = [];
   const possibleKeys = [
     "responseMessage",
@@ -273,36 +381,57 @@ function extractGatewayFailureReasons(payload) {
     "reasonCode",
     "reasonMessage",
   ];
+
   for (const key of possibleKeys) {
     const value = payload[key];
-    if (value != null && String(value).trim()) reasons.push(`${key}: ${String(value).trim()}`);
-  }
-  if (Array.isArray(payload.errors)) {
-    for (const item of payload.errors) {
-      if (typeof item === "string" && item.trim()) reasons.push(item.trim());
-      else if (item && typeof item === "object") reasons.push(JSON.stringify(item));
+    if (value != null && String(value).trim()) {
+      reasons.push(`${key}: ${String(value).trim()}`);
     }
   }
-  return reasons.length ? reasons : ["ICICI gateway did not provide an explicit failure reason"];
+
+  if (Array.isArray(payload.errors)) {
+    for (const item of payload.errors) {
+      if (typeof item === "string" && item.trim()) {
+        reasons.push(item.trim());
+      } else if (item && typeof item === "object") {
+        reasons.push(JSON.stringify(item));
+      }
+    }
+  }
+
+  return reasons.length
+    ? reasons
+    : ["ICICI gateway did not provide an explicit failure reason"];
 }
 
 function uniqueStrings(values) {
-  return [...new Set((values || []).filter((item) => typeof item === "string" && item.trim()))];
+  return [
+    ...new Set(
+      (values || []).filter(
+        (item) => typeof item === "string" && item.trim()
+      )
+    ),
+  ];
 }
 
 function shouldRedirectToGateway(response) {
   const responseCode = String(response?.responseCode || "")
     .trim()
     .toUpperCase();
+
   const showOTPCapturePage = String(response?.showOTPCapturePage || "")
     .trim()
     .toUpperCase();
-  const isKnownSuccessCode = ["0", "00", "000", "0000", "SUCCESS"].includes(responseCode);
+
+  const isKnownSuccessCode = ["0", "00", "000", "0000", "SUCCESS"].includes(
+    responseCode
+  );
+
   const hasRedirectContext = Boolean(response?.redirectURI && response?.tranCtx);
 
   if (showOTPCapturePage === "N" && hasRedirectContext) return true;
-  // ICICI can return R1000 while still providing redirect details for auth flow.
   if (hasRedirectContext && responseCode === "R1000") return true;
   if (hasRedirectContext && isKnownSuccessCode) return true;
+
   return false;
 }

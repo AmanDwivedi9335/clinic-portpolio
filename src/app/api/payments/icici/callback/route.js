@@ -269,6 +269,8 @@ function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
           registerPayload: debug.payload || {},
           responseStatus: debug.responseStatus || "",
           responseBody: debug.responseBody || {},
+          responseContentType: debug.responseContentType || "",
+          responseText: debug.responseText || "",
           callbackPayload: rawCallbackPayload,
           rawInboundPayload,
         },

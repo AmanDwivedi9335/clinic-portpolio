@@ -59,12 +59,27 @@ export async function registerPatient(payload) {
     cache: "no-store",
   });
 
-  const result = await response.json().catch(() => ({}));
+  const rawResponseText = await response.text();
+  const contentType = response.headers.get("content-type") || "";
+
+  let result = {};
+  if (rawResponseText) {
+    try {
+      result = JSON.parse(rawResponseText);
+    } catch {
+      result = {};
+    }
+  }
+
   if (!response.ok) {
     const externalMessage =
       result?.message ||
+      result?.error_description ||
+      result?.error ||
+      result?.errors?.[0]?.message ||
       result?.error?.message ||
       result?.detail ||
+      rawResponseText ||
       "";
     const errorMessage = externalMessage
       ? `${externalMessage} (status ${response.status})`
@@ -78,6 +93,8 @@ export async function registerPatient(payload) {
       payload,
       responseStatus: response.status,
       responseBody: result,
+      responseContentType: contentType,
+      responseText: rawResponseText,
     };
     throw error;
   }

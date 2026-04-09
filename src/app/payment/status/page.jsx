@@ -11,8 +11,18 @@ function StatusInner() {
   const callbackState = searchParams.get("paymentState") || "";
   const paymentStatus = searchParams.get("paymentStatus") || "";
   const callbackHashStatus = searchParams.get("callbackHashStatus") || "";
+  const normalizedPaymentStatus = paymentStatus.trim().toLowerCase();
+  const isFailedFromGateway = normalizedPaymentStatus === "failed";
 
-  const [status, setStatus] = useState(null);
+  const [status, setStatus] = useState(() =>
+    isFailedFromGateway
+      ? {
+          state: "FAILED",
+          responseMessage: "Payment was marked as failed by the gateway.",
+          updatedAt: new Date().toISOString(),
+        }
+      : null
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [popup, setPopup] = useState({
@@ -145,6 +155,17 @@ function StatusInner() {
     }
 
     if (["FAILED", "CANCELLED"].includes(status.state)) {
+      if (isFailedFromGateway) {
+        completionTriggeredRef.current = true;
+        setIsRetryingAfterFailure(false);
+        setPopup({
+          open: true,
+          kind: "error",
+          message: "Payment failed. Please retry from checkout.",
+        });
+        return;
+      }
+
       if (failedRetryCount < MAX_FAILED_RETRIES) {
         setIsRetryingAfterFailure(true);
 
@@ -198,7 +219,7 @@ function StatusInner() {
           "Payment is still being processed by the gateway. We will keep checking automatically.",
       });
     }
-  }, [failedRetryCount, merchantTxnNo, status]);
+  }, [failedRetryCount, isFailedFromGateway, merchantTxnNo, status]);
 
   useEffect(() => {
     if (
@@ -282,7 +303,9 @@ function StatusInner() {
         </p>
       ) : null}
 
-      {loading ? <p className="mt-6">Payment is processing...</p> : null}
+      {loading && !isFailedFromGateway ? (
+        <p className="mt-6">Payment is processing...</p>
+      ) : null}
 
       {error ? <p className="mt-6 text-red-600">{error}</p> : null}
 

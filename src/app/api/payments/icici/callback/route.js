@@ -7,6 +7,16 @@ import {
 } from "@/lib/payments/icici/hash";
 import { normalizeKeyValues } from "@/lib/payments/icici/types";
 import { PaymentService } from "@/lib/payments/payment-service";
+import {
+  recordPatientPayment,
+  registerPatient,
+  toPatientMidPayload,
+  toPatientRegisterPayload,
+} from "@/lib/server/patientApiService";
+import {
+  getRegistrationDraft,
+  saveRegistrationDraft,
+} from "@/lib/server/tempRegistrationStore";
 
 export const runtime = "nodejs";
 
@@ -39,6 +49,11 @@ async function handleCallback(request) {
     );
 
     const attempt = await service.processCallback(normalizedPayload);
+    await syncDraftAndExternalPatientApi({
+      attempt,
+      normalizedPayload,
+      rawPayload: rawCallbackPayload,
+    });
 
     const redirect = new URL(config.frontendStatusUrl);
 
@@ -98,6 +113,102 @@ async function handleCallback(request) {
 
     return NextResponse.redirect(redirect, { status: 303 });
   }
+}
+
+async function syncDraftAndExternalPatientApi({
+  attempt,
+  normalizedPayload,
+  rawPayload,
+}) {
+  if (!attempt?.registrationId) return;
+
+  const draft = await getRegistrationDraft(attempt.registrationId);
+  if (!draft) return;
+
+  const now = new Date().toISOString();
+  const callbackSnapshot = {
+    state: attempt.state,
+    merchantTxnNo: attempt.merchantTxnNo,
+    transactionId:
+      normalizedPayload.bankTxnNo ||
+      normalizedPayload.txnID ||
+      normalizedPayload.txnAuthID ||
+      "",
+    responseCode:
+      normalizedPayload.responseCode || normalizedPayload.txnResponseCode || "",
+    responseMessage:
+      normalizedPayload.responseMessage ||
+      normalizedPayload.respDescription ||
+      "",
+    rawPayload,
+    updatedAt: now,
+  };
+
+  const baseDraft = {
+    ...draft,
+    merchantTxnNo: attempt.merchantTxnNo,
+    paymentState: attempt.state,
+    paymentUpdatedAt: now,
+    paymentTransaction: callbackSnapshot,
+    flowStatus:
+      attempt.state === "SUCCESS"
+        ? "PAYMENT_SUCCESS_CALLBACK"
+        : "PAYMENT_FAILED_CALLBACK",
+  };
+
+  if (attempt.state !== "SUCCESS") {
+    await saveRegistrationDraft(attempt.registrationId, baseDraft);
+    return;
+  }
+
+  let nextDraft = { ...baseDraft };
+  let patientRegisterResponse = draft.externalApiResponse || null;
+  let patientUuid =
+    draft.patientUuid ||
+    draft.externalApiResponse?.patient?.uuid ||
+    draft.externalApiResponse?.patient?.user_uuid ||
+    "";
+
+  if (!patientUuid) {
+    const registerPayload = toPatientRegisterPayload(draft);
+    patientRegisterResponse = await registerPatient(registerPayload);
+    patientUuid =
+      patientRegisterResponse?.patient?.uuid ||
+      patientRegisterResponse?.patient?.user_uuid ||
+      "";
+
+    nextDraft = {
+      ...nextDraft,
+      externalApiResponse: patientRegisterResponse,
+      patientUuid,
+      patientRegisteredAt: now,
+    };
+  }
+
+  if (!patientUuid) {
+    await saveRegistrationDraft(attempt.registrationId, {
+      ...nextDraft,
+      flowStatus: "PATIENT_REGISTERED_MISSING_UUID",
+    });
+    return;
+  }
+
+  const midPayload = toPatientMidPayload({
+    attempt,
+    callbackPayload: normalizedPayload,
+  });
+
+  const midResponse = await recordPatientPayment(patientUuid, midPayload);
+
+  await saveRegistrationDraft(attempt.registrationId, {
+    ...nextDraft,
+    patientUuid,
+    midRequestPayload: midPayload,
+    midResponse,
+    midUpdatedAt: now,
+    flowStatus: "FINALIZED",
+    finalizedAt: now,
+  });
 }
 
 function verifyInboundSecureHash(rawCallbackPayload, merchantKey) {

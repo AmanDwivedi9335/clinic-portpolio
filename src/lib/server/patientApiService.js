@@ -116,11 +116,7 @@ export async function registerPatient(payload) {
       responseStatus: response.status,
       responseBody: result,
       responseContentType: contentType,
-      responseTextPreview: truncateText(rawResponseText, 1500),
-      responseSummary: {
-        ...cloudflare,
-        textLength: rawResponseText.length,
-      },
+      responseText: rawResponseText,
     };
     throw error;
   }

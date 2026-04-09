@@ -65,6 +65,16 @@ export async function registerPatient(payload) {
         ? `${result.message}. ${detail}`
         : `Patient register API failed with status ${response.status}. ${detail}`
     );
+
+    const errorMessage = result.message
+      ? `${result.message} (status ${response.status})`
+      : `Patient register API failed with status ${response.status}`;
+
+    const error = new Error(errorMessage);
+    error.code = "patient_register_api_failed";
+    error.stage = "register_patient";
+    error.debugDetail = debugDetail;
+    throw error;
   }
 
   return result;

@@ -66,6 +66,10 @@ export function buildStatusRequestHashFields(input) {
 }
 
 export function buildInboundHashCandidates(payload) {
+  return buildInboundHashCandidateDetails(payload).map((candidate) => candidate.fields);
+}
+
+export function buildInboundHashCandidateDetails(payload) {
   const sanitizedEntries = Object.entries(payload || {}).filter(([key, value]) => {
     if (!key) return false;
     if (key.toLowerCase() === "securehash") return false;
@@ -73,26 +77,38 @@ export function buildInboundHashCandidates(payload) {
     return true;
   });
 
-  const dynamicFieldsWithCapitalizedKeysFirst = [...sanitizedEntries]
+  const dynamicWithCapitalizedKeysFirst = [...sanitizedEntries]
     .sort(([leftKey], [rightKey]) => compareIciciInboundKeys(leftKey, rightKey))
-    .map(([, value]) => String(value));
+    .map(([key, value]) => [key, String(value)]);
 
-  const dynamicFieldsInReceivedOrder = sanitizedEntries.map(([, value]) => String(value));
-  const dynamicFieldsInSortedOrder = [...sanitizedEntries]
+  const dynamicInReceivedOrder = sanitizedEntries.map(([key, value]) => [key, String(value)]);
+  const dynamicInSortedOrder = [...sanitizedEntries]
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([, value]) => String(value));
+    .map(([key, value]) => [key, String(value)]);
 
-  const legacyFixedFields = buildInboundHashFields(payload);
+  const legacyFixedFields = [
+    ["merchantTxnNo", String(payload.merchantTxnNo ?? "")],
+    [payload.responseCode != null ? "responseCode" : "status", String(payload.responseCode ?? payload.status ?? "")],
+    ["amount", String(payload.amount ?? "")],
+    ["bankTxnNo", String(payload.bankTxnNo ?? "")],
+  ];
 
   const uniqueCandidates = new Map();
-  for (const fields of [
-    dynamicFieldsWithCapitalizedKeysFirst,
-    dynamicFieldsInReceivedOrder,
-    dynamicFieldsInSortedOrder,
-    legacyFixedFields,
+  for (const candidate of [
+    { strategy: "dynamic_capitalized_keys_first", entries: dynamicWithCapitalizedKeysFirst },
+    { strategy: "dynamic_received_order", entries: dynamicInReceivedOrder },
+    { strategy: "dynamic_alphabetical_keys", entries: dynamicInSortedOrder },
+    { strategy: "legacy_fixed_fields", entries: legacyFixedFields },
   ]) {
+    const fields = candidate.entries.map(([, value]) => value);
     const signature = fields.join("\u0001");
-    if (!uniqueCandidates.has(signature)) uniqueCandidates.set(signature, fields);
+    if (!uniqueCandidates.has(signature)) {
+      uniqueCandidates.set(signature, {
+        strategy: candidate.strategy,
+        fieldKeys: candidate.entries.map(([key]) => key),
+        fields,
+      });
+    }
   }
 
   return [...uniqueCandidates.values()];

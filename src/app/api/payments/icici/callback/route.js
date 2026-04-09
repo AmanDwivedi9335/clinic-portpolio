@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getIciciConfig } from "@/lib/payments/icici/config";
-import { buildInboundHashCandidates, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
+import { buildInboundHashCandidateDetails, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
 import { normalizeKeyValues } from "@/lib/payments/icici/types";
 import { PaymentService } from "@/lib/payments/payment-service";
 
@@ -46,20 +46,19 @@ function classifyCallbackError(error) {
 
   if (message.includes("Inbound secure hash mismatch")) {
     const debugDetail = error && typeof error === "object" ? error.debugDetail : null;
-    const detailParts = ["Secure hash validation failed for callback payload."];
-    if (debugDetail?.receivedSecureHash) detailParts.push(`receivedSecureHash=${debugDetail.receivedSecureHash}`);
-    if (debugDetail?.candidatePayloads?.length) {
-      detailParts.push(`candidatePayloads=${debugDetail.candidatePayloads.join(" || ")}`);
-    }
-    if (debugDetail?.candidateHashes?.length) {
-      detailParts.push(`candidateHashes=${debugDetail.candidateHashes.join(" || ")}`);
-    }
-    if (debugDetail?.payloadJson) detailParts.push(`payload=${debugDetail.payloadJson}`);
+    const detail = debugDetail
+      ? JSON.stringify({
+          message: "Secure hash validation failed for callback payload.",
+          receivedSecureHash: debugDetail.receivedSecureHash,
+          hashInputCandidates: debugDetail.hashInputCandidates,
+          payloadReceivedFromIcici: debugDetail.payload,
+        })
+      : "Secure hash validation failed for callback payload.";
 
     return {
       code: "callback_hash_mismatch",
       stage: "verify_hash",
-      detail: detailParts.join(" "),
+      detail,
     };
   }
 
@@ -97,26 +96,31 @@ function classifyCallbackError(error) {
 function verifyInboundSecureHash(payload, merchantKey) {
   const secureHash = payload.secureHash || payload.SecureHash;
   const hashAdapter = new HmacSha256HashAdapter(merchantKey);
-  const candidates = buildInboundHashCandidates(payload);
-  const isValid = candidates.some((fields) => hashAdapter.verify(fields, secureHash));
+  const candidateDetails = buildInboundHashCandidateDetails(payload);
+  const isValid = candidateDetails.some((candidate) => hashAdapter.verify(candidate.fields, secureHash));
 
   if (!isValid) {
-    const candidatePayloads = candidates.map((fields) => fields.join(""));
-    const candidateHashes = candidates.map((fields) => hashAdapter.sign(fields));
-    const payloadJson = JSON.stringify(payload);
+    const hashInputCandidates = candidateDetails.map((candidate) => ({
+      strategy: candidate.strategy,
+      fieldKeys: candidate.fieldKeys,
+      payloadString: candidate.fields.join(""),
+      generatedSecureHash: hashAdapter.sign(candidate.fields),
+    }));
+    const debugPayload = { ...payload };
+    delete debugPayload.secureHash;
+    delete debugPayload.SecureHash;
+
     console.error("ICICI callback secure hash mismatch", {
       receivedSecureHash: secureHash || null,
-      candidatePayloads,
-      candidateHashes,
-      payloadJson,
+      hashInputCandidates,
+      payload: debugPayload,
     });
 
     const error = new Error("Inbound secure hash mismatch");
     error.debugDetail = {
       receivedSecureHash: secureHash || "",
-      candidatePayloads,
-      candidateHashes,
-      payloadJson,
+      hashInputCandidates,
+      payload: debugPayload,
     };
     throw error;
   }

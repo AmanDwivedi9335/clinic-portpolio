@@ -28,6 +28,24 @@ function getPatientApiBaseUrl() {
   return baseUrl.replace(/\/+$/, "");
 }
 
+function truncateText(value, maxLength = 1000) {
+  const text = String(value || "");
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength)}... [truncated ${text.length - maxLength} chars]`;
+}
+
+function extractCloudflareMeta(html) {
+  const source = String(html || "");
+  const rayMatch = source.match(/cRay:\s*'([^']+)'/);
+  const zoneMatch = source.match(/cZone:\s*'([^']+)'/);
+
+  return {
+    blockedByCloudflare: source.includes("cf_chl_opt"),
+    cloudflareRayId: rayMatch?.[1] || "",
+    cloudflareZone: zoneMatch?.[1] || "",
+  };
+}
+
 export function toPatientRegisterPayload(draft = {}) {
   const randomCredential = crypto.randomBytes(8).toString("hex");
 
@@ -72,7 +90,11 @@ export async function registerPatient(payload) {
   }
 
   if (!response.ok) {
+    const cloudflare = extractCloudflareMeta(rawResponseText);
     const externalMessage =
+      (cloudflare.blockedByCloudflare
+        ? "Patient register API request was blocked by Cloudflare challenge. Ask the API team to allowlist this server/IP or bypass bot protection for server-to-server traffic."
+        : "") ||
       result?.message ||
       result?.error_description ||
       result?.error ||

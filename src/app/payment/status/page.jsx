@@ -87,6 +87,8 @@ function StatusInner() {
           "We could not process the payment callback. Please review the callback details below.",
         callback_config_error:
           "ICICI payment callback configuration is invalid or incomplete.",
+        patient_register_api_failed:
+          "Payment is successful, but patient registration API failed. Please review the register API details below.",
       };
 
       setPopup({

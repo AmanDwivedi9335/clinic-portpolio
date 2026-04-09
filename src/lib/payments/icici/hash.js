@@ -114,6 +114,13 @@ export function buildInboundHashCandidateDetails(payload) {
   return [...uniqueCandidates.values()];
 }
 
+export function buildCallbackHashInputFromOrderedEntries(orderedEntries) {
+  if (!Array.isArray(orderedEntries)) return [];
+  return orderedEntries
+    .filter(([key, value]) => key && key.toLowerCase() !== "securehash" && value != null)
+    .map(([, value]) => String(value));
+}
+
 function compareIciciInboundKeys(leftKey, rightKey) {
   const leftStartsWithUppercase = /^[A-Z]/.test(leftKey);
   const rightStartsWithUppercase = /^[A-Z]/.test(rightKey);

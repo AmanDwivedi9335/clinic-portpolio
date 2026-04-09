@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getIciciConfig } from "@/lib/payments/icici/config";
-import { buildInboundHashCandidateDetails, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
+import { buildInboundHashCandidateDetails, buildCallbackHashInputFromOrderedEntries, HmacSha256HashAdapter } from "@/lib/payments/icici/hash";
 import { normalizeKeyValues } from "@/lib/payments/icici/types";
 import { PaymentService } from "@/lib/payments/payment-service";
 
@@ -20,18 +20,23 @@ async function handleCallback(request) {
   const config = getIciciConfig();
   let payload = {};
   let rawInboundPayload = null;
+  let callbackHashDebug = null;
 
   try {
     const inbound = await parseInboundPayload(request);
     payload = normalizeKeyValues(inbound.parsedPayload);
     rawInboundPayload = inbound.rawInboundPayload;
-    verifyInboundSecureHash(payload, config.merchantKey, rawInboundPayload);
+    callbackHashDebug = verifyInboundSecureHash(payload, config.merchantKey, rawInboundPayload, inbound.orderedEntries);
 
     const attempt = await service.processCallback(payload);
     const redirect = new URL(config.frontendStatusUrl);
     redirect.searchParams.set("merchantTxnNo", attempt.merchantTxnNo);
     redirect.searchParams.set("paymentState", attempt.state);
     redirect.searchParams.set("paymentStatus", attempt.state === "SUCCESS" ? "success" : "failed");
+    redirect.searchParams.set("callbackHashStatus", "matched");
+    if (callbackHashDebug?.concatenatedPayloadString) {
+      redirect.searchParams.set("callbackHashPayload", callbackHashDebug.concatenatedPayloadString);
+    }
     return NextResponse.redirect(redirect, { status: 303 });
   } catch (error) {
     const redirect = new URL(config.frontendStatusUrl);
@@ -97,11 +102,16 @@ function classifyCallbackError(error) {
   };
 }
 
-function verifyInboundSecureHash(payload, merchantKey, rawInboundPayload) {
+function verifyInboundSecureHash(payload, merchantKey, rawInboundPayload, orderedEntries = []) {
   const secureHash = payload.secureHash || payload.SecureHash;
   const hashAdapter = new HmacSha256HashAdapter(merchantKey);
+  const callbackHashFields = buildCallbackHashInputFromOrderedEntries(orderedEntries);
+  const callbackHashMatched = callbackHashFields.length > 0 && hashAdapter.verify(callbackHashFields, secureHash);
+  const callbackGeneratedHash = callbackHashFields.length ? hashAdapter.sign(callbackHashFields) : "";
+  const callbackHashPayload = callbackHashFields.join("");
   const candidateDetails = buildInboundHashCandidateDetails(payload);
-  const isValid = candidateDetails.some((candidate) => hashAdapter.verify(candidate.fields, secureHash));
+  const fallbackMatched = candidateDetails.some((candidate) => hashAdapter.verify(candidate.fields, secureHash));
+  const isValid = callbackHashMatched || fallbackMatched;
 
   if (!isValid) {
     const hashInputCandidates = candidateDetails.map((candidate) => ({
@@ -119,6 +129,11 @@ function verifyInboundSecureHash(payload, merchantKey, rawInboundPayload) {
       hashInputCandidates,
       payload: debugPayload,
       rawInboundPayload,
+      callbackHashComputation: {
+        orderedFieldValues: callbackHashFields,
+        concatenatedPayloadString: callbackHashPayload,
+        generatedSecureHash: callbackGeneratedHash,
+      },
     });
 
     const error = new Error("Inbound secure hash mismatch");
@@ -127,18 +142,32 @@ function verifyInboundSecureHash(payload, merchantKey, rawInboundPayload) {
       hashInputCandidates,
       payload: debugPayload,
       rawInboundPayload,
+      callbackHashComputation: {
+        orderedFieldValues: callbackHashFields,
+        concatenatedPayloadString: callbackHashPayload,
+        generatedSecureHash: callbackGeneratedHash,
+      },
     };
     throw error;
   }
+
+  return {
+    orderedFieldValues: callbackHashFields,
+    concatenatedPayloadString: callbackHashPayload,
+    generatedSecureHash: callbackGeneratedHash,
+    receivedSecureHash: secureHash || "",
+  };
 }
 
 async function parseInboundPayload(request) {
   const requestUrl = new URL(request.url);
-  const queryParams = Object.fromEntries(requestUrl.searchParams.entries());
+  const queryEntries = Array.from(requestUrl.searchParams.entries());
+  const queryParams = Object.fromEntries(queryEntries);
   const queryString = requestUrl.searchParams.toString();
   if (request.method === "GET") {
     return {
       parsedPayload: queryParams,
+      orderedEntries: queryEntries,
       rawInboundPayload: {
         method: "GET",
         contentType: request.headers.get("content-type") || "",
@@ -150,12 +179,13 @@ async function parseInboundPayload(request) {
   const ct = request.headers.get("content-type") || "";
   if (ct.includes("application/x-www-form-urlencoded")) {
     const rawBody = await request.text();
-    const form = new URLSearchParams(rawBody);
+    const formEntries = Array.from(new URLSearchParams(rawBody).entries());
     return {
       parsedPayload: {
         ...queryParams,
-        ...Object.fromEntries(form.entries()),
+        ...Object.fromEntries(formEntries),
       },
+      orderedEntries: [...queryEntries, ...formEntries],
       rawInboundPayload: {
         method: request.method,
         contentType: ct,
@@ -167,12 +197,14 @@ async function parseInboundPayload(request) {
 
   if (ct.includes("multipart/form-data")) {
     const form = await request.formData();
-    const parsedForm = Object.fromEntries(Array.from(form.entries()).map(([k, v]) => [k, String(v)]));
+    const formEntries = Array.from(form.entries()).map(([k, v]) => [k, String(v)]);
+    const parsedForm = Object.fromEntries(formEntries);
     return {
       parsedPayload: {
         ...queryParams,
         ...parsedForm,
       },
+      orderedEntries: [...queryEntries, ...formEntries],
       rawInboundPayload: {
         method: request.method,
         contentType: ct,
@@ -185,8 +217,10 @@ async function parseInboundPayload(request) {
   if (ct.includes("application/json")) {
     const rawBody = await request.text();
     const json = rawBody ? JSON.parse(rawBody) : {};
+    const jsonEntries = Object.entries(json || {}).map(([k, v]) => [k, String(v)]);
     return {
-      parsedPayload: { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) },
+      parsedPayload: { ...queryParams, ...Object.fromEntries(jsonEntries) },
+      orderedEntries: [...queryEntries, ...jsonEntries],
       rawInboundPayload: {
         method: request.method,
         contentType: ct,
@@ -200,6 +234,7 @@ async function parseInboundPayload(request) {
   if (!text.trim()) {
     return {
       parsedPayload: queryParams,
+      orderedEntries: queryEntries,
       rawInboundPayload: {
         method: request.method,
         contentType: ct,
@@ -212,8 +247,10 @@ async function parseInboundPayload(request) {
   try {
     const json = JSON.parse(text);
     if (json && typeof json === "object") {
+      const jsonEntries = Object.entries(json).map(([k, v]) => [k, String(v)]);
       return {
-        parsedPayload: { ...queryParams, ...Object.fromEntries(Object.entries(json).map(([k, v]) => [k, String(v)])) },
+        parsedPayload: { ...queryParams, ...Object.fromEntries(jsonEntries) },
+        orderedEntries: [...queryEntries, ...jsonEntries],
         rawInboundPayload: {
           method: request.method,
           contentType: ct,
@@ -226,9 +263,11 @@ async function parseInboundPayload(request) {
     // fallback to URL encoded parsing below
   }
 
-  const fromEncodedBody = Object.fromEntries(new URLSearchParams(text).entries());
+  const encodedEntries = Array.from(new URLSearchParams(text).entries());
+  const fromEncodedBody = Object.fromEntries(encodedEntries);
   return {
     parsedPayload: { ...queryParams, ...fromEncodedBody },
+    orderedEntries: [...queryEntries, ...encodedEntries],
     rawInboundPayload: {
       method: request.method,
       contentType: ct,

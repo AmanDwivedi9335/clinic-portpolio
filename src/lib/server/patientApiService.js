@@ -29,15 +29,17 @@ function getPatientApiBaseUrl() {
 }
 
 export function toPatientRegisterPayload(draft = {}) {
+  const randomCredential = crypto.randomBytes(8).toString("hex");
+
   return {
     email: draft.email,
-    password: draft.password || crypto.randomBytes(8).toString("hex"),
+    password: draft.password || randomCredential,
     phone: draft.mobile,
     first_name: draft.firstName,
     last_name: draft.lastName || "-",
     date_of_birth: normalizeDateOfBirth(draft.dob),
     gender: parseGender(draft.gender),
-    abha_id: draft.abhaId || "",
+    abha_id: draft.abhaId || randomCredential,
     city: draft.city || "",
     state: draft.state || "",
     pincode: draft.pincode || "000000",

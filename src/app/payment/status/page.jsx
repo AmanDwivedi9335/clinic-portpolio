@@ -10,6 +10,8 @@ function StatusInner() {
   const callbackErrorStage = searchParams.get("errorStage") || "";
   const callbackErrorDetail = searchParams.get("errorDetail") || "";
   const callbackState = searchParams.get("paymentState") || "";
+  const callbackHashStatus = searchParams.get("callbackHashStatus") || "";
+  const callbackHashPayload = searchParams.get("callbackHashPayload") || "";
   const callbackPayload = useMemo(() => {
     const payload = {};
     for (const [key, value] of searchParams.entries()) {
@@ -44,6 +46,15 @@ function StatusInner() {
   }, [merchantTxnNo]);
 
   useEffect(() => {
+    if (callbackHashStatus === "matched") {
+      setPopup({
+        open: true,
+        kind: "success",
+        message: "ICICI callback secure hash matched after concatenating all callback values except secureHash.",
+      });
+      return;
+    }
+
     if (callbackError) {
       const callbackErrorMessages = {
         callback_hash_mismatch: "Gateway callback failed secure hash validation. Please verify hash field order and merchant key.",
@@ -62,7 +73,7 @@ function StatusInner() {
           "We could not process payment callback. If amount was debited, please wait while advice updates are received.",
       });
     }
-  }, [callbackError]);
+  }, [callbackError, callbackHashStatus]);
 
   useEffect(() => {
     if (!status || completionTriggeredRef.current) return;
@@ -139,9 +150,16 @@ function StatusInner() {
       <h1 className="text-2xl font-semibold">Payment Status</h1>
       <p className="mt-2 text-sm text-gray-600">Transaction: {merchantTxnNo || "Not available"}</p>
       {callbackState ? <p className="mt-2 text-sm text-gray-600">Gateway callback state: {callbackState}</p> : null}
+      {callbackHashStatus ? <p className="mt-2 text-sm text-gray-600">Callback hash status: {callbackHashStatus}</p> : null}
       {callbackError ? <p className="mt-2 text-sm text-gray-600">Callback error code: {callbackError}</p> : null}
       {callbackErrorStage ? <p className="mt-2 text-sm text-gray-600">Callback error stage: {callbackErrorStage}</p> : null}
       {callbackErrorDetail ? <p className="mt-2 text-sm text-gray-600">Callback error detail: {callbackErrorDetail}</p> : null}
+      {callbackHashPayload ? (
+        <div className="mt-4 rounded-lg border bg-gray-50 p-4">
+          <p className="text-sm font-medium text-gray-700">Concatenated callback hash payload (all fields except secureHash)</p>
+          <pre className="mt-2 overflow-x-auto text-xs text-gray-700">{callbackHashPayload}</pre>
+        </div>
+      ) : null}
       {Object.keys(callbackPayload).length ? (
         <div className="mt-4 rounded-lg border bg-gray-50 p-4">
           <p className="text-sm font-medium text-gray-700">Callback URL response payload</p>

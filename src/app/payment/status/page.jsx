@@ -20,8 +20,13 @@ function StatusInner() {
     kind: "success",
     message: "",
   });
+  const [failedRetryCount, setFailedRetryCount] = useState(0);
+  const [isRetryingAfterFailure, setIsRetryingAfterFailure] = useState(false);
 
   const completionTriggeredRef = useRef(false);
+  const failedRetryTimerRef = useRef(null);
+
+  const MAX_FAILED_RETRIES = 2;
 
   useEffect(() => {
     if (!merchantTxnNo) return;
@@ -51,6 +56,12 @@ function StatusInner() {
     loadStatus();
   }, [merchantTxnNo]);
 
+
+  useEffect(() => {
+    return () => {
+      if (failedRetryTimerRef.current) clearTimeout(failedRetryTimerRef.current);
+    };
+  }, []);
   useEffect(() => {
     if (callbackHashStatus === "matched") {
       setPopup({
@@ -92,6 +103,7 @@ function StatusInner() {
 
     if (status.state === "SUCCESS") {
       completionTriggeredRef.current = true;
+      setIsRetryingAfterFailure(false);
 
       const finalize = async () => {
         try {
@@ -133,12 +145,41 @@ function StatusInner() {
     }
 
     if (["FAILED", "CANCELLED"].includes(status.state)) {
+      if (failedRetryCount < MAX_FAILED_RETRIES) {
+        setIsRetryingAfterFailure(true);
+
+        setPopup({
+          open: true,
+          kind: "info",
+          message: `Payment status is ${status.state.toLowerCase()}. Retrying verification (${failedRetryCount + 1}/${MAX_FAILED_RETRIES})...`,
+        });
+
+        if (failedRetryTimerRef.current) clearTimeout(failedRetryTimerRef.current);
+        failedRetryTimerRef.current = setTimeout(async () => {
+          setFailedRetryCount((count) => count + 1);
+
+          try {
+            const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
+            const result = await response.json();
+
+            if (!response.ok || !result.success) return;
+
+            setStatus(result.data);
+          } catch (_error) {
+            // non-blocking retry error
+          }
+        }, 3000);
+
+        return;
+      }
+
       completionTriggeredRef.current = true;
+      setIsRetryingAfterFailure(false);
 
       setPopup({
         open: true,
         kind: "error",
-        message: "Payment was not successful. Please retry from checkout.",
+        message: "Payment was not successful after 2 retries. Please retry from checkout.",
       });
 
       return;
@@ -149,6 +190,7 @@ function StatusInner() {
         status.state
       )
     ) {
+      setIsRetryingAfterFailure(false);
       setPopup({
         open: true,
         kind: "info",
@@ -156,7 +198,7 @@ function StatusInner() {
           "Payment is still being processed by the gateway. We will keep checking automatically.",
       });
     }
-  }, [merchantTxnNo, status]);
+  }, [failedRetryCount, merchantTxnNo, status]);
 
   useEffect(() => {
     if (
@@ -187,6 +229,7 @@ function StatusInner() {
 
   const statusLabel = useMemo(() => {
     if (!status?.state) return "Awaiting update";
+    if (isRetryingAfterFailure) return "Retrying payment verification";
 
     const labels = {
       SUCCESS: "Payment successful",
@@ -199,16 +242,18 @@ function StatusInner() {
     };
 
     return labels[status.state] || status.state;
-  }, [status]);
+  }, [isRetryingAfterFailure, status]);
 
   const statusTone = useMemo(() => {
     if (!status?.state) return "text-gray-700 bg-gray-50 border-gray-200";
+    if (isRetryingAfterFailure)
+      return "text-amber-700 bg-amber-50 border-amber-200";
     if (status.state === "SUCCESS")
       return "text-green-700 bg-green-50 border-green-200";
     if (["FAILED", "CANCELLED"].includes(status.state))
       return "text-red-700 bg-red-50 border-red-200";
     return "text-amber-700 bg-amber-50 border-amber-200";
-  }, [status]);
+  }, [isRetryingAfterFailure, status]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -224,7 +269,9 @@ function StatusInner() {
           {status?.state === "SUCCESS"
             ? "Your payment was received. You can continue using your account."
             : ["FAILED", "CANCELLED"].includes(status?.state)
-            ? "No amount will be charged for this attempt. Please try again if needed."
+            ? isRetryingAfterFailure
+              ? "We detected a failed response and are retrying verification automatically."
+              : "No amount will be charged for this attempt. Please try again if needed."
             : "We are waiting for confirmation from the payment gateway. This page updates automatically."}
         </p>
       </div>
@@ -251,6 +298,12 @@ function StatusInner() {
               ? new Date(status.updatedAt).toLocaleString()
               : "Not available"}
           </p>
+
+          {failedRetryCount > 0 ? (
+            <p>
+              <strong>Retries used:</strong> {failedRetryCount}/{MAX_FAILED_RETRIES}
+            </p>
+          ) : null}
 
           {status.responseMessage ? (
             <p>

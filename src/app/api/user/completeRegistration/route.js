@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { PaymentService } from "@/lib/payments/payment-service";
+import { verifyStatusAccessToken } from "@/lib/payments/status-access";
 import {
   recordPatientPayment,
   registerPatient,
@@ -15,6 +16,7 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const merchantTxnNo = String(body.merchantTxnNo || "").trim();
+    const statusToken = String(body.statusToken || "").trim();
     if (!merchantTxnNo) {
       return NextResponse.json({ success: false, message: "merchantTxnNo is required" }, { status: 400 });
     }
@@ -22,6 +24,16 @@ export async function POST(request) {
     const paymentService = new PaymentService();
     const attempt = await paymentService.getStatus(merchantTxnNo);
     if (!attempt) return NextResponse.json({ success: false, message: "Payment attempt not found" }, { status: 404 });
+
+    const isAuthorized = verifyStatusAccessToken({
+      token: statusToken,
+      merchantTxnNo: attempt.merchantTxnNo,
+      registrationId: attempt.registrationId,
+    });
+
+    if (!isAuthorized) {
+      return NextResponse.json({ success: false, message: "Unauthorized payment completion access" }, { status: 401 });
+    }
 
     if (attempt.state !== "SUCCESS") {
       return NextResponse.json({ success: false, message: `Payment state is ${attempt.state}` }, { status: 400 });

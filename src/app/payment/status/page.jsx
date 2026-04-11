@@ -7,6 +7,7 @@ function StatusInner() {
   const searchParams = useSearchParams();
 
   const merchantTxnNo = searchParams.get("merchantTxnNo") || "";
+  const statusToken = searchParams.get("statusToken") || "";
   const callbackError = searchParams.get("error") || "";
   const callbackState = searchParams.get("paymentState") || "";
   const paymentStatus = searchParams.get("paymentStatus") || "";
@@ -47,7 +48,11 @@ function StatusInner() {
 
     statusCheckCountRef.current += 1;
 
-    const response = await fetch(`/api/txn/status/${merchantTxnNo}`);
+    const response = await fetch(`/api/txn/status/${merchantTxnNo}`, {
+      headers: {
+        "x-payment-status-token": statusToken,
+      },
+    });
     const result = await response.json();
 
     if (!response.ok || !result.success) {
@@ -55,7 +60,7 @@ function StatusInner() {
     }
 
     return result.data;
-  }, [merchantTxnNo]);
+  }, [merchantTxnNo, statusToken]);
 
   useEffect(() => {
     if (!merchantTxnNo || isFailedFromGateway) return;
@@ -135,7 +140,7 @@ function StatusInner() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ merchantTxnNo }),
+            body: JSON.stringify({ merchantTxnNo, statusToken }),
           });
 
           const result = await response.json();
@@ -229,7 +234,7 @@ function StatusInner() {
           "Payment is still being processed by the gateway. We will keep checking automatically.",
       });
     }
-  }, [failedRetryCount, fetchLatestStatus, isFailedFromGateway, merchantTxnNo, status]);
+  }, [failedRetryCount, fetchLatestStatus, isFailedFromGateway, merchantTxnNo, status, statusToken]);
 
   useEffect(() => {
     if (

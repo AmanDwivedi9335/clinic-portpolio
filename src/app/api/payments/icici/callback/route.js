@@ -7,6 +7,7 @@ import {
 } from "@/lib/payments/icici/hash";
 import { normalizeKeyValues } from "@/lib/payments/icici/types";
 import { PaymentService } from "@/lib/payments/payment-service";
+import { createStatusAccessToken } from "@/lib/payments/status-access";
 import {
   recordPatientPayment,
   registerPatient,
@@ -34,19 +35,13 @@ async function handleCallback(request) {
 
   let rawCallbackPayload = {};
   let normalizedPayload = {};
-  let rawInboundPayload = null;
 
   try {
     const inbound = await parseInboundPayload(request);
 
     rawCallbackPayload = { ...(inbound.parsedPayload || {}) };
     normalizedPayload = normalizeKeyValues(rawCallbackPayload);
-    rawInboundPayload = inbound.rawInboundPayload;
-
-    const hashDebug = verifyInboundSecureHash(
-      rawCallbackPayload,
-      config.merchantKey
-    );
+    verifyInboundSecureHash(rawCallbackPayload, config.merchantKey);
 
     const attempt = await service.processCallback(normalizedPayload);
     await syncDraftAndExternalPatientApi({
@@ -73,27 +68,18 @@ async function handleCallback(request) {
 
     redirect.searchParams.set("callbackHashStatus", "matched");
     redirect.searchParams.set(
-      "callbackHashPayload",
-      hashDebug.concatenatedPayloadString
-    );
-    redirect.searchParams.set(
-      "generatedSecureHash",
-      hashDebug.generatedSecureHash
-    );
-    redirect.searchParams.set(
-      "receivedSecureHash",
-      hashDebug.receivedSecureHash
+      "statusToken",
+      createStatusAccessToken({
+        merchantTxnNo: attempt.merchantTxnNo,
+        registrationId: attempt.registrationId,
+      })
     );
 
     return NextResponse.redirect(redirect, { status: 303 });
   } catch (error) {
     const redirect = new URL(config.frontendStatusUrl);
 
-    const callbackError = classifyCallbackError(
-      error,
-      rawCallbackPayload,
-      rawInboundPayload
-    );
+    const callbackError = classifyCallbackError(error);
 
     redirect.searchParams.set("error", callbackError.code);
     redirect.searchParams.set("errorStage", callbackError.stage);
@@ -107,8 +93,8 @@ async function handleCallback(request) {
       redirect.searchParams.set("merchantTxnNo", merchantTxnNo);
     }
 
-    if (callbackError.detail) {
-      redirect.searchParams.set("errorDetail", callbackError.detail);
+    if (callbackError.publicMessage) {
+      redirect.searchParams.set("errorMessage", callbackError.publicMessage);
     }
 
     return NextResponse.redirect(redirect, { status: 303 });
@@ -243,40 +229,20 @@ function verifyInboundSecureHash(rawCallbackPayload, merchantKey) {
     throw error;
   }
 
-  return {
-    orderedFieldValues,
-    concatenatedPayloadString,
-    generatedSecureHash,
-    receivedSecureHash,
-  };
+  return true;
 }
 
-function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
+function classifyCallbackError(error) {
   const message =
     error instanceof Error
       ? error.message
       : "Unknown callback failure";
-  const debug = error?.debugDetail || {};
 
   if (error?.code === "patient_register_api_failed") {
     return {
       code: "patient_register_api_failed",
       stage: error?.stage || "register_patient",
-      detail: JSON.stringify(
-        {
-          message,
-          requestUrl: debug.requestUrl || "",
-          registerPayload: debug.payload || {},
-          responseStatus: debug.responseStatus || "",
-          responseBody: debug.responseBody || {},
-          responseContentType: debug.responseContentType || "",
-          responseText: debug.responseText || "",
-          callbackPayload: rawCallbackPayload,
-          rawInboundPayload,
-        },
-        null,
-        2
-      ),
+      publicMessage: "Patient registration sync failed after payment.",
     };
   }
 
@@ -284,21 +250,7 @@ function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
     return {
       code: "callback_hash_mismatch",
       stage: "verify_hash",
-      detail: JSON.stringify(
-        {
-          message: "Secure hash validation failed",
-          payload: debug.payload || rawCallbackPayload,
-          concatenatedPayloadString:
-            debug.concatenatedPayloadString || "",
-          generatedSecureHash:
-            debug.generatedSecureHash || "",
-          receivedSecureHash:
-            debug.receivedSecureHash || "",
-          rawInboundPayload,
-        },
-        null,
-        2
-      ),
+      publicMessage: "Secure hash validation failed.",
     };
   }
 
@@ -306,14 +258,7 @@ function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
     return {
       code: "callback_unknown_transaction",
       stage: "lookup_attempt",
-      detail: JSON.stringify(
-        {
-          payload: rawCallbackPayload,
-          rawInboundPayload,
-        },
-        null,
-        2
-      ),
+      publicMessage: "Callback transaction reference was not found.",
     };
   }
 
@@ -321,29 +266,14 @@ function classifyCallbackError(error, rawCallbackPayload, rawInboundPayload) {
     return {
       code: "callback_invalid_state_transition",
       stage: "state_transition",
-      detail: JSON.stringify(
-        {
-          payload: rawCallbackPayload,
-          rawInboundPayload,
-        },
-        null,
-        2
-      ),
+      publicMessage: "Invalid callback state transition.",
     };
   }
 
   return {
     code: "callback_processing_failed",
     stage: "unknown",
-    detail: JSON.stringify(
-      {
-        message,
-        payload: rawCallbackPayload,
-        rawInboundPayload,
-      },
-      null,
-      2
-    ),
+    publicMessage: "Callback processing failed.",
   };
 }
 

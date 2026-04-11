@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 
+import { registerPatient, toPatientRegisterPayload } from "@/lib/server/patientApiService";
 import { saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
 
 export const runtime = "nodejs";
@@ -36,23 +37,35 @@ export async function POST(request) {
 
     const registrationId = buildRegistrationId();
     const { firstName, lastName } = splitName(payload.fullName);
+    const baseDraft = {
+      registrationId,
+      fullName: String(payload.fullName || "").trim(),
+      firstName,
+      lastName,
+      dob: String(payload.dob || ""),
+      gender: String(payload.gender || ""),
+      mobile: normalizedMobile,
+      email: String(payload.email || "").trim(),
+      referralCode: String(payload.referralCode || "").trim(),
+      state: String(payload.state || "").trim(),
+      city: String(payload.city || "").trim(),
+      createdAt: new Date().toISOString(),
+      flowStatus: "PROFILE_CAPTURED",
+    };
+
+    const registerResponse = await registerPatient(toPatientRegisterPayload(baseDraft));
+    const patientUuid =
+      registerResponse?.patient?.uuid ||
+      registerResponse?.patient?.user_uuid;
+    if (!patientUuid) throw new Error("Patient API register response did not include patient uuid");
 
     const draft = await saveRegistrationDraft(
       registrationId,
       {
-        registrationId,
-        fullName: String(payload.fullName || "").trim(),
-        firstName,
-        lastName,
-        dob: String(payload.dob || ""),
-        gender: String(payload.gender || ""),
-        mobile: normalizedMobile,
-        email: String(payload.email || "").trim(),
-        referralCode: String(payload.referralCode || "").trim(),
-        state: String(payload.state || "").trim(),
-        city: String(payload.city || "").trim(),
-        createdAt: new Date().toISOString(),
-        flowStatus: "PROFILE_CAPTURED",
+        ...baseDraft,
+        patientUuid,
+        externalApiResponse: registerResponse,
+        flowStatus: "PATIENT_REGISTERED",
       },
       undefined,
       { requireRedis: true },
@@ -66,16 +79,20 @@ export async function POST(request) {
         fullName: draft.fullName,
         email: draft.email,
         mobile: draft.mobile,
+        patientUuid: draft.patientUuid,
         storage: "redis",
       },
     });
   } catch (error) {
+    const statusCode = Number(error?.responseStatus || 0);
+    const isClientError = statusCode >= 400 && statusCode < 500;
+
     return NextResponse.json(
       {
         success: false,
         message: error instanceof Error ? error.message : "Unable to save registration draft.",
       },
-      { status: 500 },
+      { status: isClientError ? 400 : 500 },
     );
   }
 }

@@ -46,6 +46,28 @@ function extractCloudflareMeta(html) {
   };
 }
 
+function extractPatientApiErrorMessage(result, fallbackText = "") {
+  if (!result || typeof result !== "object") {
+    return String(fallbackText || "").trim();
+  }
+
+  const firstError =
+    Array.isArray(result?.errors) && result.errors.length > 0
+      ? result.errors[0]
+      : null;
+
+  return (
+    result?.message ||
+    result?.error_description ||
+    result?.error ||
+    firstError?.message ||
+    firstError?.detail ||
+    result?.error?.message ||
+    result?.detail ||
+    String(fallbackText || "").trim()
+  );
+}
+
 export function toPatientRegisterPayload(draft = {}) {
   const randomCredential = crypto.randomBytes(8).toString("hex");
 
@@ -95,14 +117,7 @@ export async function registerPatient(payload) {
       (cloudflare.blockedByCloudflare
         ? "Patient register API request was blocked by Cloudflare challenge. Ask the API team to allowlist this server/IP or bypass bot protection for server-to-server traffic."
         : "") ||
-      result?.message ||
-      result?.error_description ||
-      result?.error ||
-      result?.errors?.[0]?.message ||
-      result?.error?.message ||
-      result?.detail ||
-      rawResponseText ||
-      "";
+      extractPatientApiErrorMessage(result, rawResponseText);
     const errorMessage = externalMessage
       ? `${externalMessage} (status ${response.status})`
       : `Patient register API failed with status ${response.status}`;
@@ -116,8 +131,9 @@ export async function registerPatient(payload) {
       responseStatus: response.status,
       responseBody: result,
       responseContentType: contentType,
-      responseText: rawResponseText,
+      responseText: truncateText(rawResponseText),
     };
+    error.responseStatus = response.status;
     throw error;
   }
 

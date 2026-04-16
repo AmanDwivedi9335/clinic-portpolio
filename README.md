@@ -37,15 +37,11 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## ICICI Payment Gateway Integration (Standard Redirect Flow)
 
-### Architecture summary
-- Registration success redirects to `/payment/checkout` where user selects a plan and starts payment.
-- Payment initiation happens at `/api/payments/icici/initiate` (server only).
-- Server computes secure hash and calls ICICI initiate sale API.
-- User browser is redirected to `redirectURI + tranCtx` from ICICI.
-- ICICI browser callback hits `/api/payments/icici/callback`.
-- ICICI payment advice (S2S) hits `/api/payments/icici/advice`.
-- Final state is read from backend via `/api/txn/status/:merchantTxnNo` (alias of payment status endpoint to avoid browser blocker false positives) on `/payment/status` page.
-- Reconciliation service (`src/lib/payments/icici/reconciliation.js`) handles missed callbacks and uncertain states.
+### Architecture summary (4-line payment flow)
+1. After registration, user lands on `/payment/checkout`, selects a plan, and frontend calls `/api/payments/icici/initiate`.
+2. Server signs request, calls ICICI initiate API, and redirects browser to ICICI with `redirectURI + tranCtx`.
+3. ICICI returns browser callback to `/api/payments/icici/callback` and also sends S2S advice to `/api/payments/icici/advice`.
+4. `/payment/status` polls `/api/txn/status/:merchantTxnNo`, while reconciliation (`src/lib/payments/icici/reconciliation.js`) resolves missed/uncertain outcomes.
 
 ### Important assumptions to confirm with ICICI onboarding
 1. Exact hash field order and hashing algorithm/version for each API.

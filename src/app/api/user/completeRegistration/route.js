@@ -3,9 +3,7 @@ import { NextResponse } from "next/server";
 import { PaymentService } from "@/lib/payments/payment-service";
 import {
   recordPatientPayment,
-  registerPatient,
   toPatientMidPayload,
-  toPatientRegisterPayload,
 } from "@/lib/server/patientApiService";
 import { getRegistrationDraft, saveRegistrationDraft } from "@/lib/server/tempRegistrationStore";
 
@@ -36,12 +34,16 @@ export async function POST(request) {
       return NextResponse.json({ success: true, message: "Registration already completed", data: draft.midResponse });
     }
 
-    const registerResponse = draft.externalApiResponse || await registerPatient(toPatientRegisterPayload(draft));
-    const patientUuid =
-      draft.patientUuid ||
-      registerResponse?.patient?.uuid ||
-      registerResponse?.patient?.user_uuid;
-    if (!patientUuid) throw new Error("Patient API register response did not include patient uuid");
+    const patientUuid = draft.patientUuid;
+    if (!patientUuid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Patient is not registered yet. Please restart registration.",
+        },
+        { status: 400 },
+      );
+    }
 
     const midPayload = toPatientMidPayload({ attempt, callbackPayload: {} });
     const midResponse = await recordPatientPayment(patientUuid, midPayload);
@@ -50,7 +52,6 @@ export async function POST(request) {
       ...draft,
       flowStatus: "FINALIZED",
       finalizedAt: new Date().toISOString(),
-      externalApiResponse: registerResponse,
       patientUuid,
       midRequestPayload: midPayload,
       midResponse,

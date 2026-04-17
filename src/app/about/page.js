@@ -33,11 +33,11 @@ export default function Page() {
 			imgurl: "/images/founders/khali.png",
 		},
 		{
-			Name: "Joe",
-			Designation: "NA",
+			Name: "Murali Krishna",
+			Designation: "HOD - Tech",
 			Details:
 				"With 8+ years of leadership experience, she had driven impactful change in the healthcare device procurement industry, delivering operational efficiencies and scalable solutions. Her work is rooted in building strong healthcare ecosystems that combine technology, strategy, and execution.",
-			imgurl: "/images/founders/khali.png",
+			imgurl: "/images/founders/murali1.png",
 		},
 		{
 			Name: "Deepthi Murikipudi",
